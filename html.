@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Horloge</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #050505;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 35px 20px 25px;
+    }
+
+    /* HEADER */
+    .top {
+      text-align: center;
+    }
+
+    .top h1 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .top p {
+      margin-top: 7px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    /* TIMER */
+    .timer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 30px;
+    }
+
+    .unit {
+      text-align: center;
+      min-width: 72px;
+    }
+
+    .number {
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 300;
+      letter-spacing: -3px;
+      color: #ffffff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .label {
+      margin-top: 10px;
+      color: #777;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .colon {
+      font-size: 42px;
+      font-weight: 300;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    /* CARD */
+    .panel {
+      background: #111111;
+      border: 1px solid #1d1d1d;
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.35);
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      color: #888;
+      font-size: 12px;
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    input {
+      width: 100%;
+      height: 52px;
+      border: none;
+      outline: none;
+      border-radius: 15px;
+      background: #1c1c1c;
+      color: white;
+      padding: 0 15px;
+      font-size: 16px;
+      color-scheme: dark;
+    }
+
+    input:focus {
+      box-shadow: 0 0 0 2px #35d07f;
+    }
+
+    /* BUTTONS */
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    button {
+      flex: 1;
+      height: 52px;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .start {
+      background: #35d07f;
+      color: #001b0d;
+    }
+
+    .reset {
+      background: #242424;
+      color: white;
+    }
+
+    button:active {
+      transform: scale(.96);
+    }
+
+    /* FINISHED */
+    .finished {
+      text-align: center;
+      color: #35d07f;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .finished.show {
+      display: block;
+    }
+
+    /* MOBILE */
+    @media (max-width: 380px) {
+      .number {
+        font-size: 42px;
+      }
+
+      .unit {
+        min-width: 60px;
+      }
+
+      .colon {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <header class="top">
+      <h1>Minuteur</h1>
+      <p>Compte à rebours</p>
+    </header>
+
+    <section>
+      <div class="timer">
+
+        <div class="unit">
+          <div id="num-hours" class="number">00</div>
+          <div class="label">Heures</div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+          <div id="num-minutes" class="number">00</div>
+          <div class="label">Minutes</div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+          <div id="num-seconds" class="number">00</div>
+          <div class="label">Secondes</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="panel">
+
+      <div class="field">
+        <label for="date-input">DATE</label>
+        <input type="date" id="date-input">
+      </div>
+
+      <div class="field">
+        <label for="time-input">HEURE</label>
+        <input type="time" id="time-input">
+      </div>
+
+      <div id="finished" class="finished">
+        ⏱ Temps écoulé
+      </div>
+
+      <div class="buttons">
+        <button class="start" onclick="startCountdown()">
+          Démarrer
+        </button>
+
+        <button class="reset" onclick="resetCountdown()">
+          Réinitialiser
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    let interval = null;
+
+    function startCountdown() {
+
+      const date = document.getElementById("date-input").value;
+      const time = document.getElementById("time-input").value || "00:00";
+
+      if (!date) {
+        alert("Choisis une date.");
+        return;
+      }
+
+      clearInterval(interval);
+
+      const target = new Date(`${date}T${time}`).getTime();
+
+      document.getElementById("finished").classList.remove("show");
+
+      updateTimer(target);
+
+      interval = setInterval(() => {
+        updateTimer(target);
+      }, 1000);
+    }
+
+    function updateTimer(target) {
+
+      const difference = Math.max(0, target - Date.now());
+
+      const totalSeconds = Math.floor(difference / 1000);
+
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById("num-hours").textContent =
+        String(hours).padStart(2, "0");
+
+      document.getElementById("num-minutes").textContent =
+        String(minutes).padStart(2, "0");
+
+      document.getElementById("num-seconds").textContent =
+        String(seconds).padStart(2, "0");
+
+      if (difference <= 0) {
+
+        clearInterval(interval);
+        interval = null;
+
+        document.getElementById("finished")
+          .classList.add("show");
+      }
+    }
+
+    function resetCountdown() {
+
+      clearInterval(interval);
+      interval = null;
+
+      document.getElementById("num-hours").textContent = "00";
+      document.getElementById("num-minutes").textContent = "00";
+      document.getElementById("num-seconds").textContent = "00";
+
+      document.getElementById("finished")
+        .classList.remove("show");
+    }
+  </script>
+
+</body>
+</html>
