@@ -9,18 +9,12 @@
 <style>
 *{box-sizing:border-box}
 
-html,body{
+body{
 margin:0;
-padding:0;
 background:#000;
 color:#fff;
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 -webkit-tap-highlight-color:transparent;
-}
-
-body{
-min-height:100vh;
-overflow-x:hidden;
 }
 
 button,input{
@@ -29,7 +23,6 @@ font-family:inherit;
 
 button{
 cursor:pointer;
--webkit-tap-highlight-color:transparent;
 touch-action:manipulation;
 }
 
@@ -37,7 +30,7 @@ touch-action:manipulation;
 max-width:520px;
 min-height:100vh;
 margin:auto;
-padding-bottom:92px;
+padding-bottom:100px;
 }
 
 header{
@@ -62,133 +55,6 @@ padding:15px 20px;
 
 .page.active{
 display:block;
-}
-
-/* =========================
-   ICÔNES SANS EMOJI
-========================= */
-
-.nav-icon{
-width:25px;
-height:25px;
-position:relative;
-display:block;
-}
-
-.icon-alarm{
-border:2px solid currentColor;
-border-radius:50%;
-width:19px;
-height:19px;
-margin-top:3px;
-}
-
-.icon-alarm:before,
-.icon-alarm:after{
-content:"";
-position:absolute;
-width:7px;
-height:2px;
-background:currentColor;
-top:-5px;
-}
-
-.icon-alarm:before{
-left:-3px;
-transform:rotate(-35deg);
-}
-
-.icon-alarm:after{
-right:-3px;
-transform:rotate(35deg);
-}
-
-.icon-clock{
-border:2px solid currentColor;
-border-radius:50%;
-width:20px;
-height:20px;
-margin-top:3px;
-}
-
-.icon-clock:before{
-content:"";
-position:absolute;
-width:2px;
-height:7px;
-background:currentColor;
-left:8px;
-top:3px;
-}
-
-.icon-clock:after{
-content:"";
-position:absolute;
-width:6px;
-height:2px;
-background:currentColor;
-left:8px;
-top:9px;
-transform:rotate(25deg);
-transform-origin:left center;
-}
-
-.icon-stopwatch{
-border:2px solid currentColor;
-border-radius:50%;
-width:19px;
-height:19px;
-margin-top:5px;
-}
-
-.icon-stopwatch:before{
-content:"";
-position:absolute;
-width:7px;
-height:3px;
-border:2px solid currentColor;
-border-bottom:0;
-left:4px;
-top:-6px;
-}
-
-.icon-stopwatch:after{
-content:"";
-position:absolute;
-width:2px;
-height:7px;
-background:currentColor;
-left:8px;
-top:4px;
-}
-
-.icon-timer{
-border:2px solid currentColor;
-border-radius:50%;
-width:20px;
-height:20px;
-margin-top:4px;
-}
-
-.icon-timer:before{
-content:"";
-position:absolute;
-width:8px;
-height:3px;
-background:currentColor;
-left:5px;
-top:-5px;
-border-radius:2px;
-}
-
-.icon-timer:after{
-content:"";
-position:absolute;
-width:2px;
-height:7px;
-background:currentColor;
-left:8px;
-top:4px;
 }
 
 /* =========================
@@ -228,7 +94,13 @@ display:inline-block;
 }
 
 .switch input{
-display:none;
+position:absolute;
+opacity:0;
+width:100%;
+height:100%;
+margin:0;
+z-index:2;
+cursor:pointer;
 }
 
 .slider{
@@ -236,6 +108,7 @@ position:absolute;
 inset:0;
 background:#444;
 border-radius:30px;
+pointer-events:none;
 }
 
 .slider:before{
@@ -263,7 +136,6 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 margin-top:15px;
-gap:10px;
 }
 
 .delete{
@@ -271,6 +143,7 @@ border:0;
 background:none;
 color:#ff5555;
 font-size:14px;
+padding:10px;
 }
 
 .add{
@@ -283,6 +156,10 @@ font-size:34px;
 color:#001b0d;
 display:block;
 margin:25px auto 5px;
+}
+
+.add:active{
+transform:scale(.94);
 }
 
 /* =========================
@@ -298,6 +175,7 @@ padding-top:70px;
 font-size:78px;
 font-weight:200;
 letter-spacing:-5px;
+font-variant-numeric:tabular-nums;
 }
 
 .clock-date{
@@ -345,177 +223,52 @@ font-size:17px;
 font-weight:600;
 }
 
+.green:active,
+.dark:active{
+transform:scale(.98);
+}
+
 .full{
 width:100%;
 margin-top:12px;
 }
 
-.lap-item{
-padding:13px 5px;
-border-bottom:1px solid #222;
-display:flex;
-justify-content:space-between;
-color:#aaa;
-font-variant-numeric:tabular-nums;
-}
-
 /* =========================
-   MINUTEUR STYLE PHOTO
+   MINUTEUR
 ========================= */
 
-.timer-page{
-padding-top:0;
-}
-
-.timer-picker{
-height:355px;
-position:relative;
-display:grid;
-grid-template-columns:1fr 24px 1fr 24px 1fr;
-align-items:center;
-margin-top:10px;
-overflow:hidden;
-}
-
-.timer-picker:before{
-content:"";
-position:absolute;
-left:8%;
-right:8%;
-top:50%;
-height:70px;
-transform:translateY(-50%);
-background:#050505;
-border-radius:18px;
-border-top:1px solid #151515;
-border-bottom:1px solid #151515;
-pointer-events:none;
-}
-
-.timer-column{
-height:100%;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:18px;
-position:relative;
-z-index:2;
-overflow:hidden;
-}
-
-.timer-value{
-height:55px;
-line-height:55px;
-font-size:47px;
-font-weight:300;
-color:#222;
-font-variant-numeric:tabular-nums;
-transition:.15s;
-}
-
-.timer-value.selected{
-color:#fff;
-font-size:48px;
-}
-
-.timer-separator{
-font-size:40px;
-font-weight:300;
-color:#fff;
-z-index:3;
-}
-
-.timer-labels{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-text-align:center;
-color:#666;
-font-size:11px;
-margin-top:-20px;
-margin-bottom:18px;
-}
-
-.preset-grid{
+.inputs{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:12px;
-margin-top:12px;
+gap:10px;
 }
 
-.preset{
-height:58px;
-background:#000;
+.inputs input{
+width:100%;
+height:60px;
+background:#171717;
+color:#fff;
 border:1px solid #292929;
 border-radius:17px;
-color:#888;
-font-size:17px;
+text-align:center;
+font-size:22px;
+outline:none;
 }
 
-.preset.selected{
-background:#242424;
-color:#fff;
-border-color:#242424;
+.inputs input:focus{
+border-color:#32d47a;
 }
 
-.timer-main-button{
-width:150px;
-height:70px;
-display:block;
-margin:34px auto 0;
-border:0;
-border-radius:40px;
-background:#292929;
-color:#fff;
-font-size:0;
-}
-
-.play-symbol{
-display:inline-block;
-width:0;
-height:0;
-border-top:13px solid transparent;
-border-bottom:13px solid transparent;
-border-left:19px solid #2385ff;
-margin-left:5px;
-}
-
-.pause-symbol{
-display:inline-flex;
-gap:6px;
-justify-content:center;
-align-items:center;
-}
-
-.pause-symbol:before,
-.pause-symbol:after{
-content:"";
-display:block;
-width:6px;
-height:24px;
-background:#2385ff;
-border-radius:2px;
-}
-
-.timer-main-button.running .play-symbol{
-display:none;
-}
-
-.timer-main-button:not(.running) .pause-symbol{
-display:none;
-}
-
-.timer-reset{
-display:block;
-margin:14px auto 0;
-background:none;
-border:0;
+.label{
+text-align:center;
+font-size:11px;
 color:#777;
-font-size:15px;
+margin-top:5px;
 }
 
 /* =========================
    NAVIGATION
+   Icônes monochromes
 ========================= */
 
 nav{
@@ -542,11 +295,30 @@ display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-gap:6px;
+gap:5px;
+padding:0;
 }
 
 nav button.active{
 color:#32d47a;
+}
+
+.icon{
+width:25px;
+height:25px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.icon svg{
+width:24px;
+height:24px;
+stroke:currentColor;
+fill:none;
+stroke-width:1.8;
+stroke-linecap:round;
+stroke-linejoin:round;
 }
 
 /* =========================
@@ -615,6 +387,19 @@ text-align:center;
 color:#666;
 padding:60px 20px;
 }
+
+/* =========================
+   TEMPS DU CHRONO
+========================= */
+
+.lap-row{
+padding:13px 5px;
+border-bottom:1px solid #222;
+display:flex;
+justify-content:space-between;
+color:#aaa;
+font-variant-numeric:tabular-nums;
+}
 </style>
 </head>
 
@@ -627,12 +412,15 @@ padding:60px 20px;
 <div class="subtitle" id="subtitle">Vos alarmes</div>
 </header>
 
-<!-- REVEILS -->
+<!-- =========================
+     REVEILS
+========================= -->
+
 <section id="alarms" class="page active">
 
 <div id="alarmList"></div>
 
-<button class="add" onclick="openAlarm()">+</button>
+<button class="add" type="button" onclick="openAlarm()">+</button>
 
 <div style="text-align:center;color:#777">
 Ajouter un réveil
@@ -640,22 +428,23 @@ Ajouter un réveil
 
 </section>
 
-<!-- HORLOGE -->
+<!-- =========================
+     HORLOGE
+========================= -->
+
 <section id="clock" class="page">
 
 <div class="clock">
-
-<div id="clockTime" class="clock-time">
-00:00:00
-</div>
-
+<div id="clockTime" class="clock-time">00:00:00</div>
 <div id="clockDate" class="clock-date"></div>
-
 </div>
 
 </section>
 
-<!-- CHRONO -->
+<!-- =========================
+     CHRONO
+========================= -->
+
 <section id="chrono" class="page">
 
 <div id="chronoDisplay" class="big-number">
@@ -664,11 +453,16 @@ Ajouter un réveil
 
 <div class="buttons">
 
-<button class="dark" onclick="lap()">
+<button
+type="button"
+class="dark"
+onclick="lap()">
 Tour
 </button>
 
-<button id="chronoStart"
+<button
+type="button"
+id="chronoStart"
 class="green"
 onclick="startChrono()">
 Démarrer
@@ -676,7 +470,10 @@ Démarrer
 
 </div>
 
-<button class="dark full" onclick="resetChrono()">
+<button
+type="button"
+class="dark full"
+onclick="resetChrono()">
 Réinitialiser
 </button>
 
@@ -684,87 +481,108 @@ Réinitialiser
 
 </section>
 
-<!-- MINUTEUR -->
-<section id="timer" class="page timer-page">
+<!-- =========================
+     MINUTEUR
+========================= -->
 
-<div class="timer-picker">
+<section id="timer" class="page">
 
-<div id="hourColumn" class="timer-column"></div>
-
-<div class="timer-separator">:</div>
-
-<div id="minuteColumn" class="timer-column"></div>
-
-<div class="timer-separator">:</div>
-
-<div id="secondColumn" class="timer-column"></div>
-
+<div id="timerDisplay" class="big-number">
+00:05:00
 </div>
 
-<div class="timer-labels">
-<div>HEURES</div>
-<div>MINUTES</div>
-<div>SECONDES</div>
+<div class="inputs">
+
+<div>
+<input id="hours" type="number" min="0" value="0">
+<div class="label">HEURES</div>
 </div>
 
-<div id="presetGrid" class="preset-grid"></div>
+<div>
+<input id="minutes" type="number" min="0" max="59" value="5">
+<div class="label">MINUTES</div>
+</div>
+
+<div>
+<input id="seconds" type="number" min="0" max="59" value="0">
+<div class="label">SECONDES</div>
+</div>
+
+</div>
 
 <button
+type="button"
 id="timerStart"
-class="timer-main-button"
+class="green full"
 onclick="startTimer()">
-
-<span class="play-symbol"></span>
-<span class="pause-symbol"></span>
-
+Démarrer
 </button>
 
 <button
-class="timer-reset"
+type="button"
+class="dark full"
 onclick="resetTimer()">
 Réinitialiser
 </button>
 
 </section>
 
+<!-- =========================
+     NAVIGATION
+========================= -->
+
 <nav>
 
-<button id="navAlarms"
-class="active"
-onclick="page('alarms')">
+<button id="navAlarms" type="button" class="active" onclick="page('alarms')">
 
-<span class="nav-icon">
-<span class="icon-alarm"></span>
+<span class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+<path d="M10 21h4"/>
+</svg>
 </span>
 
 Réveils
 
 </button>
 
-<button id="navClock" onclick="page('clock')">
+<button id="navClock" type="button" onclick="page('clock')">
 
-<span class="nav-icon">
-<span class="icon-clock"></span>
+<span class="icon">
+<svg viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="8.5"/>
+<path d="M12 7v5l3 2"/>
+</svg>
 </span>
 
 Horloge
 
 </button>
 
-<button id="navChrono" onclick="page('chrono')">
+<button id="navChrono" type="button" onclick="page('chrono')">
 
-<span class="nav-icon">
-<span class="icon-stopwatch"></span>
+<span class="icon">
+<svg viewBox="0 0 24 24">
+<circle cx="12" cy="13" r="7.5"/>
+<path d="M9 3h6"/>
+<path d="M12 5v2"/>
+<path d="M12 13l3-2"/>
+</svg>
 </span>
 
 Chrono
 
 </button>
 
-<button id="navTimer" onclick="page('timer')">
+<button id="navTimer" type="button" onclick="page('timer')">
 
-<span class="nav-icon">
-<span class="icon-timer"></span>
+<span class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M9 3h6"/>
+<path d="M12 3v3"/>
+<circle cx="12" cy="13" r="7"/>
+<path d="M12 9v4l2.5 1.5"/>
+</svg>
 </span>
 
 Minuteur
@@ -775,7 +593,9 @@ Minuteur
 
 </div>
 
-<!-- MODAL REVEIL -->
+<!-- =========================
+     MODAL REVEIL
+========================= -->
 
 <div id="modal" class="modal">
 
@@ -783,7 +603,11 @@ Minuteur
 
 <h2>Nouveau réveil</h2>
 
-<input id="alarmTime" type="time" value="07:00">
+<input
+id="alarmTime"
+type="time"
+value="07:00"
+>
 
 <input
 id="youtube"
@@ -793,24 +617,31 @@ placeholder="Lien YouTube de la musique (facultatif)"
 
 <div class="modal-buttons">
 
-<button class="dark" onclick="closeAlarm()">
+<button
+type="button"
+class="dark"
+onclick="closeAlarm()">
 Annuler
 </button>
 
-<button class="green" onclick="createAlarm()">
+<button
+type="button"
+class="green"
+onclick="createAlarm()">
 Ajouter
 </button>
 
 </div>
 
 </div>
+
 </div>
 
 <script>
 
-/* =========================
+/* =====================================================
    NAVIGATION
-========================= */
+===================================================== */
 
 const pageNames={
 alarms:["Réveils","Vos alarmes"],
@@ -821,14 +652,19 @@ timer:["Minuteur","Compte à rebours"]
 
 function page(name){
 
-document.querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
+document.querySelectorAll(".page").forEach(x=>{
+x.classList.remove("active");
+});
 
-document.getElementById(name)
-.classList.add("active");
+const selected=document.getElementById(name);
 
-document.querySelectorAll("nav button")
-.forEach(x=>x.classList.remove("active"));
+if(selected){
+selected.classList.add("active");
+}
+
+document.querySelectorAll("nav button").forEach(x=>{
+x.classList.remove("active");
+});
 
 const navButton=document.getElementById(
 "nav"+name.charAt(0).toUpperCase()+name.slice(1)
@@ -848,16 +684,15 @@ localStorage.setItem("lastPage",name);
 }
 
 
-/* =========================
+/* =====================================================
    HORLOGE
-========================= */
+===================================================== */
 
 function clock(){
 
 const d=new Date();
 
-document.getElementById("clockTime")
-.textContent=
+document.getElementById("clockTime").textContent=
 String(d.getHours()).padStart(2,"0")+":"+
 String(d.getMinutes()).padStart(2,"0")+":"+
 String(d.getSeconds()).padStart(2,"0");
@@ -877,18 +712,22 @@ setInterval(clock,1000);
 clock();
 
 
-/* =========================
+/* =====================================================
    REVEILS
-========================= */
+===================================================== */
 
 let alarms=[];
 
 try{
+
 alarms=JSON.parse(
 localStorage.getItem("myAlarms")||"[]"
 );
+
 }catch(e){
+
 alarms=[];
+
 }
 
 function saveAlarms(){
@@ -897,25 +736,30 @@ localStorage.setItem(
 "myAlarms",
 JSON.stringify(alarms)
 );
+
 }
 
 function openAlarm(){
 
-if("Notification" in window &&
-Notification.permission==="default"){
+if(
+"Notification" in window &&
+Notification.permission==="default"
+){
 
-Notification.requestPermission();
+Notification.requestPermission().catch(()=>{});
 
 }
 
 document.getElementById("modal")
 .classList.add("show");
+
 }
 
 function closeAlarm(){
 
 document.getElementById("modal")
 .classList.remove("show");
+
 }
 
 function createAlarm(){
@@ -931,19 +775,25 @@ if(!time)return;
 alarms.push({
 
 id:Date.now(),
+
 time:time,
+
 enabled:true,
+
 youtube:youtube,
+
 lastRing:""
 
 });
 
 saveAlarms();
+
 renderAlarms();
 
 document.getElementById("youtube").value="";
 
 closeAlarm();
+
 }
 
 function removeAlarm(id){
@@ -951,7 +801,9 @@ function removeAlarm(id){
 alarms=alarms.filter(a=>a.id!==id);
 
 saveAlarms();
+
 renderAlarms();
+
 }
 
 function switchAlarm(id){
@@ -963,7 +815,9 @@ if(!a)return;
 a.enabled=!a.enabled;
 
 saveAlarms();
+
 renderAlarms();
+
 }
 
 function renderAlarms(){
@@ -981,9 +835,12 @@ Appuie sur + pour créer ton premier réveil.
 </div>`;
 
 return;
+
 }
 
-alarms.sort((a,b)=>a.time.localeCompare(b.time));
+alarms.sort((a,b)=>
+a.time.localeCompare(b.time)
+);
 
 alarms.forEach(a=>{
 
@@ -991,26 +848,29 @@ const div=document.createElement("div");
 
 div.className="alarm";
 
+const musicButton=a.youtube?
+`
+<button
+type="button"
+class="dark"
+style="height:40px;padding:0 15px"
+onclick="openMusic('${escapeJs(a.youtube)}')">
+Tester la musique
+</button>
+`
+:"";
+
 div.innerHTML=`
 
 <div class="alarm-top">
 
 <div>
 
-<div class="alarm-time">
-${a.time}
-</div>
+<div class="alarm-time">${escapeHtml(a.time)}</div>
 
 <div class="alarm-name">
-
-${a.enabled?
-"Réveil activé":
-"Réveil désactivé"}
-
-${a.youtube?
-" · Musique":
-""}
-
+${a.enabled?"Réveil activé":"Réveil désactivé"}
+${a.youtube?" · Musique":""}
 </div>
 
 </div>
@@ -1030,16 +890,10 @@ onchange="switchAlarm(${a.id})">
 
 <div class="alarm-actions">
 
-${a.youtube?
-`<button
-class="dark"
-style="height:40px;padding:0 15px"
-onclick="openMusic('${a.youtube.replace(/'/g,"\\'")}')">
-Tester la musique
-</button>`
-:""}
+${musicButton}
 
 <button
+type="button"
 class="delete"
 onclick="removeAlarm(${a.id})">
 Supprimer
@@ -1051,14 +905,36 @@ Supprimer
 box.appendChild(div);
 
 });
+
+}
+
+function escapeHtml(text){
+
+return String(text)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+function escapeJs(text){
+
+return String(text)
+.replace(/\\/g,"\\\\")
+.replace(/'/g,"\\'")
+.replace(/\n/g,"\\n")
+.replace(/\r/g,"\\r");
+
 }
 
 renderAlarms();
 
 
-/* =========================
-   SON
-========================= */
+/* =====================================================
+   SON + VIBRATION
+===================================================== */
 
 let audioCtx=null;
 
@@ -1072,7 +948,7 @@ new (window.AudioContext||
 window.webkitAudioContext)();
 
 if(audioCtx.state==="suspended"){
-audioCtx.resume();
+audioCtx.resume().catch(()=>{});
 }
 
 const now=audioCtx.currentTime;
@@ -1080,6 +956,7 @@ const now=audioCtx.currentTime;
 for(let i=0;i<6;i++){
 
 const osc=audioCtx.createOscillator();
+
 const gain=audioCtx.createGain();
 
 osc.frequency.value=
@@ -1103,9 +980,11 @@ now+i*.35+.3
 );
 
 osc.connect(gain);
+
 gain.connect(audioCtx.destination);
 
 osc.start(now+i*.35);
+
 osc.stop(now+i*.35+.32);
 
 }
@@ -1119,17 +998,20 @@ navigator.vibrate([
 ]);
 
 }
+
 }
 
 
-/* =========================
+/* =====================================================
    NOTIFICATIONS
-========================= */
+===================================================== */
 
 function notify(title,text){
 
-if("Notification" in window &&
-Notification.permission==="granted"){
+if(
+"Notification" in window &&
+Notification.permission==="granted"
+){
 
 try{
 
@@ -1142,12 +1024,13 @@ requireInteraction:true
 }catch(e){}
 
 }
+
 }
 
 
-/* =========================
+/* =====================================================
    YOUTUBE
-========================= */
+===================================================== */
 
 function getYoutubeId(url){
 
@@ -1155,15 +1038,22 @@ try{
 
 const u=new URL(url);
 
-if(u.hostname.includes("youtu.be"))
+if(u.hostname.includes("youtu.be")){
+
 return u.pathname.substring(1);
 
-if(u.hostname.includes("youtube.com"))
+}
+
+if(u.hostname.includes("youtube.com")){
+
 return u.searchParams.get("v");
+
+}
 
 }catch(e){}
 
 return null;
+
 }
 
 function openMusic(url){
@@ -1178,18 +1068,20 @@ window.open(
 );
 
 }
+
 }
 
 
-/* =========================
-   REVEILS
-========================= */
+/* =====================================================
+   VERIFICATION REVEILS
+===================================================== */
 
 setInterval(()=>{
 
 const now=new Date();
 
 const hh=String(now.getHours()).padStart(2,"0");
+
 const mm=String(now.getMinutes()).padStart(2,"0");
 
 const current=hh+":"+mm;
@@ -1228,24 +1120,23 @@ openMusic(a.youtube);
 },1000);
 
 
-/* =========================
-   CHRONOMÈTRE
-   SAUVEGARDE COMPLÈTE
-========================= */
+/* =====================================================
+   CHRONOMETRE — SAUVEGARDE CORRIGEE
+===================================================== */
 
 let chronoRunning=false;
 let chronoStartTime=0;
 let chronoElapsed=0;
 let chronoInterval=null;
-let chronoLaps=[];
-
-
-/* Format chrono */
 
 function chronoFormat(ms){
 
+ms=Math.max(0,Math.floor(ms));
+
 const m=Math.floor(ms/60000);
+
 const s=Math.floor((ms%60000)/1000);
+
 const c=Math.floor((ms%1000)/10);
 
 return(
@@ -1253,10 +1144,17 @@ String(m).padStart(2,"0")+":"+
 String(s).padStart(2,"0")+"."+
 String(c).padStart(2,"0")
 );
+
 }
 
 
-/* Sauvegarde chrono */
+/*
+   On sauvegarde une valeur fixe ET le moment
+   où le chrono a commencé.
+
+   Ainsi, même si la page est fermée, au retour
+   le chrono peut recalculer le temps écoulé.
+*/
 
 function saveChrono(){
 
@@ -1276,18 +1174,13 @@ running:chronoRunning,
 
 elapsed:elapsed,
 
-startTime:chronoRunning?
-Date.now():0,
-
-laps:chronoLaps
+start:chronoRunning?
+Date.now():0
 
 })
 );
 
 }
-
-
-/* Affichage */
 
 function updateChrono(){
 
@@ -1304,12 +1197,15 @@ document.getElementById("chronoDisplay")
 
 }
 
-
-/* Démarrer / pause */
-
 function startChrono(){
 
 if(!chronoRunning){
+
+/*
+   Important :
+   on garde chronoElapsed tel quel
+   puis on recommence à compter depuis maintenant.
+*/
 
 chronoStartTime=Date.now();
 
@@ -1318,7 +1214,16 @@ chronoRunning=true;
 document.getElementById("chronoStart")
 .textContent="Pause";
 
+clearInterval(chronoInterval);
+
+chronoInterval=setInterval(updateChrono,30);
+
 }else{
+
+/*
+   Avant la pause, on ajoute précisément
+   le temps depuis chronoStartTime.
+*/
 
 chronoElapsed+=
 Date.now()-chronoStartTime;
@@ -1327,25 +1232,20 @@ chronoRunning=false;
 
 chronoStartTime=0;
 
-document.getElementById("chronoStart")
-.textContent="Démarrer";
-}
-
 clearInterval(chronoInterval);
 
-if(chronoRunning){
+chronoInterval=null;
 
-chronoInterval=
-setInterval(updateChrono,30);
+document.getElementById("chronoStart")
+.textContent="Démarrer";
 
 }
+
+saveChrono();
 
 updateChrono();
-saveChrono();
+
 }
-
-
-/* Tour */
 
 function lap(){
 
@@ -1353,52 +1253,34 @@ if(!chronoRunning)return;
 
 const value=
 chronoElapsed+
-Date.now()-chronoStartTime;
-
-chronoLaps.unshift(value);
-
-renderLaps();
-
-saveChrono();
-}
-
-
-/* Afficher les tours */
-
-function renderLaps(){
-
-const box=document.getElementById("laps");
-
-box.innerHTML="";
-
-chronoLaps.forEach((value,index)=>{
+Date.now()-
+chronoStartTime;
 
 const div=document.createElement("div");
 
-div.className="lap-item";
+div.className="lap-row";
 
 div.innerHTML=
-"<span>Tour "+(chronoLaps.length-index)+
-"</span><span>"+
+"<span>Tour</span><span>"+
 chronoFormat(value)+
 "</span>";
 
-box.appendChild(div);
+document.getElementById("laps")
+.prepend(div);
 
-});
 }
-
-
-/* Réinitialiser */
 
 function resetChrono(){
 
 clearInterval(chronoInterval);
 
+chronoInterval=null;
+
 chronoRunning=false;
+
 chronoStartTime=0;
+
 chronoElapsed=0;
-chronoLaps=[];
 
 document.getElementById("chronoDisplay")
 .textContent="00:00.00";
@@ -1409,10 +1291,14 @@ document.getElementById("chronoStart")
 document.getElementById("laps").innerHTML="";
 
 localStorage.removeItem("chronoState");
+
 }
 
 
-/* Charger le chrono */
+/*
+   Recharge le chrono après fermeture
+   ou actualisation de la page.
+*/
 
 function loadChrono(){
 
@@ -1423,23 +1309,35 @@ JSON.parse(
 localStorage.getItem("chronoState")
 );
 
-if(!data)return;
+if(!data){
+
+updateChrono();
+
+return;
+
+}
 
 chronoElapsed=
 Number(data.elapsed)||0;
 
-chronoLaps=
-Array.isArray(data.laps)?
-data.laps:[];
-
 if(data.running){
 
-chronoStartTime=Date.now();
+/*
+   Le temps enregistré correspond au moment
+   de la dernière sauvegarde.
+*/
+
+const savedAt=
+Number(data.start)||Date.now();
+
+chronoStartTime=savedAt;
 
 chronoRunning=true;
 
 document.getElementById("chronoStart")
 .textContent="Pause";
+
+clearInterval(chronoInterval);
 
 chronoInterval=
 setInterval(updateChrono,30);
@@ -1448,19 +1346,22 @@ setInterval(updateChrono,30);
 
 chronoRunning=false;
 
+chronoStartTime=0;
+
 document.getElementById("chronoStart")
 .textContent="Démarrer";
 
 }
 
-renderLaps();
 updateChrono();
 
 }catch(e){
 
 chronoRunning=false;
+chronoStartTime=0;
 chronoElapsed=0;
-chronoLaps=[];
+
+updateChrono();
 
 }
 
@@ -1469,28 +1370,40 @@ chronoLaps=[];
 loadChrono();
 
 
-/* =========================
+/*
+   Sauvegarde régulière du chrono.
+   Cela évite de perdre l'état si le navigateur
+   ferme brutalement la page.
+*/
+
+setInterval(()=>{
+
+if(chronoRunning){
+
+saveChrono();
+
+}
+
+},1000);
+
+
+/* =====================================================
    MINUTEUR
-========================= */
+===================================================== */
 
 let timerRunning=false;
 let timerEnd=0;
-let timerRemaining=0;
+let timerRemaining=300;
 let timerInterval=null;
-
-let timerHours=0;
-let timerMinutes=5;
-let timerSeconds=0;
-
-
-/* Format */
 
 function timerFormat(s){
 
 s=Math.max(0,Math.floor(s));
 
 const h=Math.floor(s/3600);
+
 const m=Math.floor((s%3600)/60);
+
 const sec=s%60;
 
 return(
@@ -1498,7 +1411,75 @@ String(h).padStart(2,"0")+":"+
 String(m).padStart(2,"0")+":"+
 String(sec).padStart(2,"0")
 );
+
 }
 
+function saveTimer(){
 
-/* ===============
+localStorage.setItem(
+"timerState",
+JSON.stringify({
+
+running:timerRunning,
+
+end:timerEnd,
+
+remaining:timerRemaining
+
+})
+);
+
+}
+
+function updateTimer(){
+
+if(timerRunning){
+
+timerRemaining=Math.max(
+0,
+Math.ceil((timerEnd-Date.now())/1000)
+);
+
+}
+
+document.getElementById("timerDisplay")
+.textContent=timerFormat(timerRemaining);
+
+saveTimer();
+
+}
+
+function startTimer(){
+
+if(timerRunning){
+
+timerRemaining=Math.max(
+0,
+Math.ceil((timerEnd-Date.now())/1000)
+);
+
+timerRunning=false;
+
+clearInterval(timerInterval);
+
+timerInterval=null;
+
+document.getElementById("timerStart")
+.textContent="Reprendre";
+
+saveTimer();
+
+return;
+
+}
+
+if(timerRemaining<=0){
+
+const h=
+Number(document.getElementById("hours").value)||0;
+
+const m=
+Number(document.getElementById("minutes").value)||0;
+
+const s=
+Number(document.getElementById("s
