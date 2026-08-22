@@ -7,64 +7,42 @@
 <title>Horloge</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  background:#000;
-  color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-}
+*{box-sizing:border-box}
 
 body{
-  overflow-x:hidden;
-}
-
-button{
-  font-family:inherit;
-  cursor:pointer;
-  -webkit-user-select:none;
-  user-select:none;
-  touch-action:manipulation;
+margin:0;
+background:#000;
+color:#fff;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
 
 .app{
-  width:100%;
-  max-width:520px;
-  min-height:100vh;
-  margin:auto;
-  padding-bottom:105px;
+max-width:520px;
+min-height:100vh;
+margin:auto;
+padding-bottom:100px;
 }
 
-header{
-  padding:30px 24px 15px;
-}
+header{padding:30px 24px 15px}
 
 h1{
-  font-size:34px;
-  margin:0;
-  font-weight:700;
+font-size:34px;
+margin:0;
+font-weight:700;
 }
 
 .subtitle{
-  color:#777;
-  margin-top:5px;
+color:#777;
+margin-top:5px;
 }
 
 .page{
-  display:none;
-  padding:15px 20px;
-  width:100%;
+display:none;
+padding:15px 20px;
 }
 
 .page.active{
-  display:block;
+display:block;
 }
 
 /* =========================
@@ -72,101 +50,92 @@ h1{
 ========================= */
 
 .alarm{
-  background:#171717;
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:12px;
+background:#171717;
+border-radius:22px;
+padding:20px;
+margin-bottom:12px;
 }
 
 .alarm-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 .alarm-time{
-  font-size:54px;
-  font-weight:300;
-  letter-spacing:-2px;
+font-size:54px;
+font-weight:300;
+letter-spacing:-2px;
 }
 
 .alarm-name{
-  color:#888;
-  font-size:14px;
-  margin-top:2px;
+color:#888;
+font-size:14px;
+margin-top:2px;
 }
 
 .switch{
-  width:54px;
-  height:32px;
-  position:relative;
-  display:inline-block;
-  flex-shrink:0;
+width:54px;
+height:32px;
+position:relative;
+display:inline-block;
 }
 
 .switch input{
-  display:none;
+display:none;
 }
 
 .slider{
-  position:absolute;
-  inset:0;
-  background:#444;
-  border-radius:30px;
+position:absolute;
+inset:0;
+background:#444;
+border-radius:30px;
 }
 
 .slider:before{
-  content:"";
-  position:absolute;
-  width:26px;
-  height:26px;
-  left:3px;
-  top:3px;
-  background:#fff;
-  border-radius:50%;
-  transition:.2s;
+content:"";
+position:absolute;
+width:26px;
+height:26px;
+left:3px;
+top:3px;
+background:#fff;
+border-radius:50%;
+transition:.2s;
 }
 
-.switch input:checked + .slider{
-  background:#32d47a;
+.switch input:checked+.slider{
+background:#32d47a;
 }
 
-.switch input:checked + .slider:before{
-  transform:translateX(22px);
+.switch input:checked+.slider:before{
+transform:translateX(22px);
 }
 
 .alarm-actions{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:15px;
-  gap:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:15px;
 }
 
 .delete{
-  border:0;
-  background:none;
-  color:#ff5555;
-  font-size:14px;
-  padding:10px;
+border:0;
+background:none;
+color:#ff5555;
+font-size:14px;
 }
 
 .add{
-  width:58px;
-  height:58px;
-  border:0;
-  border-radius:50%;
-  background:#32d47a;
-  font-size:34px;
-  color:#001b0d;
-  display:block;
-  margin:25px auto 5px;
-}
-
-.add:active,
-.green:active,
-.dark:active{
-  transform:scale(.96);
+width:58px;
+height:58px;
+border:0;
+border-radius:50%;
+background:#32d47a;
+font-size:34px;
+color:#001b0d;
+display:block;
+margin:25px auto 5px;
 }
 
 /* =========================
@@ -174,144 +143,195 @@ h1{
 ========================= */
 
 .clock{
-  text-align:center;
-  padding-top:70px;
+text-align:center;
+padding-top:70px;
 }
 
 .clock-time{
-  font-size:78px;
-  font-weight:200;
-  letter-spacing:-5px;
-  font-variant-numeric:tabular-nums;
+font-size:78px;
+font-weight:200;
+letter-spacing:-5px;
 }
 
 .clock-date{
-  font-size:18px;
-  color:#888;
-  margin-top:8px;
+font-size:18px;
+color:#888;
+margin-top:8px;
 }
 
 /* =========================
-   CHRONO / MINUTEUR
+   CHRONO
 ========================= */
 
 .big-number{
-  font-size:68px;
-  font-weight:200;
-  text-align:center;
-  letter-spacing:-4px;
-  margin:75px 0 50px;
-  font-variant-numeric:tabular-nums;
+font-size:68px;
+font-weight:200;
+text-align:center;
+letter-spacing:-4px;
+margin:75px 0 50px;
+font-variant-numeric:tabular-nums;
 }
 
 .buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+button{
+font-family:inherit;
+cursor:pointer;
 }
 
 .green{
-  background:#32d47a;
-  color:#001b0d;
-  border:0;
-  border-radius:18px;
-  height:58px;
-  font-size:17px;
-  font-weight:700;
+background:#32d47a;
+color:#001b0d;
+border:0;
+border-radius:18px;
+height:58px;
+font-size:17px;
+font-weight:700;
 }
 
 .dark{
-  background:#202020;
-  color:#fff;
-  border:0;
-  border-radius:18px;
-  height:58px;
-  font-size:17px;
-  font-weight:600;
+background:#202020;
+color:#fff;
+border:0;
+border-radius:18px;
+height:58px;
+font-size:17px;
+font-weight:600;
 }
 
 .full{
-  width:100%;
-  margin-top:12px;
-}
-
-.inputs{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.inputs input{
-  width:100%;
-  height:60px;
-  background:#171717;
-  color:#fff;
-  border:1px solid #292929;
-  border-radius:17px;
-  text-align:center;
-  font-size:22px;
-  outline:none;
-}
-
-.label{
-  text-align:center;
-  font-size:11px;
-  color:#777;
-  margin-top:5px;
-}
-
-.lap-row{
-  padding:13px 5px;
-  border-bottom:1px solid #222;
-  display:flex;
-  justify-content:space-between;
-  color:#aaa;
+width:100%;
+margin-top:12px;
 }
 
 /* =========================
-   NAVIGATION
+   NOUVEAU MINUTEUR
+========================= */
+
+.timer-display{
+text-align:center;
+font-size:64px;
+font-weight:200;
+letter-spacing:-3px;
+font-variant-numeric:tabular-nums;
+margin-top:35px;
+margin-bottom:25px;
+}
+
+/* Roulettes */
+
+.timer-picker{
+height:230px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+position:relative;
+overflow:hidden;
+border-radius:25px;
+background:#101010;
+}
+
+.timer-picker::after{
+content:"";
+position:absolute;
+left:8px;
+right:8px;
+top:50%;
+height:64px;
+transform:translateY(-50%);
+border-top:1px solid #333;
+border-bottom:1px solid #333;
+border-radius:15px;
+pointer-events:none;
+}
+
+.timer-column{
+height:230px;
+overflow-y:auto;
+scroll-snap-type:y mandatory;
+scrollbar-width:none;
+-webkit-overflow-scrolling:touch;
+padding-top:83px;
+padding-bottom:83px;
+}
+
+.timer-column::-webkit-scrollbar{
+display:none;
+}
+
+.timer-value{
+height:64px;
+display:flex;
+align-items:center;
+justify-content:center;
+scroll-snap-align:center;
+font-size:30px;
+font-weight:300;
+color:#555;
+transition:.15s;
+user-select:none;
+}
+
+.timer-value.selected{
+color:#fff;
+font-size:34px;
+font-weight:400;
+}
+
+.timer-labels{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+text-align:center;
+margin-top:8px;
+color:#666;
+font-size:12px;
+}
+
+.timer-buttons{
+margin-top:30px;
+}
+
+/* =========================
+   NAV
 ========================= */
 
 nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  width:100%;
-  max-width:520px;
-  height:82px;
-  margin:auto;
-  background:#111;
-  border-top:1px solid #222;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  z-index:9999;
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:100%;
+max-width:520px;
+height:82px;
+background:#111;
+border-top:1px solid #222;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+z-index:50;
 }
 
 nav button{
-  appearance:none;
-  -webkit-appearance:none;
-  background:none;
-  border:0;
-  outline:none;
-  color:#777;
-  font-size:11px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-  min-width:0;
-  padding:0;
+background:none;
+border:0;
+color:#777;
+font-size:11px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:5px;
 }
 
 nav button.active{
-  color:#32d47a;
+color:#32d47a;
 }
 
 .icon{
-  font-size:25px;
-  line-height:1;
+font-size:25px;
 }
 
 /* =========================
@@ -319,66 +339,66 @@ nav button.active{
 ========================= */
 
 .modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:none;
-  align-items:flex-end;
-  z-index:10000;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+display:none;
+align-items:flex-end;
+z-index:100;
 }
 
 .modal.show{
-  display:flex;
+display:flex;
 }
 
 .modal-box{
-  width:100%;
-  max-width:520px;
-  margin:auto;
-  background:#171717;
-  border-radius:28px 28px 0 0;
-  padding:25px 20px 35px;
+width:100%;
+max-width:520px;
+margin:auto;
+background:#171717;
+border-radius:28px 28px 0 0;
+padding:25px 20px 35px;
 }
 
 .modal-box h2{
-  margin:0 0 20px;
+margin:0 0 20px;
 }
 
 .modal-box input[type=time]{
-  width:100%;
-  height:75px;
-  background:#222;
-  color:#fff;
-  border:1px solid #333;
-  border-radius:18px;
-  font-size:40px;
-  text-align:center;
-  color-scheme:dark;
+width:100%;
+height:75px;
+background:#222;
+color:#fff;
+border:1px solid #333;
+border-radius:18px;
+font-size:40px;
+text-align:center;
+color-scheme:dark;
 }
 
 .modal-box input[type=text]{
-  width:100%;
-  height:52px;
-  margin-top:12px;
-  background:#222;
-  color:#fff;
-  border:1px solid #333;
-  border-radius:15px;
-  padding:0 14px;
-  outline:none;
+width:100%;
+height:52px;
+margin-top:12px;
+background:#222;
+color:#fff;
+border:1px solid #333;
+border-radius:15px;
+padding:0 14px;
+outline:none;
 }
 
 .modal-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:18px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:18px;
 }
 
 .empty{
-  text-align:center;
-  color:#666;
-  padding:60px 20px;
+text-align:center;
+color:#666;
+padding:60px 20px;
 }
 </style>
 </head>
@@ -388,8 +408,8 @@ nav button.active{
 <div class="app">
 
 <header>
-  <h1 id="title">Réveils</h1>
-  <div class="subtitle" id="subtitle">Vos alarmes</div>
+<h1 id="title">Réveils</h1>
+<div class="subtitle" id="subtitle">Vos alarmes</div>
 </header>
 
 <!-- =========================
@@ -398,13 +418,13 @@ nav button.active{
 
 <section id="alarms" class="page active">
 
-  <div id="alarmList"></div>
+<div id="alarmList"></div>
 
-  <button id="addAlarmButton" class="add" type="button">+</button>
+<button class="add" onclick="openAlarm()">+</button>
 
-  <div style="text-align:center;color:#777">
-    Ajouter un réveil
-  </div>
+<div style="text-align:center;color:#777">
+Ajouter un réveil
+</div>
 
 </section>
 
@@ -414,15 +434,15 @@ nav button.active{
 
 <section id="clock" class="page">
 
-  <div class="clock">
+<div class="clock">
 
-    <div id="clockTime" class="clock-time">
-      00:00:00
-    </div>
+<div id="clockTime" class="clock-time">
+00:00:00
+</div>
 
-    <div id="clockDate" class="clock-date"></div>
+<div id="clockDate" class="clock-date"></div>
 
-  </div>
+</div>
 
 </section>
 
@@ -432,27 +452,27 @@ nav button.active{
 
 <section id="chrono" class="page">
 
-  <div id="chronoDisplay" class="big-number">
-    00:00.00
-  </div>
+<div id="chronoDisplay" class="big-number">
+00:00.00
+</div>
 
-  <div class="buttons">
+<div class="buttons">
 
-    <button id="lapButton" class="dark" type="button">
-      Tour
-    </button>
+<button class="dark" onclick="lap()">
+Tour
+</button>
 
-    <button id="chronoStart" class="green" type="button">
-      Démarrer
-    </button>
+<button id="chronoStart" class="green" onclick="startChrono()">
+Démarrer
+</button>
 
-  </div>
+</div>
 
-  <button id="chronoReset" class="dark full" type="button">
-    Réinitialiser
-  </button>
+<button class="dark full" onclick="resetChrono()">
+Réinitialiser
+</button>
 
-  <div id="laps"></div>
+<div id="laps"></div>
 
 </section>
 
@@ -462,64 +482,87 @@ nav button.active{
 
 <section id="timer" class="page">
 
-  <div id="timerDisplay" class="big-number">
-    00:05:00
-  </div>
+<div id="timerDisplay" class="timer-display">
+00:05:00
+</div>
 
-  <div class="inputs">
+<div class="timer-picker">
 
-    <div>
-      <input id="hours" type="number" min="0" value="0">
-      <div class="label">HEURES</div>
-    </div>
+<div id="hoursPicker" class="timer-column"></div>
 
-    <div>
-      <input id="minutes" type="number" min="0" max="59" value="5">
-      <div class="label">MINUTES</div>
-    </div>
+<div id="minutesPicker" class="timer-column"></div>
 
-    <div>
-      <input id="seconds" type="number" min="0" max="59" value="0">
-      <div class="label">SECONDES</div>
-    </div>
+<div id="secondsPicker" class="timer-column"></div>
 
-  </div>
+</div>
 
-  <button id="timerStart" class="green full" type="button">
-    Démarrer
-  </button>
+<div class="timer-labels">
+<div>HEURES</div>
+<div>MINUTES</div>
+<div>SECONDES</div>
+</div>
 
-  <button id="timerReset" class="dark full" type="button">
-    Réinitialiser
-  </button>
+<div class="timer-buttons">
+
+<button
+id="timerStart"
+class="green full"
+onclick="startTimer()">
+Démarrer
+</button>
+
+<button
+class="dark full"
+onclick="resetTimer()">
+Réinitialiser
+</button>
+
+</div>
 
 </section>
 
 <!-- =========================
-     NAV
+     NAVIGATION
 ========================= -->
 
 <nav>
 
-  <button id="navAlarms" class="active" data-page="alarms" type="button">
-    <span class="icon">⏰</span>
-    Réveils
-  </button>
+<button
+id="navAlarms"
+class="active"
+onclick="page('alarms')">
 
-  <button id="navClock" data-page="clock" type="button">
-    <span class="icon">🕐</span>
-    Horloge
-  </button>
+<span class="icon">⏰</span>
+Réveils
 
-  <button id="navChrono" data-page="chrono" type="button">
-    <span class="icon">⏱️</span>
-    Chrono
-  </button>
+</button>
 
-  <button id="navTimer" data-page="timer" type="button">
-    <span class="icon">⌛</span>
-    Minuteur
-  </button>
+<button
+id="navClock"
+onclick="page('clock')">
+
+<span class="icon">🕐</span>
+Horloge
+
+</button>
+
+<button
+id="navChrono"
+onclick="page('chrono')">
+
+<span class="icon">⏱️</span>
+Chrono
+
+</button>
+
+<button
+id="navTimer"
+onclick="page('timer')">
+
+<span class="icon">⌛</span>
+Minuteur
+
+</button>
 
 </nav>
 
@@ -531,755 +574,999 @@ nav button.active{
 
 <div id="modal" class="modal">
 
-  <div class="modal-box">
+<div class="modal-box">
 
-    <h2>Nouveau réveil</h2>
+<h2>Nouveau réveil</h2>
 
-    <input
-      id="alarmTime"
-      type="time"
-      value="07:00"
-    >
+<input
+id="alarmTime"
+type="time"
+value="07:00">
 
-    <input
-      id="youtube"
-      type="text"
-      placeholder="Lien YouTube de la musique (facultatif)"
-    >
+<input
+id="youtube"
+type="text"
+placeholder="Lien YouTube de la musique (facultatif)"
+>
 
-    <div class="modal-buttons">
+<div class="modal-buttons">
 
-      <button id="closeAlarmButton" class="dark" type="button">
-        Annuler
-      </button>
+<button
+class="dark"
+onclick="closeAlarm()">
+Annuler
+</button>
 
-      <button id="createAlarmButton" class="green" type="button">
-        Ajouter
-      </button>
-
-    </div>
-
-  </div>
+<button
+class="green"
+onclick="createAlarm()">
+Ajouter
+</button>
 
 </div>
 
+</div>
+</div>
+
 <script>
-"use strict";
 
-/* =====================================================
-   DONNEES DES PAGES
-===================================================== */
+/* =========================
+   NAVIGATION
+========================= */
 
-const pageNames = {
-  alarms:["Réveils","Vos alarmes"],
-  clock:["Horloge","Heure locale"],
-  chrono:["Chronomètre","Mesure du temps"],
-  timer:["Minuteur","Compte à rebours"]
+const pageNames={
+alarms:["Réveils","Vos alarmes"],
+clock:["Horloge","Heure locale"],
+chrono:["Chronomètre","Mesure du temps"],
+timer:["Minuteur","Compte à rebours"]
 };
 
+function page(name){
 
-/* =====================================================
-   NAVIGATION
-   Aucun onclick ici : les boutons sont gérés par JS.
-===================================================== */
+document.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("active"));
 
-function showPage(name){
+const selectedPage=document.getElementById(name);
 
-  if(!pageNames[name]){
-    return;
-  }
+if(!selectedPage)return;
 
-  const pages = document.querySelectorAll(".page");
+selectedPage.classList.add("active");
 
-  pages.forEach(function(section){
-    section.classList.remove("active");
-  });
+document.querySelectorAll("nav button")
+.forEach(x=>x.classList.remove("active"));
 
-  const selectedPage = document.getElementById(name);
+const navButton=document.getElementById(
+"nav"+name.charAt(0).toUpperCase()+name.slice(1)
+);
 
-  if(selectedPage){
-    selectedPage.classList.add("active");
-  }
+if(navButton){
+navButton.classList.add("active");
+}
 
-  const navButtons = document.querySelectorAll("nav button");
+document.getElementById("title").textContent=
+pageNames[name][0];
 
-  navButtons.forEach(function(button){
-    button.classList.remove("active");
-  });
+document.getElementById("subtitle").textContent=
+pageNames[name][1];
 
-  const selectedButton =
-    document.querySelector('nav button[data-page="' + name + '"]');
-
-  if(selectedButton){
-    selectedButton.classList.add("active");
-  }
-
-  document.getElementById("title").textContent =
-    pageNames[name][0];
-
-  document.getElementById("subtitle").textContent =
-    pageNames[name][1];
-
-  try{
-    localStorage.setItem("lastPage",name);
-  }catch(e){}
+localStorage.setItem("lastPage",name);
 }
 
 
-/* =====================================================
-   BRANCHEMENT DES BOUTONS DE NAVIGATION
-===================================================== */
+/* =========================
+   HORLOGE
+========================= */
 
-document.querySelectorAll("nav button[data-page]")
-.forEach(function(button){
+function clock(){
 
-  button.addEventListener("click",function(event){
+const d=new Date();
 
-    event.preventDefault();
-    event.stopPropagation();
+document.getElementById("clockTime")
+.textContent=
+String(d.getHours()).padStart(2,"0")+":"+
+String(d.getMinutes()).padStart(2,"0")+":"+
+String(d.getSeconds()).padStart(2,"0");
 
-    const name = button.getAttribute("data-page");
-
-    showPage(name);
-
-  });
-
+let date=d.toLocaleDateString("fr-FR",{
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
 });
 
-
-/* =====================================================
-   HORLOGE
-===================================================== */
-
-function updateClock(){
-
-  const d = new Date();
-
-  const time =
-    String(d.getHours()).padStart(2,"0") + ":" +
-    String(d.getMinutes()).padStart(2,"0") + ":" +
-    String(d.getSeconds()).padStart(2,"0");
-
-  document.getElementById("clockTime").textContent = time;
-
-  let date = d.toLocaleDateString("fr-FR",{
-    weekday:"long",
-    day:"numeric",
-    month:"long",
-    year:"numeric"
-  });
-
-  date =
-    date.charAt(0).toUpperCase() +
-    date.slice(1);
-
-  document.getElementById("clockDate").textContent = date;
+document.getElementById("clockDate")
+.textContent=
+date.charAt(0).toUpperCase()+date.slice(1);
 }
 
-updateClock();
+setInterval(clock,1000);
+clock();
 
-setInterval(updateClock,1000);
 
+/* =========================
+   REVEILS SAUVEGARDES
+========================= */
 
-/* =====================================================
-   REVEILS
-===================================================== */
-
-let alarms = [];
+let alarms=[];
 
 try{
 
-  alarms =
-    JSON.parse(
-      localStorage.getItem("myAlarms") || "[]"
-    );
-
-  if(!Array.isArray(alarms)){
-    alarms=[];
-  }
+alarms=JSON.parse(
+localStorage.getItem("myAlarms")||"[]"
+);
 
 }catch(e){
 
-  alarms=[];
+alarms=[];
 
 }
-
 
 function saveAlarms(){
 
-  try{
-    localStorage.setItem(
-      "myAlarms",
-      JSON.stringify(alarms)
-    );
-  }catch(e){}
+localStorage.setItem(
+"myAlarms",
+JSON.stringify(alarms)
+);
 
 }
-
 
 function openAlarm(){
 
-  if(
-    "Notification" in window &&
-    Notification.permission === "default"
-  ){
+if("Notification" in window &&
+Notification.permission==="default"){
 
-    Notification.requestPermission().catch(function(){});
+Notification.requestPermission();
 
-  }
-
-  document.getElementById("modal")
-    .classList.add("show");
 }
 
+document.getElementById("modal")
+.classList.add("show");
+
+}
 
 function closeAlarm(){
 
-  document.getElementById("modal")
-    .classList.remove("show");
+document.getElementById("modal")
+.classList.remove("show");
 
 }
-
 
 function createAlarm(){
 
-  const time =
-    document.getElementById("alarmTime").value;
+const time=
+document.getElementById("alarmTime").value;
 
-  const youtube =
-    document.getElementById("youtube").value.trim();
+const youtube=
+document.getElementById("youtube").value.trim();
 
-  if(!time){
-    return;
-  }
+if(!time)return;
 
-  alarms.push({
-    id:Date.now(),
-    time:time,
-    enabled:true,
-    youtube:youtube,
-    lastRing:""
-  });
+alarms.push({
 
-  saveAlarms();
+id:Date.now(),
+time:time,
+enabled:true,
+youtube:youtube,
+lastRing:""
 
-  renderAlarms();
+});
 
-  document.getElementById("youtube").value="";
+saveAlarms();
+renderAlarms();
 
-  closeAlarm();
+document.getElementById("youtube").value="";
+
+closeAlarm();
 
 }
-
 
 function removeAlarm(id){
 
-  alarms =
-    alarms.filter(function(alarm){
-      return alarm.id !== id;
-    });
+alarms=alarms.filter(a=>a.id!==id);
 
-  saveAlarms();
-
-  renderAlarms();
+saveAlarms();
+renderAlarms();
 
 }
-
 
 function switchAlarm(id){
 
-  const alarm =
-    alarms.find(function(a){
-      return a.id === id;
-    });
+const a=alarms.find(x=>x.id===id);
 
-  if(!alarm){
-    return;
-  }
+if(!a)return;
 
-  alarm.enabled = !alarm.enabled;
+a.enabled=!a.enabled;
 
-  saveAlarms();
-
-  renderAlarms();
+saveAlarms();
+renderAlarms();
 
 }
 
-
 function renderAlarms(){
 
-  const box =
-    document.getElementById("alarmList");
+const box=document.getElementById("alarmList");
 
-  box.innerHTML="";
+box.innerHTML="";
 
-  if(alarms.length===0){
+if(alarms.length===0){
 
-    box.innerHTML = `
-      <div class="empty">
-        Aucun réveil<br><br>
-        Appuie sur + pour créer ton premier réveil.
-      </div>
-    `;
+box.innerHTML=`
+<div class="empty">
+Aucun réveil<br><br>
+Appuie sur + pour créer ton premier réveil.
+</div>`;
 
-    return;
-  }
+return;
 
-  alarms.sort(function(a,b){
-    return a.time.localeCompare(b.time);
-  });
+}
 
-  alarms.forEach(function(a){
+alarms.sort((a,b)=>
+a.time.localeCompare(b.time)
+);
 
-    const div =
-      document.createElement("div");
+alarms.forEach(a=>{
 
-    div.className="alarm";
+const div=document.createElement("div");
 
-    const top =
-      document.createElement("div");
+div.className="alarm";
 
-    top.className="alarm-top";
+div.innerHTML=`
 
-    const info =
-      document.createElement("div");
+<div class="alarm-top">
 
-    const time =
-      document.createElement("div");
+<div>
 
-    time.className="alarm-time";
-    time.textContent=a.time;
+<div class="alarm-time">
+${a.time}
+</div>
 
-    const name =
-      document.createElement("div");
+<div class="alarm-name">
 
-    name.className="alarm-name";
+${a.enabled?
+"Réveil activé":
+"Réveil désactivé"}
 
-    name.textContent =
-      a.enabled
-      ? "Réveil activé"
-      : "Réveil désactivé";
+${a.youtube?
+" · 🎵 Musique":
+""}
 
-    if(a.youtube){
-      name.textContent += " · 🎵 Musique";
-    }
+</div>
 
-    info.appendChild(time);
-    info.appendChild(name);
+</div>
 
-    const label =
-      document.createElement("label");
+<label class="switch">
 
-    label.className="switch";
+<input
+type="checkbox"
+${a.enabled?"checked":""}
+onchange="switchAlarm(${a.id})">
 
-    const checkbox =
-      document.createElement("input");
+<span class="slider"></span>
 
-    checkbox.type="checkbox";
-    checkbox.checked=!!a.enabled;
+</label>
 
-    checkbox.addEventListener("change",function(){
-      switchAlarm(a.id);
-    });
+</div>
 
-    const slider =
-      document.createElement("span");
+<div class="alarm-actions">
 
-    slider.className="slider";
+${a.youtube?
+`<button
+class="dark"
+style="height:40px;padding:0 15px"
+onclick="openMusic('${a.youtube.replace(/'/g,"\\'")}')">
 
-    label.appendChild(checkbox);
-    label.appendChild(slider);
+🎵 Tester la musique
 
-    top.appendChild(info);
-    top.appendChild(label);
+</button>`:
+""}
 
-    const actions =
-      document.createElement("div");
+<button
+class="delete"
+onclick="removeAlarm(${a.id})">
 
-    actions.className="alarm-actions";
+Supprimer
 
-    if(a.youtube){
+</button>
 
-      const music =
-        document.createElement("button");
+</div>
 
-      music.className="dark";
-      music.type="button";
-      music.style.height="40px";
-      music.style.padding="0 15px";
-      music.textContent="🎵 Tester la musique";
+`;
 
-      music.addEventListener("click",function(){
-        openMusic(a.youtube);
-      });
+box.appendChild(div);
 
-      actions.appendChild(music);
-    }
-
-    const deleteButton =
-      document.createElement("button");
-
-    deleteButton.className="delete";
-    deleteButton.type="button";
-    deleteButton.textContent="Supprimer";
-
-    deleteButton.addEventListener("click",function(){
-      removeAlarm(a.id);
-    });
-
-    actions.appendChild(deleteButton);
-
-    div.appendChild(top);
-    div.appendChild(actions);
-
-    box.appendChild(div);
-
-  });
+});
 
 }
 
 renderAlarms();
 
 
-/* =====================================================
+/* =========================
    SON
-===================================================== */
+========================= */
 
 let audioCtx=null;
 
 function ring(){
 
-  try{
+try{
 
-    audioCtx =
-      audioCtx ||
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
+audioCtx=
+audioCtx||
+new (
+window.AudioContext||
+window.webkitAudioContext
+)();
 
-    if(audioCtx.state==="suspended"){
-      audioCtx.resume();
-    }
+const now=audioCtx.currentTime;
 
-    const now =
-      audioCtx.currentTime;
+for(let i=0;i<6;i++){
 
-    for(let i=0;i<6;i++){
+const osc=
+audioCtx.createOscillator();
 
-      const osc =
-        audioCtx.createOscillator();
+const gain=
+audioCtx.createGain();
 
-      const gain =
-        audioCtx.createGain();
+osc.frequency.value=
+i%2===0?880:660;
 
-      osc.frequency.value =
-        i%2===0 ? 880 : 660;
+osc.type="sine";
 
-      osc.type="sine";
+gain.gain.setValueAtTime(
+.001,
+now+i*.35
+);
 
-      gain.gain.setValueAtTime(
-        .001,
-        now+i*.35
-      );
+gain.gain.exponentialRampToValueAtTime(
+.45,
+now+i*.35+.03
+);
 
-      gain.gain.exponentialRampToValueAtTime(
-        .45,
-        now+i*.35+.03
-      );
+gain.gain.exponentialRampToValueAtTime(
+.001,
+now+i*.35+.3
+);
 
-      gain.gain.exponentialRampToValueAtTime(
-        .001,
-        now+i*.35+.3
-      );
+osc.connect(gain);
+gain.connect(audioCtx.destination);
 
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
+osc.start(now+i*.35);
+osc.stop(now+i*.35+.32);
 
-      osc.start(now+i*.35);
-      osc.stop(now+i*.35+.32);
-    }
+}
 
-  }catch(e){}
+}catch(e){}
 
-  if(navigator.vibrate){
+if(navigator.vibrate){
 
-    navigator.vibrate([
-      500,300,
-      500,300,
-      700,300,
-      500
-    ]);
+navigator.vibrate([
+500,300,500,300,700,
+300,500
+]);
 
-  }
+}
 
 }
 
 
-/* =====================================================
-   NOTIFICATIONS
-===================================================== */
+/* =========================
+   NOTIFICATION
+========================= */
 
 function notify(title,text){
 
-  if(
-    "Notification" in window &&
-    Notification.permission==="granted"
-  ){
+if("Notification" in window &&
+Notification.permission==="granted"){
 
-    try{
+try{
 
-      new Notification(title,{
-        body:text,
-        tag:"horloge-"+Date.now(),
-        requireInteraction:true
-      });
+new Notification(title,{
 
-    }catch(e){}
+body:text,
+tag:"horloge-"+Date.now(),
+requireInteraction:true
 
-  }
+});
+
+}catch(e){}
+
+}
 
 }
 
 
-/* =====================================================
+/* =========================
    YOUTUBE
-===================================================== */
+========================= */
 
 function getYoutubeId(url){
 
-  try{
+try{
 
-    const u =
-      new URL(url);
+const u=new URL(url);
 
-    if(
-      u.hostname.includes("youtu.be")
-    ){
+if(u.hostname.includes("youtu.be"))
+return u.pathname.substring(1);
 
-      return u.pathname.substring(1);
+if(u.hostname.includes("youtube.com"))
+return u.searchParams.get("v");
 
-    }
+}catch(e){}
 
-    if(
-      u.hostname.includes("youtube.com")
-    ){
+return null;
 
-      return u.searchParams.get("v");
-
-    }
-
-  }catch(e){}
-
-  return null;
 }
-
 
 function openMusic(url){
 
-  const id =
-    getYoutubeId(url);
+const id=getYoutubeId(url);
 
-  if(id){
+if(id){
 
-    window.open(
-      "https://www.youtube.com/watch?v="+id,
-      "_blank"
-    );
+window.open(
+"https://www.youtube.com/watch?v="+id,
+"_blank"
+);
 
-  }
+}
 
 }
 
 
-/* =====================================================
+/* =========================
    VERIFICATION REVEILS
-===================================================== */
+========================= */
 
-function checkAlarms(){
+setInterval(()=>{
 
-  const now = new Date();
+const now=new Date();
 
-  const current =
-    String(now.getHours()).padStart(2,"0") +
-    ":" +
-    String(now.getMinutes()).padStart(2,"0");
+const hh=
+String(now.getHours()).padStart(2,"0");
 
-  alarms.forEach(function(a){
+const mm=
+String(now.getMinutes()).padStart(2,"0");
 
-    if(
-      a.enabled &&
-      a.time===current &&
-      a.lastRing!==current
-    ){
+const current=hh+":"+mm;
 
-      a.lastRing=current;
+alarms.forEach(a=>{
 
-      saveAlarms();
+if(
+a.enabled &&
+a.time===current &&
+a.lastRing!==current
+){
 
-      ring();
+a.lastRing=current;
 
-      notify(
-        "⏰ Réveil",
-        "Il est "+current
-      );
+saveAlarms();
 
-      if(a.youtube){
+ring();
 
-        setTimeout(function(){
-          openMusic(a.youtube);
-        },1000);
+notify(
+"⏰ Réveil",
+"Il est "+current
+);
 
-      }
+if(a.youtube){
 
-    }
+setTimeout(()=>{
 
-  });
+openMusic(a.youtube);
+
+},1000);
 
 }
 
-setInterval(checkAlarms,1000);
+}
+
+});
+
+},1000);
 
 
-/* =====================================================
+/* =========================
    CHRONOMETRE
-===================================================== */
+========================= */
 
 let chronoRunning=false;
 let chronoStartTime=0;
 let chronoElapsed=0;
 let chronoInterval=null;
 
-
 function chronoFormat(ms){
 
-  const m =
-    Math.floor(ms/60000);
+const m=Math.floor(ms/60000);
 
-  const s =
-    Math.floor((ms%60000)/1000);
+const s=Math.floor(
+(ms%60000)/1000
+);
 
-  const c =
-    Math.floor((ms%1000)/10);
+const c=Math.floor(
+(ms%1000)/10
+);
 
-  return (
-    String(m).padStart(2,"0") +
-    ":" +
-    String(s).padStart(2,"0") +
-    "." +
-    String(c).padStart(2,"0")
-  );
-
-}
-
-
-function saveChrono(){
-
-  try{
-
-    let elapsed=chronoElapsed;
-
-    if(chronoRunning){
-      elapsed +=
-        Date.now()-chronoStartTime;
-    }
-
-    localStorage.setItem(
-      "chronoState",
-      JSON.stringify({
-        running:chronoRunning,
-        elapsed:elapsed,
-        start:chronoStartTime
-      })
-    );
-
-  }catch(e){}
+return(
+String(m).padStart(2,"0")+":"+
+String(s).padStart(2,"0")+"."+
+String(c).padStart(2,"0")
+);
 
 }
-
 
 function updateChrono(){
 
-  let value =
-    chronoElapsed;
+let value=chronoElapsed;
 
-  if(chronoRunning){
+if(chronoRunning)
+value+=Date.now()-chronoStartTime;
 
-    value +=
-      Date.now()-chronoStartTime;
+document.getElementById(
+"chronoDisplay"
+).textContent=
+chronoFormat(value);
 
-  }
+localStorage.setItem(
+"chronoElapsed",
+value
+);
 
-  document.getElementById(
-    "chronoDisplay"
-  ).textContent =
-    chronoFormat(value);
+localStorage.setItem(
+"chronoRunning",
+chronoRunning
+);
 
-  saveChrono();
+if(chronoRunning){
+
+localStorage.setItem(
+"chronoStart",
+chronoStartTime
+);
 
 }
 
+}
 
 function startChrono(){
 
-  if(!chronoRunning){
+if(!chronoRunning){
 
-    chronoStartTime =
-      Date.now();
+chronoStartTime=Date.now();
 
-    chronoRunning=true;
+chronoRunning=true;
 
-    document.getElementById(
-      "chronoStart"
-    ).textContent="Pause";
+document.getElementById(
+"chronoStart"
+).textContent="Pause";
 
-    clearInterval(chronoInterval);
+}else{
 
-    chronoInterval =
-      setInterval(updateChrono,30);
+chronoElapsed+=
+Date.now()-chronoStartTime;
 
-  }else{
+chronoRunning=false;
 
-    chronoElapsed +=
-      Date.now()-chronoStartTime;
+document.getElementById(
+"chronoStart"
+).textContent="Démarrer";
 
-    chronoRunning=false;
+}
 
-    clearInterval(chronoInterval);
+clearInterval(chronoInterval);
 
-    document.getElementById(
-      "chronoStart"
-    ).textContent="Démarrer";
+if(chronoRunning){
 
-  }
+chronoInterval=
+setInterval(updateChrono,30);
 
-  updateChrono();
+}
+
+updateChrono();
+
+}
+
+function lap(){
+
+if(!chronoRunning)return;
+
+const value=
+chronoElapsed+
+Date.now()-chronoStartTime;
+
+const div=
+document.createElement("div");
+
+div.style.cssText=
+"padding:13px 5px;border-bottom:1px solid #222;display:flex;justify-content:space-between;color:#aaa";
+
+div.innerHTML=
+"<span>Tour</span><span>"+
+chronoFormat(value)+
+"</span>";
+
+document.getElementById("laps")
+.prepend(div);
+
+}
+
+function resetChrono(){
+
+clearInterval(chronoInterval);
+
+chronoRunning=false;
+chronoElapsed=0;
+
+document.getElementById(
+"chronoDisplay"
+).textContent="00:00.00";
+
+document.getElementById(
+"chronoStart"
+).textContent="Démarrer";
+
+document.getElementById(
+"laps"
+).innerHTML="";
+
+localStorage.removeItem("chronoElapsed");
+localStorage.removeItem("chronoRunning");
+localStorage.removeItem("chronoStart");
 
 }
 
 
-function lap(){
+/* =========================
+   MINUTEUR
+   ROULETTES
+========================= */
 
-  if(!chronoRunning){
-    return;
-  }
+let selectedHours=0;
+let selectedMinutes=5;
+let selectedSeconds=0;
 
-  const value =
-    chronoElapsed +
-    Date.now()-chronoStartTime;
+function createPicker(id,max){
 
-  const div =
-    document.createElement("div");
+const picker=
+document.getElementById(id);
 
-  div.className="lap-row";
+picker.innerHTML="";
 
-  const left =
-    document.createElement("span");
+for(let i=0;i<=max;i++){
 
-  left.textContent="Tour";
+const item=
+document.createElement("div");
 
-  const right =
-    document.createElement("span");
+item.className="timer-value";
 
-  right.textContent =
-    chronoFo
+item.dataset.value=i;
+
+item.textContent=
+String(i).padStart(2,"0");
+
+picker.appendChild(item);
+
+}
+
+picker.addEventListener(
+"scroll",
+()=>{
+updatePicker(id);
+},
+{passive:true}
+);
+
+}
+
+function updatePicker(id){
+
+const picker=
+document.getElementById(id);
+
+const items=
+picker.querySelectorAll(".timer-value");
+
+const center=
+picker.scrollTop+
+picker.clientHeight/2;
+
+let closest=null;
+let distance=Infinity;
+
+items.forEach(item=>{
+
+const itemCenter=
+item.offsetTop+
+item.offsetHeight/2;
+
+const d=
+Math.abs(itemCenter-center);
+
+if(d<distance){
+
+distance=d;
+closest=item;
+
+}
+
+});
+
+items.forEach(item=>
+item.classList.remove("selected")
+);
+
+if(closest){
+
+closest.classList.add("selected");
+
+const value=
+Number(closest.dataset.value);
+
+if(id==="hoursPicker")
+selectedHours=value;
+
+if(id==="minutesPicker")
+selectedMinutes=value;
+
+if(id==="secondsPicker")
+selectedSeconds=value;
+
+updateTimerDisplay();
+
+saveTimerSelection();
+
+}
+
+}
+
+function scrollToValue(id,value){
+
+const picker=
+document.getElementById(id);
+
+const item=
+picker.querySelector(
+'.timer-value[data-value="'+value+'"]'
+);
+
+if(item){
+
+picker.scrollTop=
+item.offsetTop-
+picker.clientHeight/2+
+item.offsetHeight/2;
+
+}
+
+}
+
+function updateTimerDisplay(){
+
+const total=
+selectedHours*3600+
+selectedMinutes*60+
+selectedSeconds;
+
+if(!timerRunning){
+
+timerRemaining=total;
+
+}
+
+document.getElementById(
+"timerDisplay"
+).textContent=
+timerFormat(
+timerRunning?
+timerRemaining:
+total
+);
+
+}
+
+function saveTimerSelection(){
+
+localStorage.setItem(
+"timerSelection",
+JSON.stringify({
+
+hours:selectedHours,
+minutes:selectedMinutes,
+seconds:selectedSeconds
+
+})
+);
+
+}
+
+function loadTimerSelection(){
+
+try{
+
+const data=
+JSON.parse(
+localStorage.getItem("timerSelection")
+);
+
+if(data){
+
+selectedHours=
+Number(data.hours)||0;
+
+selectedMinutes=
+Number(data.minutes)||0;
+
+selectedSeconds=
+Number(data.seconds)||0;
+
+}
+
+}catch(e){}
+
+createPicker("hoursPicker",23);
+createPicker("minutesPicker",59);
+createPicker("secondsPicker",59);
+
+setTimeout(()=>{
+
+scrollToValue(
+"hoursPicker",
+selectedHours
+);
+
+scrollToValue(
+"minutesPicker",
+selectedMinutes
+);
+
+scrollToValue(
+"secondsPicker",
+selectedSeconds
+);
+
+updatePicker("hoursPicker");
+updatePicker("minutesPicker");
+updatePicker("secondsPicker");
+
+},50);
+
+}
+
+loadTimerSelection();
+
+
+/* =========================
+   MINUTEUR AVEC SAUVEGARDE
+========================= */
+
+let timerRunning=false;
+let timerEnd=0;
+let timerRemaining=
+selectedHours*3600+
+selectedMinutes*60+
+selectedSeconds;
+
+let timerInterval=null;
+
+function timerFormat(s){
+
+const h=Math.floor(s/3600);
+
+const m=Math.floor(
+(s%3600)/60
+);
+
+const sec=s%60;
+
+return(
+String(h).padStart(2,"0")+":"+
+String(m).padStart(2,"0")+":"+
+String(sec).padStart(2,"0")
+);
+
+}
+
+function saveTimer(){
+
+localStorage.setItem(
+"timerState",
+JSON.stringify({
+
+running:timerRunning,
+end:timerEnd,
+remaining:timerRemaining
+
+})
+);
+
+}
+
+function updateTimer(){
+
+if(timerRunning){
+
+timerRemaining=Math.max(
+0,
+Math.ceil(
+(timerEnd-Date.now())/1000
+)
+);
+
+}
+
+document.getElementById(
+"timerDisplay"
+).textContent=
+timerFormat(timerRemaining);
+
+saveTimer();
+
+}
+
+function startTimer(){
+
+if(timerRunning){
+
+timerRemaining=Math.max(
+0,
+Math.ceil(
+(timerEnd-Date.now())/1000
+)
+);
+
+timerRunning=false;
+
+clearInterval(timerInterval);
+
+document.getElementById(
+"timerStart"
+).textContent="Reprendre";
+
+saveTimer();
+
+return;
+
+}
+
+if(timerRemaining<=0){
+
+timerRemaining=
+selectedHours*3600+
+selectedMinutes*60+
+selectedSeconds;
+
+}
+
+if(timerRemaining<=0)return;
+
+timerEnd=
+Date.now()+
+timerRemaining*1000;
+
+timerRunning=true;
+
+document.getElementById(
+"timerStart"
+).textContent="Pause";
+
+clearInterval(timerInterval);
+
+timerInterval=
+setInterval(()=>{
+
+updateTimer();
+
+if(timerRemaining<=0){
+
+clearInterval(timerInterval);
+
+timerRunning=false;
+
+document.getElementById(
+"timerStart"
+).textContent="Démarrer";
+
+ring();
+
+notify(
+  
