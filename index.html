@@ -8,73 +8,59 @@
 
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#000;color:#fff}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-button,input{font:inherit}
-button{cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-
+body{
+margin:0;
+background:#000;
+color:#fff;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
 .app{
 max-width:520px;
 min-height:100vh;
 margin:auto;
 padding-bottom:100px;
 }
-
 header{padding:30px 24px 15px}
 h1{font-size:34px;margin:0;font-weight:700}
 .subtitle{color:#777;margin-top:5px}
-
 .page{display:none;padding:15px 20px}
 .page.active{display:block}
 
 /* REVEILS */
-
 .alarm{
 background:#171717;
 border-radius:22px;
 padding:20px;
 margin-bottom:12px;
 }
-
 .alarm-top{
 display:flex;
 justify-content:space-between;
 align-items:center;
 }
-
 .alarm-time{
 font-size:54px;
 font-weight:300;
 letter-spacing:-2px;
 }
-
 .alarm-name{
 color:#888;
 font-size:14px;
 margin-top:2px;
 }
-
 .switch{
 width:54px;
 height:32px;
 position:relative;
 display:inline-block;
 }
-
-.switch input{
-position:absolute;
-opacity:0;
-width:0;
-height:0;
-}
-
+.switch input{display:none}
 .slider{
 position:absolute;
 inset:0;
 background:#444;
 border-radius:30px;
 }
-
 .slider:before{
 content:"";
 position:absolute;
@@ -86,31 +72,20 @@ background:#fff;
 border-radius:50%;
 transition:.2s;
 }
-
-.switch input:checked+.slider{
-background:#32d47a;
-}
-
-.switch input:checked+.slider:before{
-transform:translateX(22px);
-}
-
+.switch input:checked+.slider{background:#32d47a}
+.switch input:checked+.slider:before{transform:translateX(22px)}
 .alarm-actions{
 display:flex;
 justify-content:space-between;
 align-items:center;
 margin-top:15px;
-gap:10px;
 }
-
 .delete{
 border:0;
 background:none;
 color:#ff5555;
 font-size:14px;
-padding:10px;
 }
-
 .add{
 width:58px;
 height:58px;
@@ -123,25 +98,16 @@ display:block;
 margin:25px auto 5px;
 }
 
-.empty{
-text-align:center;
-color:#666;
-padding:60px 20px;
-}
-
 /* HORLOGE */
-
 .clock{
 text-align:center;
 padding-top:70px;
 }
-
 .clock-time{
 font-size:78px;
 font-weight:200;
 letter-spacing:-5px;
 }
-
 .clock-date{
 font-size:18px;
 color:#888;
@@ -149,7 +115,6 @@ margin-top:8px;
 }
 
 /* CHRONO / MINUTEUR */
-
 .big-number{
 font-size:68px;
 font-weight:200;
@@ -158,13 +123,16 @@ letter-spacing:-4px;
 margin:75px 0 50px;
 font-variant-numeric:tabular-nums;
 }
-
 .buttons{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:12px;
 }
-
+button{
+font-family:inherit;
+cursor:pointer;
+touch-action:manipulation;
+}
 .green{
 background:#32d47a;
 color:#001b0d;
@@ -174,7 +142,6 @@ height:58px;
 font-size:17px;
 font-weight:700;
 }
-
 .dark{
 background:#202020;
 color:#fff;
@@ -184,18 +151,15 @@ height:58px;
 font-size:17px;
 font-weight:600;
 }
-
 .full{
 width:100%;
 margin-top:12px;
 }
-
 .inputs{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:10px;
 }
-
 .inputs input{
 width:100%;
 height:60px;
@@ -207,7 +171,6 @@ text-align:center;
 font-size:22px;
 outline:none;
 }
-
 .label{
 text-align:center;
 font-size:11px;
@@ -215,16 +178,7 @@ color:#777;
 margin-top:5px;
 }
 
-.lap-row{
-padding:13px 5px;
-border-bottom:1px solid #222;
-display:flex;
-justify-content:space-between;
-color:#aaa;
-}
-
-/* NAVIGATION */
-
+/* NAV */
 nav{
 position:fixed;
 bottom:0;
@@ -239,7 +193,6 @@ display:grid;
 grid-template-columns:repeat(4,1fr);
 z-index:50;
 }
-
 nav button{
 background:none;
 border:0;
@@ -250,19 +203,11 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 gap:5px;
-padding:0;
 }
-
-nav button.active{
-color:#32d47a;
-}
-
-.icon{
-font-size:25px;
-}
+nav button.active{color:#32d47a}
+.icon{font-size:25px}
 
 /* MODAL */
-
 .modal{
 position:fixed;
 inset:0;
@@ -271,11 +216,7 @@ display:none;
 align-items:flex-end;
 z-index:100;
 }
-
-.modal.show{
-display:flex;
-}
-
+.modal.show{display:flex}
 .modal-box{
 width:100%;
 max-width:520px;
@@ -284,11 +225,7 @@ background:#171717;
 border-radius:28px 28px 0 0;
 padding:25px 20px 35px;
 }
-
-.modal-box h2{
-margin:0 0 20px;
-}
-
+.modal-box h2{margin:0 0 20px}
 .modal-box input[type=time]{
 width:100%;
 height:75px;
@@ -300,7 +237,6 @@ font-size:40px;
 text-align:center;
 color-scheme:dark;
 }
-
 .modal-box input[type=text]{
 width:100%;
 height:52px;
@@ -312,12 +248,16 @@ border-radius:15px;
 padding:0 14px;
 outline:none;
 }
-
 .modal-buttons{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
 margin-top:18px;
+}
+.empty{
+text-align:center;
+color:#666;
+padding:60px 20px;
 }
 </style>
 </head>
@@ -332,73 +272,40 @@ margin-top:18px;
 </header>
 
 <!-- REVEILS -->
-
 <section id="alarms" class="page active">
-
 <div id="alarmList"></div>
 
 <button type="button" class="add" id="addAlarmButton">+</button>
-
-<div style="text-align:center;color:#777">
-Ajouter un réveil
-</div>
-
+<div style="text-align:center;color:#777">Ajouter un réveil</div>
 </section>
-
 
 <!-- HORLOGE -->
-
 <section id="clock" class="page">
-
 <div class="clock">
-
-<div id="clockTime" class="clock-time">
-00:00:00
-</div>
-
+<div id="clockTime" class="clock-time">00:00:00</div>
 <div id="clockDate" class="clock-date"></div>
-
 </div>
-
 </section>
-
 
 <!-- CHRONO -->
-
 <section id="chrono" class="page">
 
-<div id="chronoDisplay" class="big-number">
-00:00.00
-</div>
+<div id="chronoDisplay" class="big-number">00:00.00</div>
 
 <div class="buttons">
-
-<button type="button" class="dark" id="lapButton">
-Tour
-</button>
-
-<button type="button" id="chronoStart" class="green">
-Démarrer
-</button>
-
+<button type="button" class="dark" id="lapButton">Tour</button>
+<button type="button" id="chronoStart" class="green">Démarrer</button>
 </div>
 
-<button type="button" class="dark full" id="chronoReset">
-Réinitialiser
-</button>
+<button type="button" class="dark full" id="chronoReset">Réinitialiser</button>
 
 <div id="laps"></div>
-
 </section>
 
-
 <!-- MINUTEUR -->
-
 <section id="timer" class="page">
 
-<div id="timerDisplay" class="big-number">
-00:05:00
-</div>
+<div id="timerDisplay" class="big-number">00:05:00</div>
 
 <div class="inputs">
 
@@ -419,18 +326,10 @@ Réinitialiser
 
 </div>
 
-<button type="button" id="timerStart" class="green full">
-Démarrer
-</button>
-
-<button type="button" class="dark full" id="timerReset">
-Réinitialiser
-</button>
+<button type="button" id="timerStart" class="green full">Démarrer</button>
+<button type="button" class="dark full" id="timerReset">Réinitialiser</button>
 
 </section>
-
-
-<!-- NAVIGATION -->
 
 <nav>
 
@@ -458,9 +357,7 @@ Minuteur
 
 </div>
 
-
 <!-- MODAL REVEIL -->
-
 <div id="modal" class="modal">
 
 <div class="modal-box">
@@ -476,76 +373,70 @@ placeholder="Lien YouTube de la musique (facultatif)"
 >
 
 <div class="modal-buttons">
-
-<button type="button" class="dark" id="closeAlarmButton">
-Annuler
-</button>
-
-<button type="button" class="green" id="createAlarmButton">
-Ajouter
-</button>
-
+<button type="button" class="dark" id="cancelAlarm">Annuler</button>
+<button type="button" class="green" id="createAlarmButton">Ajouter</button>
 </div>
 
 </div>
-
 </div>
-
 
 <script>
+"use strict";
+
+/* =========================
+   OUTILS
+========================= */
+
+const $ = id => document.getElementById(id);
+
+const pageNames = {
+    alarms:["Réveils","Vos alarmes"],
+    clock:["Horloge","Heure locale"],
+    chrono:["Chronomètre","Mesure du temps"],
+    timer:["Minuteur","Compte à rebours"]
+};
+
+let currentPage = "alarms";
 
 /* =========================
    NAVIGATION
 ========================= */
 
-const pageNames={
-alarms:["Réveils","Vos alarmes"],
-clock:["Horloge","Heure locale"],
-chrono:["Chronomètre","Mesure du temps"],
-timer:["Minuteur","Compte à rebours"]
-};
+function showPage(name){
 
-function showPage(name,save=true){
+    if(!pageNames[name]) return;
 
-if(!pageNames[name]){
-name="alarms";
+    currentPage = name;
+
+    document.querySelectorAll(".page").forEach(section=>{
+        section.classList.remove("active");
+    });
+
+    const target = $(name);
+    if(target) target.classList.add("active");
+
+    document.querySelectorAll("nav button").forEach(button=>{
+        button.classList.remove("active");
+    });
+
+    const navButton = $("nav" + name.charAt(0).toUpperCase() + name.slice(1));
+
+    if(navButton){
+        navButton.classList.add("active");
+    }
+
+    $("title").textContent = pageNames[name][0];
+    $("subtitle").textContent = pageNames[name][1];
+
+    try{
+        localStorage.setItem("lastPage",name);
+    }catch(e){}
 }
 
-document.querySelectorAll(".page")
-.forEach(el=>{
-el.classList.remove("active");
-});
-
-document.getElementById(name)
-.classList.add("active");
-
-document.querySelectorAll("nav button")
-.forEach(el=>{
-el.classList.remove("active");
-});
-
-const nav=document.getElementById(
-"nav"+
-name.charAt(0).toUpperCase()+
-name.slice(1)
-);
-
-if(nav){
-nav.classList.add("active");
-}
-
-document.getElementById("title")
-.textContent=pageNames[name][0];
-
-document.getElementById("subtitle")
-.textContent=pageNames[name][1];
-
-if(save){
-localStorage.setItem("lastPage",name);
-}
-
-}
-
+$("navAlarms").addEventListener("click",()=>showPage("alarms"));
+$("navClock").addEventListener("click",()=>showPage("clock"));
+$("navChrono").addEventListener("click",()=>showPage("chrono"));
+$("navTimer").addEventListener("click",()=>showPage("timer"));
 
 /* =========================
    HORLOGE
@@ -553,379 +444,267 @@ localStorage.setItem("lastPage",name);
 
 function updateClock(){
 
-const d=new Date();
+    const d = new Date();
 
-document.getElementById("clockTime")
-.textContent=
-String(d.getHours()).padStart(2,"0")+":"+
-String(d.getMinutes()).padStart(2,"0")+":"+
-String(d.getSeconds()).padStart(2,"0");
+    $("clockTime").textContent =
+        String(d.getHours()).padStart(2,"0") + ":" +
+        String(d.getMinutes()).padStart(2,"0") + ":" +
+        String(d.getSeconds()).padStart(2,"0");
 
-let date=d.toLocaleDateString(
-"fr-FR",
-{
-weekday:"long",
-day:"numeric",
-month:"long",
-year:"numeric"
+    let date = d.toLocaleDateString("fr-FR",{
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+    });
+
+    $("clockDate").textContent =
+        date.charAt(0).toUpperCase() + date.slice(1);
 }
-);
-
-document.getElementById("clockDate")
-.textContent=
-date.charAt(0).toUpperCase()+
-date.slice(1);
-
-}
-
-setInterval(updateClock,1000);
 
 updateClock();
-
+setInterval(updateClock,1000);
 
 /* =========================
    REVEILS
 ========================= */
 
-let alarms=[];
+let alarms = [];
 
 try{
-
-alarms=
-JSON.parse(
-localStorage.getItem("myAlarms")||"[]"
-);
-
+    alarms = JSON.parse(localStorage.getItem("myAlarms") || "[]");
+    if(!Array.isArray(alarms)) alarms = [];
 }catch(e){
-
-alarms=[];
-
+    alarms = [];
 }
 
 function saveAlarms(){
-
-localStorage.setItem(
-"myAlarms",
-JSON.stringify(alarms)
-);
-
+    try{
+        localStorage.setItem("myAlarms",JSON.stringify(alarms));
+    }catch(e){}
 }
-
 
 function openAlarm(){
+    $("modal").classList.add("show");
 
-if(
-"Notification" in window &&
-Notification.permission==="default"
-){
-
-try{
-Notification.requestPermission();
-}catch(e){}
-
+    if("Notification" in window &&
+       Notification.permission === "default"){
+        Notification.requestPermission().catch(()=>{});
+    }
 }
-
-document
-.getElementById("modal")
-.classList.add("show");
-
-}
-
 
 function closeAlarm(){
-
-document
-.getElementById("modal")
-.classList.remove("show");
-
+    $("modal").classList.remove("show");
 }
 
+$("addAlarmButton").addEventListener("click",openAlarm);
+$("cancelAlarm").addEventListener("click",closeAlarm);
+
+$("modal").addEventListener("click",e=>{
+    if(e.target === $("modal")){
+        closeAlarm();
+    }
+});
 
 function createAlarm(){
 
-const time=
-document.getElementById("alarmTime").value;
+    const time = $("alarmTime").value;
+    const youtube = $("youtube").value.trim();
 
-const youtube=
-document.getElementById("youtube")
-.value
-.trim();
+    if(!time) return;
 
-if(!time)return;
+    alarms.push({
+        id:Date.now(),
+        time:time,
+        enabled:true,
+        youtube:youtube,
+        lastRing:""
+    });
 
-alarms.push({
+    saveAlarms();
+    renderAlarms();
 
-id:Date.now(),
-
-time:time,
-
-enabled:true,
-
-youtube:youtube,
-
-lastRing:""
-
-});
-
-saveAlarms();
-
-renderAlarms();
-
-document.getElementById("youtube")
-.value="";
-
-closeAlarm();
-
+    $("youtube").value = "";
+    closeAlarm();
 }
 
+$("createAlarmButton").addEventListener("click",createAlarm);
 
 function removeAlarm(id){
 
-alarms=
-alarms.filter(a=>a.id!==id);
+    alarms = alarms.filter(a=>String(a.id)!==String(id));
 
-saveAlarms();
-
-renderAlarms();
-
+    saveAlarms();
+    renderAlarms();
 }
-
 
 function switchAlarm(id){
 
-const a=
-alarms.find(x=>x.id===id);
+    const alarm = alarms.find(a=>String(a.id)===String(id));
 
-if(!a)return;
+    if(!alarm) return;
 
-a.enabled=!a.enabled;
+    alarm.enabled = !alarm.enabled;
 
-saveAlarms();
-
-renderAlarms();
-
+    saveAlarms();
+    renderAlarms();
 }
-
-
-function escapeHtml(text){
-
-return String(text)
-.replace(/[&<>"']/g,function(c){
-
-return{
-
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-
-}[c];
-
-});
-
-}
-
 
 function renderAlarms(){
 
-const box=
-document.getElementById("alarmList");
+    const box = $("alarmList");
+    box.innerHTML = "";
 
-box.innerHTML="";
+    if(alarms.length === 0){
 
-if(alarms.length===0){
+        box.innerHTML = `
+        <div class="empty">
+            Aucun réveil<br><br>
+            Appuie sur + pour créer ton premier réveil.
+        </div>`;
 
-box.innerHTML=
-'<div class="empty">'+
-'Aucun réveil<br><br>'+
-'Appuie sur + pour créer ton premier réveil.'+
-'</div>';
+        return;
+    }
 
-return;
+    alarms.sort((a,b)=>a.time.localeCompare(b.time));
 
+    alarms.forEach(a=>{
+
+        const div = document.createElement("div");
+        div.className = "alarm";
+
+        const top = document.createElement("div");
+        top.className = "alarm-top";
+
+        const info = document.createElement("div");
+
+        const time = document.createElement("div");
+        time.className = "alarm-time";
+        time.textContent = a.time;
+
+        const name = document.createElement("div");
+        name.className = "alarm-name";
+        name.textContent =
+            (a.enabled ? "Réveil activé" : "Réveil désactivé") +
+            (a.youtube ? " · 🎵 Musique" : "");
+
+        info.appendChild(time);
+        info.appendChild(name);
+
+        const label = document.createElement("label");
+        label.className = "switch";
+
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.checked = !!a.enabled;
+
+        input.addEventListener("change",()=>{
+            switchAlarm(a.id);
+        });
+
+        const slider = document.createElement("span");
+        slider.className = "slider";
+
+        label.appendChild(input);
+        label.appendChild(slider);
+
+        top.appendChild(info);
+        top.appendChild(label);
+
+        const actions = document.createElement("div");
+        actions.className = "alarm-actions";
+
+        if(a.youtube){
+
+            const music = document.createElement("button");
+            music.type = "button";
+            music.className = "dark";
+            music.style.height = "40px";
+            music.style.padding = "0 15px";
+            music.textContent = "🎵 Tester la musique";
+
+            music.addEventListener("click",()=>{
+                openMusic(a.youtube);
+            });
+
+            actions.appendChild(music);
+        }
+
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "delete";
+        del.textContent = "Supprimer";
+
+        del.addEventListener("click",()=>{
+            removeAlarm(a.id);
+        });
+
+        actions.appendChild(del);
+
+        div.appendChild(top);
+        div.appendChild(actions);
+
+        box.appendChild(div);
+    });
 }
 
-alarms.sort(
-(a,b)=>a.time.localeCompare(b.time)
-);
-
-alarms.forEach(a=>{
-
-const div=
-document.createElement("div");
-
-div.className="alarm";
-
-const musicButton=
-a.youtube
-?
-'<button type="button" class="dark music-test" style="height:40px;padding:0 15px">🎵 Tester la musique</button>'
-:
-"";
-
-div.innerHTML=`
-
-<div class="alarm-top">
-
-<div>
-
-<div class="alarm-time">
-${escapeHtml(a.time)}
-</div>
-
-<div class="alarm-name">
-
-${a.enabled
-?"Réveil activé"
-:"Réveil désactivé"}
-
-${a.youtube
-?" · 🎵 Musique"
-:""}
-
-</div>
-
-</div>
-
-<label class="switch">
-
-<input
-type="checkbox"
-${a.enabled?"checked":""}
->
-
-<span class="slider"></span>
-
-</label>
-
-</div>
-
-<div class="alarm-actions">
-
-${musicButton}
-
-<button type="button" class="delete">
-Supprimer
-</button>
-
-</div>
-
-`;
-
-div
-.querySelector("input")
-.addEventListener(
-"change",
-()=>switchAlarm(a.id)
-);
-
-div
-.querySelector(".delete")
-.addEventListener(
-"click",
-()=>removeAlarm(a.id)
-);
-
-if(a.youtube){
-
-div
-.querySelector(".music-test")
-.addEventListener(
-"click",
-()=>openMusic(a.youtube)
-);
-
-}
-
-box.appendChild(div);
-
-});
-
-}
-
+renderAlarms();
 
 /* =========================
    SON
 ========================= */
 
-let audioCtx=null;
+let audioCtx = null;
 
 function ring(){
 
-try{
+    try{
 
-audioCtx=
-audioCtx||
-new(
-window.AudioContext||
-window.webkitAudioContext
-)();
+        audioCtx =
+            audioCtx ||
+            new (window.AudioContext || window.webkitAudioContext)();
 
-if(audioCtx.state==="suspended"){
-audioCtx.resume();
+        if(audioCtx.state === "suspended"){
+            audioCtx.resume().catch(()=>{});
+        }
+
+        const now = audioCtx.currentTime;
+
+        for(let i=0;i<6;i++){
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.frequency.value = i % 2 === 0 ? 880 : 660;
+            osc.type = "sine";
+
+            gain.gain.setValueAtTime(.001,now+i*.35);
+
+            gain.gain.exponentialRampToValueAtTime(
+                .45,
+                now+i*.35+.03
+            );
+
+            gain.gain.exponentialRampToValueAtTime(
+                .001,
+                now+i*.35+.3
+            );
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now+i*.35);
+            osc.stop(now+i*.35+.32);
+        }
+
+    }catch(e){}
+
+    if(navigator.vibrate){
+        navigator.vibrate([
+            500,300,500,300,700,300,500
+        ]);
+    }
 }
-
-const now=
-audioCtx.currentTime;
-
-for(let i=0;i<6;i++){
-
-const osc=
-audioCtx.createOscillator();
-
-const gain=
-audioCtx.createGain();
-
-osc.frequency.value=
-i%2===0?880:660;
-
-osc.type="sine";
-
-gain.gain.setValueAtTime(
-.001,
-now+i*.35
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.45,
-now+i*.35+.03
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.001,
-now+i*.35+.3
-);
-
-osc.connect(gain);
-
-gain.connect(
-audioCtx.destination
-);
-
-osc.start(now+i*.35);
-
-osc.stop(now+i*.35+.32);
-
-}
-
-}catch(e){}
-
-if(navigator.vibrate){
-
-try{
-
-navigator.vibrate([
-500,300,500,300,700,
-300,500
-]);
-
-}catch(e){}
-
-}
-
-}
-
 
 /* =========================
    NOTIFICATION
@@ -933,28 +712,20 @@ navigator.vibrate([
 
 function notify(title,text){
 
-if(
-"Notification" in window &&
-Notification.permission==="granted"
-){
+    if(
+        "Notification" in window &&
+        Notification.permission === "granted"
+    ){
 
-try{
-
-new Notification(
-title,
-{
-body:text,
-tag:"horloge-"+Date.now(),
-requireInteraction:true
+        try{
+            new Notification(title,{
+                body:text,
+                tag:"horloge-"+Date.now(),
+                requireInteraction:true
+            });
+        }catch(e){}
+    }
 }
-);
-
-}catch(e){}
-
-}
-
-}
-
 
 /* =========================
    YOUTUBE
@@ -962,799 +733,302 @@ requireInteraction:true
 
 function getYoutubeId(url){
 
-try{
+    try{
 
-const u=new URL(url);
+        const u = new URL(url);
 
-if(
-u.hostname.includes("youtu.be")
-){
+        if(u.hostname.includes("youtu.be")){
+            return u.pathname.substring(1);
+        }
 
-return u.pathname.substring(1);
+        if(u.hostname.includes("youtube.com")){
+            return u.searchParams.get("v");
+        }
 
+    }catch(e){}
+
+    return null;
 }
-
-if(
-u.hostname.includes("youtube.com")
-){
-
-return u.searchParams.get("v");
-
-}
-
-}catch(e){}
-
-return null;
-
-}
-
 
 function openMusic(url){
 
-const id=
-getYoutubeId(url);
+    const id = getYoutubeId(url);
 
-if(id){
-
-window.open(
-"https://www.youtube.com/watch?v="+
-encodeURIComponent(id),
-"_blank"
-);
-
+    if(id){
+        window.open(
+            "https://www.youtube.com/watch?v="+id,
+            "_blank"
+        );
+    }
 }
-
-}
-
 
 /* =========================
    VERIFICATION REVEILS
 ========================= */
 
-setInterval(()=>{
+function checkAlarms(){
 
-const now=new Date();
+    const now = new Date();
 
-const current=
-String(now.getHours()).padStart(2,"0")+
-":"+
-String(now.getMinutes()).padStart(2,"0");
+    const hh = String(now.getHours()).padStart(2,"0");
+    const mm = String(now.getMinutes()).padStart(2,"0");
 
-alarms.forEach(a=>{
+    const current = hh + ":" + mm;
 
-if(
-a.enabled &&
-a.time===current &&
-a.lastRing!==current
-){
+    alarms.forEach(a=>{
 
-a.lastRing=current;
+        if(
+            a.enabled &&
+            a.time === current &&
+            a.lastRing !== current
+        ){
 
-saveAlarms();
+            a.lastRing = current;
 
-ring();
+            saveAlarms();
 
-notify(
-"⏰ Réveil",
-"Il est "+current
-);
+            ring();
 
-if(a.youtube){
+            notify(
+                "⏰ Réveil",
+                "Il est " + current
+            );
 
-setTimeout(
-()=>openMusic(a.youtube),
-1000
-);
-
+            if(a.youtube){
+                setTimeout(()=>{
+                    openMusic(a.youtube);
+                },1000);
+            }
+        }
+    });
 }
 
-}
-
-});
-
-},1000);
-
+setInterval(checkAlarms,1000);
 
 /* =========================
    CHRONOMETRE
-   SAUVEGARDE
+   SAUVEGARDE COMPLETE
 ========================= */
 
-let chronoRunning=false;
-
-let chronoStartTime=0;
-
-let chronoElapsed=0;
-
-let chronoInterval=null;
-
-let lapsData=[];
-
+let chronoRunning = false;
+let chronoStartTime = 0;
+let chronoElapsed = 0;
+let chronoInterval = null;
+let chronoLaps = [];
 
 function chronoFormat(ms){
 
-const m=
-Math.floor(ms/60000);
+    ms = Math.max(0,ms);
 
-const s=
-Math.floor(
-(ms%60000)/1000
-);
+    const m = Math.floor(ms/60000);
+    const s = Math.floor((ms%60000)/1000);
+    const c = Math.floor((ms%1000)/10);
 
-const c=
-Math.floor(
-(ms%1000)/10
-);
-
-return(
-String(m).padStart(2,"0")+
-":"+
-String(s).padStart(2,"0")+
-"."+
-String(c).padStart(2,"0")
-);
-
+    return (
+        String(m).padStart(2,"0") + ":" +
+        String(s).padStart(2,"0") + "." +
+        String(c).padStart(2,"0")
+    );
 }
-
 
 function saveChrono(){
 
-let elapsed=
-chronoElapsed;
+    try{
 
-if(chronoRunning){
+        let elapsed = chronoElapsed;
 
-elapsed+=
-Date.now()-chronoStartTime;
+        if(chronoRunning){
+            elapsed += Date.now() - chronoStartTime;
+        }
 
+        localStorage.setItem(
+            "chronoState",
+            JSON.stringify({
+                running:chronoRunning,
+                elapsed:elapsed,
+                start:chronoRunning ? Date.now() : 0,
+                laps:chronoLaps
+            })
+        );
+
+    }catch(e){}
 }
-
-localStorage.setItem(
-"chronoState",
-JSON.stringify({
-
-running:chronoRunning,
-
-elapsed:elapsed,
-
-laps:lapsData
-
-})
-);
-
-}
-
 
 function updateChrono(){
 
-let value=
-chronoElapsed;
+    let value = chronoElapsed;
 
-if(chronoRunning){
+    if(chronoRunning){
+        value += Date.now() - chronoStartTime;
+    }
 
-value+=
-Date.now()-chronoStartTime;
+    $("chronoDisplay").textContent = chronoFormat(value);
 
+    saveChrono();
 }
-
-document
-.getElementById("chronoDisplay")
-.textContent=
-chronoFormat(value);
-
-saveChrono();
-
-}
-
 
 function startChrono(){
 
-if(!chronoRunning){
+    if(!chronoRunning){
 
-chronoStartTime=
-Date.now();
+        chronoStartTime = Date.now();
+        chronoRunning = true;
 
-chronoRunning=true;
+        $("chronoStart").textContent = "Pause";
 
-document
-.getElementById("chronoStart")
-.textContent=
-"Pause";
+        clearInterval(chronoInterval);
 
-}else{
+        chronoInterval = setInterval(updateChrono,30);
 
-chronoElapsed+=
-Date.now()-chronoStartTime;
+    }else{
 
-chronoRunning=false;
+        chronoElapsed += Date.now() - chronoStartTime;
+        chronoRunning = false;
 
-document
-.getElementById("chronoStart")
-.textContent=
-"Démarrer";
+        $("chronoStart").textContent = "Démarrer";
 
+        clearInterval(chronoInterval);
+        chronoInterval = null;
+    }
+
+    updateChrono();
 }
-
-clearInterval(
-chronoInterval
-);
-
-if(chronoRunning){
-
-chronoInterval=
-setInterval(
-updateChrono,
-30
-);
-
-}
-
-updateChrono();
-
-saveChrono();
-
-}
-
 
 function lap(){
 
-if(!chronoRunning)return;
+    if(!chronoRunning) return;
 
-const value=
-chronoElapsed+
-Date.now()-
-chronoStartTime;
+    const value =
+        chronoElapsed +
+        Date.now() -
+        chronoStartTime;
 
-lapsData.unshift(value);
+    chronoLaps.push(value);
 
-renderLaps();
-
-saveChrono();
-
+    renderLaps();
+    saveChrono();
 }
-
 
 function renderLaps(){
 
-const box=
-document.getElementById("laps");
+    const box = $("laps");
+    box.innerHTML = "";
 
-box.innerHTML="";
+    chronoLaps.slice().reverse().forEach((value,index)=>{
 
-lapsData.forEach(
-(value,index)=>{
+        const div = document.createElement("div");
 
-const div=
-document.createElement("div");
+        div.style.cssText =
+            "padding:13px 5px;" +
+            "border-bottom:1px solid #222;" +
+            "display:flex;" +
+            "justify-content:space-between;" +
+            "color:#aaa";
 
-div.className=
-"lap-row";
+        const number = chronoLaps.length-index;
 
-div.innerHTML=
-"<span>Tour "+
-(lapsData.length-index)+
-"</span><span>"+
-chronoFormat(value)+
-"</span>";
+        div.innerHTML =
+            "<span>Tour "+number+"</span>" +
+            "<span>"+chronoFormat(value)+"</span>";
 
-box.appendChild(div);
-
+        box.appendChild(div);
+    });
 }
-);
-
-}
-
 
 function resetChrono(){
 
-clearInterval(
-chronoInterval
-);
+    clearInterval(chronoInterval);
+    chronoInterval = null;
 
-chronoInterval=null;
+    chronoRunning = false;
+    chronoStartTime = 0;
+    chronoElapsed = 0;
+    chronoLaps = [];
 
-chronoRunning=false;
+    $("chronoDisplay").textContent = "00:00.00";
+    $("chronoStart").textContent = "Démarrer";
+    $("laps").innerHTML = "";
 
-chronoElapsed=0;
-
-chronoStartTime=0;
-
-lapsData=[];
-
-document
-.getElementById("chronoDisplay")
-.textContent=
-"00:00.00";
-
-document
-.getElementById("chronoStart")
-.textContent=
-"Démarrer";
-
-document
-.getElementById("laps")
-.innerHTML="";
-
-localStorage.removeItem(
-"chronoState"
-);
-
+    try{
+        localStorage.removeItem("chronoState");
+    }catch(e){}
 }
 
+$("chronoStart").addEventListener("click",startChrono);
+$("lapButton").addEventListener("click",lap);
+$("chronoReset").addEventListener("click",resetChrono);
+
+/* =========================
+   CHARGER CHRONO
+========================= */
 
 function loadChrono(){
 
-try{
+    try{
 
-const data=
-JSON.parse(
-localStorage.getItem(
-"chronoState"
-)||
-"null"
-);
+        const data =
+            JSON.parse(
+                localStorage.getItem("chronoState")
+            );
 
-if(!data)return;
+        if(!data) return;
 
-chronoElapsed=
-Number(data.elapsed)||0;
+        chronoElapsed = Number(data.elapsed) || 0;
 
-lapsData=
-Array.isArray(data.laps)
-?data.laps.map(Number)
-:[];
+        chronoLaps =
+            Array.isArray(data.laps)
+            ? data.laps
+            : [];
 
-if(data.running){
+        if(data.running){
 
-chronoRunning=true;
+            chronoRunning = true;
+            chronoStartTime = Date.now();
 
-chronoStartTime=
-Date.now();
+            $("chronoStart").textContent = "Pause";
 
-document
-.getElementById("chronoStart")
-.textContent=
-"Pause";
+            clearInterval(chronoInterval);
 
-clearInterval(
-chronoInterval
-);
+            chronoInterval =
+                setInterval(updateChrono,30);
 
-chronoInterval=
-setInterval(
-updateChrono,
-30
-);
+        }else{
 
+            chronoRunning = false;
+            chronoStartTime = 0;
+
+            $("chronoStart").textContent = "Démarrer";
+        }
+
+        renderLaps();
+        updateChrono();
+
+    }catch(e){
+        chronoRunning = false;
+        chronoElapsed = 0;
+        chronoLaps = [];
+    }
 }
 
-renderLaps();
-
-updateChrono();
-
-}catch(e){}
-
-}
-
+loadChrono();
 
 /* =========================
    MINUTEUR
 ========================= */
 
-let timerRunning=false;
-
-let timerEnd=0;
-
-let timerRemaining=300;
-
-let timerInterval=null;
-
+let timerRunning = false;
+let timerEnd = 0;
+let timerRemaining = 300;
+let timerInterval = null;
 
 function timerFormat(s){
 
-s=Math.max(
-0,
-Math.floor(s)
-);
-
-const h=
-Math.floor(s/3600);
-
-const m=
-Math.floor(
-(s%3600)/60
-);
-
-const sec=
-s%60;
-
-return(
-String(h).padStart(2,"0")+
-":"+
-String(m).padStart(2,"0")+
-":"+
-String(sec).padStart(2,"0")
-);
-
-}
-
-
-function saveTimer(){
-
-localStorage.setItem(
-"timerState",
-JSON.stringify({
-
-running:timerRunning,
-
-end:timerEnd,
-
-remaining:timerRemaining
-
-})
-);
-
-}
-
-
-function updateTimer(){
-
-if(timerRunning){
-
-timerRemaining=
-Math.max(
-0,
-Math.ceil(
-(timerEnd-Date.now())/1000
-)
-);
-
-}
-
-document
-.getElementById("timerDisplay")
-.textContent=
-timerFormat(timerRemaining);
-
-saveTimer();
-
-}
-
-
-function finishTimer(){
-
-clearInterval(
-timerInterval
-);
-
-timerInterval=null;
-
-timerRunning=false;
-
-timerRemaining=0;
-
-document
-.getElementById("timerStart")
-.textContent=
-"Démarrer";
-
-updateTimer();
-
-ring();
-
-notify(
-"⌛ Minuteur terminé",
-"Le compte à rebours est terminé."
-);
-
-}
-
-
-function startTimer(){
-
-if(timerRunning){
-
-timerRemaining=
-Math.max(
-0,
-Math.ceil(
-(timerEnd-Date.now())/1000
-)
-);
-
-timerRunning=false;
-
-clearInterval(
-timerInterval
-);
-
-timerInterval=null;
-
-document
-.getElementById("timerStart")
-.textContent=
-"Reprendre";
-
-saveTimer();
-
-return;
-
-}
-
-
-if(timerRemaining<=0){
-
-const h=
-Number(
-document.getElementById("hours").value
-)||0;
-
-const m=
-Number(
-document.getElementById("minutes").value
-)||0;
-
-const s=
-Number(
-document.getElementById("seconds").value
-)||0;
-
-timerRemaining=
-h*3600+
-m*60+
-s;
-
-}
-
-if(timerRemaining<=0)return;
-
-timerEnd=
-Date.now()+
-timerRemaining*1000;
-
-timerRunning=true;
-
-document
-.getElementById("timerStart")
-.textContent=
-"Pause";
-
-clearInterval(
-timerInterval
-);
-
-timerInterval=
-setInterval(()=>{
-
-updateTimer();
-
-if(timerRemaining<=0){
-
-finishTimer();
-
-}
-
-},250);
-
-updateTimer();
-
-}
-
-
-function resetTimer(){
-
-clearInterval(
-timerInterval
-);
-
-timerInterval=null;
-
-timerRunning=false;
-
-timerRemaining=300;
-
-timerEnd=0;
-
-document.getElementById("hours")
-.value=0;
-
-document.getElementById("minutes")
-.value=5;
-
-document.getElementById("seconds")
-.value=0;
-
-document
-.getElementById("timerStart")
-.textContent=
-"Démarrer";
-
-updateTimer();
-
-}
-
-
-function loadTimer(){
-
-try{
-
-const data=
-JSON.parse(
-localStorage.getItem(
-"timerState"
-)||
-"null"
-);
-
-if(!data){
-
-document
-.getElementById("timerDisplay")
-.textContent=
-"00:05:00";
-
-return;
-
-}
-
-timerRemaining=
-Number(data.remaining);
-
-if(!Number.isFinite(timerRemaining)){
-
-timerRemaining=300;
-
-}
-
-if(
-data.running &&
-data.end &&
-Number(data.end)>Date.now()
-){
-
-timerEnd=
-Number(data.end);
-
-timerRunning=true;
-
-document
-.getElementById("timerStart")
-.textContent=
-"Pause";
-
-clearInterval(
-timerInterval
-);
-
-timerInterval=
-setInterval(()=>{
-
-updateTimer();
-
-if(timerRemaining<=0){
-
-finishTimer();
-
-}
-
-},250);
-
-}else if(data.running){
-
-timerRemaining=0;
-
-timerRunning=false;
-
-}
-
-updateTimer();
-
-}catch(e){}
-
-}
-
-
-/* =========================
-   BOUTONS
-========================= */
-
-document
-.getElementById("navAlarms")
-.addEventListener(
-"click",
-()=>showPage("alarms")
-);
-
-document
-.getElementById("navClock")
-.addEventListener(
-"click",
-()=>showPage("clock")
-);
-
-document
-.getElementById("navChrono")
-.addEventListener(
-"click",
-()=>showPage("chrono")
-);
-
-document
-.getElementById("navTimer")
-.addEventListener(
-"click",
-()=>showPage("timer")
-);
-
-document
-.getElementById("addAlarmButton")
-.addEventListener(
-"click",
-openAlarm
-);
-
-document
-.getElementById("closeAlarmButton")
-.addEventListener(
-"click",
-closeAlarm
-);
-
-document
-.getElementById("createAlarmButton")
-.addEventListener(
-"click",
-createAlarm
-);
-
-document
-.getElementById("chronoStart")
-.addEventListener(
-"click",
-startChrono
-);
-
-document
-.getElementById("lapButton")
-.addEventListener(
-"click",
-lap
-);
-
-document
-.getElementById("chronoReset")
-.addEventListener(
-"click",
-resetChrono
-);
-
-document
-.getElementById("timerStart")
-.addEventListener(
-"click",
-startTimer
-);
-
-document
-.getElementById("timerReset")
-.addEventListener(
-"click",
-resetTimer
-);
-
-document
-.getElementById("modal")
-.addEventListener(
-"click",
-function(e){
-
-if(e.target.id==="modal"){
-
-closeAlarm();
-
-}
-
-});
-
-
-/* ===
+    s = Math.max(0,Math.floor(s));
+
+    const h = Math.floor(s/3600);
+    const m = Math.floor((s%3600)/60);
+    const sec = s%60;
+
+    return (
+        String(h).padStart(2,"0") + ":" +
+        S
