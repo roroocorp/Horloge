@@ -45,9 +45,7 @@ padding:15px 20px;
 display:block;
 }
 
-/* =========================
-   REVEILS
-========================= */
+/* REVEILS */
 
 .alarm{
 background:#171717;
@@ -138,9 +136,7 @@ display:block;
 margin:25px auto 5px;
 }
 
-/* =========================
-   HORLOGE
-========================= */
+/* HORLOGE */
 
 .clock{
 text-align:center;
@@ -159,9 +155,7 @@ color:#888;
 margin-top:8px;
 }
 
-/* =========================
-   CHRONO
-========================= */
+/* CHRONO */
 
 .big-number{
 font-size:68px;
@@ -181,6 +175,7 @@ gap:12px;
 button{
 font-family:inherit;
 cursor:pointer;
+-webkit-tap-highlight-color:transparent;
 }
 
 .green{
@@ -209,7 +204,7 @@ margin-top:12px;
 }
 
 /* =========================
-   NOUVEAU MINUTEUR
+   MINUTEUR
 ========================= */
 
 .timer-display{
@@ -218,11 +213,8 @@ font-size:64px;
 font-weight:200;
 letter-spacing:-3px;
 font-variant-numeric:tabular-nums;
-margin-top:35px;
-margin-bottom:25px;
+margin:35px 0 25px;
 }
-
-/* Roulettes */
 
 .timer-picker{
 height:230px;
@@ -235,7 +227,7 @@ border-radius:25px;
 background:#101010;
 }
 
-.timer-picker::after{
+.timer-picker::before{
 content:"";
 position:absolute;
 left:8px;
@@ -247,6 +239,7 @@ border-top:1px solid #333;
 border-bottom:1px solid #333;
 border-radius:15px;
 pointer-events:none;
+z-index:2;
 }
 
 .timer-column{
@@ -272,7 +265,6 @@ scroll-snap-align:center;
 font-size:30px;
 font-weight:300;
 color:#555;
-transition:.15s;
 user-select:none;
 }
 
@@ -288,16 +280,14 @@ grid-template-columns:repeat(3,1fr);
 text-align:center;
 margin-top:8px;
 color:#666;
-font-size:12px;
+font-size:11px;
 }
 
 .timer-buttons{
-margin-top:30px;
+margin-top:25px;
 }
 
-/* =========================
-   NAV
-========================= */
+/* NAV */
 
 nav{
 position:fixed;
@@ -334,9 +324,7 @@ color:#32d47a;
 font-size:25px;
 }
 
-/* =========================
-   MODAL
-========================= */
+/* MODAL */
 
 .modal{
 position:fixed;
@@ -412,9 +400,7 @@ padding:60px 20px;
 <div class="subtitle" id="subtitle">Vos alarmes</div>
 </header>
 
-<!-- =========================
-     REVEILS
-========================= -->
+<!-- REVEILS -->
 
 <section id="alarms" class="page active">
 
@@ -428,9 +414,7 @@ Ajouter un réveil
 
 </section>
 
-<!-- =========================
-     HORLOGE
-========================= -->
+<!-- HORLOGE -->
 
 <section id="clock" class="page">
 
@@ -446,9 +430,7 @@ Ajouter un réveil
 
 </section>
 
-<!-- =========================
-     CHRONO
-========================= -->
+<!-- CHRONO -->
 
 <section id="chrono" class="page">
 
@@ -476,9 +458,7 @@ Réinitialiser
 
 </section>
 
-<!-- =========================
-     MINUTEUR
-========================= -->
+<!-- MINUTEUR -->
 
 <section id="timer" class="page">
 
@@ -521,9 +501,7 @@ Réinitialiser
 
 </section>
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+<!-- NAVIGATION -->
 
 <nav>
 
@@ -568,9 +546,7 @@ Minuteur
 
 </div>
 
-<!-- =========================
-     MODAL REVEIL
-========================= -->
+<!-- MODAL REVEIL -->
 
 <div id="modal" class="modal">
 
@@ -623,17 +599,22 @@ timer:["Minuteur","Compte à rebours"]
 
 function page(name){
 
-document.querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
+const pages=document.querySelectorAll(".page");
 
-const selectedPage=document.getElementById(name);
+pages.forEach(function(x){
+x.classList.remove("active");
+});
 
-if(!selectedPage)return;
+const target=document.getElementById(name);
 
-selectedPage.classList.add("active");
+if(!target)return;
+
+target.classList.add("active");
 
 document.querySelectorAll("nav button")
-.forEach(x=>x.classList.remove("active"));
+.forEach(function(x){
+x.classList.remove("active");
+});
 
 const navButton=document.getElementById(
 "nav"+name.charAt(0).toUpperCase()+name.slice(1)
@@ -649,7 +630,10 @@ pageNames[name][0];
 document.getElementById("subtitle").textContent=
 pageNames[name][1];
 
+try{
 localStorage.setItem("lastPage",name);
+}catch(e){}
+
 }
 
 
@@ -677,6 +661,7 @@ year:"numeric"
 document.getElementById("clockDate")
 .textContent=
 date.charAt(0).toUpperCase()+date.slice(1);
+
 }
 
 setInterval(clock,1000);
@@ -684,7 +669,7 @@ clock();
 
 
 /* =========================
-   REVEILS SAUVEGARDES
+   REVEILS
 ========================= */
 
 let alarms=[];
@@ -695,6 +680,10 @@ alarms=JSON.parse(
 localStorage.getItem("myAlarms")||"[]"
 );
 
+if(!Array.isArray(alarms)){
+alarms=[];
+}
+
 }catch(e){
 
 alarms=[];
@@ -703,17 +692,23 @@ alarms=[];
 
 function saveAlarms(){
 
+try{
+
 localStorage.setItem(
 "myAlarms",
 JSON.stringify(alarms)
 );
 
+}catch(e){}
+
 }
 
 function openAlarm(){
 
-if("Notification" in window &&
-Notification.permission==="default"){
+if(
+"Notification" in window &&
+Notification.permission==="default"
+){
 
 Notification.requestPermission();
 
@@ -752,6 +747,7 @@ lastRing:""
 });
 
 saveAlarms();
+
 renderAlarms();
 
 document.getElementById("youtube").value="";
@@ -762,7 +758,9 @@ closeAlarm();
 
 function removeAlarm(id){
 
-alarms=alarms.filter(a=>a.id!==id);
+alarms=alarms.filter(function(a){
+return a.id!==id;
+});
 
 saveAlarms();
 renderAlarms();
@@ -771,7 +769,9 @@ renderAlarms();
 
 function switchAlarm(id){
 
-const a=alarms.find(x=>x.id===id);
+const a=alarms.find(function(x){
+return x.id===id;
+});
 
 if(!a)return;
 
@@ -800,15 +800,19 @@ return;
 
 }
 
-alarms.sort((a,b)=>
-a.time.localeCompare(b.time)
-);
+alarms.sort(function(a,b){
+return a.time.localeCompare(b.time);
+});
 
-alarms.forEach(a=>{
+alarms.forEach(function(a){
 
 const div=document.createElement("div");
 
 div.className="alarm";
+
+const musicText=a.youtube?
+" · 🎵 Musique":
+"";
 
 div.innerHTML=`
 
@@ -821,15 +825,8 @@ ${a.time}
 </div>
 
 <div class="alarm-name">
-
-${a.enabled?
-"Réveil activé":
-"Réveil désactivé"}
-
-${a.youtube?
-" · 🎵 Musique":
-""}
-
+${a.enabled?"Réveil activé":"Réveil désactivé"}
+${musicText}
 </div>
 
 </div>
@@ -849,16 +846,22 @@ onchange="switchAlarm(${a.id})">
 
 <div class="alarm-actions">
 
-${a.youtube?
-`<button
+${
+a.youtube
+?
+`
+<button
 class="dark"
 style="height:40px;padding:0 15px"
 onclick="openMusic('${a.youtube.replace(/'/g,"\\'")}')">
 
 🎵 Tester la musique
 
-</button>`:
-""}
+</button>
+`
+:
+""
+}
 
 <button
 class="delete"
@@ -869,7 +872,6 @@ Supprimer
 </button>
 
 </div>
-
 `;
 
 box.appendChild(div);
@@ -893,10 +895,14 @@ try{
 
 audioCtx=
 audioCtx||
-new (
+new(
 window.AudioContext||
 window.webkitAudioContext
 )();
+
+if(audioCtx.state==="suspended"){
+audioCtx.resume();
+}
 
 const now=audioCtx.currentTime;
 
@@ -956,17 +962,17 @@ navigator.vibrate([
 
 function notify(title,text){
 
-if("Notification" in window &&
-Notification.permission==="granted"){
+if(
+"Notification" in window &&
+Notification.permission==="granted"
+){
 
 try{
 
 new Notification(title,{
-
 body:text,
 tag:"horloge-"+Date.now(),
 requireInteraction:true
-
 });
 
 }catch(e){}
@@ -986,11 +992,13 @@ try{
 
 const u=new URL(url);
 
-if(u.hostname.includes("youtu.be"))
+if(u.hostname.includes("youtu.be")){
 return u.pathname.substring(1);
+}
 
-if(u.hostname.includes("youtube.com"))
+if(u.hostname.includes("youtube.com")){
 return u.searchParams.get("v");
+}
 
 }catch(e){}
 
@@ -1018,7 +1026,7 @@ window.open(
    VERIFICATION REVEILS
 ========================= */
 
-setInterval(()=>{
+setInterval(function(){
 
 const now=new Date();
 
@@ -1030,7 +1038,7 @@ String(now.getMinutes()).padStart(2,"0");
 
 const current=hh+":"+mm;
 
-alarms.forEach(a=>{
+alarms.forEach(function(a){
 
 if(
 a.enabled &&
@@ -1051,10 +1059,8 @@ notify(
 
 if(a.youtube){
 
-setTimeout(()=>{
-
+setTimeout(function(){
 openMusic(a.youtube);
-
 },1000);
 
 }
@@ -1099,13 +1105,19 @@ function updateChrono(){
 
 let value=chronoElapsed;
 
-if(chronoRunning)
+if(chronoRunning){
 value+=Date.now()-chronoStartTime;
+}
 
-document.getElementById(
-"chronoDisplay"
-).textContent=
+const display=
+document.getElementById("chronoDisplay");
+
+if(display){
+display.textContent=
 chronoFormat(value);
+}
+
+try{
 
 localStorage.setItem(
 "chronoElapsed",
@@ -1125,6 +1137,8 @@ chronoStartTime
 );
 
 }
+
+}catch(e){}
 
 }
 
@@ -1174,8 +1188,7 @@ const value=
 chronoElapsed+
 Date.now()-chronoStartTime;
 
-const div=
-document.createElement("div");
+const div=document.createElement("div");
 
 div.style.cssText=
 "padding:13px 5px;border-bottom:1px solid #222;display:flex;justify-content:space-between;color:#aaa";
@@ -1196,6 +1209,7 @@ clearInterval(chronoInterval);
 
 chronoRunning=false;
 chronoElapsed=0;
+chronoStartTime=0;
 
 document.getElementById(
 "chronoDisplay"
@@ -1209,26 +1223,142 @@ document.getElementById(
 "laps"
 ).innerHTML="";
 
+try{
+
 localStorage.removeItem("chronoElapsed");
 localStorage.removeItem("chronoRunning");
 localStorage.removeItem("chronoStart");
+
+}catch(e){}
 
 }
 
 
 /* =========================
    MINUTEUR
-   ROULETTES
+   VARIABLES AVANT UTILISATION
 ========================= */
+
+let timerRunning=false;
+let timerEnd=0;
+let timerRemaining=300;
+let timerInterval=null;
 
 let selectedHours=0;
 let selectedMinutes=5;
 let selectedSeconds=0;
 
+
+/* =========================
+   FORMAT MINUTEUR
+========================= */
+
+function timerFormat(s){
+
+s=Math.max(0,Math.floor(s));
+
+const h=Math.floor(s/3600);
+
+const m=Math.floor(
+(s%3600)/60
+);
+
+const sec=s%60;
+
+return(
+String(h).padStart(2,"0")+":"+
+String(m).padStart(2,"0")+":"+
+String(sec).padStart(2,"0")
+);
+
+}
+
+
+/* =========================
+   SAUVEGARDE MINUTEUR
+========================= */
+
+function saveTimer(){
+
+try{
+
+localStorage.setItem(
+"timerState",
+JSON.stringify({
+
+running:timerRunning,
+end:timerEnd,
+remaining:timerRemaining
+
+})
+);
+
+}catch(e){}
+
+}
+
+function saveTimerSelection(){
+
+try{
+
+localStorage.setItem(
+"timerSelection",
+JSON.stringify({
+
+hours:selectedHours,
+minutes:selectedMinutes,
+seconds:selectedSeconds
+
+})
+);
+
+}catch(e){}
+
+}
+
+
+/* =========================
+   AFFICHAGE MINUTEUR
+========================= */
+
+function updateTimer(){
+
+if(timerRunning){
+
+timerRemaining=Math.max(
+0,
+Math.ceil(
+(timerEnd-Date.now())/1000
+)
+);
+
+}
+
+const display=
+document.getElementById("timerDisplay");
+
+if(display){
+
+display.textContent=
+timerFormat(timerRemaining);
+
+}
+
+saveTimer();
+
+}
+
+
+/* =========================
+   ROULETTES MINUTEUR
+========================= */
+
 function createPicker(id,max){
 
 const picker=
 document.getElementById(id);
+
+if(!picker)return;
 
 picker.innerHTML="";
 
@@ -1250,8 +1380,10 @@ picker.appendChild(item);
 
 picker.addEventListener(
 "scroll",
-()=>{
+function(){
+
 updatePicker(id);
+
 },
 {passive:true}
 );
@@ -1260,8 +1392,12 @@ updatePicker(id);
 
 function updatePicker(id){
 
+if(timerRunning)return;
+
 const picker=
 document.getElementById(id);
+
+if(!picker)return;
 
 const items=
 picker.querySelectorAll(".timer-value");
@@ -1273,7 +1409,7 @@ picker.clientHeight/2;
 let closest=null;
 let distance=Infinity;
 
-items.forEach(item=>{
+items.forEach(function(item){
 
 const itemCenter=
 item.offsetTop+
@@ -1291,31 +1427,42 @@ closest=item;
 
 });
 
-items.forEach(item=>
-item.classList.remove("selected")
-);
+items.forEach(function(item){
 
-if(closest){
+item.classList.remove("selected");
+
+});
+
+if(!closest)return;
 
 closest.classList.add("selected");
 
 const value=
 Number(closest.dataset.value);
 
-if(id==="hoursPicker")
+if(id==="hoursPicker"){
 selectedHours=value;
+}
 
-if(id==="minutesPicker")
+if(id==="minutesPicker"){
 selectedMinutes=value;
+}
 
-if(id==="secondsPicker")
+if(id==="secondsPicker"){
 selectedSeconds=value;
+}
 
-updateTimerDisplay();
+timerRemaining=
+selectedHours*3600+
+selectedMinutes*60+
+selectedSeconds;
+
+document.getElementById(
+"timerDisplay"
+).textContent=
+timerFormat(timerRemaining);
 
 saveTimerSelection();
-
-}
 
 }
 
@@ -1324,60 +1471,26 @@ function scrollToValue(id,value){
 const picker=
 document.getElementById(id);
 
+if(!picker)return;
+
 const item=
 picker.querySelector(
 '.timer-value[data-value="'+value+'"]'
 );
 
-if(item){
+if(!item)return;
 
 picker.scrollTop=
 item.offsetTop-
-picker.clientHeight/2+
-item.offsetHeight/2;
+(picker.clientHeight/2)+
+(item.offsetHeight/2);
 
 }
 
-}
 
-function updateTimerDisplay(){
-
-const total=
-selectedHours*3600+
-selectedMinutes*60+
-selectedSeconds;
-
-if(!timerRunning){
-
-timerRemaining=total;
-
-}
-
-document.getElementById(
-"timerDisplay"
-).textContent=
-timerFormat(
-timerRunning?
-timerRemaining:
-total
-);
-
-}
-
-function saveTimerSelection(){
-
-localStorage.setItem(
-"timerSelection",
-JSON.stringify({
-
-hours:selectedHours,
-minutes:selectedMinutes,
-seconds:selectedSeconds
-
-})
-);
-
-}
+/* =========================
+   CHOIX DU MINUTEUR
+========================= */
 
 function loadTimerSelection(){
 
@@ -1391,23 +1504,50 @@ localStorage.getItem("timerSelection")
 if(data){
 
 selectedHours=
-Number(data.hours)||0;
+Math.max(
+0,
+Math.min(
+23,
+Number(data.hours)||0
+)
+);
 
 selectedMinutes=
-Number(data.minutes)||0;
+Math.max(
+0,
+Math.min(
+59,
+Number(data.minutes)||0
+)
+);
 
 selectedSeconds=
-Number(data.seconds)||0;
+Math.max(
+0,
+Math.min(
+59,
+Number(data.seconds)||0
+)
+);
 
 }
 
 }catch(e){}
 
+}
+
+loadTimerSelection();
+
+
+/* =========================
+   CREATION DES ROULETTES
+========================= */
+
 createPicker("hoursPicker",23);
 createPicker("minutesPicker",59);
 createPicker("secondsPicker",59);
 
-setTimeout(()=>{
+setTimeout(function(){
 
 scrollToValue(
 "hoursPicker",
@@ -1424,84 +1564,20 @@ scrollToValue(
 selectedSeconds
 );
 
+setTimeout(function(){
+
 updatePicker("hoursPicker");
 updatePicker("minutesPicker");
 updatePicker("secondsPicker");
 
+},100);
+
 },50);
-
-}
-
-loadTimerSelection();
 
 
 /* =========================
-   MINUTEUR AVEC SAUVEGARDE
+   DEMARRER MINUTEUR
 ========================= */
-
-let timerRunning=false;
-let timerEnd=0;
-let timerRemaining=
-selectedHours*3600+
-selectedMinutes*60+
-selectedSeconds;
-
-let timerInterval=null;
-
-function timerFormat(s){
-
-const h=Math.floor(s/3600);
-
-const m=Math.floor(
-(s%3600)/60
-);
-
-const sec=s%60;
-
-return(
-String(h).padStart(2,"0")+":"+
-String(m).padStart(2,"0")+":"+
-String(sec).padStart(2,"0")
-);
-
-}
-
-function saveTimer(){
-
-localStorage.setItem(
-"timerState",
-JSON.stringify({
-
-running:timerRunning,
-end:timerEnd,
-remaining:timerRemaining
-
-})
-);
-
-}
-
-function updateTimer(){
-
-if(timerRunning){
-
-timerRemaining=Math.max(
-0,
-Math.ceil(
-(timerEnd-Date.now())/1000
-)
-);
-
-}
-
-document.getElementById(
-"timerDisplay"
-).textContent=
-timerFormat(timerRemaining);
-
-saveTimer();
-
-}
 
 function startTimer(){
 
@@ -1528,45 +1604,6 @@ return;
 
 }
 
-if(timerRemaining<=0){
 
-timerRemaining=
-selectedHours*3600+
-selectedMinutes*60+
-selectedSeconds;
-
-}
-
-if(timerRemaining<=0)return;
-
-timerEnd=
-Date.now()+
-timerRemaining*1000;
-
-timerRunning=true;
-
-document.getElementById(
-"timerStart"
-).textContent="Pause";
-
-clearInterval(timerInterval);
-
-timerInterval=
-setInterval(()=>{
-
-updateTimer();
-
-if(timerRemaining<=0){
-
-clearInterval(timerInterval);
-
-timerRunning=false;
-
-document.getElementById(
-"timerStart"
-).textContent="Démarrer";
-
-ring();
-
-notify(
-  
+/* Si le minuteur est à zéro,
+on reprend la valeur 
