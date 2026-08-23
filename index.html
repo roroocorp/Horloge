@@ -2,607 +2,702 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#000000">
+
 <title>Horloge</title>
 
 <style>
+
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
-  margin:0;
-  padding:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
+html{
+    width:100%;
+    height:100%;
+    background:#000;
 }
 
 body{
-  touch-action:manipulation;
+    margin:0;
+    width:100%;
+    height:100%;
+    background:#000;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
 }
+
+/* =====================================================
+   STRUCTURE
+===================================================== */
 
 #app{
-  position:relative;
-  width:100%;
-  height:100dvh;
-  background:#000;
+    width:100%;
+    min-height:100%;
+    background:#000;
 }
 
-/* =========================
+/* =====================================================
    PAGES
-========================= */
+===================================================== */
 
 .page{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:92px;
+    display:none;
 
-  padding:42px 28px 30px;
+    width:100%;
+    min-height:calc(100vh - 82px);
 
-  overflow-y:auto;
-  overflow-x:hidden;
+    padding:
+        34px
+        24px
+        105px;
 
-  display:none;
+    overflow-y:auto;
+    overflow-x:hidden;
 
-  background:#000;
+    background:#000;
 }
 
-.page.show{
-  display:block;
+.page.active{
+    display:block;
 }
 
-.content{
-  width:100%;
-  max-width:700px;
-  margin:auto;
+.page-content{
+    width:100%;
+    max-width:610px;
+    margin:0 auto;
 }
+
+/* =====================================================
+   TITRES
+===================================================== */
 
 h1{
-  margin:0;
-  font-size:38px;
-  font-weight:700;
-  letter-spacing:-1px;
+    margin:0;
+
+    font-size:32px;
+    line-height:1.1;
+
+    font-weight:700;
 }
 
 .subtitle{
-  margin-top:8px;
-  color:#777;
-  font-size:18px;
+    margin-top:8px;
+
+    color:#777;
+
+    font-size:16px;
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+/* =====================================================
+   BARRE DU BAS
+===================================================== */
 
-#nav{
-  position:absolute;
-  z-index:5000;
+.bottom{
+    position:fixed;
 
-  left:50%;
-  bottom:0;
+    left:50%;
+    bottom:0;
 
-  transform:translateX(-50%);
+    transform:translateX(-50%);
 
-  width:100%;
-  max-width:728px;
-  height:92px;
+    width:100%;
+    max-width:728px;
 
-  background:#111;
+    height:82px;
 
-  display:flex;
+    background:#111;
 
-  padding:5px 3px;
+    border-top:1px solid #1b1b1b;
+
+    display:flex;
+
+    z-index:99999;
+
+    padding:3px 2px;
+
+    padding-bottom:
+        env(safe-area-inset-bottom,3px);
 }
 
-.nav{
-  flex:1;
+.tab{
+    flex:1;
 
-  height:82px;
+    height:76px;
 
-  background:transparent;
-  border:0;
+    border:0;
+    outline:0;
 
-  color:#666;
+    background:transparent;
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+    color:#666;
 
-  gap:6px;
+    display:flex;
+    flex-direction:column;
 
-  font-size:13px;
+    align-items:center;
+    justify-content:center;
 
-  cursor:pointer;
+    gap:4px;
 
-  padding:0;
-  margin:0;
+    font-size:12px;
 
-  position:relative;
-
-  z-index:6000;
+    cursor:pointer;
 }
 
-.nav.active{
-  color:#20e879;
+.tab.active{
+    color:#20e879;
 }
 
-.nav svg{
-  width:31px;
-  height:31px;
+.tab svg{
+    width:29px;
+    height:29px;
 
-  stroke:currentColor;
-  fill:none;
-  stroke-width:2.4;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+    fill:none;
 
-  pointer-events:none;
+    stroke:currentColor;
+
+    stroke-width:2.3;
+
+    stroke-linecap:round;
+    stroke-linejoin:round;
 }
 
-.nav span{
-  pointer-events:none;
-}
-
-/* =========================
+/* =====================================================
    RÉVEILS
-========================= */
+===================================================== */
 
 .empty{
-  text-align:center;
-  margin-top:76px;
+    text-align:center;
+
+    margin-top:68px;
 }
 
 .plus{
-  width:82px;
-  height:82px;
+    width:72px;
+    height:72px;
 
-  border-radius:50%;
-  border:0;
+    border:0;
+    border-radius:50%;
 
-  background:#20e879;
-  color:#06130b;
+    background:#20e879;
 
-  font-size:42px;
-  font-weight:300;
+    color:#07150d;
 
-  display:block;
-  margin:auto;
-}
+    font-size:38px;
+    font-weight:300;
 
-.plus:active{
-  transform:scale(.94);
+    line-height:72px;
+
+    padding:0;
 }
 
 .add-text{
-  margin-top:14px;
-  color:#777;
-  font-size:20px;
+    margin-top:12px;
+
+    color:#777;
+
+    font-size:17px;
 }
 
 .alarm-list{
-  margin-top:30px;
+    margin-top:25px;
 }
 
 .alarm{
-  min-height:90px;
+    min-height:78px;
 
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+    display:flex;
 
-  border-bottom:1px solid #181818;
+    align-items:center;
+    justify-content:space-between;
+
+    border-bottom:1px solid #171717;
 }
 
 .alarm-time{
-  font-size:39px;
-  font-weight:300;
+    font-size:34px;
+    font-weight:300;
 }
 
 .alarm-days{
-  margin-top:4px;
-  color:#777;
-  font-size:14px;
+    margin-top:3px;
+
+    color:#777;
+
+    font-size:12px;
 }
 
-.alarm-right{
-  display:flex;
-  align-items:center;
-  gap:13px;
+.alarm-actions{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
 }
 
 .delete{
-  background:none;
-  border:0;
-  color:#666;
-  font-size:27px;
+    width:36px;
+    height:36px;
+
+    border:0;
+
+    background:transparent;
+
+    color:#666;
+
+    font-size:25px;
 }
 
-.switch{
-  width:51px;
-  height:30px;
+.toggle{
+    width:46px;
+    height:27px;
 
-  border:0;
-  border-radius:20px;
+    border:0;
 
-  background:#333;
+    border-radius:20px;
 
-  position:relative;
+    background:#333;
+
+    position:relative;
 }
 
-.switch:after{
-  content:"";
+.toggle:after{
+    content:"";
 
-  position:absolute;
+    position:absolute;
 
-  width:24px;
-  height:24px;
+    width:21px;
+    height:21px;
 
-  left:3px;
-  top:3px;
+    left:3px;
+    top:3px;
 
-  border-radius:50%;
+    background:#999;
 
-  background:#aaa;
+    border-radius:50%;
 
-  transition:.2s;
+    transition:.2s;
 }
 
-.switch.on{
-  background:#20e879;
+.toggle.on{
+    background:#20e879;
 }
 
-.switch.on:after{
-  left:24px;
-  background:#06130b;
+.toggle.on:after{
+    left:22px;
+    background:#06120a;
 }
 
-/* =========================
+/* =====================================================
    HORLOGE
-========================= */
+===================================================== */
 
 .clock-page{
-  text-align:center;
+    text-align:center;
 }
 
-.clock-content{
-  margin-top:110px;
+.clock-box{
+    margin-top:100px;
 }
 
 .clock{
-  font-size:clamp(55px,15vw,105px);
-  font-weight:300;
-  white-space:nowrap;
-  letter-spacing:1px;
+    font-size:clamp(45px,10vw,76px);
+
+    font-weight:300;
+
+    letter-spacing:1px;
+
+    white-space:nowrap;
 }
 
 .clock-sec{
-  color:#20e879;
+    color:#20e879;
 }
 
 .date{
-  margin-top:15px;
-  color:#777;
-  font-size:20px;
-  text-transform:capitalize;
+    margin-top:12px;
+
+    color:#777;
+
+    font-size:17px;
+
+    text-transform:capitalize;
 }
 
-/* =========================
-   OUTILS
-========================= */
+/* =====================================================
+   CHRONO
+===================================================== */
 
 .tool-page{
-  text-align:center;
+    text-align:center;
 }
 
 .tool{
-  margin-top:90px;
+    margin-top:75px;
 }
 
-.display{
-  font-size:clamp(55px,15vw,100px);
-  font-weight:300;
-  white-space:nowrap;
-  font-variant-numeric:tabular-nums;
+.tool-display{
+    font-size:clamp(48px,11vw,75px);
+
+    font-weight:300;
+
+    font-variant-numeric:tabular-nums;
+
+    white-space:nowrap;
 }
 
 .green{
-  color:#20e879;
+    color:#20e879;
 }
 
-.buttons{
-  margin-top:45px;
+.tool-buttons{
+    display:flex;
 
-  display:flex;
-  justify-content:center;
-  gap:20px;
+    justify-content:center;
+
+    gap:15px;
+
+    margin-top:35px;
 }
 
-.round{
-  width:78px;
-  height:78px;
+.round-button{
+    width:68px;
+    height:68px;
 
-  border:0;
-  border-radius:50%;
+    border:0;
+    border-radius:50%;
 
-  background:#181818;
-  color:#fff;
+    background:#181818;
 
-  font-size:15px;
+    color:#fff;
+
+    font-size:13px;
 }
 
-.round.green-btn{
-  background:#20e879;
-  color:#06130b;
-  font-weight:bold;
+.round-button.main{
+    background:#20e879;
+    color:#06120a;
+    font-weight:bold;
 }
-
-.round:active{
-  transform:scale(.93);
-}
-
-/* =========================
-   TOURS
-========================= */
 
 .laps{
-  max-width:430px;
-  margin:35px auto 0;
+    width:100%;
+    max-width:400px;
 
-  text-align:left;
+    margin:28px auto 0;
 
-  max-height:180px;
-  overflow:auto;
+    text-align:left;
 }
 
 .lap{
-  display:flex;
-  justify-content:space-between;
+    display:flex;
 
-  padding:11px 4px;
+    justify-content:space-between;
 
-  color:#aaa;
+    padding:9px 3px;
 
-  border-bottom:1px solid #181818;
+    color:#888;
+
+    border-bottom:1px solid #171717;
+
+    font-size:13px;
 }
 
-/* =========================
+/* =====================================================
    MINUTEUR
-========================= */
+===================================================== */
 
-.timer{
-  margin-top:70px;
+.timer-box{
+    margin-top:65px;
+}
+
+.timer-display{
+    font-size:clamp(48px,11vw,75px);
+
+    font-weight:300;
+
+    font-variant-numeric:tabular-nums;
+
+    white-space:nowrap;
 }
 
 .timer-inputs{
-  display:flex;
-  justify-content:center;
-  align-items:center;
+    display:flex;
 
-  gap:7px;
+    align-items:center;
+    justify-content:center;
 
-  margin-top:35px;
+    gap:5px;
+
+    margin-top:30px;
 }
 
-.input-time{
-  width:76px;
-  height:58px;
+.time-input{
+    width:65px;
+    height:50px;
 
-  background:#111;
-  color:#fff;
+    background:#111;
 
-  border:1px solid #292929;
-  border-radius:12px;
+    color:#fff;
 
-  text-align:center;
+    border:1px solid #292929;
 
-  font-size:24px;
-  outline:none;
+    border-radius:10px;
+
+    text-align:center;
+
+    font-size:21px;
+
+    outline:none;
 }
 
-.input-time:focus{
-  border-color:#20e879;
+.time-input:focus{
+    border-color:#20e879;
 }
 
 .colon{
-  color:#777;
-  font-size:25px;
+    color:#777;
+
+    font-size:20px;
 }
 
-/* =========================
-   MODALE
-========================= */
+/* =====================================================
+   MODAL
+===================================================== */
 
-#modal{
-  position:fixed;
-  z-index:10000;
+.modal{
+    position:fixed;
 
-  inset:0;
+    inset:0;
 
-  background:rgba(0,0,0,.72);
+    z-index:100000;
 
-  display:none;
-  align-items:flex-end;
+    display:none;
+
+    align-items:flex-end;
+
+    background:rgba(0,0,0,.72);
 }
 
-#modal.show{
-  display:flex;
+.modal.show{
+    display:flex;
 }
 
 .modal-box{
-  width:100%;
-  max-width:600px;
+    width:100%;
+    max-width:600px;
 
-  margin:auto auto 0;
+    margin:auto auto 0;
 
-  background:#151515;
+    background:#151515;
 
-  border-radius:25px 25px 0 0;
+    border-radius:22px 22px 0 0;
 
-  padding:25px 22px 32px;
+    padding:22px 20px 28px;
 }
 
 .modal-title{
-  text-align:center;
-  font-size:22px;
-  margin-bottom:22px;
+    text-align:center;
+
+    font-size:20px;
+
+    margin-bottom:20px;
 }
 
-.alarm-time-input{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:8px;
+.alarm-inputs{
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:6px;
 }
 
-.alarm-time-input input{
-  width:105px;
-  height:70px;
+.alarm-input{
+    width:90px;
+    height:62px;
 
-  background:#080808;
-  color:#fff;
+    background:#080808;
 
-  border:1px solid #333;
-  border-radius:15px;
+    color:#fff;
 
-  text-align:center;
+    border:1px solid #303030;
 
-  font-size:38px;
-  outline:none;
+    border-radius:13px;
+
+    text-align:center;
+
+    font-size:32px;
+
+    outline:none;
 }
 
 .days{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:8px;
+    display:flex;
 
-  margin:25px 0;
+    justify-content:center;
+    flex-wrap:wrap;
+
+    gap:7px;
+
+    margin:22px 0;
 }
 
 .day{
-  width:43px;
-  height:43px;
+    width:40px;
+    height:40px;
 
-  border:0;
-  border-radius:50%;
+    border:0;
+    border-radius:50%;
 
-  background:#252525;
-  color:#aaa;
+    background:#252525;
+
+    color:#aaa;
+
+    font-size:11px;
 }
 
 .day.selected{
-  background:#20e879;
-  color:#06130b;
-  font-weight:bold;
+    background:#20e879;
+
+    color:#06120a;
+
+    font-weight:bold;
 }
 
 .modal-buttons{
-  display:flex;
-  gap:12px;
+    display:flex;
+
+    gap:10px;
 }
 
-.modal-buttons button{
-  flex:1;
-  height:52px;
+.modal-button{
+    flex:1;
 
-  border:0;
-  border-radius:30px;
+    height:48px;
 
-  font-size:16px;
+    border:0;
+
+    border-radius:25px;
+
+    font-size:15px;
 }
 
 .cancel{
-  background:#292929;
-  color:#fff;
+    background:#292929;
+
+    color:#fff;
 }
 
 .save{
-  background:#20e879;
-  color:#06130b;
-  font-weight:bold;
+    background:#20e879;
+
+    color:#06120a;
+
+    font-weight:bold;
 }
 
-/* =========================
-   ALERTE
-========================= */
+/* =====================================================
+   SONNERIE
+===================================================== */
 
-#ring{
-  position:fixed;
-  z-index:20000;
+.ringing{
+    position:fixed;
 
-  inset:0;
+    inset:0;
 
-  background:#000;
+    z-index:200000;
 
-  display:none;
+    display:none;
 
-  align-items:center;
-  justify-content:center;
+    align-items:center;
+    justify-content:center;
 
-  text-align:center;
+    background:#000;
+
+    text-align:center;
 }
 
-#ring.show{
-  display:flex;
+.ringing.show{
+    display:flex;
 }
 
-#ring h2{
-  font-size:40px;
+.ringing h2{
+    font-size:35px;
 }
 
-.ring-time{
-  color:#20e879;
-  font-size:70px;
-  margin:25px 0 40px;
+.ringing-time{
+    color:#20e879;
+
+    font-size:60px;
+
+    margin:20px 0 35px;
 }
 
 .stop{
-  border:0;
-  border-radius:40px;
+    border:0;
 
-  background:#20e879;
-  color:#06130b;
+    border-radius:30px;
 
-  padding:17px 45px;
+    background:#20e879;
 
-  font-size:18px;
-  font-weight:bold;
+    color:#06120a;
+
+    padding:15px 40px;
+
+    font-size:16px;
+
+    font-weight:bold;
 }
+
+/* =====================================================
+   PETITS ÉCRANS
+===================================================== */
 
 @media(max-width:500px){
 
-  .page{
-    padding:32px 20px 25px;
-  }
+    .page{
+        padding-left:18px;
+        padding-right:18px;
+        padding-top:30px;
+    }
 
-  h1{
-    font-size:34px;
-  }
+    h1{
+        font-size:30px;
+    }
 
-  #nav{
-    height:91px;
-  }
+    .subtitle{
+        font-size:15px;
+    }
 
-  .nav{
-    height:82px;
-    font-size:12px;
-  }
+    .empty{
+        margin-top:58px;
+    }
 
-  .nav svg{
-    width:30px;
-    height:30px;
-  }
+    .plus{
+        width:68px;
+        height:68px;
+        line-height:68px;
+    }
+
+    .bottom{
+        height:78px;
+    }
+
+    .tab{
+        height:72px;
+        font-size:11px;
+    }
+
+    .tab svg{
+        width:27px;
+        height:27px;
+    }
 
 }
+
 </style>
 </head>
 
@@ -610,22 +705,36 @@ h1{
 
 <div id="app">
 
-<!-- =================================================
+
+<!-- =====================================================
      RÉVEILS
-================================================= -->
+===================================================== -->
 
-<section class="page show" id="alarms">
+<section
+    id="page-reveils"
+    class="page active">
 
-<div class="content">
+<div class="page-content">
 
 <h1>Réveils</h1>
-<div class="subtitle">Vos alarmes</div>
 
-<div id="alarmList" class="alarm-list"></div>
+<div class="subtitle">
+Vos alarmes
+</div>
 
-<div id="empty" class="empty">
+<div id="alarmList"></div>
 
-<button class="plus" onclick="openModal()">+</button>
+<div
+    id="emptyAlarm"
+    class="empty">
+
+<button
+    class="plus"
+    onclick="openAlarm()">
+
++
+
+</button>
 
 <div class="add-text">
 Ajouter un réveil
@@ -638,24 +747,34 @@ Ajouter un réveil
 </section>
 
 
-<!-- =================================================
+<!-- =====================================================
      HORLOGE
-================================================= -->
+===================================================== -->
 
-<section class="page clock-page" id="clock">
+<section
+    id="page-horloge"
+    class="page clock-page">
 
-<div class="content">
+<div class="page-content">
 
 <h1>Horloge</h1>
-<div class="subtitle">Heure actuelle</div>
 
-<div class="clock-content">
-
-<div class="clock">
-<span id="hh">00</span>:<span id="mm">00</span>:<span class="clock-sec" id="ss">00</span>
+<div class="subtitle">
+Heure actuelle
 </div>
 
-<div class="date" id="date"></div>
+<div class="clock-box">
+
+<div class="clock">
+
+<span id="hours">00</span>:<span id="minutes">00</span>:<span class="clock-sec" id="seconds">00</span>
+
+</div>
+
+<div
+    id="date"
+    class="date">
+</div>
 
 </div>
 
@@ -664,40 +783,63 @@ Ajouter un réveil
 </section>
 
 
-<!-- =================================================
-     CHRONO
-================================================= -->
+<!-- =====================================================
+     CHRONOMÈTRE
+===================================================== -->
 
-<section class="page tool-page" id="chrono">
+<section
+    id="page-chrono"
+    class="page tool-page">
 
-<div class="content">
+<div class="page-content">
 
 <h1>Chrono</h1>
-<div class="subtitle">Chronomètre</div>
+
+<div class="subtitle">
+Chronomètre
+</div>
 
 <div class="tool">
 
-<div class="display">
-<span id="cm">00</span>:<span id="cs">00</span><span class="green">.<span id="cml">00</span></span>
+<div class="tool-display">
+
+<span id="chronoMinutes">00</span>:<span id="chronoSeconds">00</span><span class="green">.<span id="chronoMs">00</span></span>
+
 </div>
 
-<div class="buttons">
+<div class="tool-buttons">
 
-<button class="round" onclick="chronoReset()">
+<button
+    class="round-button"
+    onclick="chronoReset()">
+
 Reset
+
 </button>
 
-<button class="round green-btn" id="chronoButton" onclick="chronoToggle()">
+<button
+    id="chronoStart"
+    class="round-button main"
+    onclick="chronoStartStop()">
+
 Démarrer
+
 </button>
 
-<button class="round" onclick="chronoLap()">
+<button
+    class="round-button"
+    onclick="chronoLap()">
+
 Tour
+
 </button>
 
 </div>
 
-<div class="laps" id="laps"></div>
+<div
+    id="laps"
+    class="laps">
+</div>
 
 </div>
 
@@ -706,63 +848,81 @@ Tour
 </section>
 
 
-<!-- =================================================
+<!-- =====================================================
      MINUTEUR
-================================================= -->
+===================================================== -->
 
-<section class="page tool-page" id="timer">
+<section
+    id="page-minuteur"
+    class="page tool-page">
 
-<div class="content">
+<div class="page-content">
 
 <h1>Minuteur</h1>
-<div class="subtitle">Compte à rebours</div>
 
-<div class="tool timer">
+<div class="subtitle">
+Compte à rebours
+</div>
 
-<div class="display" id="timerDisplay">
+<div class="timer-box">
+
+<div
+    id="timerDisplay"
+    class="timer-display">
+
 00:00:00
+
 </div>
 
 <div class="timer-inputs">
 
 <input
-id="th"
-class="input-time"
-type="number"
-min="0"
-max="99"
-value="0">
+    id="timerHours"
+    class="time-input"
+    type="number"
+    min="0"
+    max="99"
+    value="0">
 
 <span class="colon">:</span>
 
 <input
-id="tm"
-class="input-time"
-type="number"
-min="0"
-max="59"
-value="5">
+    id="timerMinutes"
+    class="time-input"
+    type="number"
+    min="0"
+    max="59"
+    value="5">
 
 <span class="colon">:</span>
 
 <input
-id="ts"
-class="input-time"
-type="number"
-min="0"
-max="59"
-value="0">
+    id="timerSeconds"
+    class="time-input"
+    type="number"
+    min="0"
+    max="59"
+    value="0">
 
 </div>
 
-<div class="buttons">
+<div class="tool-buttons">
 
-<button class="round" onclick="timerReset()">
+<button
+    class="round-button"
+    onclick="timerReset()">
+
 Reset
+
 </button>
 
-<button class="round green-btn" id="timerButton" onclick="timerToggle()">
+<button
+    id="timerStart"
+    class="round-button main"
+    onclick="timerStartStop()">
+
 Démarrer
+
 </button>
 
 </div>
@@ -774,21 +934,25 @@ Démarrer
 </section>
 
 
-<!-- =================================================
-     NAVIGATION
-================================================= -->
+<!-- =====================================================
+     BARRE NAVIGATION
+===================================================== -->
 
-<nav id="nav">
+<nav class="bottom">
 
-<button class="nav active" id="navAlarms"
-onclick="showPage('alarms','navAlarms')">
+
+<button
+    id="tab-reveils"
+    class="tab active"
+    onclick="changePage('reveils')">
 
 <svg viewBox="0 0 32 32">
+
 <path d="M9 22h14"/>
 <path d="M10 22v-8a6 6 0 0 1 12 0v8"/>
 <path d="M7 22h18"/>
 <path d="M13 26h6"/>
-<path d="M16 8V5"/>
+
 </svg>
 
 <span>Réveils</span>
@@ -796,13 +960,17 @@ onclick="showPage('alarms','navAlarms')">
 </button>
 
 
-<button class="nav"
-id="navClock"
-onclick="showPage('clock','navClock')">
+<button
+    id="tab-horloge"
+    class="tab"
+    onclick="changePage('horloge')">
 
 <svg viewBox="0 0 32 32">
+
 <circle cx="16" cy="16" r="12"/>
+
 <path d="M16 9v7l5 3"/>
+
 </svg>
 
 <span>Horloge</span>
@@ -810,17 +978,22 @@ onclick="showPage('clock','navClock')">
 </button>
 
 
-<button class="nav"
-id="navChrono"
-onclick="showPage('chrono','navChrono')">
+<button
+    id="tab-chrono"
+    class="tab"
+    onclick="changePage('chrono')">
 
 <svg viewBox="0 0 32 32">
+
 <circle cx="16" cy="18" r="10"/>
+
 <path d="M13 5h6"/>
 <path d="M16 5v3"/>
 <path d="M11 8L9 6"/>
 <path d="M21 8l2-2"/>
+
 <path d="M16 12v6l4 2"/>
+
 </svg>
 
 <span>Chrono</span>
@@ -828,34 +1001,41 @@ onclick="showPage('chrono','navChrono')">
 </button>
 
 
-<button class="nav"
-id="navTimer"
-onclick="showPage('timer','navTimer')">
+<button
+    id="tab-minuteur"
+    class="tab"
+    onclick="changePage('minuteur')">
 
 <svg viewBox="0 0 32 32">
+
 <circle cx="16" cy="18" r="10"/>
+
 <path d="M13 5h6"/>
 <path d="M16 5v3"/>
 <path d="M11 8L9 6"/>
 <path d="M21 8l2-2"/>
+
 <path d="M16 12v6"/>
-<path d="M16 18l-3 2"/>
+
 </svg>
 
 <span>Minuteur</span>
 
 </button>
 
+
 </nav>
 
 </div>
 
 
-<!-- =================================================
-     MODALE
-================================================= -->
+<!-- =====================================================
+     MODALE RÉVEIL
+===================================================== -->
 
-<div id="modal">
+<div
+    id="alarmModal"
+    class="modal">
 
 <div class="modal-box">
 
@@ -863,23 +1043,25 @@ onclick="showPage('timer','navTimer')">
 Nouveau réveil
 </div>
 
-<div class="alarm-time-input">
+<div class="alarm-inputs">
 
 <input
-id="alarmHour"
-type="number"
-min="0"
-max="23"
-value="07">
+    id="alarmHour"
+    class="alarm-input"
+    type="number"
+    min="0"
+    max="23"
+    value="07">
 
 <span class="colon">:</span>
 
 <input
-id="alarmMinute"
-type="number"
-min="0"
-max="59"
-value="00">
+    id="alarmMinute"
+    class="alarm-input"
+    type="number"
+    min="0"
+    max="59"
+    value="00">
 
 </div>
 
@@ -897,12 +1079,20 @@ value="00">
 
 <div class="modal-buttons">
 
-<button class="cancel" onclick="closeModal()">
+<button
+    class="modal-button cancel"
+    onclick="closeAlarm()">
+
 Annuler
+
 </button>
 
-<button class="save" onclick="saveAlarm()">
+<button
+    class="modal-button save"
+    onclick="saveAlarm()">
+
 Enregistrer
+
 </button>
 
 </div>
@@ -912,22 +1102,32 @@ Enregistrer
 </div>
 
 
-<!-- =================================================
+<!-- =====================================================
      SONNERIE
-================================================= -->
+===================================================== -->
 
-<div id="ring">
+<div
+    id="ringing"
+    class="ringing">
 
 <div>
 
 <h2>Réveil</h2>
 
-<div class="ring-time" id="ringTime">
+<div
+    id="ringingTime"
+    class="ringing-time">
+
 00:00
+
 </div>
 
-<button class="stop" onclick="stopRing()">
+<button
+    class="stop"
+    onclick="stopAlarm()">
+
 Arrêter
+
 </button>
 
 </div>
@@ -941,24 +1141,30 @@ Arrêter
    NAVIGATION
 ===================================================== */
 
-function showPage(page,id){
+function changePage(name){
 
-  /*
-    C'est volontairement très simple :
-    une seule page visible à la fois.
-  */
+    document.querySelectorAll(".page")
+    .forEach(function(page){
 
-  document.querySelectorAll(".page").forEach(function(p){
-    p.classList.remove("show");
-  });
+        page.classList.remove("active");
 
-  document.getElementById(page).classList.add("show");
+    });
 
-  document.querySelectorAll(".nav").forEach(function(n){
-    n.classList.remove("active");
-  });
+    document.getElementById(
+        "page-" + name
+    ).classList.add("active");
 
-  document.getElementById(id).classList.add("active");
+
+    document.querySelectorAll(".tab")
+    .forEach(function(tab){
+
+        tab.classList.remove("active");
+
+    });
+
+    document.getElementById(
+        "tab-" + name
+    ).classList.add("active");
 
 }
 
@@ -967,55 +1173,67 @@ function showPage(page,id){
    HORLOGE
 ===================================================== */
 
-const days=[
-"dimanche",
-"lundi",
-"mardi",
-"mercredi",
-"jeudi",
-"vendredi",
-"samedi"
+const dayNames=[
+    "dimanche",
+    "lundi",
+    "mardi",
+    "mercredi",
+    "jeudi",
+    "vendredi",
+    "samedi"
 ];
 
-const months=[
-"janvier",
-"février",
-"mars",
-"avril",
-"mai",
-"juin",
-"juillet",
-"août",
-"septembre",
-"octobre",
-"novembre",
-"décembre"
+const monthNames=[
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre"
 ];
 
-function pad(n){
-  return String(n).padStart(2,"0");
-}
+function pad(number){
 
-function clockUpdate(){
-
-  const d=new Date();
-
-  document.getElementById("hh").textContent=pad(d.getHours());
-  document.getElementById("mm").textContent=pad(d.getMinutes());
-  document.getElementById("ss").textContent=pad(d.getSeconds());
-
-  document.getElementById("date").textContent=
-    days[d.getDay()]+" "+
-    d.getDate()+" "+
-    months[d.getMonth()]+" "+
-    d.getFullYear();
-
-  checkAlarms();
+    return String(number).padStart(2,"0");
 
 }
 
-setInterval(clockUpdate,1000);
-clockUpdate();
+function updateClock(){
+
+    const now=new Date();
+
+    document.getElementById("hours")
+        .textContent=pad(now.getHours());
+
+    document.getElementById("minutes")
+        .textContent=pad(now.getMinutes());
+
+    document.getElementById("seconds")
+        .textContent=pad(now.getSeconds());
+
+    document.getElementById("date")
+        .textContent=
+        dayNames[now.getDay()]
+        +" "
+        +now.getDate()
+        +" "
+        +monthNames[now.getMonth()]
+        +" "
+        +now.getFullYear();
+
+    checkAlarms();
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
 
 
 /* =====================================================
@@ -1025,385 +1243,275 @@ clockUpdate();
 let alarms=[];
 
 try{
-  alarms=JSON.parse(localStorage.getItem("clock_alarms"))||[];
+
+    alarms=JSON.parse(
+        localStorage.getItem("myClockAlarms")
+    ) || [];
+
 }catch(e){
-  alarms=[];
+
+    alarms=[];
+
 }
 
 let selectedDays=[];
 
-function openModal(){
 
-  selectedDays=[];
+function openAlarm(){
 
-  document.querySelectorAll(".day").forEach(function(d){
-    d.classList.remove("selected");
-  });
+    selectedDays=[];
 
-  document.getElementById("modal").classList.add("show");
+    document.querySelectorAll(".day")
+    .forEach(function(day){
+
+        day.classList.remove("selected");
+
+    });
+
+    document.getElementById(
+        "alarmModal"
+    ).classList.add("show");
 
 }
 
-function closeModal(){
 
-  document.getElementById("modal").classList.remove("show");
+function closeAlarm(){
+
+    document.getElementById(
+        "alarmModal"
+    ).classList.remove("show");
 
 }
+
 
 function selectDay(button){
 
-  const day=Number(button.dataset.day);
+    const day=Number(
+        button.dataset.day
+    );
 
-  if(selectedDays.includes(day)){
+    if(selectedDays.includes(day)){
 
-    selectedDays=selectedDays.filter(function(x){
-      return x!==day;
-    });
+        selectedDays=selectedDays.filter(
+            function(x){
 
-    button.classList.remove("selected");
+                return x!==day;
 
-  }else{
+            }
+        );
 
-    selectedDays.push(day);
+        button.classList.remove("selected");
 
-    button.classList.add("selected");
+    }else{
 
-  }
+        selectedDays.push(day);
+
+        button.classList.add("selected");
+
+    }
 
 }
+
 
 function saveAlarm(){
 
-  let h=Number(document.getElementById("alarmHour").value)||0;
-  let m=Number(document.getElementById("alarmMinute").value)||0;
+    let h=Number(
+        document.getElementById("alarmHour").value
+    ) || 0;
 
-  h=Math.max(0,Math.min(23,h));
-  m=Math.max(0,Math.min(59,m));
+    let m=Number(
+        document.getElementById("alarmMinute").value
+    ) || 0;
 
-  alarms.push({
-    id:Date.now(),
-    hour:h,
-    minute:m,
-    days:[...selectedDays],
-    enabled:true,
-    last:""
-  });
+    h=Math.max(0,Math.min(23,h));
 
-  localStorage.setItem(
-    "clock_alarms",
-    JSON.stringify(alarms)
-  );
+    m=Math.max(0,Math.min(59,m));
 
-  renderAlarms();
-  closeModal();
+
+    alarms.push({
+
+        id:Date.now(),
+
+        hour:h,
+
+        minute:m,
+
+        days:[...selectedDays],
+
+        enabled:true,
+
+        last:""
+
+    });
+
+
+    localStorage.setItem(
+        "myClockAlarms",
+        JSON.stringify(alarms)
+    );
+
+
+    renderAlarms();
+
+    closeAlarm();
 
 }
+
 
 function renderAlarms(){
 
-  const list=document.getElementById("alarmList");
-  const empty=document.getElementById("empty");
+    const list=
+        document.getElementById(
+            "alarmList"
+        );
 
-  list.innerHTML="";
+    const empty=
+        document.getElementById(
+            "emptyAlarm"
+        );
 
-  empty.style.display=
-    alarms.length===0 ? "block":"none";
+    list.innerHTML="";
 
-  const names={
-    0:"Dim",
-    1:"Lun",
-    2:"Mar",
-    3:"Mer",
-    4:"Jeu",
-    5:"Ven",
-    6:"Sam"
-  };
 
-  alarms.forEach(function(a){
+    empty.style.display=
+        alarms.length
+        ? "none"
+        : "block";
 
-    let text="Tous les jours";
 
-    if(a.days.length){
-      text=a.days.map(function(d){
-        return names[d];
-      }).join(" • ");
-    }
+    const names={
+        0:"Dim",
+        1:"Lun",
+        2:"Mar",
+        3:"Mer",
+        4:"Jeu",
+        5:"Ven",
+        6:"Sam"
+    };
 
-    const row=document.createElement("div");
 
-    row.className="alarm";
+    alarms.forEach(function(alarm){
 
-    row.innerHTML=`
-      <div>
-        <div class="alarm-time">
-          ${pad(a.hour)}:${pad(a.minute)}
-        </div>
-        <div class="alarm-days">
-          ${text}
-        </div>
-      </div>
+        let days="Tous les jours";
 
-      <div class="alarm-right">
 
-        <button
-          class="delete"
-          onclick="deleteAlarm(${a.id})">
-          ×
-        </button>
+        if(alarm.days.length){
 
-        <button
-          class="switch ${a.enabled?"on":""}"
-          onclick="toggleAlarm(${a.id})">
-        </button>
+            days=alarm.days.map(
+                function(day){
 
-      </div>
-    `;
+                    return names[day];
 
-    list.appendChild(row);
+                }
+            ).join(" • ");
 
-  });
+        }
+
+
+        const element=
+            document.createElement("div");
+
+        element.className="alarm";
+
+
+        element.innerHTML=`
+
+            <div>
+
+                <div class="alarm-time">
+
+                    ${pad(alarm.hour)}:${pad(alarm.minute)}
+
+                </div>
+
+                <div class="alarm-days">
+
+                    ${days}
+
+                </div>
+
+            </div>
+
+
+            <div class="alarm-actions">
+
+                <button
+                    class="delete"
+                    onclick="deleteAlarm(${alarm.id})">
+
+                    ×
+
+                </button>
+
+
+                <button
+                    class="toggle ${alarm.enabled ? "on" : ""}"
+                    onclick="toggleAlarm(${alarm.id})">
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        list.appendChild(element);
+
+    });
 
 }
+
 
 function deleteAlarm(id){
 
-  alarms=alarms.filter(function(a){
-    return a.id!==id;
-  });
+    alarms=alarms.filter(
+        function(alarm){
 
-  localStorage.setItem(
-    "clock_alarms",
-    JSON.stringify(alarms)
-  );
+            return alarm.id!==id;
 
-  renderAlarms();
+        }
+    );
+
+
+    localStorage.setItem(
+        "myClockAlarms",
+        JSON.stringify(alarms)
+    );
+
+
+    renderAlarms();
 
 }
+
 
 function toggleAlarm(id){
 
-  const a=alarms.find(function(x){
-    return x.id===id;
-  });
+    const alarm=
+        alarms.find(
+            function(a){
 
-  if(!a)return;
+                return a.id===id;
 
-  a.enabled=!a.enabled;
-
-  localStorage.setItem(
-    "clock_alarms",
-    JSON.stringify(alarms)
-  );
-
-  renderAlarms();
-
-}
-
-renderAlarms();
+            }
+        );
 
 
-/* =====================================================
-   ALARME
-===================================================== */
+    if(!alarm)return;
 
-let ringing=false;
 
-function checkAlarms(){
+    alarm.enabled=
+        !alarm.enabled;
 
-  if(ringing)return;
-
-  const d=new Date();
-
-  if(d.getSeconds()!==0)return;
-
-  alarms.forEach(function(a){
-
-    if(!a.enabled)return;
-
-    if(a.hour!==d.getHours())return;
-
-    if(a.minute!==d.getMinutes())return;
-
-    if(
-      a.days.length &&
-      !a.days.includes(d.getDay())
-    ){
-      return;
-    }
-
-    const key=
-      d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
-
-    if(a.last===key)return;
-
-    a.last=key;
 
     localStorage.setItem(
-      "clock_alarms",
-      JSON.stringify(alarms)
+        "myClockAlarms",
+        JSON.stringify(alarms)
     );
 
-    startRing(
-      pad(a.hour)+":"+pad(a.minute)
-    );
 
-  });
-
-}
-
-function startRing(time){
-
-  ringing=true;
-
-  document.getElementById("ringTime").textContent=time;
-
-  document.getElementById("ring").classList.add("show");
-
-  if(navigator.vibrate){
-    navigator.vibrate([500,300,500,300,800]);
-  }
-
-}
-
-function stopRing(){
-
-  ringing=false;
-
-  document.getElementById("ring").classList.remove("show");
-
-  if(navigator.vibrate){
-    navigator.vibrate(0);
-  }
+    renderAlarms();
 
 }
 
 
-/* =====================================================
-   CHRONOMÈTRE
-===================================================== */
-
-let chronoRunning=false;
-let chronoElapsed=0;
-let chronoStartTime=0;
-let chronoInterval=null;
-let lastLap=0;
-
-function chronoUpdate(){
-
-  let elapsed=chronoElapsed;
-
-  if(chronoRunning){
-    elapsed+=Date.now()-chronoStartTime;
-  }
-
-  const total=Math.floor(elapsed/1000);
-
-  const min=Math.floor(total/60);
-  const sec=total%60;
-  const ms=Math.floor((elapsed%1000)/10);
-
-  document.getElementById("cm").textContent=pad(min);
-  document.getElementById("cs").textContent=pad(sec);
-  document.getElementById("cml").textContent=pad(ms);
-
-}
-
-function chronoToggle(){
-
-  if(!chronoRunning){
-
-    chronoRunning=true;
-    chronoStartTime=Date.now();
-
-    chronoInterval=setInterval(chronoUpdate,20);
-
-    document.getElementById("chronoButton").textContent="Pause";
-
-  }else{
-
-    chronoElapsed+=Date.now()-chronoStartTime;
-
-    chronoRunning=false;
-
-    clearInterval(chronoInterval);
-
-    document.getElementById("chronoButton").textContent="Démarrer";
-
-    chronoUpdate();
-
-  }
-
-}
-
-function chronoReset(){
-
-  chronoRunning=false;
-
-  clearInterval(chronoInterval);
-
-  chronoElapsed=0;
-  chronoStartTime=0;
-  lastLap=0;
-
-  document.getElementById("chronoButton").textContent="Démarrer";
-
-  document.getElementById("laps").innerHTML="";
-
-  chronoUpdate();
-
-}
-
-function chronoLap(){
-
-  let elapsed=chronoElapsed;
-
-  if(chronoRunning){
-    elapsed+=Date.now()-chronoStartTime;
-  }
-
-  if(elapsed<=0)return;
-
-  const difference=elapsed-lastLap;
-
-  lastLap=elapsed;
-
-  const total=Math.floor(difference/1000);
-
-  const min=Math.floor(total/60);
-  const sec=total%60;
-  const ms=Math.floor((difference%1000)/10);
-
-  const row=document.createElement("div");
-
-  row.className="lap";
-
-  const number=
-    document.querySelectorAll(".lap").length+1;
-
-  row.innerHTML=
-    "<span>Tour "+number+"</span>"+
-    "<span>"+
-    pad(min)+":"+pad(sec)+"."+pad(ms)+
-    "</span>";
-
-  document.getElementById("laps").prepend(row);
-
-}
-
-chronoUpdate();
-
-
-/* =====================================================
-   MINUTEUR
-===================================================== */
-
-let timerRunning=false;
-let timerRemaining=0;
-let timerEnd=0;
-let timerInterval=null;
-
-function getTimerValue(){
-
-  const h=Math.max(
-    0,
-    Number(docum
+renderAlarm
