@@ -2,48 +2,35 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
 <title>Horloge</title>
 
 <style>
-
-/* =====================================================
-   BASE
-===================================================== */
-
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html,
-body {
+html, body {
     width: 100%;
     height: 100%;
-    overflow: hidden;
     background: #000;
-    color: #fff;
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
 }
 
 button {
     font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .app {
     width: 100%;
-    height: 100dvh;
     max-width: 700px;
+    height: 100dvh;
     margin: auto;
     background: #000;
     position: relative;
@@ -51,55 +38,24 @@ button {
 }
 
 
-/* =====================================================
-   HEADER
-===================================================== */
-
-.header {
-    height: 55px;
-
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-
-    padding: 0 25px;
-}
-
-.menu {
-    font-size: 29px;
-    line-height: 1;
-    cursor: pointer;
-}
-
-
-/* =====================================================
+/* ================================
    CONTENU
-===================================================== */
+================================ */
 
 .content {
     position: absolute;
-
-    top: 55px;
+    top: 0;
     left: 0;
     right: 0;
-
     bottom: 82px;
-
     overflow: hidden;
 }
-
-
-/* =====================================================
-   PAGES
-===================================================== */
 
 .page {
     width: 100%;
     height: 100%;
-
-    padding: 10px 22px;
-
-    overflow-y: auto;
+    padding: 15px 20px;
+    overflow: hidden;
 }
 
 .hidden {
@@ -107,75 +63,63 @@ button {
 }
 
 
-/* =====================================================
+/* ================================
    MINUTEUR
-===================================================== */
+================================ */
 
 .timer-page {
     display: flex;
     flex-direction: column;
-
-    height: 100%;
+    justify-content: flex-start;
 }
 
 
 /* Roulettes */
 
 .picker {
-    flex: 0 0 auto;
-
-    height: min(48vh, 390px);
+    width: 100%;
+    height: 390px;
+    flex-shrink: 0;
 
     display: grid;
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     position: relative;
-
-    margin: 0 5px;
 }
 
 
-/*
-   Zone centrale du sélecteur
-*/
+/* Zone de sélection centrale */
 
-.picker::before {
+.picker::after {
     content: "";
-
     position: absolute;
 
     left: 0;
     right: 0;
 
     top: 50%;
-
-    transform:
-        translateY(-50%);
+    transform: translateY(-50%);
 
     height: 76px;
 
     pointer-events: none;
-
-    border-top:
-        1px solid transparent;
-
-    border-bottom:
-        1px solid transparent;
 }
 
 
 /* Colonnes */
 
 .column {
-    height: 100%;
+    height: 390px;
 
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-    scroll-snap-type:
-        y mandatory;
+    scroll-snap-type: y mandatory;
 
     scrollbar-width: none;
+
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
 
     text-align: center;
 }
@@ -188,56 +132,41 @@ button {
 /* Liste */
 
 .list {
-    padding-top: calc(
-        (min(48vh, 390px) - 76px) / 2
-    );
-
-    padding-bottom: calc(
-        (min(48vh, 390px) - 76px) / 2
-    );
+    padding-top: 157px;
+    padding-bottom: 157px;
 }
 
 
-/* Titres */
+/* Heures / minutes / secondes */
 
 .title {
     height: 76px;
 
     display: flex;
-    justify-content: center;
     align-items: center;
-
-    font-size: 20px;
+    justify-content: center;
 
     color: #a1a1a5;
+    font-size: 20px;
 
     scroll-snap-align: center;
 }
-
-
-/* Chiffres */
 
 .number {
     height: 76px;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    font-size: clamp(
-        42px,
-        12vw,
-        60px
-    );
+    color: #242428;
 
+    font-size: 58px;
     font-weight: 300;
-
-    color: #252529;
 
     scroll-snap-align: center;
 
-    transition:
-        color .15s ease;
+    transition: color .12s;
 }
 
 .number.active {
@@ -245,107 +174,83 @@ button {
 }
 
 
-/* =====================================================
-   BOUTONS RAPIDES
-===================================================== */
+/* ================================
+   PRESETS
+================================ */
 
 .presets {
     display: flex;
+    justify-content: center;
+    gap: 16px;
 
-    justify-content:
-        center;
-
-    gap: 14px;
-
-    margin-top: 8px;
+    margin-top: 5px;
 
     flex-shrink: 0;
 }
 
 .preset {
-    width: clamp(
-        95px,
-        28vw,
-        150px
-    );
-
-    aspect-ratio: 1;
-
-    border-radius: 50%;
+    width: 145px;
+    height: 145px;
 
     border: none;
+    border-radius: 50%;
 
     background: #202022;
-
     color: #ddd;
 
-    font-size:
-        clamp(14px, 4vw, 22px);
+    font-size: 20px;
 
     cursor: pointer;
-
-    transition:
-        transform .15s,
-        background .15s;
 }
 
 .preset:active {
     transform: scale(.94);
-
-    background: #303034;
 }
 
 
-/* =====================================================
-   BOUTON DÉMARRER
-===================================================== */
+/* ================================
+   BOUTON MINUTEUR
+================================ */
 
-.start-area {
+.timer-start-area {
     flex: 1;
 
+    min-height: 100px;
+
     display: flex;
-
-    justify-content:
-        center;
-
-    align-items:
-        center;
-
-    min-height: 75px;
+    justify-content: center;
+    align-items: center;
 }
 
-.start {
+.timer-start-button {
+    min-width: 210px;
+
     border: none;
-
-    min-width: 205px;
-
-    padding: 16px 35px;
-
     border-radius: 50px;
 
-    background: #635bff;
+    padding: 17px 35px;
 
+    background: #635bff;
     color: white;
 
-    font-size: 21px;
-
+    font-size: 22px;
     font-weight: bold;
 
     cursor: pointer;
 }
 
-.start:active {
+.timer-start-button:active {
     transform: scale(.96);
 }
 
-.start.pause {
-    background: #393997;
+.timer-start-button.pause {
+    background: #3d3995;
 }
 
 
-/* =====================================================
+/* ================================
    NAVIGATION
-===================================================== */
+================================ */
 
 .navigation {
     position: absolute;
@@ -358,15 +263,11 @@ button {
 
     background: #000;
 
-    border-top:
-        1px solid #171717;
+    border-top: 1px solid #171717;
 
     display: flex;
 
-    align-items:
-        center;
-
-    z-index: 20;
+    z-index: 100;
 }
 
 .navigation button {
@@ -375,13 +276,11 @@ button {
     height: 100%;
 
     border: none;
-
     background: none;
 
     color: #858589;
 
-    font-size:
-        clamp(11px, 3.5vw, 17px);
+    font-size: 16px;
 
     cursor: pointer;
 
@@ -392,7 +291,6 @@ button {
 
 .navigation button.active {
     color: white;
-
     font-weight: bold;
 }
 
@@ -401,10 +299,9 @@ button {
 
     position: absolute;
 
-    bottom: 7px;
-
     left: 25%;
     right: 25%;
+    bottom: 7px;
 
     height: 3px;
 
@@ -414,44 +311,92 @@ button {
 }
 
 
-/* =====================================================
-   TITRES DES AUTRES PAGES
-===================================================== */
+/* ================================
+   TITRES
+================================ */
 
 .page-title {
     font-size: 34px;
-
-    margin:
-        10px 0 25px;
+    margin: 10px 0 25px;
 }
 
 
-/* =====================================================
+/* ================================
    ALARME
-===================================================== */
+================================ */
 
-.add-alarm-button {
+.add-alarm {
     width: 100%;
 
     border: none;
+    border-radius: 17px;
 
     background: #635bff;
-
     color: white;
-
-    border-radius: 18px;
 
     padding: 16px;
 
     font-size: 18px;
-
     font-weight: bold;
 
-    cursor: pointer;
+    margin-bottom: 18px;
 
-    margin-bottom: 20px;
+    cursor: pointer;
 }
 
+.alarm-form {
+    background: #171719;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    margin-bottom: 15px;
+}
+
+.alarm-form input {
+    width: 100%;
+
+    border: none;
+    border-radius: 15px;
+
+    background: #29292b;
+    color: white;
+
+    padding: 12px;
+
+    font-size: 34px;
+
+    text-align: center;
+
+    margin-bottom: 15px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.form-buttons button {
+    flex: 1;
+
+    border: none;
+    border-radius: 13px;
+
+    padding: 13px;
+
+    font-size: 16px;
+}
+
+.cancel {
+    background: #29292b;
+    color: white;
+}
+
+.save {
+    background: #635bff;
+    color: white;
+}
 
 .alarm-card {
     background: #171719;
@@ -463,61 +408,48 @@ button {
     margin-bottom: 12px;
 
     display: flex;
-
-    justify-content:
-        space-between;
-
+    justify-content: space-between;
     align-items: center;
 }
 
-
 .alarm-time {
-    font-size: 38px;
-
+    font-size: 40px;
     font-weight: 300;
 }
 
-
 .alarm-days {
     color: #888;
-
     margin-top: 5px;
-
     font-size: 14px;
 }
-
-
-/* Interrupteur */
 
 .switch {
     width: 52px;
     height: 31px;
 
-    border-radius: 20px;
-
     background: #39393d;
+
+    border-radius: 20px;
 
     position: relative;
 
     cursor: pointer;
-
-    flex-shrink: 0;
 }
 
 .switch::after {
     content: "";
 
-    position: absolute;
-
     width: 27px;
     height: 27px;
 
-    top: 2px;
-    left: 2px;
+    background: white;
 
     border-radius: 50%;
 
-    background: white;
+    position: absolute;
+
+    left: 2px;
+    top: 2px;
 
     transition: .2s;
 }
@@ -531,72 +463,9 @@ button {
 }
 
 
-/* Ajouter alarme */
-
-.alarm-form {
-    background: #171719;
-
-    border-radius: 20px;
-
-    padding: 20px;
-
-    margin-bottom: 15px;
-}
-
-.alarm-form input {
-    width: 100%;
-
-    background: #252527;
-
-    color: white;
-
-    border: none;
-
-    border-radius: 14px;
-
-    padding: 15px;
-
-    font-size: 30px;
-
-    text-align: center;
-
-    margin-bottom: 15px;
-}
-
-.form-buttons {
-    display: flex;
-
-    gap: 10px;
-}
-
-.form-buttons button {
-    flex: 1;
-
-    border: none;
-
-    border-radius: 14px;
-
-    padding: 13px;
-
-    font-size: 16px;
-
-    cursor: pointer;
-}
-
-.save {
-    background: #635bff;
-    color: white;
-}
-
-.cancel {
-    background: #29292b;
-    color: white;
-}
-
-
-/* =====================================================
+/* ================================
    HORLOGE MONDIALE
-===================================================== */
+================================ */
 
 .city-card {
     background: #171719;
@@ -614,7 +483,6 @@ button {
 
 .city-country {
     color: #888;
-
     margin-top: 4px;
 }
 
@@ -625,86 +493,120 @@ button {
 
     font-weight: 300;
 
-    font-variant-numeric:
-        tabular-nums;
+    font-variant-numeric: tabular-nums;
 }
 
 
-/* =====================================================
+/* ================================
    CHRONOMÈTRE
-===================================================== */
+================================ */
 
 .stopwatch-page {
-    text-align: center;
+    display: flex;
 
-    padding-top: 70px;
+    flex-direction: column;
+
+    align-items: center;
+
+    padding-top: 75px;
 }
 
 .stopwatch-display {
-    font-size:
-        clamp(50px, 14vw, 76px);
+    width: 100%;
+
+    text-align: center;
+
+    font-size: clamp(
+        45px,
+        12vw,
+        75px
+    );
 
     font-weight: 300;
 
     letter-spacing: -3px;
 
-    font-variant-numeric:
-        tabular-nums;
+    white-space: nowrap;
+
+    font-variant-numeric: tabular-nums;
 }
 
+
+/*
+   IMPORTANT :
+   Les boutons du chronomètre
+   ont maintenant leur propre classe.
+*/
 
 .stopwatch-buttons {
+    width: 100%;
+
     display: flex;
 
+    align-items: center;
     justify-content: center;
 
-    gap: 15px;
+    gap: 28px;
 
-    margin-top: 55px;
+    margin-top: 65px;
 }
 
+.stopwatch-button {
+    width: 82px;
+    height: 82px;
 
-.round {
-    width: 78px;
-    height: 78px;
-
-    border-radius: 50%;
+    flex: 0 0 82px;
 
     border: none;
+
+    border-radius: 50%;
 
     background: #202022;
 
     color: white;
 
-    cursor: pointer;
+    font-size: 15px;
 
-    font-size: 13px;
+    cursor: pointer;
 }
 
-.round.start {
+.stopwatch-button:active {
+    transform: scale(.94);
+}
+
+
+/* Démarrer */
+
+.stopwatch-button.start {
     background: #173b23;
 
     color: #30d158;
 }
 
-.round.stop {
+
+/* Pause */
+
+.stopwatch-button.stop {
     background: #421c1c;
 
     color: #ff453a;
 }
 
 
-.laps {
-    margin-top: 30px;
+/* Tours */
 
-    text-align: left;
+.laps {
+    width: 100%;
+
+    margin-top: 35px;
+
+    overflow-y: auto;
 }
 
 .lap {
     display: flex;
 
-    justify-content:
-        space-between;
+    justify-content: space-between;
 
     padding: 14px 5px;
 
@@ -717,62 +619,11 @@ button {
 }
 
 
-/* =====================================================
+/* ================================
    PETITS ÉCRANS
-===================================================== */
+================================ */
 
-@media (max-height: 700px) {
-
-    .header {
-        height: 45px;
-    }
-
-    .content {
-        top: 45px;
-    }
-
-    .picker {
-        height: 320px;
-    }
-
-    .list {
-        padding-top: 122px;
-        padding-bottom: 122px;
-    }
-
-    .number,
-    .title {
-        height: 64px;
-    }
-
-    .number {
-        font-size: 47px;
-    }
-
-    .presets {
-        margin-top: 3px;
-    }
-
-    .preset {
-        width: 105px;
-    }
-
-    .start-area {
-        min-height: 65px;
-    }
-
-    .navigation {
-        height: 70px;
-    }
-
-}
-
-
-/* =====================================================
-   TRÈS PETITS ÉCRANS
-===================================================== */
-
-@media (max-width: 360px) {
+@media (max-width: 500px) {
 
     .page {
         padding-left: 12px;
@@ -780,17 +631,112 @@ button {
     }
 
     .picker {
-        margin: 0;
+        height: 365px;
+    }
+
+    .column {
+        height: 365px;
+    }
+
+    .list {
+        padding-top: 144px;
+        padding-bottom: 144px;
+    }
+
+    .number {
+        height: 72px;
+        font-size: 53px;
+    }
+
+    .title {
+        height: 72px;
+        font-size: 19px;
+    }
+
+    .presets {
+        gap: 10px;
     }
 
     .preset {
-        width: 92px;
+        width: 112px;
+        height: 112px;
+
+        font-size: 17px;
+    }
+
+    .timer-start-area {
+        min-height: 95px;
+    }
+
+    .timer-start-button {
+        min-width: 205px;
+        padding: 16px 30px;
+    }
+
+    .stopwatch-buttons {
+        gap: 18px;
+    }
+
+    .stopwatch-button {
+        width: 78px;
+        height: 78px;
+        flex-basis: 78px;
     }
 
     .navigation button {
-        font-size: 10px;
+        font-size: 13px;
+    }
+}
+
+
+/* ================================
+   TRÈS PETIT ÉCRAN
+================================ */
+
+@media (max-width: 360px) {
+
+    .picker {
+        height: 330px;
     }
 
+    .column {
+        height: 330px;
+    }
+
+    .list {
+        padding-top: 129px;
+        padding-bottom: 129px;
+    }
+
+    .number {
+        height: 65px;
+        font-size: 48px;
+    }
+
+    .title {
+        height: 65px;
+        font-size: 17px;
+    }
+
+    .preset {
+        width: 96px;
+        height: 96px;
+        font-size: 15px;
+    }
+
+    .stopwatch-buttons {
+        gap: 12px;
+    }
+
+    .stopwatch-button {
+        width: 72px;
+        height: 72px;
+        flex-basis: 72px;
+    }
+
+    .navigation button {
+        font-size: 11px;
+    }
 }
 
 </style>
@@ -799,33 +745,19 @@ button {
 
 <body>
 
-
 <div class="app">
 
 
-    <!-- =================================================
-         HEADER
-    ================================================== -->
-
-    <header class="header">
-
-        <div class="menu">
-            ⋮
-        </div>
-
-    </header>
-
-
-    <!-- =================================================
+    <!-- ============================================
          CONTENU
-    ================================================== -->
+    ============================================= -->
 
     <main class="content">
 
 
-        <!-- =============================================
+        <!-- ========================================
              MINUTEUR
-        ============================================== -->
+        ========================================= -->
 
         <section
             id="timerPage"
@@ -834,8 +766,6 @@ button {
 
             <div class="picker">
 
-
-                <!-- HEURES -->
 
                 <div
                     class="column"
@@ -849,8 +779,6 @@ button {
                 </div>
 
 
-                <!-- MINUTES -->
-
                 <div
                     class="column"
                     id="minutesColumn">
@@ -862,8 +790,6 @@ button {
 
                 </div>
 
-
-                <!-- SECONDES -->
 
                 <div
                     class="column"
@@ -879,8 +805,6 @@ button {
 
             </div>
 
-
-            <!-- BOUTONS RAPIDES -->
 
             <div class="presets">
 
@@ -913,13 +837,11 @@ button {
             </div>
 
 
-            <!-- DÉMARRER -->
-
-            <div class="start-area">
+            <div class="timer-start-area">
 
                 <button
                     id="timerButton"
-                    class="start"
+                    class="timer-start-button"
                     onclick="toggleTimer()">
 
                     Démarrer
@@ -932,9 +854,10 @@ button {
         </section>
 
 
-        <!-- =============================================
+
+        <!-- ========================================
              ALARME
-        ============================================== -->
+        ========================================= -->
 
         <section
             id="alarmPage"
@@ -947,7 +870,7 @@ button {
 
 
             <button
-                class="add-alarm-button"
+                class="add-alarm"
                 onclick="showAlarmForm()">
 
                 + Ajouter une alarme
@@ -955,16 +878,16 @@ button {
             </button>
 
 
-            <!-- FORMULAIRE -->
-
             <div
                 id="alarmForm"
                 class="alarm-form hidden">
+
 
                 <input
                     id="alarmTime"
                     type="time"
                     value="07:00">
+
 
                 <div class="form-buttons">
 
@@ -976,6 +899,7 @@ button {
 
                     </button>
 
+
                     <button
                         class="save"
                         onclick="addAlarm()">
@@ -986,24 +910,20 @@ button {
 
                 </div>
 
-            </div>
-
-
-            <!-- LISTE -->
-
-            <div id="alarmList">
-
-                <!-- Les alarmes apparaissent ici -->
 
             </div>
+
+
+            <div id="alarmList"></div>
 
 
         </section>
 
 
-        <!-- =============================================
+
+        <!-- ========================================
              HORLOGE MONDIALE
-        ============================================== -->
+        ========================================= -->
 
         <section
             id="worldPage"
@@ -1028,9 +948,7 @@ button {
                 <div
                     id="parisTime"
                     class="city-time">
-
                     --:--:--
-
                 </div>
 
             </div>
@@ -1049,9 +967,7 @@ button {
                 <div
                     id="newYorkTime"
                     class="city-time">
-
                     --:--:--
-
                 </div>
 
             </div>
@@ -1070,9 +986,7 @@ button {
                 <div
                     id="tokyoTime"
                     class="city-time">
-
                     --:--:--
-
                 </div>
 
             </div>
@@ -1081,9 +995,10 @@ button {
         </section>
 
 
-        <!-- =============================================
+
+        <!-- ========================================
              CHRONOMÈTRE
-        ============================================== -->
+        ========================================= -->
 
         <section
             id="stopwatchPage"
@@ -1103,7 +1018,7 @@ button {
 
 
                 <button
-                    class="round"
+                    class="stopwatch-button"
                     onclick="addLap()">
 
                     Tour
@@ -1113,7 +1028,7 @@ button {
 
                 <button
                     id="stopwatchButton"
-                    class="round start"
+                    class="stopwatch-button start"
                     onclick="toggleStopwatch()">
 
                     Démarrer
@@ -1122,7 +1037,7 @@ button {
 
 
                 <button
-                    class="round"
+                    class="stopwatch-button"
                     onclick="resetStopwatch()">
 
                     Reset
@@ -1145,9 +1060,10 @@ button {
     </main>
 
 
-    <!-- =================================================
+
+    <!-- ============================================
          NAVIGATION
-    ================================================== -->
+    ============================================= -->
 
     <nav class="navigation">
 
@@ -1194,9 +1110,9 @@ button {
 
 <script>
 
-/* =====================================================
+/* ================================================
    NAVIGATION
-===================================================== */
+================================================ */
 
 function openPage(pageId, button) {
 
@@ -1228,67 +1144,57 @@ function openPage(pageId, button) {
 }
 
 
-/* =====================================================
-   CRÉATION DES ROULETTES
-===================================================== */
+/* ================================================
+   ROULETTES
+================================================ */
 
 function createWheel(
     listId,
     title,
-    maximum
+    max
 ) {
 
     const list =
-        document.getElementById(
-            listId
-        );
+        document.getElementById(listId);
 
-
-    /* Titre */
 
     const titleElement =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
+
 
     titleElement.className =
         "title";
 
+
     titleElement.textContent =
         title;
+
 
     list.appendChild(
         titleElement
     );
 
 
-    /* Chiffres */
-
     for (
         let i = 0;
-        i <= maximum;
+        i <= max;
         i++
     ) {
 
         const number =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
 
         number.className =
             "number";
 
 
+        number.textContent =
+            String(i).padStart(2,"0");
+
+
         number.dataset.value =
             i;
-
-
-        number.textContent =
-            String(i).padStart(
-                2,
-                "0"
-            );
 
 
         list.appendChild(
@@ -1299,12 +1205,6 @@ function createWheel(
 
 }
 
-
-/*
-    IMPORTANT :
-
-    Tout commence à 00:00:00
-*/
 
 createWheel(
     "hoursList",
@@ -1325,47 +1225,9 @@ createWheel(
 );
 
 
-/* =====================================================
-   VALEUR SÉLECTIONNÉE
-===================================================== */
-
-function getValue(columnId) {
-
-    const column =
-        document.getElementById(
-            columnId
-        );
-
-
-    const itemHeight =
-        column
-            .querySelector(".number")
-            .offsetHeight;
-
-
-    /*
-       +1 car le premier élément
-       est le titre.
-    */
-
-    const position =
-        Math.round(
-            column.scrollTop /
-            itemHeight
-        );
-
-
-    return Math.max(
-        0,
-        position
-    );
-
-}
-
-
-/* =====================================================
-   SÉLECTION VISUELLE
-===================================================== */
+/* ================================================
+   SÉLECTION DES ROULETTES
+================================================ */
 
 function updateSelection() {
 
@@ -1373,19 +1235,17 @@ function updateSelection() {
         .querySelectorAll(".column")
         .forEach(column => {
 
-            const number =
-                column.querySelector(
-                    ".number"
-                );
+            const item =
+                column.querySelector(".number");
 
-            if (!number) return;
+            if (!item) return;
 
 
             const height =
-                number.offsetHeight;
+                item.offsetHeight;
 
 
-            const position =
+            const index =
                 Math.round(
                     column.scrollTop /
                     height
@@ -1394,14 +1254,16 @@ function updateSelection() {
 
             column
                 .querySelectorAll(".number")
-                .forEach((item, index) => {
+                .forEach(
+                    (number, i) => {
 
-                    item.classList.toggle(
-                        "active",
-                        index === position
-                    );
+                        number.classList.toggle(
+                            "active",
+                            i === index
+                        );
 
-                });
+                    }
+                );
 
         });
 
@@ -1414,21 +1276,48 @@ document
 
         column.addEventListener(
             "scroll",
-            () => {
-
-                requestAnimationFrame(
-                    updateSelection
-                );
-
-            }
+            updateSelection,
+            { passive: true }
         );
 
     });
 
 
-/* =====================================================
+/* ================================================
+   VALEUR
+================================================ */
+
+function getValue(id) {
+
+    const column =
+        document.getElementById(id);
+
+
+    const number =
+        column.querySelector(".number");
+
+
+    const height =
+        number.offsetHeight;
+
+
+    return Math.max(
+        0,
+        Math.min(
+            Math.round(
+                column.scrollTop /
+                height
+            ),
+            column.querySelectorAll(".number").length - 1
+        )
+    );
+
+}
+
+
+/* ================================================
    CHOISIR UNE DURÉE
-===================================================== */
+================================================ */
 
 function setTimer(
     hours,
@@ -1436,37 +1325,37 @@ function setTimer(
     seconds
 ) {
 
-    const hourColumn =
+    const h =
         document.getElementById(
             "hoursColumn"
         );
 
-    const minuteColumn =
+    const m =
         document.getElementById(
             "minutesColumn"
         );
 
-    const secondColumn =
+    const s =
         document.getElementById(
             "secondsColumn"
         );
 
 
     const height =
-        hourColumn
-            .querySelector(".number")
-            .offsetHeight;
+        h.querySelector(
+            ".number"
+        ).offsetHeight;
 
 
-    hourColumn.scrollTop =
+    h.scrollTop =
         hours * height;
 
 
-    minuteColumn.scrollTop =
+    m.scrollTop =
         minutes * height;
 
 
-    secondColumn.scrollTop =
+    s.scrollTop =
         seconds * height;
 
 
@@ -1475,47 +1364,34 @@ function setTimer(
 }
 
 
-/* =====================================================
+/* ================================================
    MINUTEUR
-===================================================== */
+================================================ */
 
-let timerRunning =
-    false;
-
-let timerRemaining =
-    0;
-
-let timerEnd =
-    0;
-
-let timerInterval =
-    null;
+let timerRunning = false;
+let timerRemaining = 0;
+let timerEnd = 0;
+let timerInterval = null;
 
 
 function getSelectedTime() {
 
-    const hours =
-        getValue(
-            "hoursColumn"
-        );
+    const h =
+        getValue("hoursColumn");
 
 
-    const minutes =
-        getValue(
-            "minutesColumn"
-        );
+    const m =
+        getValue("minutesColumn");
 
 
-    const seconds =
-        getValue(
-            "secondsColumn"
-        );
+    const s =
+        getValue("secondsColumn");
 
 
     return (
-        hours * 3600000 +
-        minutes * 60000 +
-        seconds * 1000
+        h * 3600000 +
+        m * 60000 +
+        s * 1000
     );
 
 }
@@ -1529,10 +1405,7 @@ function toggleTimer() {
         );
 
 
-    /* DÉMARRER */
-
     if (!timerRunning) {
-
 
         if (
             timerRemaining <= 0
@@ -1549,7 +1422,7 @@ function toggleTimer() {
         ) {
 
             alert(
-                "Choisis une durée avant de démarrer."
+                "Choisis une durée."
             );
 
             return;
@@ -1582,9 +1455,6 @@ function toggleTimer() {
             );
 
     }
-
-
-    /* PAUSE */
 
     else {
 
@@ -1629,13 +1499,9 @@ function updateTimer() {
         timerRemaining <= 0
     ) {
 
-        timerRemaining =
-            0;
+        timerRemaining = 0;
 
-
-        timerRunning =
-            false;
-
+        timerRunning = false;
 
         clearInterval(
             timerInterval
@@ -1662,11 +1528,11 @@ function updateTimer() {
         ) {
 
             navigator.vibrate([
-                300,
+                400,
                 150,
-                300,
+                400,
                 150,
-                500
+                700
             ]);
 
         }
@@ -1684,21 +1550,21 @@ function updateTimer() {
 }
 
 
-/* =====================================================
+/* ================================================
    SON
-===================================================== */
+================================================ */
 
 function playSound() {
 
     try {
 
-        const AudioContext =
+        const Context =
             window.AudioContext ||
             window.webkitAudioContext;
 
 
         const audio =
-            new AudioContext();
+            new Context();
 
 
         const oscillator =
@@ -1709,22 +1575,19 @@ function playSound() {
             audio.createGain();
 
 
-        oscillator.type =
-            "sine";
-
-
         oscillator.frequency.value =
             880;
 
 
+        oscillator.type =
+            "sine";
+
+
         gain.gain.value =
-            0.25;
+            .25;
 
 
-        oscillator.connect(
-            gain
-        );
-
+        oscillator.connect(gain);
 
         gain.connect(
             audio.destination
@@ -1735,30 +1598,20 @@ function playSound() {
 
 
         setTimeout(
-            () => {
-
-                oscillator.stop();
-
-            },
+            () => oscillator.stop(),
             800
         );
 
     }
 
-    catch (error) {
-
-        console.log(
-            "Son indisponible"
-        );
-
-    }
+    catch(e) {}
 
 }
 
 
-/* =====================================================
+/* ================================================
    HORLOGE MONDIALE
-===================================================== */
+================================================ */
 
 function updateWorldClocks() {
 
@@ -1766,24 +1619,15 @@ function updateWorldClocks() {
         new Date();
 
 
-    function time(
-        timezone
-    ) {
+    function getTime(zone) {
 
         return new Intl.DateTimeFormat(
             "fr-FR",
             {
-                timeZone:
-                    timezone,
-
-                hour:
-                    "2-digit",
-
-                minute:
-                    "2-digit",
-
-                second:
-                    "2-digit"
+                timeZone: zone,
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
             }
         ).format(now);
 
@@ -1793,25 +1637,19 @@ function updateWorldClocks() {
     document.getElementById(
         "parisTime"
     ).textContent =
-        time(
-            "Europe/Paris"
-        );
+        getTime("Europe/Paris");
 
 
     document.getElementById(
         "newYorkTime"
     ).textContent =
-        time(
-            "America/New_York"
-        );
+        getTime("America/New_York");
 
 
     document.getElementById(
         "tokyoTime"
     ).textContent =
-        time(
-            "Asia/Tokyo"
-        );
+        getTime("Asia/Tokyo");
 
 }
 
@@ -1824,50 +1662,32 @@ setInterval(
 updateWorldClocks();
 
 
-/* =====================================================
+/* ================================================
    ALARMES
-===================================================== */
+================================================ */
 
 let alarms = [];
 
+let lastTriggeredAlarm = "";
 
-/*
-   Afficher le formulaire
-*/
 
 function showAlarmForm() {
 
     document
-        .getElementById(
-            "alarmForm"
-        )
-        .classList.remove(
-            "hidden"
-        );
+        .getElementById("alarmForm")
+        .classList.remove("hidden");
 
 }
 
-
-/*
-   Cacher le formulaire
-*/
 
 function hideAlarmForm() {
 
     document
-        .getElementById(
-            "alarmForm"
-        )
-        .classList.add(
-            "hidden"
-        );
+        .getElementById("alarmForm")
+        .classList.add("hidden");
 
 }
 
-
-/*
-   Ajouter une alarme
-*/
 
 function addAlarm() {
 
@@ -1877,157 +1697,26 @@ function addAlarm() {
         );
 
 
-    if (!input.value) {
-
-        return;
-
-    }
+    if (!input.value) return;
 
 
-    const alarm = {
+    alarms.push({
 
-        id:
-            Date.now(),
+        id: Date.now(),
 
-        time:
-            input.value,
+        time: input.value,
 
-        enabled:
-            true
+        enabled: true
 
-    };
-
-
-    alarms.push(
-        alarm
-    );
+    });
 
 
     renderAlarms();
 
-
     hideAlarmForm();
 
-
-    checkAlarms();
-
 }
 
-
-/*
-   Afficher les alarmes
-*/
-
-function renderAlarms() {
-
-    const list =
-        document.getElementById(
-            "alarmList"
-        );
-
-
-    list.innerHTML =
-        "";
-
-
-    if (
-        alarms.length === 0
-    ) {
-
-        list.innerHTML =
-
-            `<div class="alarm-card">
-                <div>
-                    <div style="font-size:18px">
-                        Aucune alarme
-                    </div>
-
-                    <div class="alarm-days">
-                        Ajoute une heure de réveil.
-                    </div>
-                </div>
-            </div>`;
-
-        return;
-
-    }
-
-
-    alarms.forEach(
-        alarm => {
-
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "alarm-card";
-
-
-            card.innerHTML = `
-
-                <div>
-
-                    <div class="alarm-time">
-                        ${alarm.time}
-                    </div>
-
-                    <div class="alarm-days">
-                        Tous les jours
-                    </div>
-
-                </div>
-
-                <div style="
-                    display:flex;
-                    align-items:center;
-                    gap:12px;
-                ">
-
-                    <div
-                        class="switch
-                        ${alarm.enabled ? "on" : ""}"
-                        onclick="
-                            toggleAlarm(${alarm.id})
-                        ">
-                    </div>
-
-                    <button
-                        onclick="
-                            deleteAlarm(${alarm.id})
-                        "
-                        style="
-                            border:none;
-                            background:none;
-                            color:#777;
-                            font-size:20px;
-                            cursor:pointer;
-                        ">
-
-                        ×
-
-                    </button>
-
-                </div>
-            `;
-
-
-            list.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-/*
-   Activer / désactiver
-*/
 
 function toggleAlarm(id) {
 
@@ -2049,16 +1738,11 @@ function toggleAlarm(id) {
 }
 
 
-/*
-   Supprimer
-*/
-
 function deleteAlarm(id) {
 
     alarms =
         alarms.filter(
-            alarm =>
-                alarm.id !== id
+            a => a.id !== id
         );
 
 
@@ -2067,12 +1751,107 @@ function deleteAlarm(id) {
 }
 
 
-/*
-   Vérifier les alarmes
-*/
+function renderAlarms() {
 
-let lastAlarm =
-    "";
+    const list =
+        document.getElementById(
+            "alarmList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        alarms.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="alarm-card">
+
+                <div>
+
+                    <div style="font-size:18px">
+                        Aucune alarme
+                    </div>
+
+                    <div class="alarm-days">
+                        Ajoute ton réveil avec le bouton ci-dessus.
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    alarms.forEach(alarm => {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "alarm-card";
+
+
+        card.innerHTML = `
+
+            <div>
+
+                <div class="alarm-time">
+                    ${alarm.time}
+                </div>
+
+                <div class="alarm-days">
+                    Tous les jours
+                </div>
+
+            </div>
+
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:14px;
+            ">
+
+                <div
+                    class="switch ${alarm.enabled ? "on" : ""}"
+                    onclick="toggleAlarm(${alarm.id})">
+                </div>
+
+                <button
+                    onclick="deleteAlarm(${alarm.id})"
+                    style="
+                        border:none;
+                        background:none;
+                        color:#777;
+                        font-size:25px;
+                        cursor:pointer;
+                    ">
+
+                    ×
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        list.appendChild(card);
+
+    });
+
+}
 
 
 function checkAlarms() {
@@ -2081,32 +1860,26 @@ function checkAlarms() {
         new Date();
 
 
-    const hour =
+    const current =
         String(
             now.getHours()
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const minute =
+        ).padStart(2,"0")
+        +
+        ":"
+        +
         String(
             now.getMinutes()
-        ).padStart(
-            2,
-            "0"
-        );
+        ).padStart(2,"0");
 
 
-    const current =
-        hour +
-        ":" +
-        minute;
+    const unique =
+        current +
+        "-" +
+        now.getDate();
 
 
     if (
-        current === lastAlarm
+        unique === lastTriggeredAlarm
     ) {
 
         return;
@@ -2114,43 +1887,42 @@ function checkAlarms() {
     }
 
 
-    lastAlarm =
-        current;
+    alarms.forEach(alarm => {
+
+        if (
+            alarm.enabled &&
+            alarm.time === current
+        ) {
+
+            lastTriggeredAlarm =
+                unique;
 
 
-    alarms.forEach(
-        alarm => {
+            playSound();
+
 
             if (
-                alarm.enabled &&
-                alarm.time === current
+                navigator.vibrate
             ) {
 
-                playSound();
-
-                if (
-                    navigator.vibrate
-                ) {
-
-                    navigator.vibrate([
-                        500,
-                        200,
-                        500,
-                        200,
-                        800
-                    ]);
-
-                }
-
-
-                alert(
-                    "⏰ Réveil !"
-                );
+                navigator.vibrate([
+                    500,
+                    200,
+                    500,
+                    200,
+                    800
+                ]);
 
             }
 
+
+            alert(
+                "⏰ Réveil !"
+            );
+
         }
-    );
+
+    });
 
 }
 
@@ -2161,24 +1933,15 @@ setInterval(
 );
 
 
-/* =====================================================
+/* ================================================
    CHRONOMÈTRE
-===================================================== */
+================================================ */
 
-let stopwatchRunning =
-    false;
-
-let stopwatchStart =
-    0;
-
-let stopwatchElapsed =
-    0;
-
-let stopwatchInterval =
-    null;
-
-let lapNumber =
-    0;
+let stopwatchRunning = false;
+let stopwatchStart = 0;
+let stopwatchElapsed = 0;
+let stopwatchInterval = null;
+let lapNumber = 0;
 
 
 function updateStopwatch() {
@@ -2227,22 +1990,22 @@ function updateStopwatch() {
     ).textContent =
 
         String(hours)
-            .padStart(2, "0")
+            .padStart(2,"0")
 
         + ":" +
 
         String(minutes)
-            .padStart(2, "0")
+            .padStart(2,"0")
 
         + ":" +
 
         String(seconds)
-            .padStart(2, "0")
+            .padStart(2,"0")
 
         + "." +
 
         String(centiseconds)
-            .padStart(2, "0");
+            .padStart(2,"0");
 
 }
 
@@ -2288,7 +2051,6 @@ function toggleStopwatch() {
             );
 
     }
-
 
     else {
 
@@ -2348,8 +2110,7 @@ function resetStopwatch() {
 
     document.getElementById(
         "laps"
-    ).innerHTML =
-        "";
+    ).innerHTML = "";
 
 
     const button =
@@ -2422,24 +2183,14 @@ function addLap() {
 
     document.getElementById(
         "laps"
-    ).prepend(
-        lap
-    );
+    ).prepend(lap);
 
 }
 
 
-/* =====================================================
-   INITIALISATION
-===================================================== */
-
-
-/*
-   IMPORTANT :
-   Le minuteur commence bien à :
-
-   00 : 00 : 00
-*/
+/* ================================================
+   DÉPART : 00:00:00
+================================================ */
 
 setTimer(
     0,
@@ -2447,13 +2198,13 @@ setTimer(
     0
 );
 
+updateSelection();
 
 renderAlarms();
-
 
 updateStopwatch();
 
 </script>
 
 </body>
-    </html>
+      </html>
