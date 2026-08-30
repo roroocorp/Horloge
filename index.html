@@ -2,991 +2,1142 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SnapClone</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>SnapLite</title>
 
 <style>
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
+html,
 body {
-  background: #111;
-  color: white;
-  height: 100vh;
-  overflow: hidden;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.app {
-  width: 100%;
-  max-width: 480px;
-  height: 100vh;
-  margin: auto;
-  background: #000;
-  position: relative;
-  overflow: hidden;
+button,
+input {
+    font: inherit;
 }
 
-/* Écrans */
-
-.screen {
-  display: none;
-  height: calc(100vh - 70px);
-  overflow-y: auto;
+button {
+    border: 0;
+    color: inherit;
 }
 
-.screen.active {
-  display: block;
+#app {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
 }
 
-/* CAMERA */
+/* =========================
+   ECRANS
+========================= */
+
+.page {
+    position: absolute;
+    inset: 0;
+    display: none;
+    background: #fff;
+    color: #111;
+    overflow: hidden;
+}
+
+.page.active {
+    display: block;
+}
+
+/* =========================
+   CAMERA
+========================= */
+
+#cameraPage {
+    background: #000;
+    color: #fff;
+}
 
 .camera {
-  height: calc(100vh - 70px);
-  position: relative;
-  background: linear-gradient(
-    135deg,
-    #202020,
-    #555,
-    #222
-  );
-  overflow: hidden;
+    position: absolute;
+    inset: 0;
+    background: #161616;
+    overflow: hidden;
 }
 
 #video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #171717;
 }
 
-.camera-bg {
-  width: 100%;
-  height: 100%;
-  background:
-    radial-gradient(circle at 50% 35%, #777, transparent 25%),
-    linear-gradient(135deg, #242424, #666, #181818);
+.camera-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 50% 40%, #777 0, #444 16%, #222 45%, #080808 100%);
 }
 
-/* Barre caméra */
+.camera-placeholder .face {
+    width: 180px;
+    height: 230px;
+    border-radius: 50%;
+    border: 4px solid rgba(255,255,255,.18);
+    opacity: .5;
+}
 
 .camera-top {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  padding: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding:
+        calc(env(safe-area-inset-top) + 14px)
+        18px
+        14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 5;
 }
 
-.circle-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0,0,0,.45);
-  color: white;
-  font-size: 21px;
-  cursor: pointer;
+.top-left,
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.glass-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(0,0,0,.38);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 .camera-bottom {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding:
+        18px
+        25px
+        calc(env(safe-area-inset-bottom) + 22px);
+
+    z-index: 6;
+}
+
+.camera-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.side-camera-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.38);
+    backdrop-filter: blur(10px);
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.capture-wrapper {
+    width: 86px;
+    height: 86px;
+    border: 4px solid white;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .capture {
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background: white;
-  border: 6px solid rgba(255,255,255,.5);
-  cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: white;
+    transition: transform .12s;
 }
 
-.capture:active {
-  transform: scale(.9);
+.capture-wrapper:active .capture {
+    transform: scale(.86);
 }
 
-/* STORIES */
-
-.header {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.camera-mode {
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: .5px;
 }
 
-.header h1 {
-  font-size: 28px;
+/* =========================
+   HEADER
+========================= */
+
+.app-header {
+    height: 72px;
+    padding:
+        calc(env(safe-area-inset-top) + 8px)
+        18px
+        8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+}
+
+.app-header h1 {
+    font-size: 27px;
+    letter-spacing: -.8px;
+}
+
+.header-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.dark-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: grid;
+    place-items: center;
+    font-size: 19px;
+    cursor: pointer;
+}
+
+/* =========================
+   CHAT
+========================= */
+
+#chatPage {
+    background: #fff;
+}
+
+.search-container {
+    padding: 5px 15px 12px;
+    background: #fff;
 }
 
 .search {
-  margin: 0 16px 20px;
-  width: calc(100% - 32px);
-  padding: 13px 16px;
-  border-radius: 25px;
-  border: none;
-  background: #292929;
-  color: white;
-  outline: none;
-  font-size: 15px;
+    width: 100%;
+    height: 44px;
+    border: 0;
+    outline: 0;
+    border-radius: 23px;
+    background: #f0f0f2;
+    padding: 0 17px;
+    font-size: 16px;
 }
-
-.stories {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 0 18px 25px;
-}
-
-.story {
-  min-width: 72px;
-  text-align: center;
-  font-size: 12px;
-}
-
-.story-img {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  padding: 3px;
-  margin: auto auto 7px;
-  background: #ffe600;
-}
-
-.story-img div {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: linear-gradient(135deg,#444,#aaa);
-}
-
-.story p {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* CHAT */
 
 .chat-list {
-  padding: 0 12px;
+    position: absolute;
+    top: 125px;
+    bottom: 76px;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    background: #fff;
 }
 
-.chat {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding: 13px 8px;
-  border-bottom: 1px solid #222;
-  cursor: pointer;
+.chat-item {
+    height: 76px;
+    padding: 8px 17px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    cursor: pointer;
+}
+
+.chat-item:active {
+    background: #f2f2f2;
 }
 
 .avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: linear-gradient(135deg,#777,#222);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 23px;
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 26px;
+    background: linear-gradient(145deg,#eee,#bbb);
 }
 
-.chat-info {
-  flex: 1;
+.chat-main {
+    flex: 1;
+    min-width: 0;
 }
 
-.chat-info strong {
-  display: block;
-  margin-bottom: 5px;
+.chat-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
 }
 
-.chat-info span {
-  color: #aaa;
-  font-size: 13px;
+.chat-preview {
+    font-size: 13px;
+    color: #777;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.time {
-  color: #888;
-  font-size: 11px;
+.chat-time {
+    font-size: 11px;
+    color: #999;
 }
 
-/* PROFIL */
+/* =========================
+   STORIES
+========================= */
 
-.profile {
-  text-align: center;
-  padding: 30px 20px;
+#storiesPage {
+    background: #fff;
 }
 
-.profile-avatar {
-  width: 105px;
-  height: 105px;
-  border-radius: 50%;
-  background: linear-gradient(135deg,#ffe600,#777);
-  margin: 10px auto 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 45px;
+.story-scroll {
+    display: flex;
+    gap: 13px;
+    padding: 13px 17px 20px;
+    overflow-x: auto;
 }
 
-.username {
-  color: #aaa;
-  margin-top: 5px;
+.story-card {
+    flex: 0 0 83px;
+    text-align: center;
+    cursor: pointer;
 }
 
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 45px;
-  margin: 30px 0;
+.story-ring {
+    width: 76px;
+    height: 76px;
+    margin: auto;
+    padding: 3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#ffd900,#ffb400,#ff5a36,#b300ff);
 }
 
-.stat strong {
-  display: block;
-  font-size: 20px;
+.story-ring.seen {
+    background: #cfcfcf;
 }
 
-.stat span {
-  color: #999;
-  font-size: 12px;
+.story-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#ddd,#777);
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    border: 3px solid white;
 }
 
-.profile-button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  margin-top: 10px;
-  background: #292929;
-  color: white;
-  cursor: pointer;
+.story-name {
+    margin-top: 7px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* NAVIGATION */
-
-.nav {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 70px;
-  background: #181818;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 20;
+.discovery {
+    padding: 0 17px 100px;
+    overflow-y: auto;
+    height: calc(100% - 170px);
 }
 
-.nav button {
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 25px;
-  cursor: pointer;
+.discovery h2 {
+    font-size: 21px;
+    margin-bottom: 13px;
 }
 
-.nav button.active {
-  color: white;
+.discover-card {
+    position: relative;
+    height: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg,#111,#888);
 }
 
-/* MODALE */
+.discover-card:nth-child(2) {
+    background: linear-gradient(135deg,#202020,#d5d5d5);
+}
+
+.discover-card:nth-child(3) {
+    background: linear-gradient(135deg,#555,#111);
+}
+
+.discover-content {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+}
+
+.discover-content h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.discover-content p {
+    color: #ddd;
+    font-size: 13px;
+}
+
+/* =========================
+   PROFIL
+========================= */
+
+#profilePage {
+    background: #f7f7f7;
+}
+
+.profile-content {
+    height: calc(100% - 76px);
+    overflow-y: auto;
+    text-align: center;
+    padding: 35px 20px 110px;
+}
+
+.profile-photo {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    margin: 5px auto 15px;
+    background: linear-gradient(145deg,#ffe500,#ffae00);
+    display: grid;
+    place-items: center;
+    font-size: 54px;
+    box-shadow: 0 7px 25px rgba(0,0,0,.12);
+}
+
+.profile-content h2 {
+    font-size: 23px;
+}
+
+.profile-username {
+    color: #888;
+    margin-top: 5px;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin: 27px 0;
+}
+
+.profile-stat strong {
+    display: block;
+    font-size: 21px;
+}
+
+.profile-stat span {
+    display: block;
+    color: #888;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.profile-action {
+    width: 100%;
+    height: 49px;
+    border-radius: 12px;
+    margin-top: 9px;
+    background: #e9e9e9;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.bottom-nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 76px;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: rgba(255,255,255,.96);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 20;
+    border-top: 1px solid #eee;
+}
+
+.nav-button {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: transparent;
+    color: #777;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.nav-button.active {
+    color: #111;
+}
+
+.camera-nav {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #111;
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+}
+
+/* =========================
+   CHAT OUVERT
+========================= */
+
+.chat-window {
+    position: absolute;
+    inset: 0;
+    background: #f7f7f7;
+    color: #111;
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+}
+
+.chat-window.open {
+    display: flex;
+}
+
+.chat-window-header {
+    min-height: 72px;
+    padding:
+        calc(env(safe-area-inset-top) + 8px)
+        13px
+        8px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.back-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #eee;
+    cursor: pointer;
+}
+
+.chat-user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #ddd;
+    font-size: 21px;
+}
+
+.chat-user-info {
+    flex: 1;
+}
+
+.chat-user-info strong {
+    display: block;
+}
+
+.chat-user-info span {
+    display: block;
+    color: #888;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.conversation {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+}
+
+.message {
+    max-width: 74%;
+    width: fit-content;
+    padding: 11px 15px;
+    margin-bottom: 9px;
+    border-radius: 19px;
+    font-size: 15px;
+}
+
+.message.received {
+    background: #e5e5e5;
+}
+
+.message.sent {
+    margin-left: auto;
+    background: #ffe000;
+}
+
+.message-bar {
+    display: flex;
+    gap: 8px;
+    padding:
+        10px
+        12px
+        calc(env(safe-area-inset-bottom) + 10px);
+
+    background: white;
+}
+
+.message-bar input {
+    flex: 1;
+    height: 45px;
+    border: 0;
+    outline: 0;
+    border-radius: 23px;
+    padding: 0 16px;
+    background: #eee;
+}
+
+.send-button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #111;
+    color: white;
+    cursor: pointer;
+}
+
+/* =========================
+   APERCU PHOTO
+========================= */
+
+.photo-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 200;
+    background: #000;
+    display: none;
+    flex-direction: column;
+}
+
+.photo-screen.open {
+    display: flex;
+}
+
+#photoResult {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.photo-tools {
+    position: absolute;
+    top: calc(env(safe-area-inset-top) + 16px);
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.photo-tool {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(10px);
+    color: white;
+    cursor: pointer;
+}
+
+.photo-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding:
+        18px
+        20px
+        calc(env(safe-area-inset-bottom) + 20px);
+
+    display: flex;
+    gap: 10px;
+}
+
+.photo-bottom button {
+    flex: 1;
+    height: 50px;
+    border-radius: 25px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.send-snap {
+    background: #ffe000;
+    color: #111;
+}
+
+.cancel-snap {
+    background: rgba(255,255,255,.18);
+    color: white;
+}
+
+/* =========================
+   STORY VIEWER
+========================= */
+
+.story-viewer {
+    position: absolute;
+    inset: 0;
+    z-index: 250;
+    background: #111;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.story-viewer.open {
+    display: flex;
+}
+
+.story-viewer-content {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg,#111,#666);
+}
+
+.story-viewer-top {
+    position: absolute;
+    top: calc(env(safe-area-inset-top) + 10px);
+    left: 12px;
+    right: 12px;
+    z-index: 2;
+}
+
+.story-progress {
+    height: 3px;
+    background: rgba(255,255,255,.35);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.story-progress div {
+    width: 100%;
+    height: 100%;
+    background: white;
+    transform-origin: left;
+    animation: progress 4s linear;
+}
+
+@keyframes progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+.story-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.story-user .avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+}
+
+.story-close {
+    position: absolute;
+    right: 10px;
+    top: 55px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.35);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* =========================
+   MODALE
+========================= */
 
 .modal {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,.75);
-  z-index: 50;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    inset: 0;
+    z-index: 300;
+    display: none;
+    align-items: flex-end;
+    background: rgba(0,0,0,.45);
 }
 
-.modal.show {
-  display: flex;
+.modal.open {
+    display: flex;
 }
 
-.modal-box {
-  width: 85%;
-  background: #222;
-  border-radius: 20px;
-  padding: 25px;
-  text-align: center;
+.sheet {
+    width: 100%;
+    background: white;
+    color: #111;
+    border-radius: 25px 25px 0 0;
+    padding: 24px 20px calc(env(safe-area-inset-bottom) + 25px);
+    animation: sheetUp .25s ease;
 }
 
-.modal-box h2 {
-  margin-bottom: 15px;
+@keyframes sheetUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
 }
 
-.modal-box button {
-  width: 100%;
-  padding: 13px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+.sheet h2 {
+    margin-bottom: 18px;
 }
 
-.yellow {
-  background: #ffe600;
+.setting {
+    height: 53px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
 }
 
-.close {
-  background: #444;
-  color: white;
+.sheet-close {
+    width: 100%;
+    height: 48px;
+    margin-top: 17px;
+    border-radius: 12px;
+    background: #111;
+    color: white;
+    cursor: pointer;
 }
 
-/* MESSAGE */
+/* =========================
+   RESPONSIVE
+========================= */
 
-.message-box {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: #111;
-  z-index: 40;
-}
-
-.message-box.show {
-  display: flex;
-  flex-direction: column;
-}
-
-.message-header {
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: #191919;
-}
-
-.messages {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.bubble {
-  max-width: 75%;
-  padding: 11px 15px;
-  border-radius: 18px;
-  margin-bottom: 10px;
-}
-
-.received {
-  background: #333;
-}
-
-.sent {
-  background: #ffe600;
-  color: #000;
-  margin-left: auto;
-}
-
-.message-input {
-  display: flex;
-  gap: 8px;
-  padding: 12px;
-  background: #191919;
-}
-
-.message-input input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: #333;
-  color: white;
-  padding: 12px;
-  border-radius: 20px;
-}
-
-.message-input button {
-  width: 45px;
-  border: none;
-  border-radius: 50%;
-  background: #ffe600;
-  cursor: pointer;
-}
-
-/* PHOTO */
-
-.photo-preview {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: #000;
-  z-index: 60;
-  align-items: center;
-  justify-content: center;
-}
-
-.photo-preview.show {
-  display: flex;
-  flex-direction: column;
-}
-
-.photo-preview img {
-  max-width: 90%;
-  max-height: 70%;
-  border-radius: 15px;
-}
-
-.photo-actions {
-  margin-top: 20px;
-  display: flex;
-  gap: 15px;
-}
-
-.photo-actions button {
-  border: none;
-  padding: 13px 20px;
-  border-radius: 25px;
-  cursor: pointer;
+@media (min-width: 700px) {
+    #app {
+        width: 430px;
+        height: 900px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        border-radius: 25px;
+        box-shadow: 0 0 60px rgba(0,0,0,.6);
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div id="app">
 
-  <!-- CAMERA -->
-  <section id="camera" class="screen active">
+<!-- =====================================================
+     CAMERA
+===================================================== -->
+
+<section id="cameraPage" class="page active">
+
     <div class="camera">
 
-      <div class="camera-bg" id="cameraBg"></div>
-      <video id="video" autoplay playsinline></video>
-
-      <div class="camera-top">
-        <button class="circle-btn" onclick="openProfile()">👤</button>
-        <button class="circle-btn" onclick="startCamera()">🔄</button>
-      </div>
-
-      <div class="camera-bottom">
-        <button class="capture" onclick="takePhoto()"></button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- DISCUSSION -->
-  <section id="chat" class="screen">
-
-    <div class="header">
-      <h1>Discussions</h1>
-      <button class="circle-btn">✏️</button>
-    </div>
-
-    <input
-      class="search"
-      id="search"
-      placeholder="Rechercher"
-      oninput="searchChats()"
-    >
-
-    <div class="chat-list" id="chatList">
-
-      <div class="chat" data-name="Emma" onclick="openChat('Emma','👩')">
-        <div class="avatar">👩</div>
-        <div class="chat-info">
-          <strong>Emma</strong>
-          <span>Tu as vu mon snap ?</span>
-        </div>
-        <div class="time">12:42</div>
-      </div>
-
-      <div class="chat" data-name="Lucas" onclick="openChat('Lucas','👦')">
-        <div class="avatar">👦</div>
-        <div class="chat-info">
-          <strong>Lucas</strong>
-          <span>😂 envoyé un Snap</span>
-        </div>
-        <div class="time">11:30</div>
-      </div>
-
-      <div class="chat" data-name="Sarah" onclick="openChat('Sarah','👩‍🦰')">
-        <div class="avatar">👩‍🦰</div>
-        <div class="chat-info">
-          <strong>Sarah</strong>
-          <span>À plus tard !</span>
-        </div>
-        <div class="time">Hier</div>
-      </div>
-
-      <div class="chat" data-name="Thomas" onclick="openChat('Thomas','🧑')">
-        <div class="avatar">🧑</div>
-        <div class="chat-info">
-          <strong>Thomas</strong>
-          <span>🔥 Nouvelle story</span>
-        </div>
-        <div class="time">Hier</div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- STORIES -->
-  <section id="stories" class="screen">
-
-    <div class="header">
-      <h1>Stories</h1>
-      <button class="circle-btn">⚙️</button>
-    </div>
-
-    <div class="stories">
-
-      <div class="story">
-        <div class="story-img"><div></div></div>
-        <p>Ma story</p>
-      </div>
-
-      <div class="story">
-        <div class="story-img"><div></div></div>
-        <p>Emma</p>
-      </div>
-
-      <div class="story">
-        <div class="story-img"><div></div></div>
-        <p>Lucas</p>
-      </div>
-
-      <div class="story">
-        <div class="story-img"><div></div></div>
-        <p>Sarah</p>
-      </div>
-
-      <div class="story">
-        <div class="story-img"><div></div></div>
-        <p>Thomas</p>
-      </div>
-
-    </div>
-
-    <div style="padding:20px;">
-      <h2 style="margin-bottom:15px;">Découvrir</h2>
-
-      <div style="
-        height:220px;
-        border-radius:20px;
-        background:linear-gradient(135deg,#333,#777);
-        display:flex;
-        align-items:end;
-        padding:20px;
-      ">
-        <div>
-          <h2>Une nouvelle histoire</h2>
-          <p style="color:#ccc;margin-top:5px;">
-            Découvre du contenu
-          </p>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- PROFIL -->
-  <section id="profile" class="screen">
-
-    <div class="profile">
-
-      <div class="profile-avatar">👻</div>
-
-      <h1>Mon Profil</h1>
-      <p class="username">@utilisateur</p>
-
-      <div class="stats">
-
-        <div class="stat">
-          <strong>128</strong>
-          <span>Amis</span>
+        <div class="camera-placeholder" id="cameraPlaceholder">
+            <div class="face"></div>
         </div>
 
-        <div class="stat">
-          <strong>42</strong>
-          <span>Stories</span>
+        <video id="video" autoplay playsinline></video>
+
+        <div class="camera-top">
+
+            <div class="top-left">
+                <button class="glass-btn" onclick="openProfile()">
+                    👤
+                </button>
+            </div>
+
+            <div class="top-right">
+                <button class="glass-btn" onclick="toggleFlash()">
+                    ⚡
+                </button>
+
+                <button class="glass-btn" onclick="switchCamera()">
+                    🔄
+                </button>
+            </div>
+
         </div>
 
-        <div class="stat">
-          <strong>7 542</strong>
-          <span>Score</span>
+        <div class="camera-bottom">
+
+            <div class="camera-mode">
+                PHOTO
+            </div>
+
+            <div class="camera-controls">
+
+                <button
+                    class="side-camera-btn"
+                    onclick="openStories()">
+                    📰
+                </button>
+
+                <div
+                    class="capture-wrapper"
+                    onclick="takePhoto()">
+
+                    <div class="capture"></div>
+
+                </div>
+
+                <button
+                    class="side-camera-btn"
+                    onclick="openChatPage()">
+                    💬
+                </button>
+
+            </div>
+
         </div>
 
-      </div>
+    </div>
 
-      <button
-        class="profile-button"
-        onclick="showModal()"
-      >
-        ⚙️ Paramètres
-      </button>
+</section>
 
-      <button
-        class="profile-button"
-        onclick="alert('Fonctionnalité à venir !')"
-      >
-        ➕ Ajouter des amis
-      </button>
+
+<!-- =====================================================
+     CHAT LIST
+===================================================== -->
+
+<section id="chatPage" class="page">
+
+    <header class="app-header">
+
+        <h1>Discussions</h1>
+
+        <div class="header-icons">
+
+            <button class="dark-icon"
+                    onclick="alert('Nouvelle discussion')">
+                ✏️
+            </button>
+
+        </div>
+
+    </header>
+
+    <div class="search-container">
+
+        <input
+            id="searchInput"
+            class="search"
+            type="text"
+            placeholder="Rechercher"
+            oninput="filterChats()">
 
     </div>
 
-  </section>
+    <div id="chatList" class="chat-list">
 
-  <!-- NAVIGATION -->
+        <div class="chat-item"
+             data-name="Emma"
+             onclick="openConversation('Emma','👩')">
 
-  <nav class="nav">
+            <div class="avatar">👩</div>
 
-    <button
-      id="nav-chat"
-      onclick="showScreen('chat')"
-    >
-      💬
-    </button>
+            <div class="chat-main">
+                <div class="chat-name">Emma</div>
+                <div class="chat-preview">
+                    Tu as vu mon dernier snap ?
+                </div>
+            </div>
 
-    <button
-      id="nav-stories"
-      onclick="showScreen('stories')"
-    >
-      ▶️
-    </button>
+            <div class="chat-time">12:42</div>
 
-    <button
-      id="nav-camera"
-      class="active"
-      onclick="showScreen('camera')"
-    >
-      📸
-    </button>
+        </div>
 
-    <button
-      id="nav-profile"
-      onclick="showScreen('profile')"
-    >
-      👤
-    </button>
 
-  </nav>
+        <div class="chat-item"
+             data-name="Lucas"
+             onclick="openConversation('Lucas','👦')">
 
-  <!-- MODALE PARAMÈTRES -->
+            <div class="avatar">👦</div>
 
-  <div class="modal" id="modal">
+            <div class="chat-main">
+                <div class="chat-name">Lucas</div>
+                <div class="chat-preview">
+                    😂 a envoyé un Snap
+                </div>
+            </div>
 
-    <div class="modal-box">
+            <div class="chat-time">11:30</div>
 
-      <h2>Paramètres</h2>
+        </div>
 
-      <p style="color:#aaa;margin-bottom:10px;">
-        Version démo de SnapClone
-      </p>
 
-      <button class="yellow" onclick="alert('Profil modifié !')">
-        Modifier mon profil
-      </button>
+        <div class="chat-item"
+             data-name="Sarah"
+             onclick="openConversation('Sarah','👩‍🦰')">
 
-      <button class="close" onclick="closeModal()">
-        Fermer
-      </button>
+            <div class="avatar">👩‍🦰</div>
 
-    </div>
+            <div class="chat-main">
+                <div class="chat-name">Sarah</div>
+                <div class="chat-preview">
+                    À plus tard !
+                </div>
+            </div>
 
-  </div>
+            <div class="chat-time">Hier</div>
 
-  <!-- CHAT OUVERT -->
+        </div>
 
-  <div class="message-box" id="messageBox">
 
-    <div class="message-header">
-      <button class="circle-btn" onclick="closeChat()">←</button>
-      <div class="avatar" id="messageAvatar">👩</div>
-      <strong id="messageName">Emma</strong>
-    </div>
+        <div class="chat-item"
+             data-name="Thomas"
+             onclick="openConversation('Thomas','🧑')">
 
-    <div class="messages" id="messages">
+            <div class="avatar">🧑</div>
 
-      <div class="bubble received">
-        Salut ! 👋
-      </div>
+            <div class="chat-main">
+                <div class="chat-name">Thomas</div>
+                <div class="chat-preview">
+                    🔥 Nouvelle story
+                </div>
+            </div>
 
-      <div class="bubble received">
-        Tu fais quoi ?
-      </div>
+            <div class="chat-time">Hier</div>
 
-    </div>
+        </div>
 
-    <div class="message-input">
 
-      <input
-        id="messageInput"
-        placeholder="Envoyer un message..."
-        onkeydown="if(event.key==='Enter') sendMessage()"
-      >
+        <div class="chat-item"
+             data-name="Julie"
+             onclick="openConversation('Julie','👩‍🦱')">
 
-      <button onclick="sendMessage()">➤</button>
+            <div class="avatar">👩‍🦱</div>
 
-    </div>
+            <div class="chat-main">
+                <div class="chat-name">Julie</div>
+                <div class="chat-preview">
+                    Tu viens ce soir ?
+                </div>
+            </div>
 
-  </div>
+            <div class="chat-time">Lun.</div>
 
-  <!-- APERÇU PHOTO -->
+        </div>
 
-  <div class="photo-preview" id="photoPreview">
 
-    <img id="photo">
+        <div class="chat-item"
+             data-name="Maxime"
+             onclick="openConversation('Maxime','🧑‍💻')">
 
-    <div class="photo-actions">
+            <div class="avatar">🧑‍💻</div>
 
-      <button
-        class="yellow"
-        onclick="sendSnap()"
-      >
-        Envoyer 📤
-      </button>
+            <div class="chat-main">
+                <div class="chat-name">Maxime</div>
+                <div class="chat-preview">
+                    📸 envoyé un Snap
+                </div>
+            </div>
 
-      <button
-        class="close"
-        onclick="closePhoto()"
-      >
-        Supprimer
-      </button>
+            <div class="chat-time">Dim.</div>
+
+        </div>
 
     </div>
 
-  </div>
+    <nav class="bottom-nav">
 
-</div>
+        <button class="nav-button"
+                onclick="openStories()">
+            ▶
+        </button>
 
-<script>
+        <button class="nav-button active"
+                onclick="openChatPage()">
+            💬
+        </button>
 
-/* Navigation */
+        <button class="camera-nav"
+                onclick="openCamera()">
+            📸
+        </button>
 
-function showScreen(name) {
+        <button class="nav-button"
+                onclick="openProfile()">
+            👤
+        </button>
 
-  document.querySelectorAll('.screen')
-    .forEach(screen => screen.classList.remove('active'));
+    </nav>
 
-  document.getElementById(name)
-    .classList.add('active');
+</section>
 
-  document.querySelectorAll('.nav button')
-    .forEach(button => button.classList.remove('active'));
 
-  const nav = document.getElementById('nav-' + name);
+<!-- =====================================================
+     STORIES
+===================================================== -->
 
-  if (nav) {
-    nav.classList.add('active');
-  }
-}
+<section id="storiesPage" class="page">
 
-/* Profil */
+    <header class="app-header">
 
-function openProfile() {
-  showScreen('profile');
-}
+        <h1>Stories</h1>
 
-/* Paramètres */
+        <div class="header-icons">
 
-function showModal() {
-  document.getElementById('modal')
-    .classList.add('show');
-}
+            <button class="dark-icon">
+                🔍
+            </button>
 
-function closeModal() {
-  document.getElementById('modal')
-    .classList.remove('show');
-}
+        </div>
 
-/* Recherche */
+    </header>
 
-function searchChats() {
+    <div class="story-scroll">
 
-  const value =
-    document.getElementById('search')
-    .value
-    .toLowerCase();
-
-  document.querySelectorAll('.chat')
-    .forEach(chat => {
-
-      const name =
-        chat.dataset.name.toLowerCase();
-
-      chat.style.display =
-        name.includes(value) ? 'flex' : 'none';
-
-    });
-}
-
-/* Discussions */
-
-function openChat(name, avatar) {
-
-  document.getElementById('messageName')
-    .textContent = name;
-
-  document.getElementById('messageAvatar')
-    .textContent = avatar;
-
-  document.getElementById('messageBox')
-    .classList.add('show');
-}
-
-function closeChat() {
-
-  document.getElementById('messageBox')
-    .classList.remove('show');
-
-}
-
-function sendMessage() {
-
-  const input =
-    document.getElementById('messageInput');
-
-  const text = input.value.trim();
-
-  if (!text) return;
-
-  const bubble =
-    document.createElement('div');
-
-  bubble.className = 'bubble sent';
-  bubble.textContent = text;
-
-  document.getElementById('messages')
-    .appendChild(bubble);
-
-  input.value = '';
-
-  const messages =
-    document.getElementById('messages');
-
-  messages.scrollTop = messages.scrollHeight;
-
-  setTimeout(() => {
-
-    const response =
-      document.createElement('div');
-
-    response.className = 'bubble received';
-    response.textContent = 'Vu 👀';
-
-    messages.appendChild(response);
-
-    messages.scrollTop = messages.scrollHeight;
-
-  }, 700);
-}
-
-/* Caméra */
-
-async function startCamera() {
-
-  const video =
-    document.getElementById('video');
-
-  const background =
-    document.getElementById('cameraBg');
-
-  try {
-
-    const stream =
-      await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: "user"
-        },
-        audio: false
-      });
-
-    video.srcObject = stream;
-
-    video.style.display = 'block';
-    background.style.display = 'none';
-
-  } catch (error) {
-
-    alert(
-      "Impossible d'accéder à la caméra. Vérifie les autorisations du navigateur."
-    );
-
-  }
-}
-
-/* Photo */
-
-function takePhoto() {
-
-  const video =
-    document.getElementById('video');
-
-  if (video.style.display !== 'block') {
-
-    alert(
-      "Active d'abord la caméra avec le bouton 🔄."
-    );
-
-    return;
-  }
-
-  const canvas =
-    document.createElement('canvas');
-
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-
-  const ctx =
-    canvas.getContext('2d');
-
-  ctx.drawImage(
-    video,
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-  document.getElementById('photo')
-    .src = canvas.toDataURL('image/jpeg');
-
-  document.getElementById('photoPreview')
-    .classList.add('show');
-}
-
-function closePhoto() {
-
-  document.getElementById('photoPreview')
-    .classList.remove('show');
-
-}
-
-function sendSnap() {
-
-  alert(
-    "Snap envoyé ! 📸"
-  );
-
-  closePhoto();
-
-}
-
-/* Lancer automatiquement la caméra */
-
-window.addEventListener('load', () => {
-
-  // Pour éviter de demander automatiquement
-  // l'autorisation au chargement de la page.
-
-});
-
-</script>
-
-</body>
-</html>
+    
