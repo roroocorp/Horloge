@@ -2,806 +2,944 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Snap Web</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horloge</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  color:#fff;
-  font-family:Arial,sans-serif
-}
-.app{
-  width:100%;
-  height:100%;
-  position:relative;
-  background:#000;
-}
-.page{
-  position:absolute;
-  inset:0 0 75px;
-  display:none;
-  overflow:auto;
-}
-.page.active{display:block}
-
-/* CAMERA */
-.camera{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(180deg,#578ca5,#f09a58 55%,#151515);
-}
-.camera video{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-}
-.camera-top{
-  position:absolute;
-  top:20px;
-  left:15px;
-  right:15px;
-  display:flex;
-  justify-content:space-between;
-  z-index:5;
-}
-.left,.right{
-  display:flex;
-  gap:10px;
-}
-.btn{
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:#0009;
-  color:#fff;
-  border:0;
-  font-size:22px;
-}
-.tools{
-  position:absolute;
-  right:15px;
-  top:130px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.shutter{
-  position:absolute;
-  bottom:25px;
-  left:50%;
-  transform:translateX(-50%);
-  width:82px;
-  height:82px;
-  border-radius:50%;
-  background:#fff;
-  border:6px solid #ddd;
-}
-.lenses{
-  position:absolute;
-  bottom:120px;
-  left:0;
-  right:0;
-  display:flex;
-  justify-content:center;
-  gap:12px;
-}
-.lens{
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  border:3px solid #fff;
-  background:#444;
-  font-size:25px;
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* NAV */
-.nav{
-  position:absolute;
-  bottom:0;
-  height:75px;
-  width:100%;
-  background:#050505;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:50;
-}
-.nav button{
-  background:none;
-  border:0;
-  color:#aaa;
-  font-size:25px;
-}
-.nav button.active{color:#fffc00}
-.nav span{
-  display:block;
-  font-size:9px;
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
 }
 
-/* HEADER */
-.header{
-  height:75px;
-  padding:20px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.header h1{font-size:28px}
-.search{
-  width:calc(100% - 30px);
-  margin:0 15px 15px;
-  padding:13px 18px;
-  border:0;
-  outline:0;
-  border-radius:25px;
-  background:#252525;
-  color:white;
+body {
+    display: flex;
+    flex-direction: column;
 }
 
-/* CHAT */
-.chat{
-  display:flex;
-  align-items:center;
-  padding:12px 15px;
-  border-bottom:1px solid #222;
-  gap:12px;
-}
-.person{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:#333;
-  display:grid;
-  place-items:center;
-  font-size:27px;
-}
-.chat-info{flex:1}
-.chat-info strong{display:block;margin-bottom:5px}
-.chat-info small{color:#999}
-.chat-time{color:#888;font-size:11px}
+/* ───────── EN-TÊTE ───────── */
 
-/* STORIES */
-.stories{
-  display:flex;
-  gap:14px;
-  padding:15px;
-  overflow:auto;
-}
-.story{
-  min-width:68px;
-  text-align:center;
-  font-size:11px;
-}
-.story-img{
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  padding:3px;
-  background:linear-gradient(45deg,#fffc00,#ff3ca6,#713cff);
-}
-.story-img div{
-  width:100%;
-  height:100%;
-  border-radius:50%;
-  background:#333;
-  display:grid;
-  place-items:center;
-  font-size:28px;
-}
-.title{
-  padding:10px 15px;
-  font-size:18px;
-  font-weight:bold;
-}
-.cards{
-  display:flex;
-  gap:10px;
-  padding:0 15px 25px;
-  overflow:auto;
-}
-.card{
-  min-width:150px;
-  height:240px;
-  border-radius:15px;
-  background:linear-gradient(145deg,#31586d,#d67b4d);
-  position:relative;
-  overflow:hidden;
-}
-.card:nth-child(2){
-  background:linear-gradient(145deg,#555,#151515)
-}
-.card:nth-child(3){
-  background:linear-gradient(145deg,#a66d91,#25202d)
-}
-.card div{
-  position:absolute;
-  bottom:15px;
-  left:12px;
-  font-weight:bold;
+header {
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-/* PROFIL */
-.profile{
-  text-align:center;
-  padding:35px 15px;
-}
-.snapcode{
-  width:165px;
-  height:165px;
-  background:#fffc00;
-  border-radius:25px;
-  margin:auto;
-  display:grid;
-  place-items:center;
-  font-size:85px;
-}
-.profile h1{margin-top:15px}
-.gray{color:#999}
-.stats{
-  display:flex;
-  justify-content:center;
-  gap:45px;
-  margin:25px;
-}
-.stats b{
-  display:block;
-  font-size:20px;
-}
-.stats small{color:#888}
-.panel{
-  background:#1b1b1b;
-  border-radius:15px;
-  margin:10px 15px;
-}
-.row{
-  padding:18px;
-  border-bottom:1px solid #292929;
-  text-align:left;
+header h1 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 700;
 }
 
-/* MODAL CHAT */
-.chat-window{
-  position:absolute;
-  inset:0;
-  background:#000;
-  z-index:100;
-  display:none;
-  flex-direction:column;
-}
-.chat-window.open{display:flex}
-.chat-head{
-  height:75px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:10px;
-  border-bottom:1px solid #222;
-}
-.messages{
-  flex:1;
-  overflow:auto;
-  padding:15px;
-}
-.message{
-  max-width:75%;
-  padding:11px 15px;
-  border-radius:18px;
-  margin:7px 0;
-  background:#292929;
-}
-.message.me{
-  margin-left:auto;
-  background:#fff;
-  color:#000;
-}
-.input{
-  display:flex;
-  gap:8px;
-  padding:10px;
-}
-.input input{
-  flex:1;
-  border:0;
-  outline:0;
-  background:#292929;
-  color:white;
-  padding:13px;
-  border-radius:25px;
-}
-.input button{
-  width:45px;
-  border:0;
-  border-radius:50%;
-  background:#fffc00;
+.settings {
+    position: absolute;
+    right: 25px;
+    border: 0;
+    background: transparent;
+    color: #aaa;
+    font-size: 27px;
+    cursor: pointer;
 }
 
-/* PREVIEW */
-.preview{
-  position:absolute;
-  inset:0;
-  background:#000;
-  z-index:200;
-  display:none;
-  justify-content:center;
-  align-items:center;
+/* ───────── CONTENU ───────── */
+
+main {
+    flex: 1;
+    position: relative;
+    min-height: 0;
 }
-.preview.open{display:flex}
-.preview img{
-  max-width:100%;
-  max-height:80%;
+
+.page {
+    display: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
-.send{
-  position:absolute;
-  bottom:30px;
-  padding:14px 25px;
-  border-radius:25px;
-  background:#fffc00;
-  border:0;
-  font-weight:bold;
+
+.page.active {
+    display: flex;
 }
-.close{
-  position:absolute;
-  right:20px;
-  top:25px;
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  background:#222;
-  color:white;
-  border:0;
-  font-size:25px;
+
+/* ───────── MINUTEUR ───────── */
+
+.timer-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.wheel {
+    width: 125px;
+    height: 270px;
+    overflow: hidden;
+    position: relative;
+}
+
+.wheel::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 90px;
+    background: linear-gradient(#000, transparent);
+    pointer-events: none;
+}
+
+.wheel::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 90px;
+    background: linear-gradient(transparent, #000);
+    pointer-events: none;
+}
+
+.numbers {
+    position: absolute;
+    top: 80px;
+    width: 100%;
+}
+
+.number {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #292929;
+    font-size: 45px;
+    font-weight: 300;
+}
+
+.number.selected {
+    color: #f5f5f5;
+}
+
+.separator {
+    font-size: 43px;
+    color: #ddd;
+}
+
+.presets {
+    width: min(700px, 92%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.preset {
+    height: 67px;
+    border: 1px solid #393939;
+    border-radius: 18px;
+    background: #000;
+    color: #777;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.preset.active {
+    background: #292929;
+    color: #fff;
+    border-color: #292929;
+}
+
+.play {
+    margin-top: 35px;
+    width: 150px;
+    height: 73px;
+    border: 0;
+    border-radius: 40px;
+    background: #29292b;
+    color: #2185ff;
+    font-size: 31px;
+    cursor: pointer;
+}
+
+/* ───────── CHRONOMÈTRE ───────── */
+
+.chrono-time {
+    font-size: clamp(55px, 9vw, 80px);
+    font-weight: 300;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 180px;
+}
+
+.chrono-button {
+    width: 150px;
+    height: 73px;
+    border: 0;
+    border-radius: 40px;
+    background: #29292b;
+    color: #2185ff;
+    font-size: 31px;
+}
+
+/* ───────── HORLOGE MONDIALE ───────── */
+
+.world-time {
+    font-size: clamp(65px, 12vw, 110px);
+    font-weight: 200;
+    font-variant-numeric: tabular-nums;
+}
+
+.world-date {
+    color: #888;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+/* ───────── ALARMES ───────── */
+
+.alarms {
+    width: min(650px, 90%);
+}
+
+.add-alarm {
+    border: 0;
+    background: #29292b;
+    color: #fff;
+    padding: 13px 22px;
+    border-radius: 22px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.alarm {
+    height: 90px;
+    border-bottom: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alarm-time {
+    font-size: 40px;
+    font-weight: 300;
+}
+
+.alarm-label {
+    color: #777;
+    margin-top: 4px;
+}
+
+.switch {
+    width: 52px;
+    height: 31px;
+    padding: 3px;
+    border-radius: 20px;
+    background: #333;
+    cursor: pointer;
+}
+
+.switch span {
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #fff;
+    transition: .2s;
+}
+
+.switch.on {
+    background: #30d158;
+}
+
+.switch.on span {
+    transform: translateX(21px);
+}
+
+/* ───────── NAVIGATION ───────── */
+
+nav {
+    height: 82px;
+    border-top: 1px solid #171717;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: #000;
+}
+
+.nav-button {
+    border: 0;
+    background: #000;
+    color: #777;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 14px;
+}
+
+.nav-icon {
+    font-size: 26px;
+}
+
+.nav-button.active {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* ───────── MOBILE ───────── */
+
+@media (max-width: 650px) {
+
+    header {
+        height: 58px;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    .wheel {
+        width: 85px;
+    }
+
+    .number {
+        font-size: 37px;
+    }
+
+    .timer-picker {
+        gap: 8px;
+    }
+
+    .presets {
+        gap: 8px;
+    }
+
+    .preset {
+        font-size: 15px;
+    }
+
+    .chrono-time {
+        margin-bottom: 150px;
+    }
+
+    nav {
+        height: 75px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<header>
+    <h1 id="pageTitle">Minuteur</h1>
 
-<!-- CAMERA -->
-<section id="camera" class="page active">
-<div class="camera">
+    <button class="settings" onclick="openSettings()">
+        ⚙
+    </button>
+</header>
 
-<video id="video" autoplay playsinline></video>
+<main>
 
-<div class="camera-top">
-<div class="left">
-<button class="btn" onclick="go('profile')">🙂</button>
-<button class="btn">⌕</button>
-</div>
+<!-- ═════════════ MINUTEUR ═════════════ -->
 
-<div class="right">
-<button class="btn" onclick="startCamera()">⊕</button>
-<button class="btn" onclick="flip()">↻</button>
-</div>
-</div>
+<section id="timer" class="page active">
 
-<div class="tools">
-<button class="btn">ϟ</button>
-<button class="btn">▣</button>
-<button class="btn">♫</button>
-<button class="btn">＋</button>
-</div>
+    <div class="timer-picker">
 
-<div class="lenses">
-<button class="lens">🐶</button>
-<button class="lens">🙂</button>
-<button class="lens">🌸</button>
-<button class="lens">😎</button>
-</div>
+        <div class="wheel">
+            <div class="numbers" id="hours"></div>
+        </div>
 
-<button class="shutter" onclick="snap()"></button>
+        <div class="separator">:</div>
 
-</div>
-</section>
+        <div class="wheel">
+            <div class="numbers" id="minutes"></div>
+        </div>
 
-<!-- CHAT -->
-<section id="chat" class="page">
-<div class="header">
-<h1>Chat</h1>
-<button class="btn">＋</button>
-</div>
+        <div class="separator">:</div>
 
-<input class="search"
-placeholder="Rechercher"
-oninput="search(this.value)">
+        <div class="wheel">
+            <div class="numbers" id="seconds"></div>
+        </div>
 
-<div id="chatList">
+    </div>
 
-<div class="chat" data-name="Léa"
-onclick="openChat('Léa','👩🏻')">
-<div class="person">👩🏻</div>
-<div class="chat-info">
-<strong>Léa</strong>
-<small>▢ Reçu · 2 min</small>
-</div>
-<div class="chat-time">😊</div>
-</div>
+    <div class="presets">
 
-<div class="chat" data-name="Tom"
-onclick="openChat('Tom','👦🏻')">
-<div class="person">👦🏻</div>
-<div class="chat-info">
-<strong>Tom</strong>
-<small>▶ Ouvert · 1 h</small>
-</div>
-<div class="chat-time">😊</div>
-</div>
+        <button class="preset active"
+            onclick="chooseTimer(23,3,0,this)">
+            23:03:00
+        </button>
 
-<div class="chat" data-name="Chloé"
-onclick="openChat('Chloé','👩🏻')">
-<div class="person">👩🏻</div>
-<div class="chat-info">
-<strong>Chloé</strong>
-<small>■ Appuyé pour voir · 1 h</small>
-</div>
-<div class="chat-time">😎</div>
-</div>
+        <button class="preset"
+            onclick="chooseTimer(0,9,0,this)">
+            00:09:00
+        </button>
 
-<div class="chat" data-name="Lucas"
-onclick="openChat('Lucas','👦🏼')">
-<div class="person">👦🏼</div>
-<div class="chat-info">
-<strong>Lucas</strong>
-<small>▢ Reçu · 2 h</small>
-</div>
-<div class="chat-time">🔥</div>
-</div>
+        <button class="preset"
+            onclick="chooseTimer(0,10,0,this)">
+            00:10:00
+        </button>
 
-<div class="chat" data-name="Sarah"
-onclick="openChat('Sarah','👩🏻‍🦰')">
-<div class="person">👩🏻‍🦰</div>
-<div class="chat-info">
-<strong>Sarah</strong>
-<small>▶ Ouvert · 3 h</small>
-</div>
-<div class="chat-time">😊</div>
-</div>
+        <button class="preset"
+            onclick="chooseTimer(6,36,0,this)">
+            06:36:00
+        </button>
 
-</div>
-</section>
+        <button class="preset"
+            onclick="chooseTimer(6,37,0,this)">
+            06:37:00
+        </button>
 
-<!-- STORIES -->
-<section id="stories" class="page">
-<div class="header">
-<h1>Stories</h1>
-<button class="btn">＋</button>
-</div>
+        <button class="preset"
+            onclick="chooseTimer(3,15,0,this)">
+            03:15:00
+        </button>
 
-<div class="title">Amis</div>
+    </div>
 
-<div class="stories">
-
-<div class="story">
-<div class="story-img"><div>📸</div></div>
-Ma Story
-</div>
-
-<div class="story">
-<div class="story-img"><div>👩🏻</div></div>
-Léa
-</div>
-
-<div class="story">
-<div class="story-img"><div>👦🏻</div></div>
-Tom
-</div>
-
-<div class="story">
-<div class="story-img"><div>👩🏻</div></div>
-Chloé
-</div>
-
-<div class="story">
-<div class="story-img"><div>👦🏼</div></div>
-Lucas
-</div>
-
-</div>
-
-<div class="title">Abonnements</div>
-
-<div class="cards">
-
-<div class="card">
-<div>🏔️<br>Inoxtag ⭐<br><small>il y a 2 h</small></div>
-</div>
-
-<div class="card">
-<div>🎥<br>Squeezie ⭐<br><small>il y a 4 h</small></div>
-</div>
-
-<div class="card">
-<div>💄<br>EnjoyPhoenix<br><small>il y a 6 h</small></div>
-</div>
-
-</div>
-
-<div class="title">Pour vous</div>
-
-<div class="cards">
-<div class="card"><div>🐶<br>Ces chiens sont incroyables 🐾</div></div>
-<div class="card"><div>🌊<br>Les plages les plus belles 😍</div></div>
-</div>
+    <button class="play"
+        id="timerButton"
+        onclick="toggleTimer()">
+        ▶
+    </button>
 
 </section>
 
-<!-- PROFIL -->
-<section id="profile" class="page">
-<div class="profile">
 
-<div class="snapcode">🧑🏻</div>
+<!-- ═════════════ CHRONOMÈTRE ═════════════ -->
 
-<h1>Thomas</h1>
-<p class="gray">@thomas_web · 345 678 👑</p>
+<section id="chrono" class="page">
 
-<div class="stats">
-<div><b>128</b><small>Amis</small></div>
-<div><b>42</b><small>Stories</small></div>
-<div><b>7542</b><small>Score</small></div>
-</div>
+    <div class="chrono-time" id="chronoTime">
+        00:00.00
+    </div>
 
-<div class="panel">
-<div class="row">📷 Ajouter à ma Story</div>
-<div class="row">🔒 Mes Stories privées</div>
-</div>
+    <button
+        class="chrono-button"
+        id="chronoButton"
+        onclick="toggleChrono()">
+        ▶
+    </button>
 
-<div class="panel">
-<div class="row">♙ Ajouter des amis</div>
-<div class="row">☷ Mes amis</div>
-</div>
-
-<div class="panel">
-<div class="row">🙂 Modifier mon Bitmoji</div>
-<div class="row">⚙️ Paramètres</div>
-</div>
-
-</div>
 </section>
 
-<!-- NAVIGATION -->
-<nav class="nav">
-<button onclick="go('chat')" id="nchat">💬<span>Chat</span></button>
-<button onclick="go('stories')" id="nstories">▶️<span>Stories</span></button>
-<button onclick="go('camera')" id="ncamera" class="active">📸<span>Caméra</span></button>
-<button onclick="go('profile')" id="nprofile">👤<span>Profil</span></button>
+
+<!-- ═════════════ HORLOGE MONDIALE ═════════════ -->
+
+<section id="world" class="page">
+
+    <div class="world-time" id="worldTime">
+        00:00:00
+    </div>
+
+    <div class="world-date" id="worldDate">
+        --
+    </div>
+
+</section>
+
+
+<!-- ═════════════ ALARMES ═════════════ -->
+
+<section id="alarm" class="page">
+
+    <div class="alarms">
+
+        <button class="add-alarm" onclick="addAlarm()">
+            ＋ Ajouter une alarme
+        </button>
+
+        <div id="alarmList"></div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ═════════════ NAVIGATION ═════════════ -->
+
+<nav>
+
+    <button class="nav-button"
+        onclick="changePage('alarm', this, 'Alarme')">
+
+        <span class="nav-icon">◴</span>
+        <span>Alarme</span>
+
+    </button>
+
+
+    <button class="nav-button"
+        onclick="changePage('world', this, 'Horloge mondiale')">
+
+        <span class="nav-icon">◷</span>
+        <span>Horloge mondiale</span>
+
+    </button>
+
+
+    <button class="nav-button"
+        onclick="changePage('chrono', this, 'Chronomètre')">
+
+        <span class="nav-icon">⏱</span>
+        <span>Chronomètre</span>
+
+    </button>
+
+
+    <button class="nav-button active"
+        onclick="changePage('timer', this, 'Minuteur')">
+
+        <span class="nav-icon">⌛</span>
+        <span>Minuteur</span>
+
+    </button>
+
 </nav>
 
-<!-- CHAT OUVERT -->
-<div id="chatWindow" class="chat-window">
-
-<div class="chat-head">
-<button class="btn" onclick="closeChat()">‹</button>
-<div class="person" id="chatAvatar">👩🏻</div>
-<div>
-<b id="chatName">Léa</b>
-<br>
-<small class="gray">En ligne</small>
-</div>
-</div>
-
-<div class="messages" id="messages">
-<div class="message">Salut 👋</div>
-<div class="message">Tu fais quoi ?</div>
-<div class="message me">Je teste mon nouveau Snap 😎</div>
-</div>
-
-<div class="input">
-<input id="msg" placeholder="Envoyer un message..."
-onkeydown="if(event.key==='Enter')send()">
-<button onclick="send()">➤</button>
-</div>
-
-</div>
-
-<!-- PHOTO -->
-<div id="preview" class="preview">
-<button class="close" onclick="closePreview()">×</button>
-<img id="photo">
-<button class="send" onclick="sendSnap()">Envoyer ➤</button>
-</div>
-
-</div>
 
 <script>
 
-let stream=null;
-let facing="user";
+/* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
 
-function go(page){
+function changePage(page, button, title) {
 
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
+    document.querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
 
-document.getElementById(page)
-.classList.add("active");
+    document.getElementById(page)
+        .classList.add("active");
 
-document.querySelectorAll(".nav button")
-.forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".nav-button")
+        .forEach(b => b.classList.remove("active"));
 
-const n={
-camera:"ncamera",
-chat:"nchat",
-stories:"nstories",
-profile:"nprofile"
-};
+    button.classList.add("active");
 
-if(n[page])
-document.getElementById(n[page])
-.classList.add("active");
+    document.getElementById("pageTitle")
+        .textContent = title;
 }
 
-async function startCamera(){
 
-try{
+/* ═══════════════════════════════════════
+   MINUTEUR
+═══════════════════════════════════════ */
 
-if(stream)
-stream.getTracks().forEach(t=>t.stop());
+let hours = 23;
+let minutes = 3;
+let seconds = 0;
 
-stream=await navigator.mediaDevices.getUserMedia({
-video:{
-facingMode:facing
-},
-audio:false
-});
+let timerInterval = null;
+let timerEnd = 0;
+let timerRunning = false;
 
-const video=document.getElementById("video");
 
-video.srcObject=stream;
-video.style.display="block";
+function createNumbers(id, max, selected) {
 
-}catch(e){
+    const container = document.getElementById(id);
 
-alert("Autorise la caméra dans ton navigateur.");
+    container.innerHTML = "";
 
+    for (let i = 0; i <= max; i++) {
+
+        const number = document.createElement("div");
+
+        number.className = "number";
+
+        if (i === selected) {
+            number.classList.add("selected");
+        }
+
+        number.textContent =
+            String(i).padStart(2, "0");
+
+        container.appendChild(number);
+    }
 }
 
+
+function renderTimer() {
+
+    createNumbers("hours", 23, hours);
+    createNumbers("minutes", 59, minutes);
+    createNumbers("seconds", 59, seconds);
 }
 
-async function flip(){
 
-facing=facing==="user"
-?"environment"
-:"user";
+renderTimer();
 
-startCamera();
 
+function chooseTimer(h, m, s, button) {
+
+    hours = h;
+    minutes = m;
+    seconds = s;
+
+    renderTimer();
+
+    document.querySelectorAll(".preset")
+        .forEach(b => b.classList.remove("active"));
+
+    button.classList.add("active");
 }
 
-function snap(){
 
-const video=document.getElementById("video");
+function toggleTimer() {
 
-if(video.style.display!=="block"){
+    if (timerRunning) {
 
-startCamera();
+        clearInterval(timerInterval);
 
-alert("Autorise la caméra puis appuie encore une fois.");
+        timerRunning = false;
 
-return;
+        document.getElementById("timerButton")
+            .textContent = "▶";
 
+        return;
+    }
+
+    let total =
+        hours * 3600 +
+        minutes * 60 +
+        seconds;
+
+    if (total <= 0) return;
+
+    timerEnd =
+        Date.now() +
+        total * 1000;
+
+    timerRunning = true;
+
+    document.getElementById("timerButton")
+        .textContent = "Ⅱ";
+
+    timerInterval =
+        setInterval(updateTimer, 200);
 }
 
-const canvas=document.createElement("canvas");
 
-canvas.width=video.videoWidth;
-canvas.height=video.videoHeight;
+function updateTimer() {
 
-const ctx=canvas.getContext("2d");
+    let remaining =
+        Math.max(
+            0,
+            Math.ceil(
+                (timerEnd - Date.now()) / 1000
+            )
+        );
 
-ctx.drawImage(
-video,
-0,
-0,
-canvas.width,
-canvas.height
-);
+    hours =
+        Math.floor(remaining / 3600);
 
-document.getElementById("photo").src=
-canvas.toDataURL("image/jpeg");
+    minutes =
+        Math.floor(
+            (remaining % 3600) / 60
+        );
 
-document.getElementById("preview")
-.classList.add("open");
+    seconds =
+        remaining % 60;
 
+    renderTimer();
+
+    if (remaining <= 0) {
+
+        clearInterval(timerInterval);
+
+        timerRunning = false;
+
+        document.getElementById("timerButton")
+            .textContent = "▶";
+
+        playSound();
+    }
 }
 
-function closePreview(){
 
-document.getElementById("preview")
-.classList.remove("open");
+/* ═══════════════════════════════════════
+   SON DU MINUTEUR
+═══════════════════════════════════════ */
 
+function playSound() {
+
+    try {
+
+        const audio =
+            new AudioContext();
+
+        const oscillator =
+            audio.createOscillator();
+
+        const gain =
+            audio.createGain();
+
+        oscillator.connect(gain);
+        gain.connect(audio.destination);
+
+        oscillator.frequency.value = 880;
+
+        gain.gain.value = 0.2;
+
+        oscillator.start();
+
+        oscillator.stop(
+            audio.currentTime + 1
+        );
+
+    } catch (error) {
+
+        console.log("Audio non disponible");
+
+    }
 }
 
-function sendSnap(){
 
-closePreview();
+/* ═══════════════════════════════════════
+   CHRONOMÈTRE
+═══════════════════════════════════════ */
 
-alert("Snap envoyé 📸");
+let chronoStart = 0;
+let chronoElapsed = 0;
+let chronoInterval = null;
 
+
+function toggleChrono() {
+
+    const button =
+        document.getElementById("chronoButton");
+
+    if (chronoInterval) {
+
+        chronoElapsed +=
+            Date.now() - chronoStart;
+
+        clearInterval(chronoInterval);
+
+        chronoInterval = null;
+
+        button.textContent = "▶";
+
+        return;
+    }
+
+    chronoStart = Date.now();
+
+    chronoInterval =
+        setInterval(updateChrono, 30);
+
+    button.textContent = "Ⅱ";
 }
 
-function search(value){
 
-value=value.toLowerCase();
+function updateChrono() {
 
-document.querySelectorAll(".chat")
-.forEach(c=>{
+    let elapsed =
+        chronoElapsed +
+        (Date.now() - chronoStart);
 
-const name=c.dataset.name.toLowerCase();
+    let milliseconds =
+        Math.floor(elapsed / 10) % 100;
 
-c.style.display=
-name.includes(value)?"flex":"none";
+    let seconds =
+        Math.floor(elapsed / 1000) % 60;
 
-});
+    let minutes =
+        Math.floor(elapsed / 60000);
 
+    document.getElementById("chronoTime")
+        .textContent =
+            String(minutes).padStart(2, "0")
+            + ":"
+            + String(seconds).padStart(2, "0")
+            + "."
+            + String(milliseconds).padStart(2, "0");
 }
 
-function openChat(name,avatar){
 
-document.getElementById("chatName")
-.textContent=name;
+/* ═══════════════════════════════════════
+   HORLOGE
+═══════════════════════════════════════ */
 
-document.getElementById("chatAvatar")
-.textContent=avatar;
+function updateClock() {
 
-document.getElementById("chatWindow")
-.classList.add("open");
+    const now = new Date();
 
+    document.getElementById("worldTime")
+        .textContent =
+            now.toLocaleTimeString(
+                "fr-FR",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+                }
+            );
+
+    document.getElementById("worldDate")
+        .textContent =
+            now.toLocaleDateString(
+                "fr-FR",
+                {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
 }
 
-function closeChat(){
+setInterval(updateClock, 1000);
 
-document.getElementById("chatWindow")
-.classList.remove("open");
+updateClock();
 
+
+/* ═══════════════════════════════════════
+   ALARMES
+═══════════════════════════════════════ */
+
+let alarms =
+    JSON.parse(
+        localStorage.getItem("alarms") || "[]"
+    );
+
+
+function saveAlarms() {
+
+    localStorage.setItem(
+        "alarms",
+        JSON.stringify(alarms)
+    );
 }
 
-function send(){
 
-const input=document.getElementById("msg");
+function addAlarm() {
 
-const text=input.value.trim();
+    let time =
+        prompt(
+            "Heure de l'alarme (HH:MM)",
+            "07:00"
+        );
 
-if(!text)return;
+    if (!time) return;
 
-const div=document.createElement("div");
+    if (!/^\d\d:\d\d$/.test(time)) {
 
-div.className="message me";
-div.textContent=text;
+        alert("Format incorrect. Exemple : 07:30");
 
-document.getElementById("messages")
-.appendChild(div);
+        return;
+    }
 
-input.value="";
+    alarms.push({
+        time: time,
+        enabled: true
+    });
 
-const box=document.getElementById("messages");
+    saveAlarms();
 
-box.scrollTop=box.scrollHeight;
+    renderAlarms();
+}
 
-setTimeout(()=>{
 
-const reply=document.createElement("div");
+function renderAlarms() {
 
-reply.className="message";
-reply.textContent="Vu 👀";
+    const list =
+        document.getElementById("alarmList");
 
-box.appendChild(reply);
+    list.innerHTML = "";
 
-box.scrollTop=box.scrollHeight;
+    if (alarms.length === 0) {
 
-},700);
+        list.innerHTML =
+            '<div style="color:#777;text-align:center;padding:35px">Aucune alarme</div>';
 
+        return;
+    }
+
+    alarms.forEach((alarm, index) => {
+
+        const row =
+            document.createElement("div");
+
+        row.className = "alarm";
+
+        row.innerHTML = `
+
+            <div>
+
+                <div class="alarm-time">
+                    ${alarm.time}
+                </div>
+
+                <div class="alarm-label">
+                    Tous les jours
+                </div>
+
+            </div>
+
+            <div
+                class="switch ${alarm.enabled ? "on" : ""}"
+                onclick="toggleAlarm(${index})">
+
+                <span></span>
+
+            </div>
+        `;
+
+        list.appendChild(row);
+    });
+}
+
+
+function toggleAlarm(index) {
+
+    alarms[index].enabled =
+        !alarms[index].enabled;
+
+    saveAlarms();
+
+    renderAlarms();
+}
+
+
+renderAlarms();
+
+
+/* ═══════════════════════════════════════
+   RÉGLAGES
+═══════════════════════════════════════ */
+
+function openSettings() {
+
+    alert(
+        "⚙ Réglages\n\n" +
+        "• Son du minuteur\n" +
+        "• Vibrations\n" +
+        "• Alarmes\n" +
+        "• Apparence\n" +
+        "• Horloge 24 h"
+    );
 }
 
 </script>
 
 </body>
-      </html>
+</html>
