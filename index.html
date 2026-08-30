@@ -2,1142 +2,806 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-<title>SnapLite</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Snap Web</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #000;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-button,
-input {
-    font: inherit;
-}
-
-button {
-    border: 0;
-    color: inherit;
-}
-
-#app {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    overflow: hidden;
-}
-
-/* =========================
-   ECRANS
-========================= */
-
-.page {
-    position: absolute;
-    inset: 0;
-    display: none;
-    background: #fff;
-    color: #111;
-    overflow: hidden;
-}
-
-.page.active {
-    display: block;
-}
-
-/* =========================
-   CAMERA
-========================= */
-
-#cameraPage {
-    background: #000;
-    color: #fff;
-}
-
-.camera {
-    position: absolute;
-    inset: 0;
-    background: #161616;
-    overflow: hidden;
-}
-
-#video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background: #171717;
-}
-
-.camera-placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-        radial-gradient(circle at 50% 40%, #777 0, #444 16%, #222 45%, #080808 100%);
-}
-
-.camera-placeholder .face {
-    width: 180px;
-    height: 230px;
-    border-radius: 50%;
-    border: 4px solid rgba(255,255,255,.18);
-    opacity: .5;
-}
-
-.camera-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding:
-        calc(env(safe-area-inset-top) + 14px)
-        18px
-        14px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 5;
-}
-
-.top-left,
-.top-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.glass-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: rgba(0,0,0,.38);
-    backdrop-filter: blur(12px);
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.camera-bottom {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding:
-        18px
-        25px
-        calc(env(safe-area-inset-bottom) + 22px);
-
-    z-index: 6;
-}
-
-.camera-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.side-camera-btn {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.38);
-    backdrop-filter: blur(10px);
-    display: grid;
-    place-items: center;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.capture-wrapper {
-    width: 86px;
-    height: 86px;
-    border: 4px solid white;
-    border-radius: 50%;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.capture {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: white;
-    transition: transform .12s;
-}
-
-.capture-wrapper:active .capture {
-    transform: scale(.86);
-}
-
-.camera-mode {
-    text-align: center;
-    margin-bottom: 16px;
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: .5px;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.app-header {
-    height: 72px;
-    padding:
-        calc(env(safe-area-inset-top) + 8px)
-        18px
-        8px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-}
-
-.app-header h1 {
-    font-size: 27px;
-    letter-spacing: -.8px;
-}
-
-.header-icons {
-    display: flex;
-    gap: 8px;
-}
-
-.dark-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: #f0f0f0;
-    display: grid;
-    place-items: center;
-    font-size: 19px;
-    cursor: pointer;
-}
-
-/* =========================
-   CHAT
-========================= */
-
-#chatPage {
-    background: #fff;
-}
-
-.search-container {
-    padding: 5px 15px 12px;
-    background: #fff;
-}
-
-.search {
-    width: 100%;
-    height: 44px;
-    border: 0;
-    outline: 0;
-    border-radius: 23px;
-    background: #f0f0f2;
-    padding: 0 17px;
-    font-size: 16px;
-}
-
-.chat-list {
-    position: absolute;
-    top: 125px;
-    bottom: 76px;
-    left: 0;
-    right: 0;
-    overflow-y: auto;
-    background: #fff;
-}
-
-.chat-item {
-    height: 76px;
-    padding: 8px 17px;
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    cursor: pointer;
-}
-
-.chat-item:active {
-    background: #f2f2f2;
-}
-
-.avatar {
-    width: 56px;
-    height: 56px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-size: 26px;
-    background: linear-gradient(145deg,#eee,#bbb);
-}
-
-.chat-main {
-    flex: 1;
-    min-width: 0;
-}
-
-.chat-name {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
-
-.chat-preview {
-    font-size: 13px;
-    color: #777;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.chat-time {
-    font-size: 11px;
-    color: #999;
-}
-
-/* =========================
-   STORIES
-========================= */
-
-#storiesPage {
-    background: #fff;
-}
-
-.story-scroll {
-    display: flex;
-    gap: 13px;
-    padding: 13px 17px 20px;
-    overflow-x: auto;
-}
-
-.story-card {
-    flex: 0 0 83px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.story-ring {
-    width: 76px;
-    height: 76px;
-    margin: auto;
-    padding: 3px;
-    border-radius: 50%;
-    background: linear-gradient(135deg,#ffd900,#ffb400,#ff5a36,#b300ff);
-}
-
-.story-ring.seen {
-    background: #cfcfcf;
-}
-
-.story-avatar {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(135deg,#ddd,#777);
-    display: grid;
-    place-items: center;
-    font-size: 28px;
-    border: 3px solid white;
-}
-
-.story-name {
-    margin-top: 7px;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.discovery {
-    padding: 0 17px 100px;
-    overflow-y: auto;
-    height: calc(100% - 170px);
-}
-
-.discovery h2 {
-    font-size: 21px;
-    margin-bottom: 13px;
-}
-
-.discover-card {
-    position: relative;
-    height: 260px;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 14px;
-    background: linear-gradient(135deg,#111,#888);
-}
-
-.discover-card:nth-child(2) {
-    background: linear-gradient(135deg,#202020,#d5d5d5);
-}
-
-.discover-card:nth-child(3) {
-    background: linear-gradient(135deg,#555,#111);
-}
-
-.discover-content {
-    position: absolute;
-    left: 18px;
-    right: 18px;
-    bottom: 18px;
-}
-
-.discover-content h3 {
-    font-size: 22px;
-    margin-bottom: 5px;
-}
-
-.discover-content p {
-    color: #ddd;
-    font-size: 13px;
-}
-
-/* =========================
-   PROFIL
-========================= */
-
-#profilePage {
-    background: #f7f7f7;
-}
-
-.profile-content {
-    height: calc(100% - 76px);
-    overflow-y: auto;
-    text-align: center;
-    padding: 35px 20px 110px;
-}
-
-.profile-photo {
-    width: 112px;
-    height: 112px;
-    border-radius: 50%;
-    margin: 5px auto 15px;
-    background: linear-gradient(145deg,#ffe500,#ffae00);
-    display: grid;
-    place-items: center;
-    font-size: 54px;
-    box-shadow: 0 7px 25px rgba(0,0,0,.12);
-}
-
-.profile-content h2 {
-    font-size: 23px;
-}
-
-.profile-username {
-    color: #888;
-    margin-top: 5px;
-}
-
-.profile-stats {
-    display: flex;
-    justify-content: center;
-    gap: 48px;
-    margin: 27px 0;
-}
-
-.profile-stat strong {
-    display: block;
-    font-size: 21px;
-}
-
-.profile-stat span {
-    display: block;
-    color: #888;
-    font-size: 12px;
-    margin-top: 3px;
-}
-
-.profile-action {
-    width: 100%;
-    height: 49px;
-    border-radius: 12px;
-    margin-top: 9px;
-    background: #e9e9e9;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.bottom-nav {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 76px;
-    padding-bottom: env(safe-area-inset-bottom);
-    background: rgba(255,255,255,.96);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 20;
-    border-top: 1px solid #eee;
-}
-
-.nav-button {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: transparent;
-    color: #777;
-    font-size: 23px;
-    cursor: pointer;
-}
-
-.nav-button.active {
-    color: #111;
-}
-
-.camera-nav {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: #111;
-    color: white;
-    display: grid;
-    place-items: center;
-    font-size: 24px;
-}
-
-/* =========================
-   CHAT OUVERT
-========================= */
-
-.chat-window {
-    position: absolute;
-    inset: 0;
-    background: #f7f7f7;
-    color: #111;
-    z-index: 100;
-    display: none;
-    flex-direction: column;
-}
-
-.chat-window.open {
-    display: flex;
-}
-
-.chat-window-header {
-    min-height: 72px;
-    padding:
-        calc(env(safe-area-inset-top) + 8px)
-        13px
-        8px;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: white;
-    border-bottom: 1px solid #ddd;
-}
-
-.back-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: #eee;
-    cursor: pointer;
-}
-
-.chat-user-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: #ddd;
-    font-size: 21px;
-}
-
-.chat-user-info {
-    flex: 1;
-}
-
-.chat-user-info strong {
-    display: block;
-}
-
-.chat-user-info span {
-    display: block;
-    color: #888;
-    font-size: 12px;
-    margin-top: 3px;
-}
-
-.conversation {
-    flex: 1;
-    overflow-y: auto;
-    padding: 18px;
-}
-
-.message {
-    max-width: 74%;
-    width: fit-content;
-    padding: 11px 15px;
-    margin-bottom: 9px;
-    border-radius: 19px;
-    font-size: 15px;
-}
-
-.message.received {
-    background: #e5e5e5;
-}
-
-.message.sent {
-    margin-left: auto;
-    background: #ffe000;
-}
-
-.message-bar {
-    display: flex;
-    gap: 8px;
-    padding:
-        10px
-        12px
-        calc(env(safe-area-inset-bottom) + 10px);
-
-    background: white;
-}
-
-.message-bar input {
-    flex: 1;
-    height: 45px;
-    border: 0;
-    outline: 0;
-    border-radius: 23px;
-    padding: 0 16px;
-    background: #eee;
-}
-
-.send-button {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: #111;
-    color: white;
-    cursor: pointer;
-}
-
-/* =========================
-   APERCU PHOTO
-========================= */
-
-.photo-screen {
-    position: absolute;
-    inset: 0;
-    z-index: 200;
-    background: #000;
-    display: none;
-    flex-direction: column;
-}
-
-.photo-screen.open {
-    display: flex;
-}
-
-#photoResult {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.photo-tools {
-    position: absolute;
-    top: calc(env(safe-area-inset-top) + 16px);
-    right: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.photo-tool {
-    width: 43px;
-    height: 43px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.45);
-    backdrop-filter: blur(10px);
-    color: white;
-    cursor: pointer;
-}
-
-.photo-bottom {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding:
-        18px
-        20px
-        calc(env(safe-area-inset-bottom) + 20px);
-
-    display: flex;
-    gap: 10px;
-}
-
-.photo-bottom button {
-    flex: 1;
-    height: 50px;
-    border-radius: 25px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.send-snap {
-    background: #ffe000;
-    color: #111;
-}
-
-.cancel-snap {
-    background: rgba(255,255,255,.18);
-    color: white;
-}
-
-/* =========================
-   STORY VIEWER
-========================= */
-
-.story-viewer {
-    position: absolute;
-    inset: 0;
-    z-index: 250;
-    background: #111;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.story-viewer.open {
-    display: flex;
-}
-
-.story-viewer-content {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(145deg,#111,#666);
-}
-
-.story-viewer-top {
-    position: absolute;
-    top: calc(env(safe-area-inset-top) + 10px);
-    left: 12px;
-    right: 12px;
-    z-index: 2;
-}
-
-.story-progress {
-    height: 3px;
-    background: rgba(255,255,255,.35);
-    border-radius: 3px;
-    overflow: hidden;
-    margin-bottom: 12px;
-}
-
-.story-progress div {
-    width: 100%;
-    height: 100%;
-    background: white;
-    transform-origin: left;
-    animation: progress 4s linear;
-}
-
-@keyframes progress {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-}
-
-.story-user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.story-user .avatar {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-}
-
-.story-close {
-    position: absolute;
-    right: 10px;
-    top: 55px;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.35);
-    color: white;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-/* =========================
-   MODALE
-========================= */
-
-.modal {
-    position: absolute;
-    inset: 0;
-    z-index: 300;
-    display: none;
-    align-items: flex-end;
-    background: rgba(0,0,0,.45);
-}
-
-.modal.open {
-    display: flex;
-}
-
-.sheet {
-    width: 100%;
-    background: white;
-    color: #111;
-    border-radius: 25px 25px 0 0;
-    padding: 24px 20px calc(env(safe-area-inset-bottom) + 25px);
-    animation: sheetUp .25s ease;
-}
-
-@keyframes sheetUp {
-    from {
-        transform: translateY(100%);
-    }
-    to {
-        transform: translateY(0);
-    }
-}
-
-.sheet h2 {
-    margin-bottom: 18px;
-}
-
-.setting {
-    height: 53px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #eee;
-}
-
-.sheet-close {
-    width: 100%;
-    height: 48px;
-    margin-top: 17px;
-    border-radius: 12px;
-    background: #111;
-    color: white;
-    cursor: pointer;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (min-width: 700px) {
-    #app {
-        width: 430px;
-        height: 900px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        border-radius: 25px;
-        box-shadow: 0 0 60px rgba(0,0,0,.6);
-    }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  color:#fff;
+  font-family:Arial,sans-serif
+}
+.app{
+  width:100%;
+  height:100%;
+  position:relative;
+  background:#000;
+}
+.page{
+  position:absolute;
+  inset:0 0 75px;
+  display:none;
+  overflow:auto;
+}
+.page.active{display:block}
+
+/* CAMERA */
+.camera{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg,#578ca5,#f09a58 55%,#151515);
+}
+.camera video{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+.camera-top{
+  position:absolute;
+  top:20px;
+  left:15px;
+  right:15px;
+  display:flex;
+  justify-content:space-between;
+  z-index:5;
+}
+.left,.right{
+  display:flex;
+  gap:10px;
+}
+.btn{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#0009;
+  color:#fff;
+  border:0;
+  font-size:22px;
+}
+.tools{
+  position:absolute;
+  right:15px;
+  top:130px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.shutter{
+  position:absolute;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  width:82px;
+  height:82px;
+  border-radius:50%;
+  background:#fff;
+  border:6px solid #ddd;
+}
+.lenses{
+  position:absolute;
+  bottom:120px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+}
+.lens{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  border:3px solid #fff;
+  background:#444;
+  font-size:25px;
+}
+
+/* NAV */
+.nav{
+  position:absolute;
+  bottom:0;
+  height:75px;
+  width:100%;
+  background:#050505;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:50;
+}
+.nav button{
+  background:none;
+  border:0;
+  color:#aaa;
+  font-size:25px;
+}
+.nav button.active{color:#fffc00}
+.nav span{
+  display:block;
+  font-size:9px;
+}
+
+/* HEADER */
+.header{
+  height:75px;
+  padding:20px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header h1{font-size:28px}
+.search{
+  width:calc(100% - 30px);
+  margin:0 15px 15px;
+  padding:13px 18px;
+  border:0;
+  outline:0;
+  border-radius:25px;
+  background:#252525;
+  color:white;
+}
+
+/* CHAT */
+.chat{
+  display:flex;
+  align-items:center;
+  padding:12px 15px;
+  border-bottom:1px solid #222;
+  gap:12px;
+}
+.person{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:#333;
+  display:grid;
+  place-items:center;
+  font-size:27px;
+}
+.chat-info{flex:1}
+.chat-info strong{display:block;margin-bottom:5px}
+.chat-info small{color:#999}
+.chat-time{color:#888;font-size:11px}
+
+/* STORIES */
+.stories{
+  display:flex;
+  gap:14px;
+  padding:15px;
+  overflow:auto;
+}
+.story{
+  min-width:68px;
+  text-align:center;
+  font-size:11px;
+}
+.story-img{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  padding:3px;
+  background:linear-gradient(45deg,#fffc00,#ff3ca6,#713cff);
+}
+.story-img div{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:#333;
+  display:grid;
+  place-items:center;
+  font-size:28px;
+}
+.title{
+  padding:10px 15px;
+  font-size:18px;
+  font-weight:bold;
+}
+.cards{
+  display:flex;
+  gap:10px;
+  padding:0 15px 25px;
+  overflow:auto;
+}
+.card{
+  min-width:150px;
+  height:240px;
+  border-radius:15px;
+  background:linear-gradient(145deg,#31586d,#d67b4d);
+  position:relative;
+  overflow:hidden;
+}
+.card:nth-child(2){
+  background:linear-gradient(145deg,#555,#151515)
+}
+.card:nth-child(3){
+  background:linear-gradient(145deg,#a66d91,#25202d)
+}
+.card div{
+  position:absolute;
+  bottom:15px;
+  left:12px;
+  font-weight:bold;
+}
+
+/* PROFIL */
+.profile{
+  text-align:center;
+  padding:35px 15px;
+}
+.snapcode{
+  width:165px;
+  height:165px;
+  background:#fffc00;
+  border-radius:25px;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  font-size:85px;
+}
+.profile h1{margin-top:15px}
+.gray{color:#999}
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:45px;
+  margin:25px;
+}
+.stats b{
+  display:block;
+  font-size:20px;
+}
+.stats small{color:#888}
+.panel{
+  background:#1b1b1b;
+  border-radius:15px;
+  margin:10px 15px;
+}
+.row{
+  padding:18px;
+  border-bottom:1px solid #292929;
+  text-align:left;
+}
+
+/* MODAL CHAT */
+.chat-window{
+  position:absolute;
+  inset:0;
+  background:#000;
+  z-index:100;
+  display:none;
+  flex-direction:column;
+}
+.chat-window.open{display:flex}
+.chat-head{
+  height:75px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+  border-bottom:1px solid #222;
+}
+.messages{
+  flex:1;
+  overflow:auto;
+  padding:15px;
+}
+.message{
+  max-width:75%;
+  padding:11px 15px;
+  border-radius:18px;
+  margin:7px 0;
+  background:#292929;
+}
+.message.me{
+  margin-left:auto;
+  background:#fff;
+  color:#000;
+}
+.input{
+  display:flex;
+  gap:8px;
+  padding:10px;
+}
+.input input{
+  flex:1;
+  border:0;
+  outline:0;
+  background:#292929;
+  color:white;
+  padding:13px;
+  border-radius:25px;
+}
+.input button{
+  width:45px;
+  border:0;
+  border-radius:50%;
+  background:#fffc00;
+}
+
+/* PREVIEW */
+.preview{
+  position:absolute;
+  inset:0;
+  background:#000;
+  z-index:200;
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+.preview.open{display:flex}
+.preview img{
+  max-width:100%;
+  max-height:80%;
+}
+.send{
+  position:absolute;
+  bottom:30px;
+  padding:14px 25px;
+  border-radius:25px;
+  background:#fffc00;
+  border:0;
+  font-weight:bold;
+}
+.close{
+  position:absolute;
+  right:20px;
+  top:25px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#222;
+  color:white;
+  border:0;
+  font-size:25px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="app">
+<div class="app">
 
-<!-- =====================================================
-     CAMERA
-===================================================== -->
+<!-- CAMERA -->
+<section id="camera" class="page active">
+<div class="camera">
 
-<section id="cameraPage" class="page active">
+<video id="video" autoplay playsinline></video>
 
-    <div class="camera">
+<div class="camera-top">
+<div class="left">
+<button class="btn" onclick="go('profile')">🙂</button>
+<button class="btn">⌕</button>
+</div>
 
-        <div class="camera-placeholder" id="cameraPlaceholder">
-            <div class="face"></div>
-        </div>
+<div class="right">
+<button class="btn" onclick="startCamera()">⊕</button>
+<button class="btn" onclick="flip()">↻</button>
+</div>
+</div>
 
-        <video id="video" autoplay playsinline></video>
+<div class="tools">
+<button class="btn">ϟ</button>
+<button class="btn">▣</button>
+<button class="btn">♫</button>
+<button class="btn">＋</button>
+</div>
 
-        <div class="camera-top">
+<div class="lenses">
+<button class="lens">🐶</button>
+<button class="lens">🙂</button>
+<button class="lens">🌸</button>
+<button class="lens">😎</button>
+</div>
 
-            <div class="top-left">
-                <button class="glass-btn" onclick="openProfile()">
-                    👤
-                </button>
-            </div>
+<button class="shutter" onclick="snap()"></button>
 
-            <div class="top-right">
-                <button class="glass-btn" onclick="toggleFlash()">
-                    ⚡
-                </button>
+</div>
+</section>
 
-                <button class="glass-btn" onclick="switchCamera()">
-                    🔄
-                </button>
-            </div>
+<!-- CHAT -->
+<section id="chat" class="page">
+<div class="header">
+<h1>Chat</h1>
+<button class="btn">＋</button>
+</div>
 
-        </div>
+<input class="search"
+placeholder="Rechercher"
+oninput="search(this.value)">
 
-        <div class="camera-bottom">
+<div id="chatList">
 
-            <div class="camera-mode">
-                PHOTO
-            </div>
+<div class="chat" data-name="Léa"
+onclick="openChat('Léa','👩🏻')">
+<div class="person">👩🏻</div>
+<div class="chat-info">
+<strong>Léa</strong>
+<small>▢ Reçu · 2 min</small>
+</div>
+<div class="chat-time">😊</div>
+</div>
 
-            <div class="camera-controls">
+<div class="chat" data-name="Tom"
+onclick="openChat('Tom','👦🏻')">
+<div class="person">👦🏻</div>
+<div class="chat-info">
+<strong>Tom</strong>
+<small>▶ Ouvert · 1 h</small>
+</div>
+<div class="chat-time">😊</div>
+</div>
 
-                <button
-                    class="side-camera-btn"
-                    onclick="openStories()">
-                    📰
-                </button>
+<div class="chat" data-name="Chloé"
+onclick="openChat('Chloé','👩🏻')">
+<div class="person">👩🏻</div>
+<div class="chat-info">
+<strong>Chloé</strong>
+<small>■ Appuyé pour voir · 1 h</small>
+</div>
+<div class="chat-time">😎</div>
+</div>
 
-                <div
-                    class="capture-wrapper"
-                    onclick="takePhoto()">
+<div class="chat" data-name="Lucas"
+onclick="openChat('Lucas','👦🏼')">
+<div class="person">👦🏼</div>
+<div class="chat-info">
+<strong>Lucas</strong>
+<small>▢ Reçu · 2 h</small>
+</div>
+<div class="chat-time">🔥</div>
+</div>
 
-                    <div class="capture"></div>
+<div class="chat" data-name="Sarah"
+onclick="openChat('Sarah','👩🏻‍🦰')">
+<div class="person">👩🏻‍🦰</div>
+<div class="chat-info">
+<strong>Sarah</strong>
+<small>▶ Ouvert · 3 h</small>
+</div>
+<div class="chat-time">😊</div>
+</div>
 
-                </div>
+</div>
+</section>
 
-                <button
-                    class="side-camera-btn"
-                    onclick="openChatPage()">
-                    💬
-                </button>
+<!-- STORIES -->
+<section id="stories" class="page">
+<div class="header">
+<h1>Stories</h1>
+<button class="btn">＋</button>
+</div>
 
-            </div>
+<div class="title">Amis</div>
 
-        </div>
+<div class="stories">
 
-    </div>
+<div class="story">
+<div class="story-img"><div>📸</div></div>
+Ma Story
+</div>
+
+<div class="story">
+<div class="story-img"><div>👩🏻</div></div>
+Léa
+</div>
+
+<div class="story">
+<div class="story-img"><div>👦🏻</div></div>
+Tom
+</div>
+
+<div class="story">
+<div class="story-img"><div>👩🏻</div></div>
+Chloé
+</div>
+
+<div class="story">
+<div class="story-img"><div>👦🏼</div></div>
+Lucas
+</div>
+
+</div>
+
+<div class="title">Abonnements</div>
+
+<div class="cards">
+
+<div class="card">
+<div>🏔️<br>Inoxtag ⭐<br><small>il y a 2 h</small></div>
+</div>
+
+<div class="card">
+<div>🎥<br>Squeezie ⭐<br><small>il y a 4 h</small></div>
+</div>
+
+<div class="card">
+<div>💄<br>EnjoyPhoenix<br><small>il y a 6 h</small></div>
+</div>
+
+</div>
+
+<div class="title">Pour vous</div>
+
+<div class="cards">
+<div class="card"><div>🐶<br>Ces chiens sont incroyables 🐾</div></div>
+<div class="card"><div>🌊<br>Les plages les plus belles 😍</div></div>
+</div>
 
 </section>
 
+<!-- PROFIL -->
+<section id="profile" class="page">
+<div class="profile">
 
-<!-- =====================================================
-     CHAT LIST
-===================================================== -->
+<div class="snapcode">🧑🏻</div>
 
-<section id="chatPage" class="page">
+<h1>Thomas</h1>
+<p class="gray">@thomas_web · 345 678 👑</p>
 
-    <header class="app-header">
+<div class="stats">
+<div><b>128</b><small>Amis</small></div>
+<div><b>42</b><small>Stories</small></div>
+<div><b>7542</b><small>Score</small></div>
+</div>
 
-        <h1>Discussions</h1>
+<div class="panel">
+<div class="row">📷 Ajouter à ma Story</div>
+<div class="row">🔒 Mes Stories privées</div>
+</div>
 
-        <div class="header-icons">
+<div class="panel">
+<div class="row">♙ Ajouter des amis</div>
+<div class="row">☷ Mes amis</div>
+</div>
 
-            <button class="dark-icon"
-                    onclick="alert('Nouvelle discussion')">
-                ✏️
-            </button>
+<div class="panel">
+<div class="row">🙂 Modifier mon Bitmoji</div>
+<div class="row">⚙️ Paramètres</div>
+</div>
 
-        </div>
-
-    </header>
-
-    <div class="search-container">
-
-        <input
-            id="searchInput"
-            class="search"
-            type="text"
-            placeholder="Rechercher"
-            oninput="filterChats()">
-
-    </div>
-
-    <div id="chatList" class="chat-list">
-
-        <div class="chat-item"
-             data-name="Emma"
-             onclick="openConversation('Emma','👩')">
-
-            <div class="avatar">👩</div>
-
-            <div class="chat-main">
-                <div class="chat-name">Emma</div>
-                <div class="chat-preview">
-                    Tu as vu mon dernier snap ?
-                </div>
-            </div>
-
-            <div class="chat-time">12:42</div>
-
-        </div>
-
-
-        <div class="chat-item"
-             data-name="Lucas"
-             onclick="openConversation('Lucas','👦')">
-
-            <div class="avatar">👦</div>
-
-            <div class="chat-main">
-                <div class="chat-name">Lucas</div>
-                <div class="chat-preview">
-                    😂 a envoyé un Snap
-                </div>
-            </div>
-
-            <div class="chat-time">11:30</div>
-
-        </div>
-
-
-        <div class="chat-item"
-             data-name="Sarah"
-             onclick="openConversation('Sarah','👩‍🦰')">
-
-            <div class="avatar">👩‍🦰</div>
-
-            <div class="chat-main">
-                <div class="chat-name">Sarah</div>
-                <div class="chat-preview">
-                    À plus tard !
-                </div>
-            </div>
-
-            <div class="chat-time">Hier</div>
-
-        </div>
-
-
-        <div class="chat-item"
-             data-name="Thomas"
-             onclick="openConversation('Thomas','🧑')">
-
-            <div class="avatar">🧑</div>
-
-            <div class="chat-main">
-                <div class="chat-name">Thomas</div>
-                <div class="chat-preview">
-                    🔥 Nouvelle story
-                </div>
-            </div>
-
-            <div class="chat-time">Hier</div>
-
-        </div>
-
-
-        <div class="chat-item"
-             data-name="Julie"
-             onclick="openConversation('Julie','👩‍🦱')">
-
-            <div class="avatar">👩‍🦱</div>
-
-            <div class="chat-main">
-                <div class="chat-name">Julie</div>
-                <div class="chat-preview">
-                    Tu viens ce soir ?
-                </div>
-            </div>
-
-            <div class="chat-time">Lun.</div>
-
-        </div>
-
-
-        <div class="chat-item"
-             data-name="Maxime"
-             onclick="openConversation('Maxime','🧑‍💻')">
-
-            <div class="avatar">🧑‍💻</div>
-
-            <div class="chat-main">
-                <div class="chat-name">Maxime</div>
-                <div class="chat-preview">
-                    📸 envoyé un Snap
-                </div>
-            </div>
-
-            <div class="chat-time">Dim.</div>
-
-        </div>
-
-    </div>
-
-    <nav class="bottom-nav">
-
-        <button class="nav-button"
-                onclick="openStories()">
-            ▶
-        </button>
-
-        <button class="nav-button active"
-                onclick="openChatPage()">
-            💬
-        </button>
-
-        <button class="camera-nav"
-                onclick="openCamera()">
-            📸
-        </button>
-
-        <button class="nav-button"
-                onclick="openProfile()">
-            👤
-        </button>
-
-    </nav>
-
+</div>
 </section>
 
+<!-- NAVIGATION -->
+<nav class="nav">
+<button onclick="go('chat')" id="nchat">💬<span>Chat</span></button>
+<button onclick="go('stories')" id="nstories">▶️<span>Stories</span></button>
+<button onclick="go('camera')" id="ncamera" class="active">📸<span>Caméra</span></button>
+<button onclick="go('profile')" id="nprofile">👤<span>Profil</span></button>
+</nav>
 
-<!-- =====================================================
-     STORIES
-===================================================== -->
+<!-- CHAT OUVERT -->
+<div id="chatWindow" class="chat-window">
 
-<section id="storiesPage" class="page">
+<div class="chat-head">
+<button class="btn" onclick="closeChat()">‹</button>
+<div class="person" id="chatAvatar">👩🏻</div>
+<div>
+<b id="chatName">Léa</b>
+<br>
+<small class="gray">En ligne</small>
+</div>
+</div>
 
-    <header class="app-header">
+<div class="messages" id="messages">
+<div class="message">Salut 👋</div>
+<div class="message">Tu fais quoi ?</div>
+<div class="message me">Je teste mon nouveau Snap 😎</div>
+</div>
 
-        <h1>Stories</h1>
+<div class="input">
+<input id="msg" placeholder="Envoyer un message..."
+onkeydown="if(event.key==='Enter')send()">
+<button onclick="send()">➤</button>
+</div>
 
-        <div class="header-icons">
+</div>
 
-            <button class="dark-icon">
-                🔍
-            </button>
+<!-- PHOTO -->
+<div id="preview" class="preview">
+<button class="close" onclick="closePreview()">×</button>
+<img id="photo">
+<button class="send" onclick="sendSnap()">Envoyer ➤</button>
+</div>
 
-        </div>
+</div>
 
-    </header>
+<script>
 
-    <div class="story-scroll">
+let stream=null;
+let facing="user";
 
-    
+function go(page){
+
+document.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
+
+document.getElementById(page)
+.classList.add("active");
+
+document.querySelectorAll(".nav button")
+.forEach(b=>b.classList.remove("active"));
+
+const n={
+camera:"ncamera",
+chat:"nchat",
+stories:"nstories",
+profile:"nprofile"
+};
+
+if(n[page])
+document.getElementById(n[page])
+.classList.add("active");
+}
+
+async function startCamera(){
+
+try{
+
+if(stream)
+stream.getTracks().forEach(t=>t.stop());
+
+stream=await navigator.mediaDevices.getUserMedia({
+video:{
+facingMode:facing
+},
+audio:false
+});
+
+const video=document.getElementById("video");
+
+video.srcObject=stream;
+video.style.display="block";
+
+}catch(e){
+
+alert("Autorise la caméra dans ton navigateur.");
+
+}
+
+}
+
+async function flip(){
+
+facing=facing==="user"
+?"environment"
+:"user";
+
+startCamera();
+
+}
+
+function snap(){
+
+const video=document.getElementById("video");
+
+if(video.style.display!=="block"){
+
+startCamera();
+
+alert("Autorise la caméra puis appuie encore une fois.");
+
+return;
+
+}
+
+const canvas=document.createElement("canvas");
+
+canvas.width=video.videoWidth;
+canvas.height=video.videoHeight;
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(
+video,
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+document.getElementById("photo").src=
+canvas.toDataURL("image/jpeg");
+
+document.getElementById("preview")
+.classList.add("open");
+
+}
+
+function closePreview(){
+
+document.getElementById("preview")
+.classList.remove("open");
+
+}
+
+function sendSnap(){
+
+closePreview();
+
+alert("Snap envoyé 📸");
+
+}
+
+function search(value){
+
+value=value.toLowerCase();
+
+document.querySelectorAll(".chat")
+.forEach(c=>{
+
+const name=c.dataset.name.toLowerCase();
+
+c.style.display=
+name.includes(value)?"flex":"none";
+
+});
+
+}
+
+function openChat(name,avatar){
+
+document.getElementById("chatName")
+.textContent=name;
+
+document.getElementById("chatAvatar")
+.textContent=avatar;
+
+document.getElementById("chatWindow")
+.classList.add("open");
+
+}
+
+function closeChat(){
+
+document.getElementById("chatWindow")
+.classList.remove("open");
+
+}
+
+function send(){
+
+const input=document.getElementById("msg");
+
+const text=input.value.trim();
+
+if(!text)return;
+
+const div=document.createElement("div");
+
+div.className="message me";
+div.textContent=text;
+
+document.getElementById("messages")
+.appendChild(div);
+
+input.value="";
+
+const box=document.getElementById("messages");
+
+box.scrollTop=box.scrollHeight;
+
+setTimeout(()=>{
+
+const reply=document.createElement("div");
+
+reply.className="message";
+reply.textContent="Vu 👀";
+
+box.appendChild(reply);
+
+box.scrollTop=box.scrollHeight;
+
+},700);
+
+}
+
+</script>
+
+</body>
+      </html>
