@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Card Studio</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,9 +18,11 @@ body {
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     color: #fff;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     padding: 24px;
 
     background:
@@ -30,55 +34,90 @@ body {
 .app {
     width: 100%;
     max-width: 1150px;
+
     display: grid;
     grid-template-columns: .8fr 1.2fr;
+
     gap: 55px;
+
     align-items: center;
 }
 
 .logo {
     color: #818cf8;
+
     font-size: 13px;
     font-weight: 800;
+
     letter-spacing: 4px;
+
     margin-bottom: 20px;
 }
 
 h1 {
     font-size: clamp(48px, 7vw, 82px);
+
     line-height: .9;
+
     letter-spacing: -5px;
+
     margin-bottom: 30px;
 }
 
 .gradient {
-    background: linear-gradient(90deg,#818cf8,#22d3ee,#34d399);
+    background:
+        linear-gradient(
+            90deg,
+            #818cf8,
+            #22d3ee,
+            #34d399
+        );
+
     -webkit-background-clip: text;
+
     color: transparent;
 }
 
 .panel {
     padding: 25px;
+
     border-radius: 25px;
+
     background: rgba(18,23,40,.75);
+
     border: 1px solid rgba(255,255,255,.1);
+
     backdrop-filter: blur(20px);
-    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.35);
 }
 
 button {
     width: 100%;
+
     padding: 17px;
+
     border: 0;
+
     border-radius: 14px;
+
     color: white;
+
     font-size: 15px;
     font-weight: 800;
+
     cursor: pointer;
 
-    background: linear-gradient(90deg,#6366f1,#06b6d4);
+    background:
+        linear-gradient(
+            90deg,
+            #6366f1,
+            #06b6d4
+        );
 
-    box-shadow: 0 12px 35px rgba(99,102,241,.3);
+    box-shadow:
+        0 12px 35px rgba(99,102,241,.3);
 
     transition: .2s;
 }
@@ -87,30 +126,49 @@ button:hover {
     transform: translateY(-3px);
 }
 
+button:active {
+    transform: translateY(0);
+}
+
 .info {
     text-align: center;
+
     color: #777f96;
+
     font-size: 10px;
+
     margin-top: 14px;
 }
 
-/* CARD */
+
+/* =========================
+   CARTE
+========================= */
 
 .scene {
     width: 100%;
     max-width: 570px;
+
     aspect-ratio: 1.586;
+
     margin: auto;
+
     perspective: 1400px;
+
     cursor: pointer;
 }
 
 .card {
     width: 100%;
     height: 100%;
+
     position: relative;
+
     transform-style: preserve-3d;
-    transition: transform .85s cubic-bezier(.2,.8,.2,1);
+
+    transition:
+        transform .85s
+        cubic-bezier(.2,.8,.2,1);
 }
 
 .scene.flipped .card {
@@ -119,135 +177,234 @@ button:hover {
 
 .face {
     position: absolute;
+
     inset: 0;
+
     overflow: hidden;
+
     border-radius: 28px;
+
     backface-visibility: hidden;
 
-    box-shadow: 0 35px 90px rgba(0,0,0,.5);
+    box-shadow:
+        0 35px 90px rgba(0,0,0,.5);
 }
 
 .face::before {
     content: "";
+
     position: absolute;
+
     width: 290px;
     height: 290px;
+
     right: -100px;
     top: -120px;
+
     border-radius: 50%;
-    background: rgba(255,255,255,.15);
+
+    background:
+        rgba(255,255,255,.15);
 }
 
 .face::after {
     content: "";
+
     position: absolute;
+
     width: 330px;
     height: 330px;
+
     left: -170px;
     bottom: -190px;
+
     border-radius: 50%;
-    background: rgba(255,255,255,.1);
+
+    background:
+        rgba(255,255,255,.1);
 }
 
-/* DESIGNS */
+
+/* =========================
+   DESIGNS
+========================= */
 
 .blue {
     background:
-        radial-gradient(circle at 80% 20%,rgba(34,211,238,.6),transparent 30%),
-        linear-gradient(135deg,#172554,#2563eb);
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(34,211,238,.6),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #172554,
+            #2563eb
+        );
 }
 
 .dark {
     background:
-        radial-gradient(circle at 20% 80%,rgba(239,68,68,.35),transparent 35%),
-        linear-gradient(135deg,#111827,#374151);
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(239,68,68,.35),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #111827,
+            #374151
+        );
 }
 
 .green {
     background:
-        radial-gradient(circle at 80% 15%,rgba(52,211,153,.5),transparent 32%),
-        linear-gradient(135deg,#064e3b,#0f766e);
+        radial-gradient(
+            circle at 80% 15%,
+            rgba(52,211,153,.5),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #064e3b,
+            #0f766e
+        );
 }
 
 .purple {
     background:
-        radial-gradient(circle at 80% 20%,rgba(192,132,252,.55),transparent 35%),
-        linear-gradient(135deg,#2e1065,#701a75);
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(192,132,252,.55),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #2e1065,
+            #701a75
+        );
 }
 
 .black {
     background:
-        linear-gradient(135deg,#050505,#292929);
+        linear-gradient(
+            135deg,
+            #050505,
+            #292929
+        );
 }
 
-/* RECTO */
+
+/* =========================
+   RECTO
+========================= */
 
 .front {
     transform: rotateY(0);
+
     padding: 30px;
 }
 
 .top {
     position: relative;
+
     z-index: 3;
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: flex-start;
 }
 
 .brand {
     font-size: 23px;
+
     font-weight: 900;
+
     letter-spacing: -1px;
 }
 
 .chip {
     width: 53px;
     height: 41px;
+
     border-radius: 8px;
 
     background:
-        linear-gradient(90deg,transparent 46%,rgba(0,0,0,.2) 47%,transparent 50%),
-        linear-gradient(0deg,transparent 46%,rgba(0,0,0,.2) 47%,transparent 50%),
-        linear-gradient(135deg,#d7c47d,#fff0a9,#a98c3e);
+        linear-gradient(
+            90deg,
+            transparent 46%,
+            rgba(0,0,0,.2) 47%,
+            transparent 50%
+        ),
+        linear-gradient(
+            0deg,
+            transparent 46%,
+            rgba(0,0,0,.2) 47%,
+            transparent 50%
+        ),
+        linear-gradient(
+            135deg,
+            #d7c47d,
+            #fff0a9,
+            #a98c3e
+        );
 }
 
 .sample {
     position: absolute;
+
     top: 80px;
     right: 30px;
+
     z-index: 3;
 
     font-size: 8px;
+
     letter-spacing: 2px;
+
     font-weight: 900;
 
     opacity: .65;
 
-    border: 1px solid rgba(255,255,255,.45);
+    border:
+        1px solid rgba(255,255,255,.45);
+
     padding: 4px 7px;
+
     border-radius: 4px;
 }
 
 .number {
     position: relative;
+
     z-index: 3;
 
     margin-top: 63px;
 
     font-family: monospace;
-    font-size: clamp(19px,4vw,31px);
+
+    font-size:
+        clamp(
+            19px,
+            4vw,
+            31px
+        );
+
     letter-spacing: 3px;
 
-    text-shadow: 0 2px 4px rgba(0,0,0,.3);
+    text-shadow:
+        0 2px 4px rgba(0,0,0,.3);
 }
 
 .details {
     position: relative;
+
     z-index: 3;
 
     display: flex;
+
     gap: 42px;
 
     margin-top: 25px;
@@ -255,19 +412,25 @@ button:hover {
 
 .detail small {
     display: block;
+
     font-size: 8px;
+
     letter-spacing: 1px;
+
     opacity: .7;
+
     margin-bottom: 5px;
 }
 
 .detail strong {
     font-family: monospace;
+
     letter-spacing: 2px;
 }
 
 .bottom {
     position: absolute;
+
     z-index: 3;
 
     left: 30px;
@@ -275,33 +438,46 @@ button:hover {
     bottom: 27px;
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: end;
 }
 
 .holder-label {
     font-size: 8px;
+
     opacity: .6;
+
     letter-spacing: 1.5px;
+
     margin-bottom: 4px;
 }
 
 .holder {
     font-size: 13px;
+
     font-weight: 800;
+
     letter-spacing: 1.5px;
 }
 
-/* VERSO */
+
+/* =========================
+   VERSO
+========================= */
 
 .back {
     transform: rotateY(180deg);
+
     padding: 0;
 }
 
 .magnetic {
     height: 62px;
+
     margin-top: 28px;
+
     background: #070707;
 }
 
@@ -311,13 +487,17 @@ button:hover {
 
 .signature {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     margin-top: 20px;
 }
 
 .signature-line {
     height: 40px;
+
     flex: 1;
 
     border-radius: 3px;
@@ -334,176 +514,280 @@ button:hover {
 
 .back-code {
     padding: 9px 13px;
+
     border-radius: 3px;
 
     background: white;
+
     color: #111;
 
     font-family: monospace;
+
     font-weight: 900;
 }
 
 .back-info {
     margin-top: 30px;
+
     max-width: 430px;
 
     font-size: 9px;
+
     line-height: 1.5;
 
-    color: rgba(255,255,255,.65);
+    color:
+        rgba(255,255,255,.65);
 }
 
 .back-brand {
     position: absolute;
+
     right: 30px;
     bottom: 25px;
 
     font-size: 20px;
+
     font-weight: 900;
 }
 
 .hint {
     text-align: center;
+
     color: #6f7890;
+
     font-size: 11px;
+
     margin-top: 18px;
 }
 
+
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media(max-width:850px) {
+
+    body {
+        padding: 18px;
+    }
 
     .app {
         grid-template-columns: 1fr;
+
         gap: 35px;
     }
 
     .intro {
         text-align: center;
     }
+
+    h1 {
+        letter-spacing: -3px;
+    }
+
+    .scene {
+        max-width: 570px;
+    }
 }
+
+@media(max-width:500px) {
+
+    .front {
+        padding: 20px;
+    }
+
+    .brand {
+        font-size: 17px;
+    }
+
+    .chip {
+        width: 42px;
+        height: 32px;
+    }
+
+    .sample {
+        top: 65px;
+        right: 20px;
+    }
+
+    .number {
+        margin-top: 48px;
+
+        font-size: 15px;
+
+        letter-spacing: 1.5px;
+    }
+
+    .details {
+        gap: 22px;
+
+        margin-top: 18px;
+    }
+
+    .bottom {
+        left: 20px;
+        right: 20px;
+        bottom: 18px;
+    }
+
+    .holder {
+        font-size: 10px;
+
+        letter-spacing: 1px;
+    }
+
+    .back-content {
+        padding: 0 20px;
+    }
+
+    .magnetic {
+        height: 45px;
+    }
+}
+
 </style>
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <section class="intro">
 
-        <div class="logo">
-            CARD STUDIO
-        </div>
+<!-- =========================
+     INTRO
+========================= -->
 
-        <h1>
-            Create<br>
-            <span class="gradient">Card.</span>
-        </h1>
+<section class="intro">
 
-        <div class="panel">
+    <div class="logo">
+        CARD STUDIO
+    </div>
 
-            <button id="generate">
-                ✨ Générer une nouvelle carte
-            </button>
+    <h1>
+        Create<br>
+        <span class="gradient">
+            Card.
+        </span>
+    </h1>
 
-            <p class="info">
-                Cliquez sur le bouton pour générer une nouvelle carte.
-            </p>
+    <div class="panel">
 
-        </div>
+        <button id="generate">
+            ✨ Générer une nouvelle carte
+        </button>
 
-    </section>
+        <p class="info">
+            Cliquez sur le bouton pour générer une nouvelle carte.
+        </p>
+
+    </div>
+
+</section>
 
 
-    <section>
+<!-- =========================
+     CARTE
+========================= -->
 
-        <div class="scene" id="scene">
+<section>
 
-            <div class="card">
+    <div
+        class="scene"
+        id="scene"
+    >
 
-                <!-- RECTO -->
+        <div class="card">
 
-                <div class="face front blue" id="front">
 
-                    <div class="top">
+            <!-- =========================
+                 RECTO
+            ========================= -->
 
-                        <div class="brand" id="brand">
-                            AURORA
-                        </div>
+            <div
+                class="face front blue"
+                id="front"
+            >
 
-                        <div class="chip"></div>
+                <div class="top">
+
+                    <div
+                        class="brand"
+                        id="brand"
+                    >
+                        AURORA
+                    </div>
+
+                    <div class="chip"></div>
+
+                </div>
+
+
+                <div class="sample">
+                    SAMPLE
+                </div>
+
+
+                <div
+                    class="number"
+                    id="number"
+                >
+                    0000 0000 0000 0000
+                </div>
+
+
+                <div class="details">
+
+                    <div class="detail">
+
+                        <small>
+                            VALID THRU
+                        </small>
+
+                        <strong id="expiry">
+                            00/00
+                        </strong>
 
                     </div>
 
-                    <div class="sample">
-                        SAMPLE
-                    </div>
 
-                    <div class="number" id="number">
-                        0000 0000 0000 0000
-                    </div>
+                    <div class="detail">
 
-                    <div class="details">
+                        <small>
+                            SECURITY
+                        </small>
 
-                        <div class="detail">
-                            <small>VALID THRU</small>
-                            <strong id="expiry">00/00</strong>
-                        </div>
-
-                        <div class="detail">
-                            <small>SECURITY</small>
-                            <strong id="cvv">000</strong>
-                        </div>
-
-                    </div>
-
-                    <div class="bottom">
-
-                        <div>
-
-                            <div class="holder-label">
-                                CARDHOLDER
-                            </div>
-
-                            <div class="holder" id="holder">
-                                SAMPLE USER
-                            </div>
-
-                        </div>
-
-                        <div class="brand" id="brandBottom">
-                            AURORA
-                        </div>
+                        <strong id="cvv">
+                            000
+                        </strong>
 
                     </div>
 
                 </div>
 
 
-                <!-- VERSO -->
+                <div class="bottom">
 
-                <div class="face back blue" id="back">
+                    <div>
 
-                    <div class="magnetic"></div>
-
-                    <div class="back-content">
-
-                        <div class="signature">
-
-                            <div class="signature-line"></div>
-
-                            <div class="back-code" id="backCode">
-                                000
-                            </div>
-
+                        <div class="holder-label">
+                            CARDHOLDER
                         </div>
 
-                        <p class="back-info">
-                            Carte destinée à une interface graphique.
-                            Les informations affichées sont fictives.
-                        </p>
+                        <div
+                            class="holder"
+                            id="holder"
+                        >
+                            SAMPLE
+                        </div>
 
                     </div>
 
-                    <div class="back-brand" id="backBrand">
+
+                    <div
+                        class="brand"
+                        id="brandBottom"
+                    >
                         AURORA
                     </div>
 
@@ -511,163 +795,676 @@ button:hover {
 
             </div>
 
+
+            <!-- =========================
+                 VERSO
+            ========================= -->
+
+            <div
+                class="face back blue"
+                id="back"
+            >
+
+                <div class="magnetic"></div>
+
+
+                <div class="back-content">
+
+                    <div class="signature">
+
+                        <div class="signature-line"></div>
+
+                        <div
+                            class="back-code"
+                            id="backCode"
+                        >
+                            000
+                        </div>
+
+                    </div>
+
+
+                    <p class="back-info">
+                        Carte destinée à une interface graphique.
+                        Les informations affichées sont fictives.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="back-brand"
+                    id="backBrand"
+                >
+                    AURORA
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="hint">
-            Cliquez sur la carte pour voir le verso ↻
-        </div>
+    </div>
 
-    </section>
+
+    <div class="hint">
+        Cliquez sur la carte pour voir le verso ↻
+    </div>
+
+</section>
 
 </div>
 
 
 <script>
 
-/* =========================
+
+/* =====================================================
    PRÉNOMS
-========================= */
+   FILLES + GARÇONS
+   TOUS MÉLANGÉS
+===================================================== */
 
 const firstNames = [
 
-"ALEX","LUCAS","NOAH","LEO","HUGO","ADAM","ETHAN","LIAM",
-"JULES","NATHAN","MAX","MATHIS","GABRIEL","LOUIS","ARTHUR",
-"ENZO","THOMAS","PAUL","ANTOINE","JULIEN","NICOLAS","ROMAIN",
-"SIMON","VICTOR","CHARLES","MAXIME","ALEXANDRE","DAVID",
-"SAMUEL","BENJAMIN","RAPHAEL","HENRI","MARC","PIERRE","JEAN",
-"THEO","ELIAS","MALO","SACHA","TOM","VALENTIN","FELIX","OSCAR",
-"AARON","MATTEO","MARTIN","GASPARD","GUILLAUME","KEVIN",
-"STEPHANE","DAMIEN","CORENTIN","FLORIAN","QUENTIN","REMI",
-"LOIC","YANIS","ILAN","LUC","MATHIEU","NOLAN","ESTEBAN",
+"ALEX",
+"ALEXANDRE",
+"ALEXANDRA",
+"ALEXIS",
+"ALICE",
+"ALICIA",
+"ALINE",
+"ALIX",
+"ALMA",
+"AMBRE",
+"AMELIE",
+"AMELIA",
+"ANA",
+"ANAIS",
+"ANNA",
+"ANNAELLE",
+"ANNE",
+"ANTON",
+"ANTOINE",
+"ANTHONY",
+"APOLLINE",
+"ARTHUR",
+"AARON",
+"ADAM",
+"ADELE",
+"ADRIEN",
+"AGATHE",
+"AGNES",
+"ALBAN",
+"ALBANE",
+"AMIN",
+"AMINA",
+"ANDREA",
+"ANDRE",
+"ANGELE",
+"ANGELIQUE",
+"ANOUK",
+"ARMAND",
+"AUGUSTIN",
+"AURELIE",
+"AURELIEN",
+"AXEL",
+"AXELLE",
 
-"LEA","EMMA","LOUISE","JADE","ALICE","CHLOE","LINA","ROSE",
-"ANNA","MILA","JULIA","ZOE","CAMILLE","SARAH","MANON","CLARA",
-"INES","LUCIE","EVA","JEANNE","LOLA","MARGOT","ELENA",
-"CHARLOTTE","AMELIE","MATHILDE","PAULINE","MARIE","VICTOIRE",
-"ELISE","AGATHE","ALIX","AMBRE","APOLLINE","AURELIE","CELIA",
-"CELESTE","DIANE","ELISA","FANNY","GABRIELLE","HANNA","IRIS",
-"JOSEPHINE","JULIETTE","LAURA","LEONIE","MAELYS","MAEVA",
-"MELANIE","MELISSA","NAOMI","NINA","OCEANE","OPHELIE","ROMANE",
-"SALOME","SOPHIE","VALENTINE","YASMINE","ZELIE","ADELE","ELLA",
-"LOU","MAYA","MORGANE","NOEMIE","PAOLA","TESS","THEA",
+"BASTIEN",
+"BEATRICE",
+"BENJAMIN",
+"BERENICE",
+"BERTRAND",
+"BIANCA",
+"BRICE",
+"BRIGITTE",
+"BRUNO",
+"BAPTISTE",
+"BELLA",
+"BENOIT",
 
-/* Variantes et autres prénoms */
+"CAMILLE",
+"CARLA",
+"CAROLINE",
+"CAROLINA",
+"CELIA",
+"CELINE",
+"CELESTE",
+"CHARLES",
+"CHARLOTTE",
+"CHLOE",
+"CHRISTOPHE",
+"CLAIRE",
+"CLARA",
+"CLARISSE",
+"CLAUDE",
+"CLEMENT",
+"CLEMENCE",
+"COLINE",
+"CONSTANCE",
+"CORENTIN",
+"CORALIE",
+"CYRIL",
+"CYRILLE",
+"CAPUCINE",
+"CASTILLE",
 
-"AGNES","AIMEE","ALINE","ANAIS","ANDREA","ANGELIQUE","BEATRICE",
-"BERENICE","BRIGITTE","CARLA","CAROLINE","CECILE","CELINE",
-"CORALIE","DEBORAH","DOMINIQUE","EDEN","EDITH","ELEONORE",
-"ELIANA","EMILIE","ESTELLE","FLORENCE","FLEUR","FRANCOISE",
-"GAELLE","HELENE","ISABELLE","JASMINE","KAREN","KARINE",
-"LAETITIA","LAURE","LAURENCE","LILOU","LISA","LORRAINE",
-"MAELLE","MAE","MARINE","MARION","MARIANNE","MELINA",
-"MYLENE","NADIA","NATHALIE","NELLY","NORA","PATRICIA",
-"PRISCILLA","SANDRA","SONIA","SYLVIE","TATIANA","THAIS",
-"VALERIE","VANESSA","VERONIQUE","YVETTE",
+"DAMIEN",
+"DANIEL",
+"DANIELLE",
+"DAVID",
+"DEBORAH",
+"DIANE",
+"DIMITRI",
+"DOMINIQUE",
+"DORIAN",
+"DORIANE",
+"DOROTHEE",
+"DYLAN",
 
-"ALBAN","ALAIN","ALBERT","AMIN","ANDRE","ANTOINE","ARNAUD",
-"AUGUSTIN","BASTIEN","BRUNO","CEDRIC","CHRISTOPHE","CYRIL",
-"DANIEL","DAMIEN","DIMITRI","DOMINIQUE","EMMANUEL","ERIC",
-"FABIEN","FABRICE","FRANCK","FREDERIC","GERARD","GREGORY",
-"GUY","JACQUES","JEREMY","JOACHIM","JOEL","JONATHAN","JOSEPH",
-"LAURENT","LEON","MARCEL","MARIUS","MICHAEL","MICHEL",
-"OLIVIER","PATRICK","PHILIPPE","RAPHAEL","RAYMOND","SERGE",
-"STEPHEN","SYLVAIN","VINCENT","WILLIAM","XAVIER","YANN"
+"EDEN",
+"EDOUARD",
+"ELENA",
+"ELIANA",
+"ELIAS",
+"ELIE",
+"ELIOTT",
+"ELIOT",
+"ELISA",
+"ELISE",
+"ELLA",
+"ELLEN",
+"ELODIE",
+"ELEONORE",
+"EMILIE",
+"EMMA",
+"EMMANUEL",
+"EMMANUELLE",
+"ENZO",
+"ERIC",
+"ERWAN",
+"ESTEBAN",
+"ESTELLE",
+"EVA",
+"EVAN",
+"EUGENIE",
+"ETHAN",
+
+"FABIAN",
+"FABIEN",
+"FABIENNE",
+"FANNY",
+"FELIX",
+"FERNAND",
+"FLAVIEN",
+"FLORENCE",
+"FLORIAN",
+"FLEUR",
+"FRANCOIS",
+"FRANCK",
+"FREDERIC",
+
+"GABRIEL",
+"GABRIELLE",
+"GAEL",
+"GAELLE",
+"GASPARD",
+"GEOFFREY",
+"GEOFFROY",
+"GEORGES",
+"GERALD",
+"GERARD",
+"GILLES",
+"GUILLAUME",
+"GWENDOLINE",
+
+"HANNA",
+"HAROLD",
+"HARON",
+"HENRI",
+"HELENE",
+"HUGO",
+
+"ILAN",
+"ILONA",
+"INES",
+"IRIS",
+"ISAAC",
+"ISABELLE",
+"ISMAEL",
+"IVAN",
+
+"JACQUES",
+"JADE",
+"JASMINE",
+"JEAN",
+"JEANNE",
+"JEREMY",
+"JESSICA",
+"JOACHIM",
+"JOEL",
+"JOSEPH",
+"JOSEPHINE",
+"JONATHAN",
+"JORDAN",
+"JOSEPH",
+"JULIA",
+"JULIEN",
+"JULIETTE",
+"JUSTIN",
+"JUSTINE",
+
+"KAREN",
+"KARIM",
+"KARINE",
+"KELLY",
+"KEVIN",
+"KENZO",
+"KIARA",
+"KILLIAN",
+
+"LAETITIA",
+"LAURA",
+"LAURE",
+"LAURENT",
+"LAURENCE",
+"LEA",
+"LEANDRE",
+"LEON",
+"LEONARD",
+"LEONIE",
+"LEO",
+"LEON",
+"LIAM",
+"LILI",
+"LILOU",
+"LINA",
+"LISA",
+"LOLA",
+"LOU",
+"LOUIS",
+"LOUISE",
+"LUCA",
+"LUCAS",
+"LUCIE",
+"LUDOVIC",
+"LUNA",
+
+"MAEL",
+"MAELLE",
+"MAE",
+"MAELYS",
+"MAEVA",
+"MARGAUX",
+"MARGOT",
+"MARIE",
+"MARINE",
+"MARION",
+"MARIANNE",
+"MARIO",
+"MARTIN",
+"MATHEO",
+"MATHIAS",
+"MATHIEU",
+"MATHILDE",
+"MATHIS",
+"MATTEO",
+"MAX",
+"MAXENCE",
+"MAXIME",
+"MAXIMILIEN",
+"MAYA",
+"MEHDI",
+"MELANIE",
+"MELISSA",
+"MELINA",
+"MELISSA",
+"MICHAEL",
+"MICHEL",
+"MILA",
+"MILO",
+"MORGANE",
+"MORGAN",
+"MYLENE",
+
+"NAEL",
+"NAELLE",
+"NAOMI",
+"NATHAN",
+"NATHALIE",
+"NELLY",
+"NICO",
+"NICOLAS",
+"NINA",
+"NOAH",
+"NOE",
+"NOEL",
+"NOEMIE",
+"NOLAN",
+"NORA",
+"NORAH",
+
+"OCEANE",
+"OLIVIER",
+"OLIVIA",
+"OPHELIE",
+"OSCAR",
+
+"PAOLA",
+"PAUL",
+"PAULINE",
+"PIERRE",
+"PRISCILLA",
+
+"QUENTIN",
+
+"RAPHAEL",
+"RAPHAELLE",
+"REBECCA",
+"REMI",
+"ROMAIN",
+"ROMANE",
+"ROSE",
+"RUBEN",
+
+"SACHA",
+"SALOME",
+"SAM",
+"SAMUEL",
+"SANDRA",
+"SARAH",
+"SEBASTIEN",
+"SERGE",
+"SIMON",
+"SOPHIE",
+"SOFIA",
+"SONIA",
+"STANISLAS",
+"STEPHANE",
+"SYLVAIN",
+
+"TANIA",
+"TATIANA",
+"TESS",
+"THEA",
+"THEO",
+"THOMAS",
+"THIBAULT",
+"THIERRY",
+"TIM",
+"TIMEO",
+"TOM",
+
+"VALENTIN",
+"VALENTINE",
+"VALERIE",
+"VANESSA",
+"VICTOR",
+"VICTORIA",
+"VINCENT",
+"VIOLETTE",
+"VIVIEN",
+"VIVIANE",
+
+"WILLIAM",
+
+"XAVIER",
+
+"YANIS",
+"YANN",
+"YASMINE",
+"YOANN",
+
+"ZOE",
+"ZELIE",
+
+/* Prénoms supplémentaires */
+
+"ADRIANA",
+"ALANA",
+"ALBA",
+"ALBAN",
+"ALISON",
+"AMANDINE",
+"AMEL",
+"AMIR",
+"AMIRAH",
+"ANAEL",
+"ANAELLE",
+"ANDY",
+"ARIEL",
+"ARMEL",
+"AYA",
+"AYDEN",
+"AYLAN",
+"AYMEN",
+
+"BOB",
+"BRYAN",
+"BRYANNE",
+
+"CHRIS",
+"CHRISTIAN",
+"CHRISTIANE",
+"CHLOE",
+"CLAUDIA",
+"CLARA",
+"CLARISSE",
+
+"DAN",
+"DAVID",
+"DAVINA",
+"DENIS",
+"DENISE",
+"DIEGO",
+"DORIAN",
+
+"ELI",
+"ELIAN",
+"ELIOTT",
+"ELVIRE",
+"ELVINA",
+"EMILIAN",
+"ENORA",
+"ESTHER",
+"EVAN",
+"EVE",
+
+"FIONA",
+"FRANCOISE",
+
+"GIULIA",
+"GIOVANNI",
+"GIULIO",
+"GREGORY",
+
+"HAYDEN",
+"HAYLEY",
+"HORTENSE",
+
+"ISABELLA",
+"ISMAIL",
+
+"JAMES",
+"JANE",
+"JASON",
+"JENNIFER",
+"JENNA",
+"JIMMY",
+"JOHAN",
+"JOHANN",
+"JOHANNA",
+"JONAS",
+"JORDAN",
+"JULIAN",
+
+"KAIS",
+"KASSANDRA",
+"KELIAN",
+"KELIA",
+"KIM",
+"KIMBERLEY",
+
+"LANA",
+"LARA",
+"LENA",
+"LESLIE",
+"LILIAN",
+"LILIANE",
+"LOAN",
+"LOANA",
+"LOGAN",
+"LORIS",
+"LORENZO",
+"LYA",
+"LYNA",
+
+"MAEL",
+"MAELAN",
+"MAELINE",
+"MAELIS",
+"MAELYS",
+"MANON",
+"MARCO",
+"MARINA",
+"MARLON",
+"MARVIN",
+"MATILDE",
+"MAXIM",
+"MEDHI",
+"MELISSA",
+"MELVYN",
+"MIA",
+"MICKAEL",
+"MIREILLE",
+"MURIEL",
+
+"NADIA",
+"NAEL",
+"NELSON",
+"NINO",
+"NOA",
+"NOAH",
+"NOELIE",
+"NOUR",
+
+"OLIVIA",
+"ORIANE",
+
+"PAOLO",
+"PHILIPPE",
+
+"RAYAN",
+"RAYANE",
+"RAYMOND",
+"RANIA",
+"RAPHAEL",
+"ROBIN",
+"RORY",
+
+"SANDY",
+"SAMY",
+"SOPHIA",
+"STELLA",
+"SWANN",
+
+"TANIA",
+"TEDDY",
+"THALIA",
+"THEO",
+"TIMOTHY",
+"TRISTAN",
+
+"VALENTIN",
+"VANILLE",
+
+"WENDY",
+
+"YARA",
+"YOHAN",
+"YOUNES",
+
+"ZAKARIA",
+"ZACHARY",
+"ZARA"
 ];
 
 
-/* =========================
-   NOMS DE FAMILLE
-========================= */
-
-const lastNames = [
-
-"MARTIN","BERNARD","DUBOIS","THOMAS","ROBERT","RICHARD",
-"PETIT","DURAND","LEROY","MOREAU","SIMON","LAURENT",
-"LEFEBVRE","MICHEL","GARCIA","DAVID","BERTRAND","ROUX",
-"VINCENT","FOURNIER","MOREL","GIRARD","ANDRE","LEGRAND",
-"GARNIER","FAURE","ROUSSEAU","BLANC","GUERIN","MULLER",
-"HENRY","ROUSSEL","NICOLAS","PERRIN","MORIN","MATHIEU",
-"CLEMENT","GAUTIER","DUMONT","LOPEZ","FONTAINE","CHEVALIER",
-"DENIS","FRANCOIS","MARCHAND","DUPONT","LAMBERT","BONNET",
-"MASSON","SANCHEZ","GERARD","BOYER","MERCIER","BLANCHARD",
-"GILLET","BARBIER","ARNAUD","MARTINEZ","GERMAIN","ROCHE",
-"RENAUD","SCHMITT","ROY","COLLET","PICHON","BENOIT","LEMAIRE",
-"LACROIX","OLIVIER","RIVIERE","AUBERT","DROUET","BESSON",
-"MARCHAL","MEYER","JOLY","PERRET","LEMOINE","BARON","CARON",
-"DIAZ","FERNANDEZ","PEREZ","GONZALEZ","SILVA","MARTY","REY",
-"DUPUIS","GODARD","VIAL","MAILLET","DANIEL","DUMAS","GAILLARD",
-
-/* Série supplémentaire */
-
-"ADAM","ALEXANDRE","ALLARD","ANDRE","ANTOINE","AUBRY","AUGER",
-"BARRE","BAUDRY","BECKER","BEGUE","BELIN","BELLOT","BERGER",
-"BERNARDIN","BERTHELOT","BESNARD","BIDAULT","BIGOT","BILLARD",
-"BLANCHET","BLOCH","BOUCHER","BOULANGER","BOURGEOIS","BOUVIER",
-"BRETON","BRUN","BRUNET","BUISSON","CARRERE","CARRE","CARON",
-"CASTEL","CAZEAU","CHAPELLE","CHAPUIS","CHARBONNIER","CHARPENTIER",
-"CHARRIER","CHARTIER","CHAUVIN","CLERC","COLIN","COLLETTE",
-"COMTE","CORDIER","COSTA","COTTE","COULON","COURTOIS","CRESPIN",
-"DA COSTA","DA SILVA","DAHAN","DELATTRE","DELCOURT","DELORME",
-"DELPECH","DELPORTE","DESCHAMPS","DESROCHES","DIALLO","DIEU",
-"DONATI","DORVAL","DOUCET","DUBREUIL","DUCHENE","DUCLOS",
-"DUFOUR","DUGAS","DUMAS","DUPUY","DURIEZ","DUTERTRE","DUTHEIL",
-"FABRE","FAVRE","FELIX","FERNAND","FERRAND","FERRARI","FERRIER",
-"FISCHER","FOREST","FORTIN","FOUCHER","FOURNEL","FRANCOIS",
-"FREY","GAILLOT","GARNIER","GAY","GEOFFROY","GERMAIN","GIRAUD",
-"GODARD","GODIN","GOMEZ","GONCALVES","GRAND","GRANGER","GRAS",
-"GRENIER","GRONDIN","GROS","GUYOT","HAMEL","HARDY","HENRY",
-"HERBERT","HERVIEU","HUBERT","HUET","JACOB","JACQUET","JACQUIN",
-"JACQUOT","JEANNE","JOLIVET","JOUANNET","JOURDAN","JOURDAIN",
-"LABBE","LACOSTE","LAFON","LAGARDE","LALLEMAND","LANGLOIS",
-"LAPORTE","LAROCHE","LAVAL","LEBLANC","LECLERC","LECOQ",
-"LEDUC","LEFORT","LEGENDRE","LEJEUNE","LEMAITRE","LEMOINE",
-"LENORMAND","LEPAGE","LEROUX","LESCURE","LESAGE","LEVEQUE",
-"LOISEAU","LOUIS","LUCIANI","MAHE","MAILLOT","MALET","MALLET",
-"MARCHAND","MARIE","MARIN","MARQUES","MARTEL","MARTINELLI",
-"MASSARD","MAURY","MENARD","MERLE","MESTRE","MEUNIER","MILLET",
-"MONNIER","MONTEIRO","MORVAN","MOULIN","MOUNIER","MUNIER",
-"NAVARRO","NEVEU","NOEL","NORMAND","OLIVIER","PARENT","PARIS",
-"PASQUIER","PASCAL","PATUREL","PAUL","PAVAN","PELTIER","PERON",
-"PETITJEAN","PICARD","PILLOT","PINTO","PONS","POIRIER","POTIER",
-"PREVOST","PRIEUR","PROST","RAYNAUD","REMY","RENARD","RIVET",
-"ROGER","ROLLAND","ROSA","ROSSET","ROSSI","SABATIER","SALMON",
-"SANCHEZ","SANTOS","SAUVAGE","SAUVET","SCHNEIDER","SCHNEIDER",
-"SEGOND","SELLIER","SERRE","SERRA","SIMONET","SOULIER","SOUZA",
-"STEPHAN","TESSIER","TISSOT","TOURNIER","TRAVERS","VALENTIN",
-"VALLEE","VAN DEN BERG","VASSEUR","VERDIER","VERGER","VERNIER",
-"VIDAL","VIENNE","VIGNE","VILLAIN","VILLARD","VILLEMIN","WEBER"
-];
-
-
-/* =========================
+/* =====================================================
    DESIGNS
-========================= */
+===================================================== */
 
 const designs = [
-    { className: "blue", brand: "AURORA" },
-    { className: "dark", brand: "NOVA" },
-    { className: "green", brand: "VERTEX" },
-    { className: "purple", brand: "AURA" },
-    { className: "black", brand: "ONYX" }
+
+    {
+        className: "blue",
+        brand: "AURORA"
+    },
+
+    {
+        className: "dark",
+        brand: "NOVA"
+    },
+
+    {
+        className: "green",
+        brand: "VERTEX"
+    },
+
+    {
+        className: "purple",
+        brand: "AURA"
+    },
+
+    {
+        className: "black",
+        brand: "ONYX"
+    }
+
 ];
 
 
-const scene = document.getElementById("scene");
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-const front = document.getElementById("front");
-const back = document.getElementById("back");
+const scene =
+    document.getElementById("scene");
 
-const number = document.getElementById("number");
-const expiry = document.getElementById("expiry");
-const cvv = document.getElementById("cvv");
-const backCode = document.getElementById("backCode");
+const front =
+    document.getElementById("front");
 
-const holder = document.getElementById("holder");
+const back =
+    document.getElementById("back");
 
-const brand = document.getElementById("brand");
-const brandBottom = document.getElementById("brandBottom");
-const backBrand = document.getElementById("backBrand");
+const number =
+    document.getElementById("number");
 
+const expiry =
+    document.getElementById("expiry");
+
+const cvv =
+    document.getElementById("cvv");
+
+const backCode =
+    document.getElementById("backCode");
+
+const holder =
+    document.getElementById("holder");
+
+const brand =
+    document.getElementById("brand");
+
+const brandBottom =
+    document.getElementById("brandBottom");
+
+const backBrand =
+    document.getElementById("backBrand");
+
+
+/* =====================================================
+   CHOISIR UN ÉLÉMENT AU HASARD
+===================================================== */
 
 function randomItem(array) {
 
@@ -680,42 +1477,60 @@ function randomItem(array) {
 }
 
 
+/* =====================================================
+   GÉNÉRER UN PRÉNOM
+   IMPORTANT :
+   Il n'y a maintenant PLUS DE NOM DE FAMILLE.
+===================================================== */
+
 function randomName() {
 
-    const prenom =
-        randomItem(firstNames);
-
-    const nom =
-        randomItem(lastNames);
-
-    return prenom + " " + nom;
+    return randomItem(firstNames);
 
 }
 
+
+/* =====================================================
+   NUMÉRO FICTIF
+===================================================== */
 
 function randomNumber() {
 
     const blocks = [];
 
-    for (let i = 0; i < 4; i++) {
+    for (
+        let i = 0;
+        i < 4;
+        i++
+    ) {
 
         let block = "";
 
-        for (let j = 0; j < 4; j++) {
+        for (
+            let j = 0;
+            j < 4;
+            j++
+        ) {
 
-            block += Math.floor(
-                Math.random() * 10
-            );
+            block +=
+                Math.floor(
+                    Math.random() * 10
+                );
 
         }
 
         blocks.push(block);
+
     }
 
     return blocks.join(" ");
 
 }
 
+
+/* =====================================================
+   DATE FICTIVE
+===================================================== */
 
 function randomExpiry() {
 
@@ -724,148 +1539,6 @@ function randomExpiry() {
             Math.floor(
                 Math.random() * 12
             ) + 1
-        ).padStart(2,"0");
-
-    const year =
-        String(
-            28 +
-            Math.floor(
-                Math.random() * 8
-            )
-        );
-
-    return month + "/" + year;
-
-}
-
-
-function randomCode() {
-
-    return String(
-        Math.floor(
-            100 +
-            Math.random() * 900
-        )
-    );
-
-}
-
-
-function generateCard() {
-
-    const design =
-        randomItem(designs);
-
-
-    /* DESIGN */
-
-    front.className =
-        "face front " +
-        design.className;
-
-    back.className =
-        "face back " +
-        design.className;
-
-
-    /* MARQUE */
-
-    brand.textContent =
-        design.brand;
-
-    brandBottom.textContent =
-        design.brand;
-
-    backBrand.textContent =
-        design.brand;
-
-
-    /* PRÉNOM + NOM */
-
-    holder.textContent =
-        randomName();
-
-
-    /* NUMÉRO */
-
-    number.textContent =
-        randomNumber();
-
-
-    /* DATE */
-
-    expiry.textContent =
-        randomExpiry();
-
-
-    /* CODE */
-
-    const code =
-        randomCode();
-
-    cvv.textContent =
-        code;
-
-    backCode.textContent =
-        code;
-
-
-    /* RECTO */
-
-    scene.classList.remove("flipped");
-
-
-    /* ANIMATION */
-
-    front.animate(
-        [
-            {
-                opacity: .15,
-                transform: "scale(.94)"
-            },
-            {
-                opacity: 1,
-                transform: "scale(1)"
-            }
-        ],
-        {
-            duration: 500,
-            easing: "cubic-bezier(.2,.8,.2,1)"
-        }
-    );
-
-}
-
-
-/* BOUTON */
-
-document
-    .getElementById("generate")
-    .addEventListener(
-        "click",
-        generateCard
-    );
-
-
-/* RETOURNEMENT */
-
-scene.addEventListener(
-    "click",
-    function() {
-
-        scene.classList.toggle(
-            "flipped"
-        );
-
-    }
-);
-
-
-/* PREMIÈRE GÉNÉRATION */
-
-generateCard();
-
-</script>
-
-</body>
-    </html>
+        ).padStart(
+            2,
+         
