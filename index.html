@@ -14,12 +14,13 @@
 
 body {
     min-height: 100vh;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: Arial, Helvetica, sans-serif;
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+
     background:
         radial-gradient(circle at 10% 10%, #312e81, transparent 30%),
         radial-gradient(circle at 90% 90%, #075985, transparent 30%),
@@ -27,88 +28,75 @@ body {
 }
 
 .app {
-    width: min(1150px, 100%);
+    width: 100%;
+    max-width: 1150px;
     display: grid;
     grid-template-columns: .8fr 1.2fr;
-    gap: 45px;
+    gap: 55px;
     align-items: center;
 }
 
-.intro {
-    position: relative;
-    z-index: 50;
-    margin-top: -70px;
-}
-
 .logo {
-    margin-bottom: 12px;
     color: #818cf8;
-    font-size: 12px;
-    font-weight: 900;
+    font-size: 13px;
+    font-weight: 800;
     letter-spacing: 4px;
+    margin-bottom: 20px;
 }
 
 h1 {
-    margin-bottom: 22px;
-    font-size: clamp(42px, 6vw, 70px);
+    font-size: clamp(48px, 7vw, 82px);
     line-height: .9;
     letter-spacing: -5px;
+    margin-bottom: 30px;
 }
 
 .gradient {
-    color: transparent;
     background: linear-gradient(90deg,#818cf8,#22d3ee,#34d399);
     -webkit-background-clip: text;
-    background-clip: text;
+    color: transparent;
 }
 
 .panel {
-    position: relative;
-    z-index: 100;
-    padding: 18px;
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 22px;
+    padding: 25px;
+    border-radius: 25px;
     background: rgba(18,23,40,.75);
+    border: 1px solid rgba(255,255,255,.1);
     backdrop-filter: blur(20px);
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
 }
 
 button {
-    position: relative;
-    z-index: 100;
     width: 100%;
-    padding: 15px;
+    padding: 17px;
     border: 0;
     border-radius: 14px;
     color: white;
-    background: linear-gradient(90deg,#6366f1,#06b6d4);
     font-size: 15px;
-    font-weight: 900;
+    font-weight: 800;
     cursor: pointer;
-    pointer-events: auto;
-    transition: transform .2s, filter .2s;
+
+    background: linear-gradient(90deg,#6366f1,#06b6d4);
+
+    box-shadow: 0 12px 35px rgba(99,102,241,.3);
+
+    transition: .2s;
 }
 
 button:hover {
     transform: translateY(-3px);
-    filter: brightness(1.1);
-}
-
-button:active {
-    transform: scale(.98);
 }
 
 .info {
-    margin-top: 12px;
+    text-align: center;
     color: #777f96;
     font-size: 10px;
-    text-align: center;
+    margin-top: 14px;
 }
 
-/* CARTE */
+/* CARD */
 
 .scene {
-    position: relative;
-    z-index: 2;
     width: 100%;
     max-width: 570px;
     aspect-ratio: 1.586;
@@ -122,7 +110,7 @@ button:active {
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform .8s cubic-bezier(.2,.8,.2,1);
+    transition: transform .85s cubic-bezier(.2,.8,.2,1);
 }
 
 .scene.flipped .card {
@@ -135,6 +123,7 @@ button:active {
     overflow: hidden;
     border-radius: 28px;
     backface-visibility: hidden;
+
     box-shadow: 0 35px 90px rgba(0,0,0,.5);
 }
 
@@ -143,8 +132,8 @@ button:active {
     position: absolute;
     width: 290px;
     height: 290px;
-    top: -120px;
     right: -100px;
+    top: -120px;
     border-radius: 50%;
     background: rgba(255,255,255,.15);
 }
@@ -154,8 +143,8 @@ button:active {
     position: absolute;
     width: 330px;
     height: 330px;
-    bottom: -190px;
     left: -170px;
+    bottom: -190px;
     border-radius: 50%;
     background: rgba(255,255,255,.1);
 }
@@ -187,18 +176,21 @@ button:active {
 }
 
 .black {
-    background: linear-gradient(135deg,#050505,#292929);
+    background:
+        linear-gradient(135deg,#050505,#292929);
 }
 
 /* RECTO */
 
 .front {
+    transform: rotateY(0);
     padding: 30px;
 }
 
 .top {
     position: relative;
     z-index: 3;
+
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -214,6 +206,7 @@ button:active {
     width: 53px;
     height: 41px;
     border-radius: 8px;
+
     background:
         linear-gradient(90deg,transparent 46%,rgba(0,0,0,.2) 47%,transparent 50%),
         linear-gradient(0deg,transparent 46%,rgba(0,0,0,.2) 47%,transparent 50%),
@@ -222,41 +215,50 @@ button:active {
 
 .sample {
     position: absolute;
-    z-index: 4;
     top: 80px;
     right: 30px;
-    padding: 4px 7px;
-    border: 1px solid rgba(255,255,255,.5);
-    border-radius: 4px;
+    z-index: 3;
+
     font-size: 8px;
-    font-weight: 900;
     letter-spacing: 2px;
+    font-weight: 900;
+
+    opacity: .65;
+
+    border: 1px solid rgba(255,255,255,.45);
+    padding: 4px 7px;
+    border-radius: 4px;
 }
 
 .number {
     position: relative;
     z-index: 3;
+
     margin-top: 63px;
+
     font-family: monospace;
-    font-size: clamp(18px,4vw,30px);
+    font-size: clamp(19px,4vw,31px);
     letter-spacing: 3px;
+
     text-shadow: 0 2px 4px rgba(0,0,0,.3);
 }
 
 .details {
     position: relative;
     z-index: 3;
+
     display: flex;
     gap: 42px;
+
     margin-top: 25px;
 }
 
 .detail small {
     display: block;
-    margin-bottom: 5px;
     font-size: 8px;
     letter-spacing: 1px;
     opacity: .7;
+    margin-bottom: 5px;
 }
 
 .detail strong {
@@ -267,24 +269,26 @@ button:active {
 .bottom {
     position: absolute;
     z-index: 3;
+
+    left: 30px;
     right: 30px;
     bottom: 27px;
-    left: 30px;
+
     display: flex;
-    align-items: end;
     justify-content: space-between;
+    align-items: end;
 }
 
 .holder-label {
-    margin-bottom: 4px;
     font-size: 8px;
-    letter-spacing: 1.5px;
     opacity: .6;
+    letter-spacing: 1.5px;
+    margin-bottom: 4px;
 }
 
 .holder {
     font-size: 13px;
-    font-weight: 900;
+    font-weight: 800;
     letter-spacing: 1.5px;
 }
 
@@ -292,6 +296,7 @@ button:active {
 
 .back {
     transform: rotateY(180deg);
+    padding: 0;
 }
 
 .magnetic {
@@ -314,7 +319,9 @@ button:active {
 .signature-line {
     height: 40px;
     flex: 1;
+
     border-radius: 3px;
+
     background:
         repeating-linear-gradient(
             -5deg,
@@ -328,42 +335,48 @@ button:active {
 .back-code {
     padding: 9px 13px;
     border-radius: 3px;
-    color: #111;
+
     background: white;
+    color: #111;
+
     font-family: monospace;
     font-weight: 900;
 }
 
 .back-info {
     margin-top: 30px;
-    color: rgba(255,255,255,.65);
+    max-width: 430px;
+
     font-size: 9px;
+    line-height: 1.5;
+
+    color: rgba(255,255,255,.65);
 }
 
 .back-brand {
     position: absolute;
     right: 30px;
     bottom: 25px;
+
     font-size: 20px;
     font-weight: 900;
 }
 
 .hint {
-    margin-top: 18px;
+    text-align: center;
     color: #6f7890;
     font-size: 11px;
-    text-align: center;
+    margin-top: 18px;
 }
 
 @media(max-width:850px) {
 
     .app {
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: 35px;
     }
 
     .intro {
-        margin-top: -30px;
         text-align: center;
     }
 }
@@ -374,287 +387,261 @@ button:active {
 
 <div class="app">
 
-<section class="intro">
+    <section class="intro">
 
-    <div class="logo">
-        CARD STUDIO
-    </div>
-
-    <h1>
-        Create<br>
-        <span class="gradient">Card.</span>
-    </h1>
-
-    <div class="panel">
-
-        <button type="button" id="generate">
-            ✨ Générer une nouvelle carte
-        </button>
-
-        <p class="info">
-            Cliquez sur le bouton pour générer une nouvelle carte.
-        </p>
-
-    </div>
-
-</section>
-
-
-<section>
-
-<div class="scene" id="scene">
-
-<div class="card">
-
-<!-- RECTO -->
-
-<div class="face front blue" id="front">
-
-    <div class="top">
-
-        <div class="brand" id="brand">
-            AURORA
+        <div class="logo">
+            CARD STUDIO
         </div>
 
-        <div class="chip"></div>
+        <h1>
+            Create<br>
+            <span class="gradient">Card.</span>
+        </h1>
 
-    </div>
+        <div class="panel">
 
-    <div class="sample">
-        SAMPLE
-    </div>
+            <button id="generate">
+                ✨ Générer une nouvelle carte
+            </button>
 
-    <div class="number" id="number">
-        0000 0000 0000 0000
-    </div>
+            <p class="info">
+                Cliquez sur le bouton pour générer une nouvelle carte.
+            </p>
 
-    <div class="details">
-
-        <div class="detail">
-            <small>VALID THRU</small>
-            <strong id="expiry">00/00</strong>
         </div>
 
-        <div class="detail">
-            <small>SECURITY</small>
-            <strong id="cvv">000</strong>
-        </div>
+    </section>
 
-    </div>
 
-    <div class="bottom">
+    <section>
 
-        <div>
+        <div class="scene" id="scene">
 
-            <div class="holder-label">
-                CARDHOLDER
+            <div class="card">
+
+                <!-- RECTO -->
+
+                <div class="face front blue" id="front">
+
+                    <div class="top">
+
+                        <div class="brand" id="brand">
+                            AURORA
+                        </div>
+
+                        <div class="chip"></div>
+
+                    </div>
+
+                    <div class="sample">
+                        SAMPLE
+                    </div>
+
+                    <div class="number" id="number">
+                        0000 0000 0000 0000
+                    </div>
+
+                    <div class="details">
+
+                        <div class="detail">
+                            <small>VALID THRU</small>
+                            <strong id="expiry">00/00</strong>
+                        </div>
+
+                        <div class="detail">
+                            <small>SECURITY</small>
+                            <strong id="cvv">000</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="bottom">
+
+                        <div>
+
+                            <div class="holder-label">
+                                CARDHOLDER
+                            </div>
+
+                            <div class="holder" id="holder">
+                                SAMPLE USER
+                            </div>
+
+                        </div>
+
+                        <div class="brand" id="brandBottom">
+                            AURORA
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- VERSO -->
+
+                <div class="face back blue" id="back">
+
+                    <div class="magnetic"></div>
+
+                    <div class="back-content">
+
+                        <div class="signature">
+
+                            <div class="signature-line"></div>
+
+                            <div class="back-code" id="backCode">
+                                000
+                            </div>
+
+                        </div>
+
+                        <p class="back-info">
+                            Carte destinée à une interface graphique.
+                            Les informations affichées sont fictives.
+                        </p>
+
+                    </div>
+
+                    <div class="back-brand" id="backBrand">
+                        AURORA
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="holder" id="holder">
-                SAMPLE USER
-            </div>
-
         </div>
 
-        <div class="brand" id="brandBottom">
-            AURORA
+        <div class="hint">
+            Cliquez sur la carte pour voir le verso ↻
         </div>
 
-    </div>
-
-</div>
-
-
-<!-- VERSO -->
-
-<div class="face back blue" id="back">
-
-    <div class="magnetic"></div>
-
-    <div class="back-content">
-
-        <div class="signature">
-
-            <div class="signature-line"></div>
-
-            <div class="back-code" id="backCode">
-                000
-            </div>
-
-        </div>
-
-        <p class="back-info">
-            Card Studio — données fictives
-        </p>
-
-    </div>
-
-    <div class="back-brand" id="backBrand">
-        AURORA
-    </div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="hint">
-    Cliquez sur la carte pour voir le verso ↻
-</div>
-
-</section>
+    </section>
 
 </div>
 
 
 <script>
 
-/* ==============================
+/* =========================
    PRÉNOMS
-============================== */
+========================= */
 
 const firstNames = [
+
+"ALEX","LUCAS","NOAH","LEO","HUGO","ADAM","ETHAN","LIAM",
+"JULES","NATHAN","MAX","MATHIS","GABRIEL","LOUIS","ARTHUR",
+"ENZO","THOMAS","PAUL","ANTOINE","JULIEN","NICOLAS","ROMAIN",
+"SIMON","VICTOR","CHARLES","MAXIME","ALEXANDRE","DAVID",
+"SAMUEL","BENJAMIN","RAPHAEL","HENRI","MARC","PIERRE","JEAN",
+"THEO","ELIAS","MALO","SACHA","TOM","VALENTIN","FELIX","OSCAR",
+"AARON","MATTEO","MARTIN","GASPARD","GUILLAUME","KEVIN",
+"STEPHANE","DAMIEN","CORENTIN","FLORIAN","QUENTIN","REMI",
+"LOIC","YANIS","ILAN","LUC","MATHIEU","NOLAN","ESTEBAN",
+
 "LEA","EMMA","LOUISE","JADE","ALICE","CHLOE","LINA","ROSE",
 "ANNA","MILA","JULIA","ZOE","CAMILLE","SARAH","MANON","CLARA",
-"INES","LUCIE","EVA","JEANNE","LOLA","MARGOT","ELENA","CHARLOTTE",
-"AMELIE","MATHILDE","PAULINE","MARIE","VICTOIRE","ELISE","AGATHE",
-"ALIX","AMBRE","APOLLINE","AURELIE","CELIA","CELESTE","DIANE",
-"ELISA","FANNY","GABRIELLE","HANNA","IRIS","JOSEPHINE","JULIETTE",
-"LAURA","LEONIE","MAELYS","MAEVA","MELANIE","MELISSA","NAOMI",
-"NINA","OCEANE","OPHELIE","ROMANE","SALOME","SOPHIE","VALENTINE",
-"YASMINE","ZELIE","ADELE","ELLA","LOU","MAYA","MORGANE","NOEMIE",
-"PAOLA","TESS","THEA","AGNES","AIMEE","ALINE","ANAIS","ANDREA",
-"ANGELIQUE","BEATRICE","BERENICE","BRIGITTE","CARLA","CAROLINE",
-"CECILE","CELINE","CORALIE","DEBORAH","EDITH","ELEONORE","ELIANA",
-"EMILIE","ESTELLE","FLORENCE","FLEUR","GAELLE","HELENE","ISABELLE",
-"JASMINE","KAREN","KARINE","LAETITIA","LAURE","LAURENCE","LILOU",
-"LISA","LORRAINE","MAELLE","MAE","MARINE","MARION","MARIANNE",
-"MELINA","MYLENE","NADIA","NATHALIE","NELLY","NORA","PATRICIA",
-"PRISCILLA","SANDRA","SONIA","SYLVIE","TATIANA","THAIS","VALERIE",
-"VANESSA","VERONIQUE","YVETTE","ALBA","ALYSSA","AMANDA","AMELIA",
-"ANA","ANGELINA","ARIANE","AUDREY","BELLA","BIANCA","CANDICE",
-"CASSANDRE","CATIA","CECILIA","CHARLINE","COLINE","CONSTANCE",
-"DAPHNE","DORIANE","EDEN","ELINA","EMILIA","ERICA","ESTHER","FIONA",
-"GIULIA","JENNA","JESSICA","JOY","KELLY","KIM","LAUREN","LENA",
-"LIA","LILI","LILIANE","LOUANE","LYDIA","MAELINE","MAIWENN",
-"MARINA","MARISA","MIA","MIRANDA","MONA","NADINE","NATALIA",
-"NATACHA","NELL","NICOLE","OLIVIA","PAMELA","RACHEL","REBECCA",
-"RITA","SABRINA","SAMANTHA","SANDRINE","SHANA","SHARON","SIENNA",
-"STELLA","TANIA","TARA","TIFFANY","VALENTINA","VIOLETTE","WENDY",
-"YARA","ZARA",
+"INES","LUCIE","EVA","JEANNE","LOLA","MARGOT","ELENA",
+"CHARLOTTE","AMELIE","MATHILDE","PAULINE","MARIE","VICTOIRE",
+"ELISE","AGATHE","ALIX","AMBRE","APOLLINE","AURELIE","CELIA",
+"CELESTE","DIANE","ELISA","FANNY","GABRIELLE","HANNA","IRIS",
+"JOSEPHINE","JULIETTE","LAURA","LEONIE","MAELYS","MAEVA",
+"MELANIE","MELISSA","NAOMI","NINA","OCEANE","OPHELIE","ROMANE",
+"SALOME","SOPHIE","VALENTINE","YASMINE","ZELIE","ADELE","ELLA",
+"LOU","MAYA","MORGANE","NOEMIE","PAOLA","TESS","THEA",
 
-"ALEX","LUCAS","NOAH","LEO","HUGO","ADAM","ETHAN","LIAM","JULES",
-"NATHAN","MAX","MATHIS","GABRIEL","LOUIS","ARTHUR","ENZO","THOMAS",
-"PAUL","ANTOINE","JULIEN","NICOLAS","ROMAIN","SIMON","VICTOR",
-"CHARLES","MAXIME","ALEXANDRE","DAVID","SAMUEL","BENJAMIN",
-"RAPHAEL","HENRI","MARC","PIERRE","JEAN","THEO","ELIAS","MALO",
-"SACHA","TOM","VALENTIN","FELIX","OSCAR","AARON","MATTEO","MARTIN",
-"GASPARD","GUILLAUME","KEVIN","STEPHANE","DAMIEN","CORENTIN",
-"FLORIAN","QUENTIN","REMI","LOIC","YANIS","ILAN","LUC","MATHIEU",
-"NOLAN","ESTEBAN","ALBAN","ALAIN","ALBERT","AMIN","ANDRE","ARNAUD",
-"AUGUSTIN","BASTIEN","BRUNO","CEDRIC","CHRISTOPHE","CYRIL","DANIEL",
-"DIMITRI","EMMANUEL","ERIC","FABIEN","FABRICE","FRANCK","FREDERIC",
-"GERARD","GREGORY","GUY","JACQUES","JEREMY","JOACHIM","JOEL",
-"JONATHAN","JOSEPH","LAURENT","LEON","MARCEL","MARIUS","MICHAEL",
-"MICHEL","OLIVIER","PATRICK","PHILIPPE","RAYMOND","SERGE","SYLVAIN",
-"VINCENT","WILLIAM","XAVIER","YANN","ADRIEN","ALEXIS","AXEL",
-"BAPTISTE","BENOIT","CLEMENT","DORIAN","EDOUARD","ELIOTT","EMILIEN",
-"EVAN","FLORENT","GEOFFREY","HADRIEN","JEROME","LEANDRE","MARCUS",
-"MARVIN","MELVIN","MORGAN","NEIL","NOE","OWEN","ROBIN","RUDY",
-"SEBASTIEN","TIM","TIMOTHE","TRISTAN","VADIM","WALTER","YANNICK",
-"YOANN","ZACHARIE"
+/* Variantes et autres prénoms */
+
+"AGNES","AIMEE","ALINE","ANAIS","ANDREA","ANGELIQUE","BEATRICE",
+"BERENICE","BRIGITTE","CARLA","CAROLINE","CECILE","CELINE",
+"CORALIE","DEBORAH","DOMINIQUE","EDEN","EDITH","ELEONORE",
+"ELIANA","EMILIE","ESTELLE","FLORENCE","FLEUR","FRANCOISE",
+"GAELLE","HELENE","ISABELLE","JASMINE","KAREN","KARINE",
+"LAETITIA","LAURE","LAURENCE","LILOU","LISA","LORRAINE",
+"MAELLE","MAE","MARINE","MARION","MARIANNE","MELINA",
+"MYLENE","NADIA","NATHALIE","NELLY","NORA","PATRICIA",
+"PRISCILLA","SANDRA","SONIA","SYLVIE","TATIANA","THAIS",
+"VALERIE","VANESSA","VERONIQUE","YVETTE",
+
+"ALBAN","ALAIN","ALBERT","AMIN","ANDRE","ANTOINE","ARNAUD",
+"AUGUSTIN","BASTIEN","BRUNO","CEDRIC","CHRISTOPHE","CYRIL",
+"DANIEL","DAMIEN","DIMITRI","DOMINIQUE","EMMANUEL","ERIC",
+"FABIEN","FABRICE","FRANCK","FREDERIC","GERARD","GREGORY",
+"GUY","JACQUES","JEREMY","JOACHIM","JOEL","JONATHAN","JOSEPH",
+"LAURENT","LEON","MARCEL","MARIUS","MICHAEL","MICHEL",
+"OLIVIER","PATRICK","PHILIPPE","RAPHAEL","RAYMOND","SERGE",
+"STEPHEN","SYLVAIN","VINCENT","WILLIAM","XAVIER","YANN"
 ];
 
 
-/* ==============================
+/* =========================
    NOMS DE FAMILLE
-============================== */
+========================= */
 
 const lastNames = [
-"MARTIN","BERNARD","DUBOIS","THOMAS","ROBERT","RICHARD","PETIT",
-"DURAND","LEROY","MOREAU","SIMON","LAURENT","LEFEBVRE","MICHEL",
-"GARCIA","DAVID","BERTRAND","ROUX","VINCENT","FOURNIER","MOREL",
-"GIRARD","ANDRE","LEGRAND","GARNIER","FAURE","ROUSSEAU","BLANC",
-"GUERIN","MULLER","HENRY","ROUSSEL","NICOLAS","PERRIN","MORIN",
-"MATHIEU","CLEMENT","GAUTIER","DUMONT","LOPEZ","FONTAINE",
-"CHEVALIER","DENIS","FRANCOIS","MARCHAND","DUPONT","LAMBERT",
-"BONNET","MASSON","SANCHEZ","GERARD","BOYER","MERCIER","BLANCHARD",
-"GILLET","BARBIER","ARNAUD","MARTINEZ","GERMAIN","ROCHE","RENAUD",
-"SCHMITT","ROY","COLLET","PICHON","BENOIT","LEMAIRE","LACROIX",
-"OLIVIER","RIVIERE","AUBERT","DROUET","BESSON","MARCHAL","MEYER",
-"JOLY","PERRET","LEMOINE","BARON","CARON","DIAZ","FERNANDEZ",
-"PEREZ","GONZALEZ","SILVA","MARTY","REY","DUPUIS","GODARD","VIAL",
-"MAILLET","DANIEL","DUMAS","GAILLARD","ADAM","ALLARD","AUBRY",
-"AUGER","BARRE","BAUDRY","BECKER","BEGUE","BELIN","BELLOT","BERGER",
+
+"MARTIN","BERNARD","DUBOIS","THOMAS","ROBERT","RICHARD",
+"PETIT","DURAND","LEROY","MOREAU","SIMON","LAURENT",
+"LEFEBVRE","MICHEL","GARCIA","DAVID","BERTRAND","ROUX",
+"VINCENT","FOURNIER","MOREL","GIRARD","ANDRE","LEGRAND",
+"GARNIER","FAURE","ROUSSEAU","BLANC","GUERIN","MULLER",
+"HENRY","ROUSSEL","NICOLAS","PERRIN","MORIN","MATHIEU",
+"CLEMENT","GAUTIER","DUMONT","LOPEZ","FONTAINE","CHEVALIER",
+"DENIS","FRANCOIS","MARCHAND","DUPONT","LAMBERT","BONNET",
+"MASSON","SANCHEZ","GERARD","BOYER","MERCIER","BLANCHARD",
+"GILLET","BARBIER","ARNAUD","MARTINEZ","GERMAIN","ROCHE",
+"RENAUD","SCHMITT","ROY","COLLET","PICHON","BENOIT","LEMAIRE",
+"LACROIX","OLIVIER","RIVIERE","AUBERT","DROUET","BESSON",
+"MARCHAL","MEYER","JOLY","PERRET","LEMOINE","BARON","CARON",
+"DIAZ","FERNANDEZ","PEREZ","GONZALEZ","SILVA","MARTY","REY",
+"DUPUIS","GODARD","VIAL","MAILLET","DANIEL","DUMAS","GAILLARD",
+
+/* Série supplémentaire */
+
+"ADAM","ALEXANDRE","ALLARD","ANDRE","ANTOINE","AUBRY","AUGER",
+"BARRE","BAUDRY","BECKER","BEGUE","BELIN","BELLOT","BERGER",
 "BERNARDIN","BERTHELOT","BESNARD","BIDAULT","BIGOT","BILLARD",
 "BLANCHET","BLOCH","BOUCHER","BOULANGER","BOURGEOIS","BOUVIER",
-"BRETON","BRUN","BRUNET","BUISSON","CARRERE","CARRE","CASTEL",
-"CAZEAU","CHAPELLE","CHAPUIS","CHARBONNIER","CHARPENTIER",
-"CHARRIER","CHARTIER","CHAUVIN","CLERC","COLIN","COLLETTE","COMTE",
-"CORDIER","COSTA","COTTE","COULON","COURTOIS","CRESPIN","DA COSTA",
-"DA SILVA","DAHAN","DELATTRE","DELCOURT","DELORME","DELPECH",
-"DELPORTE","DESCHAMPS","DESROCHES","DIALLO","DIEU","DONATI","DORVAL",
-"DOUCET","DUBREUIL","DUCHENE","DUCLOS","DUFOUR","DUGAS","DUPUY",
-"DURIEZ","DUTERTRE","DUTHEIL","FABRE","FAVRE","FELIX","FERNAND",
-"FERRAND","FERRARI","FERRIER","FISCHER","FOREST","FORTIN","FOUCHER",
-"FOURNEL","FREY","GAILLOT","GAY","GEOFFROY","GIRAUD","GODIN",
-"GOMEZ","GONCALVES","GRAND","GRANGER","GRAS","GRENIER","GRONDIN",
-"GROS","GUYOT","HAMEL","HARDY","HERBERT","HERVIEU","HUBERT","HUET",
-"JACOB","JACQUET","JACQUIN","JACQUOT","JOLIVET","JOUANNET","JOURDAN",
-"JOURDAIN","LABBE","LACOSTE","LAFON","LAGARDE","LALLEMAND",
-"LANGLOIS","LAPORTE","LAROCHE","LAVAL","LEBLANC","LECLERC","LECOQ",
-"LEDUC","LEFORT","LEGENDRE","LEJEUNE","LEMAITRE","LENORMAND",
-"LEPAGE","LEROUX","LESCURE","LESAGE","LEVEQUE","LOISEAU","LUCIANI",
-"MAHE","MAILLOT","MALET","MALLET","MARIN","MARQUES","MARTEL",
-"MARTINELLI","MASSARD","MAURY","MENARD","MERLE","MESTRE","MEUNIER",
-"MILLET","MONNIER","MONTEIRO","MORVAN","MOULIN","MOUNIER","MUNIER",
-"NAVARRO","NEVEU","NOEL","NORMAND","PARENT","PARIS","PASQUIER",
-"PASCAL","PATUREL","PAVAN","PELTIER","PERON","PETITJEAN","PICARD",
-"PILLOT","PINTO","PONS","POIRIER","POTIER","PREVOST","PRIEUR",
-"PROST","RAYNAUD","REMY","RENARD","RIVET","ROGER","ROLLAND","ROSA",
-"ROSSET","ROSSI","SABATIER","SALMON","SANTOS","SAUVAGE","SAUVET",
-"SCHNEIDER","SEGOND","SELLIER","SERRE","SERRA","SIMONET","SOULIER",
-"SOUZA","STEPHAN","TESSIER","TISSOT","TOURNIER","TRAVERS","VALENTIN",
-"VALLEE","VASSEUR","VERDIER","VERGER","VERNIER","VIDAL","VIENNE",
-"VIGNE","VILLAIN","VILLARD","VILLEMIN","WEBER","ABAD","ABBAD","ABEL",
-"ABRAHAM","ACOSTA","AGUILAR","ALMEIDA","ALONSO","ALVAREZ","AMARO",
-"AMAYA","AMBROISE","AMIEL","ANDREANI","ANGELI","ANTUNES","ARCELIN",
-"ARRIGHI","AUBIN","AVRIL","BABIN","BACON","BAILLY","BAKER","BALLET",
-"BARRAL","BARRAUD","BARTHE","BARTHELEMY","BASTIDE","BAUDIN",
-"BAUDOUIN","BAZIN","BEAUMONT","BEAUVAIS","BECQUET","BEDOUET",
-"BELANGER","BENARD","BENET","BERNARDY","BERTIN","BESSE","BETTINI",
-"BIANCHI","BILLON","BINET","BIZET","BOIS","BOISSON","BONNARD",
-"BONNEFOUS","BONNETTE","BORDEAUX","BORREL","BOSSE","BOTREL","BOUCHET",
-"BOUDOU","BOULAY","BRUNEL","BRUNEAU","CAILLE","CAILLET","CAMUS",
-"CANDELA","CARLIER","CARPENTIER","CASSAGNE","CASTELLI","CAUSSE",
-"CAVALIER","CHABAN","CHABERT","CHAILLOU","CHALON","CHAMBON",
-"CHAPRON","CHARLES","CHASTEL","CHAUVEAU","CHEMIN","CHENU","CHERON",
-"CHIRON","CHRETIEN","CLAVIER","COCHET","COLOMB","COLSON","CONSTANT",
-"CORBIN","CORNET","COSTE","COTTIN","COUDERC","COUDERT","COURBET",
-"COUSIN","COUTURIER","CREPIN","DEBAISIEUX","DEBRAY","DELCROIX",
-"DELISLE","DELON","DEMARET","DEMARS","DENIAU","DESMET","DEVILLE",
-"DIEUDONNE","DION","DORE","DUBOS","DUGUE","DUPRE","DURIEU",
-"DUSSAULT","ESPOSITO","ETIENNE","EVRARD","FAVREAU","FLEURY","FRAPPIER",
-"GABORIT","GAGNE","GALLE","GANDON","GARIN","GASNIER","GAYET","GENTIL",
-"GILBERT","GIRARDIN","GOUJON","GRANDJEAN","GRIMAUD","GUILLOT",
-"HALLOUIN","HAMON","HERVE","HOAREAU","JAMET","JANIN","JEANNIN",
-"JOUVE","LABORDE","LANCEL","LANDAIS","LANGLET","LAVIGNE","LECLERCQ",
-"LECOINTRE","LEFRANCOIS","LEONARD","LESCOT","LETELLIER","LEVY",
-"LOMBARD","LORENZINI","MAILLARD","MAZET","MONTAIGNE","MOTTE","MUNOZ",
-"PAGES","PARMENTIER","PAULIN","PENA","PERRIER","PONCET","PORTIER",
-"POULAIN","POUPON","PRUVOST","RABIER","RAFFIN","RAGOT","RAVENEL",
-"REGNIER","REYNAUD","ROCHER","RODRIGUEZ","RODRIGUES","ROMERO","ROST",
-"ROUSSELET","ROUXEL","ROYER","SABIN","SALA","SAINT-PIERRE","SAVARY",
-"SEGAL","SERGENT","SIMONIN","SOLER","SOULET","TANGUY","TEIXEIRA",
-"THIBAULT","THIERRY","TOULOUSE","TOUSSAINT","TRAN","VANIER","VERRIER",
-"VIGIER","VIVIER","WAGNER","WALTER","WEISS","WOLFF","YILMAZ"
+"BRETON","BRUN","BRUNET","BUISSON","CARRERE","CARRE","CARON",
+"CASTEL","CAZEAU","CHAPELLE","CHAPUIS","CHARBONNIER","CHARPENTIER",
+"CHARRIER","CHARTIER","CHAUVIN","CLERC","COLIN","COLLETTE",
+"COMTE","CORDIER","COSTA","COTTE","COULON","COURTOIS","CRESPIN",
+"DA COSTA","DA SILVA","DAHAN","DELATTRE","DELCOURT","DELORME",
+"DELPECH","DELPORTE","DESCHAMPS","DESROCHES","DIALLO","DIEU",
+"DONATI","DORVAL","DOUCET","DUBREUIL","DUCHENE","DUCLOS",
+"DUFOUR","DUGAS","DUMAS","DUPUY","DURIEZ","DUTERTRE","DUTHEIL",
+"FABRE","FAVRE","FELIX","FERNAND","FERRAND","FERRARI","FERRIER",
+"FISCHER","FOREST","FORTIN","FOUCHER","FOURNEL","FRANCOIS",
+"FREY","GAILLOT","GARNIER","GAY","GEOFFROY","GERMAIN","GIRAUD",
+"GODARD","GODIN","GOMEZ","GONCALVES","GRAND","GRANGER","GRAS",
+"GRENIER","GRONDIN","GROS","GUYOT","HAMEL","HARDY","HENRY",
+"HERBERT","HERVIEU","HUBERT","HUET","JACOB","JACQUET","JACQUIN",
+"JACQUOT","JEANNE","JOLIVET","JOUANNET","JOURDAN","JOURDAIN",
+"LABBE","LACOSTE","LAFON","LAGARDE","LALLEMAND","LANGLOIS",
+"LAPORTE","LAROCHE","LAVAL","LEBLANC","LECLERC","LECOQ",
+"LEDUC","LEFORT","LEGENDRE","LEJEUNE","LEMAITRE","LEMOINE",
+"LENORMAND","LEPAGE","LEROUX","LESCURE","LESAGE","LEVEQUE",
+"LOISEAU","LOUIS","LUCIANI","MAHE","MAILLOT","MALET","MALLET",
+"MARCHAND","MARIE","MARIN","MARQUES","MARTEL","MARTINELLI",
+"MASSARD","MAURY","MENARD","MERLE","MESTRE","MEUNIER","MILLET",
+"MONNIER","MONTEIRO","MORVAN","MOULIN","MOUNIER","MUNIER",
+"NAVARRO","NEVEU","NOEL","NORMAND","OLIVIER","PARENT","PARIS",
+"PASQUIER","PASCAL","PATUREL","PAUL","PAVAN","PELTIER","PERON",
+"PETITJEAN","PICARD","PILLOT","PINTO","PONS","POIRIER","POTIER",
+"PREVOST","PRIEUR","PROST","RAYNAUD","REMY","RENARD","RIVET",
+"ROGER","ROLLAND","ROSA","ROSSET","ROSSI","SABATIER","SALMON",
+"SANCHEZ","SANTOS","SAUVAGE","SAUVET","SCHNEIDER","SCHNEIDER",
+"SEGOND","SELLIER","SERRE","SERRA","SIMONET","SOULIER","SOUZA",
+"STEPHAN","TESSIER","TISSOT","TOURNIER","TRAVERS","VALENTIN",
+"VALLEE","VAN DEN BERG","VASSEUR","VERDIER","VERGER","VERNIER",
+"VIDAL","VIENNE","VIGNE","VILLAIN","VILLARD","VILLEMIN","WEBER"
 ];
 
 
-/* ==============================
+/* =========================
    DESIGNS
-============================== */
+========================= */
 
 const designs = [
     { className: "blue", brand: "AURORA" },
@@ -666,7 +653,6 @@ const designs = [
 
 
 const scene = document.getElementById("scene");
-const generateButton = document.getElementById("generate");
 
 const front = document.getElementById("front");
 const back = document.getElementById("back");
@@ -684,22 +670,30 @@ const backBrand = document.getElementById("backBrand");
 
 
 function randomItem(array) {
+
     return array[
-        Math.floor(Math.random() * array.length)
+        Math.floor(
+            Math.random() * array.length
+        )
     ];
+
 }
 
 
 function randomName() {
 
-    const firstName = randomItem(firstNames);
-    const lastName = randomItem(lastNames);
+    const prenom =
+        randomItem(firstNames);
 
-    return firstName + " " + lastName;
+    const nom =
+        randomItem(lastNames);
+
+    return prenom + " " + nom;
+
 }
 
 
-function randomDisplayNumber() {
+function randomNumber() {
 
     const blocks = [];
 
@@ -708,66 +702,120 @@ function randomDisplayNumber() {
         let block = "";
 
         for (let j = 0; j < 4; j++) {
-            block += Math.floor(Math.random() * 10);
+
+            block += Math.floor(
+                Math.random() * 10
+            );
+
         }
 
         blocks.push(block);
     }
 
     return blocks.join(" ");
+
 }
 
 
 function randomExpiry() {
 
-    const month = String(
-        Math.floor(Math.random() * 12) + 1
-    ).padStart(2, "0");
+    const month =
+        String(
+            Math.floor(
+                Math.random() * 12
+            ) + 1
+        ).padStart(2,"0");
 
-    const year = String(
-        28 + Math.floor(Math.random() * 8)
-    );
+    const year =
+        String(
+            28 +
+            Math.floor(
+                Math.random() * 8
+            )
+        );
 
     return month + "/" + year;
+
 }
 
 
 function randomCode() {
 
     return String(
-        Math.floor(100 + Math.random() * 900)
+        Math.floor(
+            100 +
+            Math.random() * 900
+        )
     );
+
 }
 
 
 function generateCard() {
 
-    const design = randomItem(designs);
+    const design =
+        randomItem(designs);
+
+
+    /* DESIGN */
 
     front.className =
-        "face front " + design.className;
+        "face front " +
+        design.className;
 
     back.className =
-        "face back " + design.className;
+        "face back " +
+        design.className;
 
-    brand.textContent = design.brand;
-    brandBottom.textContent = design.brand;
-    backBrand.textContent = design.brand;
 
-    holder.textContent = randomName();
+    /* MARQUE */
+
+    brand.textContent =
+        design.brand;
+
+    brandBottom.textContent =
+        design.brand;
+
+    backBrand.textContent =
+        design.brand;
+
+
+    /* PRÉNOM + NOM */
+
+    holder.textContent =
+        randomName();
+
+
+    /* NUMÉRO */
 
     number.textContent =
-        randomDisplayNumber();
+        randomNumber();
+
+
+    /* DATE */
 
     expiry.textContent =
         randomExpiry();
 
-    const code = randomCode();
 
-    cvv.textContent = code;
-    backCode.textContent = code;
+    /* CODE */
+
+    const code =
+        randomCode();
+
+    cvv.textContent =
+        code;
+
+    backCode.textContent =
+        code;
+
+
+    /* RECTO */
 
     scene.classList.remove("flipped");
+
+
+    /* ANIMATION */
 
     front.animate(
         [
@@ -781,28 +829,43 @@ function generateCard() {
             }
         ],
         {
-            duration: 450,
-            easing: "ease-out"
+            duration: 500,
+            easing: "cubic-bezier(.2,.8,.2,1)"
         }
     );
+
 }
 
 
-/* BOUTON DE GÉNÉRATION */
+/* BOUTON */
 
-generateButton.addEventListener("click", function(event) {
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    generateCard();
-
-});
+document
+    .getElementById("generate")
+    .addEventListener(
+        "click",
+        generateCard
+    );
 
 
-/* RETOURNEMENT DE LA CARTE */
+/* RETOURNEMENT */
 
-scene.addEventListener("click", function(event) {
+scene.addEventListener(
+    "click",
+    function() {
 
-    if (event.target.closest("#generate")) {
-     
+        scene.classList.toggle(
+            "flipped"
+        );
+
+    }
+);
+
+
+/* PREMIÈRE GÉNÉRATION */
+
+generateCard();
+
+</script>
+
+</body>
+    </html>
