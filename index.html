@@ -35,7 +35,9 @@ body {
 }
 
 .intro {
-    transform: translateY(-70px);
+    position: relative;
+    z-index: 50;
+    margin-top: -70px;
 }
 
 .logo {
@@ -62,7 +64,7 @@ h1 {
 
 .panel {
     position: relative;
-    z-index: 20;
+    z-index: 100;
     padding: 18px;
     border: 1px solid rgba(255,255,255,.1);
     border-radius: 22px;
@@ -72,7 +74,7 @@ h1 {
 
 button {
     position: relative;
-    z-index: 30;
+    z-index: 100;
     width: 100%;
     padding: 15px;
     border: 0;
@@ -354,13 +356,14 @@ button:active {
 }
 
 @media(max-width:850px) {
+
     .app {
         grid-template-columns: 1fr;
         gap: 25px;
     }
 
     .intro {
-        transform: translateY(-30px);
+        margin-top: -30px;
         text-align: center;
     }
 }
@@ -371,136 +374,145 @@ button:active {
 
 <div class="app">
 
-    <section class="intro">
+<section class="intro">
 
-        <div class="logo">CARD STUDIO</div>
+    <div class="logo">
+        CARD STUDIO
+    </div>
 
-        <h1>
-            Create<br>
-            <span class="gradient">Card.</span>
-        </h1>
+    <h1>
+        Create<br>
+        <span class="gradient">Card.</span>
+    </h1>
 
-        <div class="panel">
+    <div class="panel">
 
-            <button type="button" id="generate">
-                ✨ Générer une nouvelle carte
-            </button>
+        <button type="button" id="generate">
+            ✨ Générer une nouvelle carte
+        </button>
 
-            <p class="info">
-                Cliquez sur le bouton pour générer une nouvelle carte.
-            </p>
+        <p class="info">
+            Cliquez sur le bouton pour générer une nouvelle carte.
+        </p>
 
+    </div>
+
+</section>
+
+
+<section>
+
+<div class="scene" id="scene">
+
+<div class="card">
+
+<!-- RECTO -->
+
+<div class="face front blue" id="front">
+
+    <div class="top">
+
+        <div class="brand" id="brand">
+            AURORA
         </div>
 
-    </section>
+        <div class="chip"></div>
 
-    <section>
+    </div>
 
-        <div class="scene" id="scene">
+    <div class="sample">
+        SAMPLE
+    </div>
 
-            <div class="card">
+    <div class="number" id="number">
+        0000 0000 0000 0000
+    </div>
 
-                <div class="face front blue" id="front">
+    <div class="details">
 
-                    <div class="top">
+        <div class="detail">
+            <small>VALID THRU</small>
+            <strong id="expiry">00/00</strong>
+        </div>
 
-                        <div class="brand" id="brand">
-                            AURORA
-                        </div>
+        <div class="detail">
+            <small>SECURITY</small>
+            <strong id="cvv">000</strong>
+        </div>
 
-                        <div class="chip"></div>
+    </div>
 
-                    </div>
+    <div class="bottom">
 
-                    <div class="sample">
-                        SAMPLE
-                    </div>
+        <div>
 
-                    <div class="number" id="number">
-                        0000 0000 0000 0000
-                    </div>
+            <div class="holder-label">
+                CARDHOLDER
+            </div>
 
-                    <div class="details">
-
-                        <div class="detail">
-                            <small>VALID THRU</small>
-                            <strong id="expiry">00/00</strong>
-                        </div>
-
-                        <div class="detail">
-                            <small>SECURITY</small>
-                            <strong id="cvv">000</strong>
-                        </div>
-
-                    </div>
-
-                    <div class="bottom">
-
-                        <div>
-                            <div class="holder-label">
-                                CARDHOLDER
-                            </div>
-
-                            <div class="holder" id="holder">
-                                SAMPLE USER
-                            </div>
-                        </div>
-
-                        <div class="brand" id="brandBottom">
-                            AURORA
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="face back blue" id="back">
-
-                    <div class="magnetic"></div>
-
-                    <div class="back-content">
-
-                        <div class="signature">
-
-                            <div class="signature-line"></div>
-
-                            <div class="back-code" id="backCode">
-                                000
-                            </div>
-
-                        </div>
-
-                        <p class="back-info">
-                            Card Studio — données fictives
-                        </p>
-
-                    </div>
-
-                    <div class="back-brand" id="backBrand">
-                        AURORA
-                    </div>
-
-                </div>
-
+            <div class="holder" id="holder">
+                SAMPLE USER
             </div>
 
         </div>
 
-        <div class="hint">
-            Cliquez sur la carte pour voir le verso ↻
+        <div class="brand" id="brandBottom">
+            AURORA
         </div>
 
-    </section>
+    </div>
 
 </div>
 
+
+<!-- VERSO -->
+
+<div class="face back blue" id="back">
+
+    <div class="magnetic"></div>
+
+    <div class="back-content">
+
+        <div class="signature">
+
+            <div class="signature-line"></div>
+
+            <div class="back-code" id="backCode">
+                000
+            </div>
+
+        </div>
+
+        <p class="back-info">
+            Card Studio — données fictives
+        </p>
+
+    </div>
+
+    <div class="back-brand" id="backBrand">
+        AURORA
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="hint">
+    Cliquez sur la carte pour voir le verso ↻
+</div>
+
+</section>
+
+</div>
+
+
 <script>
 
-/*
-    Grandes listes de prénoms et noms.
-    Les données générées sont destinées uniquement
-    au rendu visuel.
-*/
+/* ==============================
+   PRÉNOMS
+============================== */
 
 const firstNames = [
 "LEA","EMMA","LOUISE","JADE","ALICE","CHLOE","LINA","ROSE",
@@ -555,9 +567,9 @@ const firstNames = [
 ];
 
 
-/*
-    Noms de famille.
-*/
+/* ==============================
+   NOMS DE FAMILLE
+============================== */
 
 const lastNames = [
 "MARTIN","BERNARD","DUBOIS","THOMAS","ROBERT","RICHARD","PETIT",
@@ -606,10 +618,10 @@ const lastNames = [
 "SOUZA","STEPHAN","TESSIER","TISSOT","TOURNIER","TRAVERS","VALENTIN",
 "VALLEE","VASSEUR","VERDIER","VERGER","VERNIER","VIDAL","VIENNE",
 "VIGNE","VILLAIN","VILLARD","VILLEMIN","WEBER","ABAD","ABBAD","ABEL",
-"ABRAHAM","ACOSTA","AGUILAR","ALBERT","ALMEIDA","ALONSO","ALVAREZ",
-"AMARO","AMAYA","AMBROISE","AMIEL","ANDREANI","ANGELI","ANTUNES",
-"ARCELIN","ARRIGHI","AUBIN","AVRIL","BABIN","BACON","BAILLY","BAKER",
-"BALLET","BARRAL","BARRAUD","BARTHE","BARTHELEMY","BASTIDE","BAUDIN",
+"ABRAHAM","ACOSTA","AGUILAR","ALMEIDA","ALONSO","ALVAREZ","AMARO",
+"AMAYA","AMBROISE","AMIEL","ANDREANI","ANGELI","ANTUNES","ARCELIN",
+"ARRIGHI","AUBIN","AVRIL","BABIN","BACON","BAILLY","BAKER","BALLET",
+"BARRAL","BARRAUD","BARTHE","BARTHELEMY","BASTIDE","BAUDIN",
 "BAUDOUIN","BAZIN","BEAUMONT","BEAUVAIS","BECQUET","BEDOUET",
 "BELANGER","BENARD","BENET","BERNARDY","BERTIN","BESSE","BETTINI",
 "BIANCHI","BILLON","BINET","BIZET","BOIS","BOISSON","BONNARD",
@@ -627,19 +639,22 @@ const lastNames = [
 "GABORIT","GAGNE","GALLE","GANDON","GARIN","GASNIER","GAYET","GENTIL",
 "GILBERT","GIRARDIN","GOUJON","GRANDJEAN","GRIMAUD","GUILLOT",
 "HALLOUIN","HAMON","HERVE","HOAREAU","JAMET","JANIN","JEANNIN",
-"JOUVE","LABORDE","LAGARDE","LANCEL","LANDAIS","LANGLET","LAVIGNE",
-"LECLERCQ","LECOINTRE","LEFRANCOIS","LEONARD","LESCOT","LETELLIER",
-"LEVY","LOMBARD","LORENZINI","MAILLARD","MAZET","MONTAIGNE","MOTTE",
-"MUNOZ","PAGES","PARMENTIER","PAULIN","PENA","PERRIER","PHILIPPE",
-"PONCET","PORTIER","POULAIN","POUPON","PRUVOST","RABIER","RAFFIN",
-"RAGOT","RAVENEL","REGNIER","REYNAUD","ROCHER","RODRIGUEZ","RODRIGUES",
-"ROMERO","ROST","ROUSSELET","ROUXEL","ROYER","SABIN","SALA",
-"SAINT-PIERRE","SAVARY","SEGAL","SERGENT","SIMONIN","SOLER","SOULET",
-"TANGUY","TEIXEIRA","THIBAULT","THIERRY","TOULOUSE","TOUSSAINT",
-"TRAN","VANIER","VERRIER","VIGIER","VIVIER","WAGNER","WALTER","WEISS",
-"WOLFF","YILMAZ"
+"JOUVE","LABORDE","LANCEL","LANDAIS","LANGLET","LAVIGNE","LECLERCQ",
+"LECOINTRE","LEFRANCOIS","LEONARD","LESCOT","LETELLIER","LEVY",
+"LOMBARD","LORENZINI","MAILLARD","MAZET","MONTAIGNE","MOTTE","MUNOZ",
+"PAGES","PARMENTIER","PAULIN","PENA","PERRIER","PONCET","PORTIER",
+"POULAIN","POUPON","PRUVOST","RABIER","RAFFIN","RAGOT","RAVENEL",
+"REGNIER","REYNAUD","ROCHER","RODRIGUEZ","RODRIGUES","ROMERO","ROST",
+"ROUSSELET","ROUXEL","ROYER","SABIN","SALA","SAINT-PIERRE","SAVARY",
+"SEGAL","SERGENT","SIMONIN","SOLER","SOULET","TANGUY","TEIXEIRA",
+"THIBAULT","THIERRY","TOULOUSE","TOUSSAINT","TRAN","VANIER","VERRIER",
+"VIGIER","VIVIER","WAGNER","WALTER","WEISS","WOLFF","YILMAZ"
 ];
 
+
+/* ==============================
+   DESIGNS
+============================== */
 
 const designs = [
     { className: "blue", brand: "AURORA" },
@@ -675,11 +690,6 @@ function randomItem(array) {
 }
 
 
-/*
-    Crée un nom en prenant toujours
-    le prénom et le nom dans deux listes distinctes.
-*/
-
 function randomName() {
 
     const firstName = randomItem(firstNames);
@@ -688,10 +698,6 @@ function randomName() {
     return firstName + " " + lastName;
 }
 
-
-/*
-    Numéro purement visuel.
-*/
 
 function randomDisplayNumber() {
 
@@ -702,11 +708,7 @@ function randomDisplayNumber() {
         let block = "";
 
         for (let j = 0; j < 4; j++) {
-
-            block += Math.floor(
-                Math.random() * 10
-            );
-
+            block += Math.floor(Math.random() * 10);
         }
 
         blocks.push(block);
@@ -748,4 +750,59 @@ function generateCard() {
     back.className =
         "face back " + design.className;
 
-    brand.textConte
+    brand.textContent = design.brand;
+    brandBottom.textContent = design.brand;
+    backBrand.textContent = design.brand;
+
+    holder.textContent = randomName();
+
+    number.textContent =
+        randomDisplayNumber();
+
+    expiry.textContent =
+        randomExpiry();
+
+    const code = randomCode();
+
+    cvv.textContent = code;
+    backCode.textContent = code;
+
+    scene.classList.remove("flipped");
+
+    front.animate(
+        [
+            {
+                opacity: .15,
+                transform: "scale(.94)"
+            },
+            {
+                opacity: 1,
+                transform: "scale(1)"
+            }
+        ],
+        {
+            duration: 450,
+            easing: "ease-out"
+        }
+    );
+}
+
+
+/* BOUTON DE GÉNÉRATION */
+
+generateButton.addEventListener("click", function(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    generateCard();
+
+});
+
+
+/* RETOURNEMENT DE LA CARTE */
+
+scene.addEventListener("click", function(event) {
+
+    if (event.target.closest("#generate")) {
+     
