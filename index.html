@@ -19,7 +19,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 25px;
+    padding: 24px;
 
     background:
         radial-gradient(circle at 10% 10%, #312e81, transparent 30%),
@@ -29,10 +29,10 @@ body {
 
 .app {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1150px;
     display: grid;
     grid-template-columns: .8fr 1.2fr;
-    gap: 50px;
+    gap: 55px;
     align-items: center;
 }
 
@@ -45,10 +45,10 @@ body {
 }
 
 h1 {
-    font-size: clamp(45px, 7vw, 80px);
+    font-size: clamp(48px, 7vw, 82px);
     line-height: .9;
     letter-spacing: -5px;
-    margin-bottom: 22px;
+    margin-bottom: 30px;
 }
 
 .gradient {
@@ -57,16 +57,9 @@ h1 {
     color: transparent;
 }
 
-.description {
-    max-width: 500px;
-    color: #9ca5bd;
-    line-height: 1.7;
-    margin-bottom: 30px;
-}
-
 .panel {
     padding: 25px;
-    border-radius: 24px;
+    border-radius: 25px;
     background: rgba(18,23,40,.75);
     border: 1px solid rgba(255,255,255,.1);
     backdrop-filter: blur(20px);
@@ -75,10 +68,10 @@ h1 {
 
 button {
     width: 100%;
-    padding: 16px;
+    padding: 17px;
     border: 0;
     border-radius: 14px;
-    color: #fff;
+    color: white;
     font-size: 15px;
     font-weight: 800;
     cursor: pointer;
@@ -86,26 +79,26 @@ button {
     background: linear-gradient(90deg,#6366f1,#06b6d4);
 
     box-shadow: 0 12px 35px rgba(99,102,241,.3);
+
     transition: .2s;
 }
 
 button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 18px 45px rgba(99,102,241,.4);
 }
 
 .info {
-    margin-top: 15px;
     text-align: center;
     color: #777f96;
     font-size: 10px;
+    margin-top: 14px;
 }
 
-/* CARTE */
+/* CARD */
 
 .scene {
     width: 100%;
-    max-width: 560px;
+    max-width: 570px;
     aspect-ratio: 1.586;
     margin: auto;
     perspective: 1400px;
@@ -128,8 +121,7 @@ button:hover {
     position: absolute;
     inset: 0;
     overflow: hidden;
-    border-radius: 27px;
-    padding: 30px;
+    border-radius: 28px;
     backface-visibility: hidden;
 
     box-shadow: 0 35px 90px rgba(0,0,0,.5);
@@ -138,8 +130,8 @@ button:hover {
 .face::before {
     content: "";
     position: absolute;
-    width: 280px;
-    height: 280px;
+    width: 290px;
+    height: 290px;
     right: -100px;
     top: -120px;
     border-radius: 50%;
@@ -149,8 +141,8 @@ button:hover {
 .face::after {
     content: "";
     position: absolute;
-    width: 320px;
-    height: 320px;
+    width: 330px;
+    height: 330px;
     left: -170px;
     bottom: -190px;
     border-radius: 50%;
@@ -184,13 +176,15 @@ button:hover {
 }
 
 .black {
-    background: linear-gradient(135deg,#050505,#292929);
+    background:
+        linear-gradient(135deg,#050505,#292929);
 }
 
 /* RECTO */
 
 .front {
     transform: rotateY(0);
+    padding: 30px;
 }
 
 .top {
@@ -209,8 +203,8 @@ button:hover {
 }
 
 .chip {
-    width: 52px;
-    height: 40px;
+    width: 53px;
+    height: 41px;
     border-radius: 8px;
 
     background:
@@ -221,7 +215,7 @@ button:hover {
 
 .sample {
     position: absolute;
-    top: 78px;
+    top: 80px;
     right: 30px;
     z-index: 3;
 
@@ -240,10 +234,10 @@ button:hover {
     position: relative;
     z-index: 3;
 
-    margin-top: 62px;
+    margin-top: 63px;
 
     font-family: monospace;
-    font-size: clamp(20px,4vw,31px);
+    font-size: clamp(19px,4vw,31px);
     letter-spacing: 3px;
 
     text-shadow: 0 2px 4px rgba(0,0,0,.3);
@@ -254,7 +248,7 @@ button:hover {
     z-index: 3;
 
     display: flex;
-    gap: 40px;
+    gap: 42px;
 
     margin-top: 25px;
 }
@@ -342,7 +336,7 @@ button:hover {
     padding: 9px 13px;
     border-radius: 3px;
 
-    background: #fff;
+    background: white;
     color: #111;
 
     font-family: monospace;
@@ -385,11 +379,6 @@ button:hover {
     .intro {
         text-align: center;
     }
-
-    .description {
-        margin-left: auto;
-        margin-right: auto;
-    }
 }
 </style>
 </head>
@@ -408,11 +397,6 @@ button:hover {
             Create<br>
             <span class="gradient">Card.</span>
         </h1>
-
-        <p class="description">
-            Créez une carte personnalisée avec de nouvelles
-            informations et un nouveau design à chaque génération.
-        </p>
 
         <div class="panel">
 
@@ -540,6 +524,134 @@ button:hover {
 
 <script>
 
+/* =========================
+   PRÉNOMS
+========================= */
+
+const firstNames = [
+
+"ALEX","LUCAS","NOAH","LEO","HUGO","ADAM","ETHAN","LIAM",
+"JULES","NATHAN","MAX","MATHIS","GABRIEL","LOUIS","ARTHUR",
+"ENZO","THOMAS","PAUL","ANTOINE","JULIEN","NICOLAS","ROMAIN",
+"SIMON","VICTOR","CHARLES","MAXIME","ALEXANDRE","DAVID",
+"SAMUEL","BENJAMIN","RAPHAEL","HENRI","MARC","PIERRE","JEAN",
+"THEO","ELIAS","MALO","SACHA","TOM","VALENTIN","FELIX","OSCAR",
+"AARON","MATTEO","MARTIN","GASPARD","GUILLAUME","KEVIN",
+"STEPHANE","DAMIEN","CORENTIN","FLORIAN","QUENTIN","REMI",
+"LOIC","YANIS","ILAN","LUC","MATHIEU","NOLAN","ESTEBAN",
+
+"LEA","EMMA","LOUISE","JADE","ALICE","CHLOE","LINA","ROSE",
+"ANNA","MILA","JULIA","ZOE","CAMILLE","SARAH","MANON","CLARA",
+"INES","LUCIE","EVA","JEANNE","LOLA","MARGOT","ELENA",
+"CHARLOTTE","AMELIE","MATHILDE","PAULINE","MARIE","VICTOIRE",
+"ELISE","AGATHE","ALIX","AMBRE","APOLLINE","AURELIE","CELIA",
+"CELESTE","DIANE","ELISA","FANNY","GABRIELLE","HANNA","IRIS",
+"JOSEPHINE","JULIETTE","LAURA","LEONIE","MAELYS","MAEVA",
+"MELANIE","MELISSA","NAOMI","NINA","OCEANE","OPHELIE","ROMANE",
+"SALOME","SOPHIE","VALENTINE","YASMINE","ZELIE","ADELE","ELLA",
+"LOU","MAYA","MORGANE","NOEMIE","PAOLA","TESS","THEA",
+
+/* Variantes et autres prénoms */
+
+"AGNES","AIMEE","ALINE","ANAIS","ANDREA","ANGELIQUE","BEATRICE",
+"BERENICE","BRIGITTE","CARLA","CAROLINE","CECILE","CELINE",
+"CORALIE","DEBORAH","DOMINIQUE","EDEN","EDITH","ELEONORE",
+"ELIANA","EMILIE","ESTELLE","FLORENCE","FLEUR","FRANCOISE",
+"GAELLE","HELENE","ISABELLE","JASMINE","KAREN","KARINE",
+"LAETITIA","LAURE","LAURENCE","LILOU","LISA","LORRAINE",
+"MAELLE","MAE","MARINE","MARION","MARIANNE","MELINA",
+"MYLENE","NADIA","NATHALIE","NELLY","NORA","PATRICIA",
+"PRISCILLA","SANDRA","SONIA","SYLVIE","TATIANA","THAIS",
+"VALERIE","VANESSA","VERONIQUE","YVETTE",
+
+"ALBAN","ALAIN","ALBERT","AMIN","ANDRE","ANTOINE","ARNAUD",
+"AUGUSTIN","BASTIEN","BRUNO","CEDRIC","CHRISTOPHE","CYRIL",
+"DANIEL","DAMIEN","DIMITRI","DOMINIQUE","EMMANUEL","ERIC",
+"FABIEN","FABRICE","FRANCK","FREDERIC","GERARD","GREGORY",
+"GUY","JACQUES","JEREMY","JOACHIM","JOEL","JONATHAN","JOSEPH",
+"LAURENT","LEON","MARCEL","MARIUS","MICHAEL","MICHEL",
+"OLIVIER","PATRICK","PHILIPPE","RAPHAEL","RAYMOND","SERGE",
+"STEPHEN","SYLVAIN","VINCENT","WILLIAM","XAVIER","YANN"
+];
+
+
+/* =========================
+   NOMS DE FAMILLE
+========================= */
+
+const lastNames = [
+
+"MARTIN","BERNARD","DUBOIS","THOMAS","ROBERT","RICHARD",
+"PETIT","DURAND","LEROY","MOREAU","SIMON","LAURENT",
+"LEFEBVRE","MICHEL","GARCIA","DAVID","BERTRAND","ROUX",
+"VINCENT","FOURNIER","MOREL","GIRARD","ANDRE","LEGRAND",
+"GARNIER","FAURE","ROUSSEAU","BLANC","GUERIN","MULLER",
+"HENRY","ROUSSEL","NICOLAS","PERRIN","MORIN","MATHIEU",
+"CLEMENT","GAUTIER","DUMONT","LOPEZ","FONTAINE","CHEVALIER",
+"DENIS","FRANCOIS","MARCHAND","DUPONT","LAMBERT","BONNET",
+"MASSON","SANCHEZ","GERARD","BOYER","MERCIER","BLANCHARD",
+"GILLET","BARBIER","ARNAUD","MARTINEZ","GERMAIN","ROCHE",
+"RENAUD","SCHMITT","ROY","COLLET","PICHON","BENOIT","LEMAIRE",
+"LACROIX","OLIVIER","RIVIERE","AUBERT","DROUET","BESSON",
+"MARCHAL","MEYER","JOLY","PERRET","LEMOINE","BARON","CARON",
+"DIAZ","FERNANDEZ","PEREZ","GONZALEZ","SILVA","MARTY","REY",
+"DUPUIS","GODARD","VIAL","MAILLET","DANIEL","DUMAS","GAILLARD",
+
+/* Série supplémentaire */
+
+"ADAM","ALEXANDRE","ALLARD","ANDRE","ANTOINE","AUBRY","AUGER",
+"BARRE","BAUDRY","BECKER","BEGUE","BELIN","BELLOT","BERGER",
+"BERNARDIN","BERTHELOT","BESNARD","BIDAULT","BIGOT","BILLARD",
+"BLANCHET","BLOCH","BOUCHER","BOULANGER","BOURGEOIS","BOUVIER",
+"BRETON","BRUN","BRUNET","BUISSON","CARRERE","CARRE","CARON",
+"CASTEL","CAZEAU","CHAPELLE","CHAPUIS","CHARBONNIER","CHARPENTIER",
+"CHARRIER","CHARTIER","CHAUVIN","CLERC","COLIN","COLLETTE",
+"COMTE","CORDIER","COSTA","COTTE","COULON","COURTOIS","CRESPIN",
+"DA COSTA","DA SILVA","DAHAN","DELATTRE","DELCOURT","DELORME",
+"DELPECH","DELPORTE","DESCHAMPS","DESROCHES","DIALLO","DIEU",
+"DONATI","DORVAL","DOUCET","DUBREUIL","DUCHENE","DUCLOS",
+"DUFOUR","DUGAS","DUMAS","DUPUY","DURIEZ","DUTERTRE","DUTHEIL",
+"FABRE","FAVRE","FELIX","FERNAND","FERRAND","FERRARI","FERRIER",
+"FISCHER","FOREST","FORTIN","FOUCHER","FOURNEL","FRANCOIS",
+"FREY","GAILLOT","GARNIER","GAY","GEOFFROY","GERMAIN","GIRAUD",
+"GODARD","GODIN","GOMEZ","GONCALVES","GRAND","GRANGER","GRAS",
+"GRENIER","GRONDIN","GROS","GUYOT","HAMEL","HARDY","HENRY",
+"HERBERT","HERVIEU","HUBERT","HUET","JACOB","JACQUET","JACQUIN",
+"JACQUOT","JEANNE","JOLIVET","JOUANNET","JOURDAN","JOURDAIN",
+"LABBE","LACOSTE","LAFON","LAGARDE","LALLEMAND","LANGLOIS",
+"LAPORTE","LAROCHE","LAVAL","LEBLANC","LECLERC","LECOQ",
+"LEDUC","LEFORT","LEGENDRE","LEJEUNE","LEMAITRE","LEMOINE",
+"LENORMAND","LEPAGE","LEROUX","LESCURE","LESAGE","LEVEQUE",
+"LOISEAU","LOUIS","LUCIANI","MAHE","MAILLOT","MALET","MALLET",
+"MARCHAND","MARIE","MARIN","MARQUES","MARTEL","MARTINELLI",
+"MASSARD","MAURY","MENARD","MERLE","MESTRE","MEUNIER","MILLET",
+"MONNIER","MONTEIRO","MORVAN","MOULIN","MOUNIER","MUNIER",
+"NAVARRO","NEVEU","NOEL","NORMAND","OLIVIER","PARENT","PARIS",
+"PASQUIER","PASCAL","PATUREL","PAUL","PAVAN","PELTIER","PERON",
+"PETITJEAN","PICARD","PILLOT","PINTO","PONS","POIRIER","POTIER",
+"PREVOST","PRIEUR","PROST","RAYNAUD","REMY","RENARD","RIVET",
+"ROGER","ROLLAND","ROSA","ROSSET","ROSSI","SABATIER","SALMON",
+"SANCHEZ","SANTOS","SAUVAGE","SAUVET","SCHNEIDER","SCHNEIDER",
+"SEGOND","SELLIER","SERRE","SERRA","SIMONET","SOULIER","SOUZA",
+"STEPHAN","TESSIER","TISSOT","TOURNIER","TRAVERS","VALENTIN",
+"VALLEE","VAN DEN BERG","VASSEUR","VERDIER","VERGER","VERNIER",
+"VIDAL","VIENNE","VIGNE","VILLAIN","VILLARD","VILLEMIN","WEBER"
+];
+
+
+/* =========================
+   DESIGNS
+========================= */
+
+const designs = [
+    { className: "blue", brand: "AURORA" },
+    { className: "dark", brand: "NOVA" },
+    { className: "green", brand: "VERTEX" },
+    { className: "purple", brand: "AURA" },
+    { className: "black", brand: "ONYX" }
+];
+
+
 const scene = document.getElementById("scene");
 
 const front = document.getElementById("front");
@@ -557,76 +669,6 @@ const brandBottom = document.getElementById("brandBottom");
 const backBrand = document.getElementById("backBrand");
 
 
-/* PRÉNOMS */
-
-const firstNames = [
-    "ALEX",
-    "LUCAS",
-    "NOAH",
-    "LEO",
-    "HUGO",
-    "ADAM",
-    "ETHAN",
-    "LIAM",
-    "JULES",
-    "NATHAN",
-    "MAX",
-    "MATHIS",
-    "GABRIEL",
-    "LOUIS",
-    "ARTHUR",
-    "ENZO"
-];
-
-
-/* NOMS DE FAMILLE */
-
-const lastNames = [
-    "MARTIN",
-    "DURAND",
-    "BERNARD",
-    "DUBOIS",
-    "THOMAS",
-    "ROBERT",
-    "RICHARD",
-    "PETIT",
-    "MOREAU",
-    "SIMON",
-    "LAURENT",
-    "MICHEL",
-    "GARCIA",
-    "ROUX",
-    "FONTAINE",
-    "CHEVALIER"
-];
-
-
-/* DESIGNS */
-
-const designs = [
-    {
-        className: "blue",
-        brand: "AURORA"
-    },
-    {
-        className: "dark",
-        brand: "NOVA"
-    },
-    {
-        className: "green",
-        brand: "VERTEX"
-    },
-    {
-        className: "purple",
-        brand: "AURA"
-    },
-    {
-        className: "black",
-        brand: "ONYX"
-    }
-];
-
-
 function randomItem(array) {
 
     return array[
@@ -640,22 +682,18 @@ function randomItem(array) {
 
 function randomName() {
 
-    const first =
+    const prenom =
         randomItem(firstNames);
 
-    const last =
+    const nom =
         randomItem(lastNames);
 
-    return first + " " + last;
+    return prenom + " " + nom;
 
 }
 
 
 function randomNumber() {
-
-    /*
-      Données générées pour l'affichage uniquement.
-    */
 
     const blocks = [];
 
@@ -672,7 +710,6 @@ function randomNumber() {
         }
 
         blocks.push(block);
-
     }
 
     return blocks.join(" ");
@@ -720,16 +757,18 @@ function generateCard() {
         randomItem(designs);
 
 
-    /* Nouveau design */
+    /* DESIGN */
 
     front.className =
-        "face front " + design.className;
+        "face front " +
+        design.className;
 
     back.className =
-        "face back " + design.className;
+        "face back " +
+        design.className;
 
 
-    /* Nouvelle marque */
+    /* MARQUE */
 
     brand.textContent =
         design.brand;
@@ -741,25 +780,25 @@ function generateCard() {
         design.brand;
 
 
-    /* Nouveau nom prénom + nom */
+    /* PRÉNOM + NOM */
 
     holder.textContent =
         randomName();
 
 
-    /* Nouveau numéro */
+    /* NUMÉRO */
 
     number.textContent =
         randomNumber();
 
 
-    /* Nouvelle date */
+    /* DATE */
 
     expiry.textContent =
         randomExpiry();
 
 
-    /* Nouveau code */
+    /* CODE */
 
     const code =
         randomCode();
@@ -771,17 +810,17 @@ function generateCard() {
         code;
 
 
-    /* Retour au recto */
+    /* RECTO */
 
     scene.classList.remove("flipped");
 
 
-    /* Animation */
+    /* ANIMATION */
 
     front.animate(
         [
             {
-                opacity: .2,
+                opacity: .15,
                 transform: "scale(.94)"
             },
             {
