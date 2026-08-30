@@ -8,336 +8,266 @@
 <style>
 * {
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
     margin: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
+    padding: 0;
 }
 
 body {
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+                 "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at top, #252525 0%, #101010 45%, #050505 100%);
+    color: white;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-/* ───────── EN-TÊTE ───────── */
+.app {
+    width: 100%;
+    max-width: 500px;
+    min-height: 700px;
+    background: rgba(20,20,20,.92);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 35px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.6);
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+}
 
 header {
-    height: 65px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+    text-align: center;
+    padding: 35px 20px 20px;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 25px;
+    font-size: 26px;
     font-weight: 700;
 }
 
-.settings {
-    position: absolute;
-    right: 25px;
+header p {
+    color: #888;
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+.tabs {
+    display: flex;
+    margin: 10px 18px 25px;
+    padding: 5px;
+    background: #111;
+    border-radius: 18px;
+}
+
+.tab {
+    flex: 1;
     border: 0;
     background: transparent;
-    color: #aaa;
-    font-size: 27px;
-    cursor: pointer;
-}
-
-/* ───────── CONTENU ───────── */
-
-main {
-    flex: 1;
-    position: relative;
-    min-height: 0;
-}
-
-.page {
-    display: none;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.page.active {
-    display: flex;
-}
-
-/* ───────── MINUTEUR ───────── */
-
-.timer-picker {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 35px;
-}
-
-.wheel {
-    width: 125px;
-    height: 270px;
-    overflow: hidden;
-    position: relative;
-}
-
-.wheel::before {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 90px;
-    background: linear-gradient(#000, transparent);
-    pointer-events: none;
-}
-
-.wheel::after {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 90px;
-    background: linear-gradient(transparent, #000);
-    pointer-events: none;
-}
-
-.numbers {
-    position: absolute;
-    top: 80px;
-    width: 100%;
-}
-
-.number {
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #292929;
-    font-size: 45px;
-    font-weight: 300;
-}
-
-.number.selected {
-    color: #f5f5f5;
-}
-
-.separator {
-    font-size: 43px;
-    color: #ddd;
-}
-
-.presets {
-    width: min(700px, 92%);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.preset {
-    height: 67px;
-    border: 1px solid #393939;
-    border-radius: 18px;
-    background: #000;
     color: #777;
-    font-size: 20px;
+    padding: 13px 5px;
+    border-radius: 14px;
+    font-size: 14px;
     cursor: pointer;
+    transition: .25s;
 }
 
-.preset.active {
-    background: #292929;
-    color: #fff;
-    border-color: #292929;
+.tab.active {
+    background: #2a2a2a;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,.3);
 }
 
-.play {
-    margin-top: 35px;
-    width: 150px;
-    height: 73px;
-    border: 0;
-    border-radius: 40px;
-    background: #29292b;
-    color: #2185ff;
-    font-size: 31px;
-    cursor: pointer;
+.screen {
+    display: none;
+    padding: 10px 25px 35px;
 }
 
-/* ───────── CHRONOMÈTRE ───────── */
+.screen.active {
+    display: block;
+}
 
-.chrono-time {
-    font-size: clamp(55px, 9vw, 80px);
-    font-weight: 300;
+.clock {
+    text-align: center;
+    padding: 45px 0;
+}
+
+.time {
+    font-size: clamp(55px, 16vw, 92px);
+    font-weight: 200;
+    letter-spacing: -4px;
     font-variant-numeric: tabular-nums;
-    margin-bottom: 180px;
 }
 
-.chrono-button {
-    width: 150px;
-    height: 73px;
-    border: 0;
-    border-radius: 40px;
-    background: #29292b;
-    color: #2185ff;
-    font-size: 31px;
+.date {
+    color: #999;
+    margin-top: 12px;
+    font-size: 16px;
 }
 
-/* ───────── HORLOGE MONDIALE ───────── */
+.circle {
+    width: 270px;
+    height: 270px;
+    margin: 20px auto 35px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #ff9f0a var(--progress, 0%),
+        #292929 var(--progress, 0%)
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
 
-.world-time {
-    font-size: clamp(65px, 12vw, 110px);
+.circle::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    background: #151515;
+    border-radius: 50%;
+}
+
+.circle-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.timer-display {
+    font-size: 48px;
     font-weight: 200;
     font-variant-numeric: tabular-nums;
 }
 
-.world-date {
-    color: #888;
-    margin-top: 10px;
-    font-size: 20px;
+.label {
+    color: #777;
+    font-size: 13px;
+    margin-top: 5px;
 }
 
-/* ───────── ALARMES ───────── */
-
-.alarms {
-    width: min(650px, 90%);
+.inputs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 25px;
 }
 
-.add-alarm {
-    border: 0;
-    background: #29292b;
-    color: #fff;
-    padding: 13px 22px;
-    border-radius: 22px;
-    font-size: 16px;
+.inputs input {
+    width: 90px;
+    padding: 14px 5px;
+    background: #242424;
+    border: 1px solid #333;
+    border-radius: 14px;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    outline: none;
+}
+
+.inputs input:focus {
+    border-color: #ff9f0a;
+}
+
+.input-labels {
+    display: flex;
+    justify-content: center;
+    gap: 44px;
+    color: #777;
+    font-size: 11px;
+    margin-top: -17px;
+    margin-bottom: 25px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+}
+
+button.action {
+    border: none;
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    background: #292929;
+    color: white;
+    font-size: 15px;
     cursor: pointer;
-    margin-bottom: 20px;
+    transition: transform .15s, background .2s;
 }
 
-.alarm {
-    height: 90px;
-    border-bottom: 1px solid #222;
+button.action:hover {
+    background: #383838;
+}
+
+button.action:active {
+    transform: scale(.92);
+}
+
+button.primary {
+    background: #ff9f0a;
+    color: #111;
+    font-weight: 700;
+}
+
+button.primary:hover {
+    background: #ffb52e;
+}
+
+.stopwatch {
+    text-align: center;
+    padding: 75px 0 50px;
+}
+
+.stopwatch-display {
+    font-size: clamp(55px, 15vw, 82px);
+    font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -3px;
+}
+
+.laps {
+    margin-top: 30px;
+    max-height: 190px;
+    overflow-y: auto;
+    border-top: 1px solid #292929;
+}
+
+.lap {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 12px 5px;
+    border-bottom: 1px solid #242424;
+    color: #aaa;
 }
 
-.alarm-time {
-    font-size: 40px;
-    font-weight: 300;
-}
-
-.alarm-label {
+.status {
+    text-align: center;
     color: #777;
-    margin-top: 4px;
+    font-size: 13px;
+    min-height: 20px;
+    margin-top: 18px;
 }
 
-.switch {
-    width: 52px;
-    height: 31px;
-    padding: 3px;
-    border-radius: 20px;
-    background: #333;
-    cursor: pointer;
-}
-
-.switch span {
-    display: block;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #fff;
-    transition: .2s;
-}
-
-.switch.on {
-    background: #30d158;
-}
-
-.switch.on span {
-    transform: translateX(21px);
-}
-
-/* ───────── NAVIGATION ───────── */
-
-nav {
-    height: 82px;
-    border-top: 1px solid #171717;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    background: #000;
-}
-
-.nav-button {
-    border: 0;
-    background: #000;
-    color: #777;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    font-size: 14px;
-}
-
-.nav-icon {
-    font-size: 26px;
-}
-
-.nav-button.active {
-    color: #fff;
-    font-weight: bold;
-}
-
-/* ───────── MOBILE ───────── */
-
-@media (max-width: 650px) {
-
-    header {
-        height: 58px;
+@media(max-width:400px) {
+    .app {
+        min-height: 650px;
+        border-radius: 28px;
     }
 
-    header h1 {
-        font-size: 22px;
+    .circle {
+        width: 240px;
+        height: 240px;
     }
 
-    .wheel {
-        width: 85px;
+    .inputs input {
+        width: 78px;
     }
 
-    .number {
-        font-size: 37px;
-    }
-
-    .timer-picker {
-        gap: 8px;
-    }
-
-    .presets {
-        gap: 8px;
-    }
-
-    .preset {
-        font-size: 15px;
-    }
-
-    .chrono-time {
-        margin-bottom: 150px;
-    }
-
-    nav {
-        height: 75px;
+    .input-labels {
+        gap: 32px;
     }
 }
 </style>
@@ -345,263 +275,210 @@ nav {
 
 <body>
 
-<header>
-    <h1 id="pageTitle">Minuteur</h1>
+<div class="app">
 
-    <button class="settings" onclick="openSettings()">
-        ⚙
-    </button>
+<header>
+    <h1>Horloge</h1>
+    <p>Simple • Élégante • Précise</p>
 </header>
 
-<main>
+<div class="tabs">
+    <button class="tab active" onclick="showScreen('clock', this)">Horloge</button>
+    <button class="tab" onclick="showScreen('timer', this)">Minuteur</button>
+    <button class="tab" onclick="showScreen('stopwatch', this)">Chrono</button>
+</div>
 
-<!-- ═════════════ MINUTEUR ═════════════ -->
+<!-- HORLOGE -->
+<section id="clock" class="screen active">
 
-<section id="timer" class="page active">
+    <div class="clock">
+        <div id="currentTime" class="time">00:00:00</div>
+        <div id="currentDate" class="date">Chargement...</div>
+    </div>
 
-    <div class="timer-picker">
+</section>
 
-        <div class="wheel">
-            <div class="numbers" id="hours"></div>
+<!-- MINUTEUR -->
+<section id="timer" class="screen">
+
+    <div class="circle" id="timerCircle">
+
+        <div class="circle-content">
+            <div id="timerDisplay" class="timer-display">00:00:00</div>
+            <div class="label">MINUTEUR</div>
         </div>
 
-        <div class="separator">:</div>
+    </div>
 
-        <div class="wheel">
-            <div class="numbers" id="minutes"></div>
+    <div class="inputs">
+
+        <input id="hours" type="number" min="0" max="99" value="0">
+        <input id="minutes" type="number" min="0" max="59" value="5">
+        <input id="seconds" type="number" min="0" max="59" value="0">
+
+    </div>
+
+    <div class="input-labels">
+        <span>HEURES</span>
+        <span>MIN</span>
+        <span>SEC</span>
+    </div>
+
+    <div class="buttons">
+
+        <button class="action" onclick="resetTimer()">Reset</button>
+
+        <button id="timerButton"
+                class="action primary"
+                onclick="toggleTimer()">Démarrer</button>
+
+    </div>
+
+    <div id="timerStatus" class="status"></div>
+
+</section>
+
+<!-- CHRONOMÈTRE -->
+<section id="stopwatch" class="screen">
+
+    <div class="stopwatch">
+
+        <div id="stopwatchDisplay" class="stopwatch-display">
+            00:00:00.00
         </div>
 
-        <div class="separator">:</div>
+        <div class="buttons">
 
-        <div class="wheel">
-            <div class="numbers" id="seconds"></div>
+            <button class="action" onclick="resetStopwatch()">
+                Reset
+            </button>
+
+            <button id="chronoButton"
+                    class="action primary"
+                    onclick="toggleStopwatch()">
+                Démarrer
+            </button>
+
         </div>
 
-    </div>
-
-    <div class="presets">
-
-        <button class="preset active"
-            onclick="chooseTimer(23,3,0,this)">
-            23:03:00
-        </button>
-
-        <button class="preset"
-            onclick="chooseTimer(0,9,0,this)">
-            00:09:00
-        </button>
-
-        <button class="preset"
-            onclick="chooseTimer(0,10,0,this)">
-            00:10:00
-        </button>
-
-        <button class="preset"
-            onclick="chooseTimer(6,36,0,this)">
-            06:36:00
-        </button>
-
-        <button class="preset"
-            onclick="chooseTimer(6,37,0,this)">
-            06:37:00
-        </button>
-
-        <button class="preset"
-            onclick="chooseTimer(3,15,0,this)">
-            03:15:00
-        </button>
-
-    </div>
-
-    <button class="play"
-        id="timerButton"
-        onclick="toggleTimer()">
-        ▶
-    </button>
-
-</section>
-
-
-<!-- ═════════════ CHRONOMÈTRE ═════════════ -->
-
-<section id="chrono" class="page">
-
-    <div class="chrono-time" id="chronoTime">
-        00:00.00
-    </div>
-
-    <button
-        class="chrono-button"
-        id="chronoButton"
-        onclick="toggleChrono()">
-        ▶
-    </button>
-
-</section>
-
-
-<!-- ═════════════ HORLOGE MONDIALE ═════════════ -->
-
-<section id="world" class="page">
-
-    <div class="world-time" id="worldTime">
-        00:00:00
-    </div>
-
-    <div class="world-date" id="worldDate">
-        --
-    </div>
-
-</section>
-
-
-<!-- ═════════════ ALARMES ═════════════ -->
-
-<section id="alarm" class="page">
-
-    <div class="alarms">
-
-        <button class="add-alarm" onclick="addAlarm()">
-            ＋ Ajouter une alarme
-        </button>
-
-        <div id="alarmList"></div>
+        <div class="laps" id="laps"></div>
 
     </div>
 
 </section>
 
-</main>
-
-
-<!-- ═════════════ NAVIGATION ═════════════ -->
-
-<nav>
-
-    <button class="nav-button"
-        onclick="changePage('alarm', this, 'Alarme')">
-
-        <span class="nav-icon">◴</span>
-        <span>Alarme</span>
-
-    </button>
-
-
-    <button class="nav-button"
-        onclick="changePage('world', this, 'Horloge mondiale')">
-
-        <span class="nav-icon">◷</span>
-        <span>Horloge mondiale</span>
-
-    </button>
-
-
-    <button class="nav-button"
-        onclick="changePage('chrono', this, 'Chronomètre')">
-
-        <span class="nav-icon">⏱</span>
-        <span>Chronomètre</span>
-
-    </button>
-
-
-    <button class="nav-button active"
-        onclick="changePage('timer', this, 'Minuteur')">
-
-        <span class="nav-icon">⌛</span>
-        <span>Minuteur</span>
-
-    </button>
-
-</nav>
-
+</div>
 
 <script>
 
-/* ═══════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════ */
+/* =========================
+   CHANGEMENT D'ONGLET
+========================= */
 
-function changePage(page, button, title) {
+function showScreen(id, button) {
 
-    document.querySelectorAll(".page")
-        .forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
 
-    document.getElementById(page)
-        .classList.add("active");
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.remove("active");
+    });
 
-    document.querySelectorAll(".nav-button")
-        .forEach(b => b.classList.remove("active"));
-
+    document.getElementById(id).classList.add("active");
     button.classList.add("active");
-
-    document.getElementById("pageTitle")
-        .textContent = title;
 }
 
 
-/* ═══════════════════════════════════════
-   MINUTEUR
-═══════════════════════════════════════ */
+/* =========================
+   HORLOGE
+========================= */
 
-let hours = 23;
-let minutes = 3;
-let seconds = 0;
+function updateClock() {
+
+    const now = new Date();
+
+    const time = now.toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+
+    const date = now.toLocaleDateString("fr-FR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    document.getElementById("currentTime").textContent = time;
+
+    document.getElementById("currentDate").textContent =
+        date.charAt(0).toUpperCase() + date.slice(1);
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+
+/* =========================
+   MINUTEUR
+========================= */
 
 let timerInterval = null;
-let timerEnd = 0;
 let timerRunning = false;
+let timerRemaining = 0;
+let timerTotal = 0;
 
+function getInputSeconds() {
 
-function createNumbers(id, max, selected) {
+    const h = Math.max(
+        0,
+        parseInt(document.getElementById("hours").value) || 0
+    );
 
-    const container = document.getElementById(id);
+    const m = Math.max(
+        0,
+        parseInt(document.getElementById("minutes").value) || 0
+    );
 
-    container.innerHTML = "";
+    const s = Math.max(
+        0,
+        parseInt(document.getElementById("seconds").value) || 0
+    );
 
-    for (let i = 0; i <= max; i++) {
+    return h * 3600 + m * 60 + s;
+}
 
-        const number = document.createElement("div");
+function formatTime(totalSeconds) {
 
-        number.className = "number";
+    totalSeconds = Math.max(0, Math.floor(totalSeconds));
 
-        if (i === selected) {
-            number.classList.add("selected");
-        }
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
 
-        number.textContent =
-            String(i).padStart(2, "0");
+    return [
+        String(h).padStart(2, "0"),
+        String(m).padStart(2, "0"),
+        String(s).padStart(2, "0")
+    ].join(":");
+}
 
-        container.appendChild(number);
+function updateTimerDisplay() {
+
+    document.getElementById("timerDisplay").textContent =
+        formatTime(timerRemaining);
+
+    let progress = 0;
+
+    if (timerTotal > 0) {
+        progress = ((timerTotal - timerRemaining) / timerTotal) * 100;
     }
+
+    document.getElementById("timerCircle")
+        .style.setProperty("--progress", progress + "%");
 }
-
-
-function renderTimer() {
-
-    createNumbers("hours", 23, hours);
-    createNumbers("minutes", 59, minutes);
-    createNumbers("seconds", 59, seconds);
-}
-
-
-renderTimer();
-
-
-function chooseTimer(h, m, s, button) {
-
-    hours = h;
-    minutes = m;
-    seconds = s;
-
-    renderTimer();
-
-    document.querySelectorAll(".preset")
-        .forEach(b => b.classList.remove("active"));
-
-    button.classList.add("active");
-}
-
 
 function toggleTimer() {
 
@@ -611,333 +488,213 @@ function toggleTimer() {
 
         timerRunning = false;
 
-        document.getElementById("timerButton")
-            .textContent = "▶";
+        document.getElementById("timerButton").textContent =
+            "Reprendre";
 
         return;
     }
 
-    let total =
-        hours * 3600 +
-        minutes * 60 +
-        seconds;
+    if (timerRemaining <= 0) {
 
-    if (total <= 0) return;
+        timerRemaining = getInputSeconds();
+        timerTotal = timerRemaining;
 
-    timerEnd =
-        Date.now() +
-        total * 1000;
+        if (timerRemaining <= 0) {
+            document.getElementById("timerStatus").textContent =
+                "Choisis une durée.";
+            return;
+        }
+    }
 
     timerRunning = true;
 
-    document.getElementById("timerButton")
-        .textContent = "Ⅱ";
+    document.getElementById("timerButton").textContent =
+        "Pause";
 
-    timerInterval =
-        setInterval(updateTimer, 200);
-}
+    document.getElementById("timerStatus").textContent = "";
 
+    const start = Date.now();
+    const initialRemaining = timerRemaining;
 
-function updateTimer() {
+    timerInterval = setInterval(() => {
 
-    let remaining =
-        Math.max(
+        const elapsed = Math.floor(
+            (Date.now() - start) / 1000
+        );
+
+        timerRemaining = Math.max(
             0,
-            Math.ceil(
-                (timerEnd - Date.now()) / 1000
-            )
+            initialRemaining - elapsed
         );
 
-    hours =
-        Math.floor(remaining / 3600);
+        updateTimerDisplay();
 
-    minutes =
-        Math.floor(
-            (remaining % 3600) / 60
-        );
+        if (timerRemaining <= 0) {
 
-    seconds =
-        remaining % 60;
+            clearInterval(timerInterval);
 
-    renderTimer();
+            timerRunning = false;
 
-    if (remaining <= 0) {
+            document.getElementById("timerButton").textContent =
+                "Démarrer";
 
-        clearInterval(timerInterval);
+            document.getElementById("timerStatus").textContent =
+                "⏰ Temps écoulé !";
 
-        timerRunning = false;
+            playAlarm();
+        }
 
-        document.getElementById("timerButton")
-            .textContent = "▶";
+    }, 100);
 
-        playSound();
-    }
+    updateTimerDisplay();
 }
 
+function resetTimer() {
 
-/* ═══════════════════════════════════════
-   SON DU MINUTEUR
-═══════════════════════════════════════ */
+    clearInterval(timerInterval);
 
-function playSound() {
+    timerRunning = false;
+    timerRemaining = 0;
+    timerTotal = 0;
+
+    document.getElementById("timerButton").textContent =
+        "Démarrer";
+
+    document.getElementById("timerStatus").textContent = "";
+
+    updateTimerDisplay();
+}
+
+function playAlarm() {
 
     try {
 
-        const audio =
-            new AudioContext();
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
 
-        const oscillator =
-            audio.createOscillator();
+        const ctx = new AudioContext();
 
-        const gain =
-            audio.createGain();
+        for (let i = 0; i < 4; i++) {
 
-        oscillator.connect(gain);
-        gain.connect(audio.destination);
+            const oscillator = ctx.createOscillator();
+            const gain = ctx.createGain();
 
-        oscillator.frequency.value = 880;
+            oscillator.frequency.value =
+                i % 2 === 0 ? 880 : 660;
 
-        gain.gain.value = 0.2;
+            oscillator.connect(gain);
+            gain.connect(ctx.destination);
 
-        oscillator.start();
+            const start = ctx.currentTime + i * .35;
 
-        oscillator.stop(
-            audio.currentTime + 1
-        );
+            gain.gain.setValueAtTime(0, start);
+            gain.gain.linearRampToValueAtTime(.25, start + .02);
+            gain.gain.exponentialRampToValueAtTime(.001, start + .28);
+
+            oscillator.start(start);
+            oscillator.stop(start + .3);
+        }
 
     } catch (error) {
-
-        console.log("Audio non disponible");
-
+        console.log("Son non disponible.");
     }
 }
 
 
-/* ═══════════════════════════════════════
+/* =========================
    CHRONOMÈTRE
-═══════════════════════════════════════ */
+========================= */
 
-let chronoStart = 0;
-let chronoElapsed = 0;
-let chronoInterval = null;
+let stopwatchInterval = null;
+let stopwatchRunning = false;
+let stopwatchStart = 0;
+let stopwatchElapsed = 0;
+let lapNumber = 0;
 
+function formatStopwatch(ms) {
 
-function toggleChrono() {
+    const centiseconds =
+        Math.floor((ms % 1000) / 10);
 
-    const button =
-        document.getElementById("chronoButton");
+    const seconds =
+        Math.floor(ms / 1000) % 60;
 
-    if (chronoInterval) {
+    const minutes =
+        Math.floor(ms / 60000) % 60;
 
-        chronoElapsed +=
-            Date.now() - chronoStart;
+    const hours =
+        Math.floor(ms / 3600000);
 
-        clearInterval(chronoInterval);
-
-        chronoInterval = null;
-
-        button.textContent = "▶";
-
-        return;
-    }
-
-    chronoStart = Date.now();
-
-    chronoInterval =
-        setInterval(updateChrono, 30);
-
-    button.textContent = "Ⅱ";
-}
-
-
-function updateChrono() {
-
-    let elapsed =
-        chronoElapsed +
-        (Date.now() - chronoStart);
-
-    let milliseconds =
-        Math.floor(elapsed / 10) % 100;
-
-    let seconds =
-        Math.floor(elapsed / 1000) % 60;
-
-    let minutes =
-        Math.floor(elapsed / 60000);
-
-    document.getElementById("chronoTime")
-        .textContent =
-            String(minutes).padStart(2, "0")
-            + ":"
-            + String(seconds).padStart(2, "0")
-            + "."
-            + String(milliseconds).padStart(2, "0");
-}
-
-
-/* ═══════════════════════════════════════
-   HORLOGE
-═══════════════════════════════════════ */
-
-function updateClock() {
-
-    const now = new Date();
-
-    document.getElementById("worldTime")
-        .textContent =
-            now.toLocaleTimeString(
-                "fr-FR",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit"
-                }
-            );
-
-    document.getElementById("worldDate")
-        .textContent =
-            now.toLocaleDateString(
-                "fr-FR",
-                {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric"
-                }
-            );
-}
-
-setInterval(updateClock, 1000);
-
-updateClock();
-
-
-/* ═══════════════════════════════════════
-   ALARMES
-═══════════════════════════════════════ */
-
-let alarms =
-    JSON.parse(
-        localStorage.getItem("alarms") || "[]"
-    );
-
-
-function saveAlarms() {
-
-    localStorage.setItem(
-        "alarms",
-        JSON.stringify(alarms)
+    return (
+        String(hours).padStart(2, "0") + ":" +
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0") + "." +
+        String(centiseconds).padStart(2, "0")
     );
 }
 
+function updateStopwatch() {
 
-function addAlarm() {
+    let current = stopwatchElapsed;
 
-    let time =
-        prompt(
-            "Heure de l'alarme (HH:MM)",
-            "07:00"
-        );
-
-    if (!time) return;
-
-    if (!/^\d\d:\d\d$/.test(time)) {
-
-        alert("Format incorrect. Exemple : 07:30");
-
-        return;
+    if (stopwatchRunning) {
+        current += Date.now() - stopwatchStart;
     }
 
-    alarms.push({
-        time: time,
-        enabled: true
-    });
-
-    saveAlarms();
-
-    renderAlarms();
+    document.getElementById("stopwatchDisplay")
+        .textContent = formatStopwatch(current);
 }
 
+function toggleStopwatch() {
 
-function renderAlarms() {
+    if (stopwatchRunning) {
 
-    const list =
-        document.getElementById("alarmList");
+        stopwatchElapsed +=
+            Date.now() - stopwatchStart;
 
-    list.innerHTML = "";
+        clearInterval(stopwatchInterval);
 
-    if (alarms.length === 0) {
+        stopwatchRunning = false;
 
-        list.innerHTML =
-            '<div style="color:#777;text-align:center;padding:35px">Aucune alarme</div>';
+        document.getElementById("chronoButton").textContent =
+            "Démarrer";
 
-        return;
+    } else {
+
+        stopwatchStart = Date.now();
+
+        stopwatchRunning = true;
+
+        document.getElementById("chronoButton").textContent =
+            "Pause";
+
+        stopwatchInterval =
+            setInterval(updateStopwatch, 20);
     }
 
-    alarms.forEach((alarm, index) => {
-
-        const row =
-            document.createElement("div");
-
-        row.className = "alarm";
-
-        row.innerHTML = `
-
-            <div>
-
-                <div class="alarm-time">
-                    ${alarm.time}
-                </div>
-
-                <div class="alarm-label">
-                    Tous les jours
-                </div>
-
-            </div>
-
-            <div
-                class="switch ${alarm.enabled ? "on" : ""}"
-                onclick="toggleAlarm(${index})">
-
-                <span></span>
-
-            </div>
-        `;
-
-        list.appendChild(row);
-    });
+    updateStopwatch();
 }
 
+function resetStopwatch() {
 
-function toggleAlarm(index) {
+    clearInterval(stopwatchInterval);
 
-    alarms[index].enabled =
-        !alarms[index].enabled;
+    stopwatchRunning = false;
+    stopwatchElapsed = 0;
+    stopwatchStart = 0;
+    lapNumber = 0;
 
-    saveAlarms();
+    document.getElementById("chronoButton").textContent =
+        "Démarrer";
 
-    renderAlarms();
+    document.getElementById("laps").innerHTML = "";
+
+    updateStopwatch();
 }
 
-
-renderAlarms();
-
-
-/* ═══════════════════════════════════════
-   RÉGLAGES
-═══════════════════════════════════════ */
-
-function openSettings() {
-
-    alert(
-        "⚙ Réglages\n\n" +
-        "• Son du minuteur\n" +
-        "• Vibrations\n" +
-        "• Alarmes\n" +
-        "• Apparence\n" +
-        "• Horloge 24 h"
-    );
-}
+updateTimerDisplay();
+updateStopwatch();
 
 </script>
 
