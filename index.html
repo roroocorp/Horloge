@@ -1,179 +1,211 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="theme-color" content="#08090b">
   <title>Waveify</title>
-  <meta name="description" content="Waveify - ta musique, ton espace">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
+  <div class="app-shell">
 
-    <div class="brand">
-      <div class="brand-logo">W</div>
-      <div class="brand-name">Waveify</div>
-    </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
 
-    <nav class="navigation">
-
-      <button class="nav-item active" data-page="home">
-        <span class="nav-icon">⌂</span>
-        <span>Accueil</span>
-      </button>
-
-      <button class="nav-item" data-page="recommendations">
-        <span class="nav-icon">✦</span>
-        <span>Recommandations</span>
-      </button>
-
-      <div class="nav-separator"></div>
-
-      <p class="nav-label">TA BIBLIOTHÈQUE</p>
-
-      <button class="nav-item" data-page="liked">
-        <span class="nav-icon">♥</span>
-        <span>J'aime</span>
-        <span class="nav-count" id="likedCount">0</span>
-      </button>
-
-      <button class="nav-item" data-page="disliked">
-        <span class="nav-icon">👎</span>
-        <span>Pas aimé</span>
-        <span class="nav-count" id="dislikedCount">0</span>
-      </button>
-
-      <button class="nav-item" data-page="playlist">
-        <span class="nav-icon">♫</span>
-        <span>Ma playlist</span>
-        <span class="nav-count" id="playlistCount">0</span>
-      </button>
-
-    </nav>
-
-    <div class="sidebar-footer">
-      <button class="reset-button" id="resetData">
-        <span>↻</span>
-        Réinitialiser
-      </button>
-    </div>
-
-  </aside>
-
-
-  <!-- CONTENU -->
-  <main class="main-content">
-
-    <!-- HEADER -->
-    <header class="topbar">
-
-      <button class="mobile-menu" id="menuBtn">
-        ☰
-      </button>
-
-      <div class="search-box">
-        <span class="search-icon">⌕</span>
-
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Rechercher un morceau ou un artiste..."
-          autocomplete="off"
-        >
+      <div class="brand">
+        <span class="brand-mark">W</span>
+        <span>Waveify</span>
       </div>
 
-      <button class="profile-button" id="profileBtn">
-        W
-      </button>
+      <nav class="nav-main">
 
-    </header>
+        <button class="nav-link active" data-route="home">
+          <span>⌂</span>
+          <span>Accueil</span>
+        </button>
+
+        <button class="nav-link" data-route="recommendations">
+          <span>✦</span>
+          <span>Recommandations</span>
+        </button>
+
+        <button class="nav-link" data-route="liked">
+          <span>♥</span>
+          <span>J’aime</span>
+          <span class="nav-count" id="likedCount">0</span>
+        </button>
+
+        <button class="nav-link" data-route="disliked">
+          <span>♥̸</span>
+          <span>Pas aimé</span>
+          <span class="nav-count" id="dislikedCount">0</span>
+        </button>
+
+        <button class="nav-link" data-route="playlist">
+          <span>＋</span>
+          <span>Ma playlist</span>
+          <span class="nav-count" id="playlistCount">0</span>
+        </button>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="nav-link" id="clearData">
+          <span>↺</span>
+          <span>Réinitialiser</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- CONTENU -->
+    <main class="main-area">
+
+      <header class="topbar">
+
+        <button
+          class="icon-button mobile-menu"
+          id="mobileMenu"
+          aria-label="Menu">
+          ☰
+        </button>
+
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Rechercher une musique..."
+            autocomplete="off">
+
+          <button
+            class="clear-search"
+            id="clearSearch"
+            aria-label="Effacer">
+            ×
+          </button>
+        </div>
+
+        <div class="top-actions">
+          <button class="ghost-button" id="topPlay">
+            ▶ Tout lire
+          </button>
+        </div>
+
+      </header>
+
+      <section class="content">
+
+        <div id="pageHome" class="page active-page"></div>
+
+        <div id="pageRecommendations" class="page"></div>
+
+        <div id="pageLiked" class="page"></div>
+
+        <div id="pageDisliked" class="page"></div>
+
+        <div id="pagePlaylist" class="page"></div>
+
+        <div id="pageSearch" class="page"></div>
+
+      </section>
+
+    </main>
+
+  </div>
 
 
-    <!-- PAGE -->
-    <div id="page" class="page"></div>
+  <!-- LECTEUR DU BAS -->
+  <section class="player" id="playerBar">
 
-  </main>
-
-
-  <!-- LECTEUR YOUTUBE INVISIBLE -->
-  <div id="youtube-player"></div>
-
-
-  <!-- PLAYER -->
-  <footer class="player">
-
-    <div class="player-track">
+    <div class="player-left">
 
       <img
         id="playerCover"
-        src="https://via.placeholder.com/80"
-        alt=""
-      >
+        class="player-cover"
+        src="https://i.ytimg.com/vi/Pl1d5YSEg2w/hqdefault.jpg"
+        alt="Pochette">
 
-      <div class="player-track-info">
+      <div class="now-playing">
 
         <strong id="playerTitle">
-          Choisis une musique
+          Aucune musique
         </strong>
 
-        <span id="playerArtist">
-          Waveify
+        <span id="playerSubtitle">
+          Choisis une musique
         </span>
 
       </div>
 
+      <button
+        class="player-like"
+        id="playerLike"
+        title="J’aime">
+        ♡
+      </button>
+
     </div>
 
 
-    <div class="player-main">
+    <div class="player-center">
 
-      <div class="player-buttons">
+      <div class="player-controls">
 
-        <button id="shuffleBtn" class="player-button">
+        <button
+          class="player-control small"
+          id="shuffleBtn"
+          title="Aléatoire">
           🔀
         </button>
 
-        <button id="prevBtn" class="player-button">
+        <button
+          class="player-control"
+          id="prevBtn"
+          title="Précédent">
           ⏮
         </button>
 
-        <button id="playBtn" class="main-play">
+        <button
+          class="play-main"
+          id="playPauseBtn"
+          title="Lecture / pause">
           ▶
         </button>
 
-        <button id="nextBtn" class="player-button">
+        <button
+          class="player-control"
+          id="nextBtn"
+          title="Suivant">
           ⏭
         </button>
 
-        <button id="repeatBtn" class="player-button">
-          🔁
+        <button
+          class="player-control small"
+          id="repeatBtn"
+          title="Répéter">
+          ↻
         </button>
 
       </div>
 
-      <div class="progress-container">
+      <div class="progress-row">
 
         <span id="currentTime">0:00</span>
 
         <input
-          id="progress"
+          id="progressBar"
           type="range"
           min="0"
           max="100"
           value="0"
-        >
+          step="0.1">
 
         <span id="duration">0:00</span>
 
@@ -184,46 +216,43 @@
 
     <div class="player-right">
 
-      <button id="likeBtn" class="player-button">
-        ♡
+      <button
+        class="mode-button"
+        id="infiniteBtn"
+        title="Mode infini">
+        ♾ <span>Infini</span>
       </button>
 
-      <button id="dislikeBtn" class="player-button">
-        👎
-      </button>
+      <span class="volume-icon">🔊</span>
 
-      <button id="playlistBtn" class="player-button">
-        ＋
-      </button>
-
-      <button id="infiniteBtn" class="player-button">
-        ♾
-      </button>
-
-      <div class="volume">
-
-        <span>🔊</span>
-
-        <input
-          id="volume"
-          type="range"
-          min="0"
-          max="100"
-          value="70"
-        >
-
-      </div>
+      <input
+        id="volumeBar"
+        type="range"
+        min="0"
+        max="100"
+        value="80">
 
     </div>
 
-  </footer>
+  </section>
 
 
-  <!-- NOTIFICATION -->
-  <div id="toast" class="toast"></div>
+  <!-- Lecteur YouTube invisible -->
+  <div
+    id="youtubePlayer"
+    class="youtube-player"
+    aria-hidden="true">
+  </div>
+
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite">
+  </div>
 
 
-  <!-- IMPORTANT : YOUTUBE AVANT SCRIPT.JS -->
+  <!-- IMPORTANT : YouTube avant script.js -->
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 
