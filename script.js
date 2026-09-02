@@ -1,5 +1,11 @@
 /* =====================================================
-   WAVEIFY — VERSION CORRIGÉE
+   WAVEIFY
+   Application musicale YouTube
+===================================================== */
+
+
+/* =====================================================
+   MUSIQUES
 ===================================================== */
 
 const SONGS = [
@@ -46,44 +52,54 @@ const SONGS = [
    SAUVEGARDE
 ===================================================== */
 
-const STORAGE_KEY = "waveify-v3";
+const STORAGE_KEY = "waveify-final-v1";
 
 const DEFAULT_STATE = {
   liked: [],
   disliked: [],
   playlist: [],
   history: [],
+
   infinite: false,
   shuffle: false,
   repeat: false,
+
   volume: 70,
   currentId: null
 };
 
+let state = loadState();
+
 function loadState() {
+
   try {
-    const saved = JSON.parse(
-      localStorage.getItem(STORAGE_KEY)
-    );
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+      );
 
     return {
       ...DEFAULT_STATE,
       ...(saved || {})
     };
+
   } catch {
-    return { ...DEFAULT_STATE };
+
+    return {
+      ...DEFAULT_STATE
+    };
+
   }
 }
 
-let state = loadState();
-
 function saveState() {
-  state.currentId = currentId;
 
   localStorage.setItem(
     STORAGE_KEY,
     JSON.stringify(state)
   );
+
 }
 
 
@@ -91,21 +107,20 @@ function saveState() {
    VARIABLES
 ===================================================== */
 
-let currentId = state.currentId;
-let queue = SONGS.map(song => song.id);
+let currentPage = "home";
+let searchTerm = "";
+
+let queue = [];
 let queuePosition = 0;
 
 let player = null;
 let playerReady = false;
 
-let currentPage = "home";
-let searchTerm = "";
-
-let progressTimer = null;
+let progressInterval = null;
 
 
 /* =====================================================
-   OUTILS
+   UTILITAIRES
 ===================================================== */
 
 function $(selector) {
@@ -113,33 +128,56 @@ function $(selector) {
 }
 
 function getSong(id) {
+
   return SONGS.find(
     song => song.id === Number(id)
   );
+
 }
 
 function isLiked(id) {
-  return state.liked.includes(Number(id));
+
+  return state.liked.includes(
+    Number(id)
+  );
+
 }
 
 function isDisliked(id) {
-  return state.disliked.includes(Number(id));
+
+  return state.disliked.includes(
+    Number(id)
+  );
+
 }
 
 function isInPlaylist(id) {
-  return state.playlist.includes(Number(id));
+
+  return state.playlist.includes(
+    Number(id)
+  );
+
 }
 
-function escapeHtml(value) {
+function cover(song) {
+
+  return `https://i.ytimg.com/vi/${song.videoId}/hqdefault.jpg`;
+
+}
+
+function escapeHTML(value) {
+
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+
 }
 
 function formatTime(seconds) {
+
   if (!Number.isFinite(seconds)) {
     return "0:00";
   }
@@ -153,14 +191,11 @@ function formatTime(seconds) {
       .padStart(2, "0");
 
   return `${minutes}:${secs}`;
+
 }
 
-
-/* =====================================================
-   TOAST
-===================================================== */
-
 function toast(message) {
+
   const element = $("#toast");
 
   if (!element) return;
@@ -169,11 +204,69 @@ function toast(message) {
 
   element.classList.add("show");
 
-  clearTimeout(toast.timer);
+  clearTimeout(
+    toast.timer
+  );
 
-  toast.timer = setTimeout(() => {
-    element.classList.remove("show");
-  }, 1800);
+  toast.timer =
+    setTimeout(() => {
+
+      element.classList.remove(
+        "show"
+      );
+
+    }, 1800);
+
+}
+
+
+/* =====================================================
+   COMPTEURS
+===================================================== */
+
+function updateCounts() {
+
+  $("#likedCount").textContent =
+    state.liked.length;
+
+  $("#dislikedCount").textContent =
+    state.disliked.length;
+
+  $("#playlistCount").textContent =
+    state.playlist.length;
+
+}
+
+
+/* =====================================================
+   RECHERCHE
+===================================================== */
+
+function searchSongs() {
+
+  const query =
+    searchTerm
+      .trim()
+      .toLowerCase();
+
+  if (!query) {
+    return SONGS;
+  }
+
+  return SONGS.filter(song =>
+
+    song.title
+      .toLowerCase()
+      .includes(query)
+
+    ||
+
+    song.artist
+      .toLowerCase()
+      .includes(query)
+
+  );
+
 }
 
 
@@ -183,11 +276,11 @@ function toast(message) {
 
 function getRecommendations() {
 
-  const disliked =
-    new Set(state.disliked);
-
   const liked =
     new Set(state.liked);
+
+  const disliked =
+    new Set(state.disliked);
 
   const playlist =
     new Set(state.playlist);
@@ -196,61 +289,51 @@ function getRecommendations() {
     new Set(state.history);
 
   return SONGS
-    .filter(song => !disliked.has(song.id))
+
+    .filter(
+      song =>
+        !disliked.has(song.id)
+    )
+
     .map(song => {
 
       let score =
-        Math.random() * 5;
+        Math.random() * 4;
 
-      if (liked.has(song.id)) {
-        score += 2;
+      if (
+        liked.has(song.id)
+      ) {
+        score += 5;
       }
 
-      if (playlist.has(song.id)) {
+      if (
+        playlist.has(song.id)
+      ) {
         score += 3;
       }
 
-      if (history.has(song.id)) {
-        score -= 1;
+      if (
+        history.has(song.id)
+      ) {
+        score += 1;
       }
 
       return {
         song,
         score
       };
+
     })
+
     .sort(
       (a, b) =>
         b.score - a.score
     )
-    .map(item => item.song);
-}
 
+    .map(
+      item => item.song
+    );
 
-/* =====================================================
-   RECHERCHE
-===================================================== */
-
-function getSearchResults() {
-
-  if (!searchTerm.trim()) {
-    return SONGS;
-  }
-
-  const query =
-    searchTerm
-      .toLowerCase()
-      .trim();
-
-  return SONGS.filter(song =>
-    song.title
-      .toLowerCase()
-      .includes(query)
-    ||
-    song.artist
-      .toLowerCase()
-      .includes(query)
-  );
 }
 
 
@@ -261,43 +344,52 @@ function getSearchResults() {
 function getPageSongs() {
 
   if (searchTerm.trim()) {
-    return getSearchResults();
+    return searchSongs();
   }
 
-  if (currentPage === "liked") {
-    return SONGS.filter(
-      song => isLiked(song.id)
-    );
+  switch (currentPage) {
+
+    case "liked":
+
+      return SONGS.filter(
+        song => isLiked(song.id)
+      );
+
+
+    case "disliked":
+
+      return SONGS.filter(
+        song => isDisliked(song.id)
+      );
+
+
+    case "playlist":
+
+      return SONGS.filter(
+        song =>
+          isInPlaylist(song.id)
+      );
+
+
+    case "recommendations":
+
+      return getRecommendations();
+
+
+    default:
+
+      return SONGS;
+
   }
 
-  if (currentPage === "disliked") {
-    return SONGS.filter(
-      song => isDisliked(song.id)
-    );
-  }
-
-  if (currentPage === "playlist") {
-    return SONGS.filter(
-      song => isInPlaylist(song.id)
-    );
-  }
-
-  if (
-    currentPage ===
-    "recommendations"
-  ) {
-    return getRecommendations();
-  }
-
-  return SONGS;
 }
 
 
 /* =====================================================
-   CARTE
+   CARTE MUSIQUE
 ===================================================== */
 
-function songCard(song) {
+function createSongCard(song) {
 
   const liked =
     isLiked(song.id);
@@ -309,16 +401,14 @@ function songCard(song) {
     isInPlaylist(song.id);
 
   return `
-    <article
-      class="song-card"
-      data-song-id="${song.id}"
-    >
+
+    <article class="song-card">
 
       <div class="cover-wrap">
 
         <img
           class="cover"
-          src="https://i.ytimg.com/vi/${song.videoId}/hqdefault.jpg"
+          src="${cover(song)}"
           alt=""
           loading="lazy"
         >
@@ -327,67 +417,81 @@ function songCard(song) {
           class="card-play"
           data-action="play"
           data-id="${song.id}"
+          aria-label="Lire"
         >
           ▶
         </button>
 
       </div>
 
-      <p
-        class="song-title"
-        title="${escapeHtml(song.title)}"
-      >
-        ${escapeHtml(song.title)}
-      </p>
+
+      <div class="song-title">
+        ${escapeHTML(song.title)}
+      </div>
 
       <div class="song-artist">
-        ${escapeHtml(song.artist)}
+        ${escapeHTML(song.artist)}
       </div>
+
 
       <div class="card-actions">
 
         <button
-          class="card-action like ${liked ? "active" : ""}"
+          class="card-action like ${
+            liked ? "active" : ""
+          }"
           data-action="like"
           data-id="${song.id}"
+          title="J'aime"
         >
           ${liked ? "♥" : "♡"}
         </button>
 
+
         <button
-          class="card-action dislike ${disliked ? "active" : ""}"
+          class="card-action dislike ${
+            disliked ? "active" : ""
+          }"
           data-action="dislike"
           data-id="${song.id}"
+          title="Pas aimé"
         >
           👎
         </button>
 
+
         <button
-          class="card-action ${playlist ? "active in-playlist" : ""}"
+          class="card-action ${
+            playlist ? "active" : ""
+          }"
           data-action="playlist"
           data-id="${song.id}"
+          title="Ma playlist"
         >
-          ${playlist ? "✓" : "＋"}
+          ${playlist ? "✓" : "+"}
         </button>
 
       </div>
 
     </article>
+
   `;
+
 }
 
 
 /* =====================================================
-   VIDE
+   ÉTAT VIDE
 ===================================================== */
 
 function emptyState(
   icon,
   title,
-  text
+  description
 ) {
 
   return `
+
     <div class="empty">
 
       <div class="empty-icon">
@@ -399,11 +503,13 @@ function emptyState(
       </strong>
 
       <p>
-        ${text}
+        ${description}
       </p>
 
     </div>
+
   `;
+
 }
 
 
@@ -413,77 +519,97 @@ function emptyState(
 
 function render() {
 
-  const page = $("#page");
+  const page =
+    $("#page");
 
   if (!page) return;
 
-  const songs =
-    getPageSongs();
+
+  updateCounts();
 
 
   /* RECHERCHE */
 
   if (searchTerm.trim()) {
 
+    const songs =
+      searchSongs();
+
     page.innerHTML = `
 
-      <div class="page-top">
+      <div class="page-heading">
 
         <div>
-          <h1 class="page-title">
-            Résultats de recherche
+
+          <h1>
+            Résultats
           </h1>
 
           <p>
             ${songs.length}
             résultat(s) pour
-            « ${escapeHtml(searchTerm)} »
+            « ${escapeHTML(searchTerm)} »
           </p>
+
         </div>
 
       </div>
 
+
       ${
         songs.length
+
           ? `
             <div class="song-grid">
-              ${songs.map(songCard).join("")}
+              ${songs
+                .map(createSongCard)
+                .join("")}
             </div>
           `
+
           : emptyState(
               "⌕",
               "Aucun résultat",
-              "Essaie un autre titre."
+              "Essaie avec un autre titre ou artiste."
             )
       }
 
     `;
 
     return;
+
   }
 
 
   /* ACCUEIL */
 
-  if (currentPage === "home") {
+  if (
+    currentPage === "home"
+  ) {
+
+    const recommendations =
+      getRecommendations()
+        .slice(0, 6);
+
 
     page.innerHTML = `
 
       <section class="hero">
 
         <div class="eyebrow">
-          TA MUSIQUE, TON ESPACE
+          WAVEIFY
         </div>
 
         <h1>
-          Bienvenue sur Waveify.
+          Ta musique.
+          <br>
+          Ton espace.
         </h1>
 
         <p>
-          Écoute tes morceaux YouTube,
-          crée ta playlist, aime ou n'aime
-          pas des titres et active le mode
-          infini.
+          Écoute tes morceaux préférés,
+          crée ta playlist et découvre
+          de nouvelles musiques.
         </p>
 
         <div class="hero-actions">
@@ -496,11 +622,11 @@ function render() {
           </button>
 
           <button
-            class="secondary-action"
+            class="secondary-btn"
             data-action="page"
             data-page-target="recommendations"
           >
-            ✦ Recommandations
+            ✦ Découvrir
           </button>
 
         </div>
@@ -508,9 +634,10 @@ function render() {
       </section>
 
 
-      <div class="section-head">
+      <div class="section-heading">
 
         <div>
+
           <h2>
             Pour toi
           </h2>
@@ -518,30 +645,27 @@ function render() {
           <p>
             Une sélection personnalisée
           </p>
-        </div>
 
-        <span class="count">
-          ${state.liked.length} ❤️
-          ·
-          ${state.playlist.length} ♫
-        </span>
+        </div>
 
       </div>
 
 
       <div class="song-grid">
 
-        ${getRecommendations()
-          .slice(0, 6)
-          .map(songCard)
-          .join("")}
+        ${
+          recommendations
+            .map(createSongCard)
+            .join("")
+        }
 
       </div>
 
 
-      <div class="section-head">
+      <div class="section-heading">
 
         <div>
+
           <h2>
             Toutes les musiques
           </h2>
@@ -549,6 +673,7 @@ function render() {
           <p>
             ${SONGS.length} morceaux
           </p>
+
         </div>
 
         <button
@@ -563,14 +688,18 @@ function render() {
 
       <div class="song-grid">
 
-        ${SONGS
-          .map(songCard)
-          .join("")}
+        ${
+          SONGS
+            .map(createSongCard)
+            .join("")
+        }
 
       </div>
+
     `;
 
     return;
+
   }
 
 
@@ -581,13 +710,16 @@ function render() {
     "recommendations"
   ) {
 
+    const songs =
+      getRecommendations();
+
     page.innerHTML = `
 
-      <div class="page-top">
+      <div class="page-heading">
 
         <div>
 
-          <h1 class="page-title">
+          <h1>
             Recommandations ✦
           </h1>
 
@@ -613,37 +745,48 @@ function render() {
 
       </div>
 
+
       ${
         songs.length
+
           ? `
             <div class="song-grid">
-              ${songs.map(songCard).join("")}
+              ${songs
+                .map(createSongCard)
+                .join("")}
             </div>
           `
+
           : emptyState(
               "✦",
               "Pas encore de recommandations",
-              "Commence à écouter et à aimer des morceaux."
+              "Écoute quelques morceaux pour commencer."
             )
       }
 
     `;
 
     return;
+
   }
 
 
   /* J'AIME */
 
-  if (currentPage === "liked") {
+  if (
+    currentPage === "liked"
+  ) {
+
+    const songs =
+      getPageSongs();
 
     page.innerHTML = `
 
-      <div class="page-top">
+      <div class="page-heading">
 
         <div>
 
-          <h1 class="page-title">
+          <h1>
             J'aime ❤️
           </h1>
 
@@ -669,56 +812,72 @@ function render() {
 
       </div>
 
+
       ${
         songs.length
+
           ? `
             <div class="song-grid">
-              ${songs.map(songCard).join("")}
+              ${songs
+                .map(createSongCard)
+                .join("")}
             </div>
           `
+
           : emptyState(
               "♡",
               "Aucune musique aimée",
-              "Clique sur ♡ pour ajouter une musique ici."
+              "Clique sur le cœur d'une musique pour l'ajouter."
             )
       }
 
     `;
 
     return;
+
   }
 
 
   /* PAS AIMÉ */
 
-  if (currentPage === "disliked") {
+  if (
+    currentPage === "disliked"
+  ) {
+
+    const songs =
+      getPageSongs();
 
     page.innerHTML = `
 
-      <div class="page-top">
+      <div class="page-heading">
 
         <div>
 
-          <h1 class="page-title">
+          <h1>
             Pas aimé 👎
           </h1>
 
           <p>
             ${songs.length}
-            musique(s) dans cette liste.
+            musique(s).
           </p>
 
         </div>
 
       </div>
 
+
       ${
         songs.length
+
           ? `
             <div class="song-grid">
-              ${songs.map(songCard).join("")}
+              ${songs
+                .map(createSongCard)
+                .join("")}
             </div>
           `
+
           : emptyState(
               "👎",
               "Aucune musique",
@@ -729,20 +888,26 @@ function render() {
     `;
 
     return;
+
   }
 
 
   /* PLAYLIST */
 
-  if (currentPage === "playlist") {
+  if (
+    currentPage === "playlist"
+  ) {
+
+    const songs =
+      getPageSongs();
 
     page.innerHTML = `
 
-      <div class="page-top">
+      <div class="page-heading">
 
         <div>
 
-          <h1 class="page-title">
+          <h1>
             Ma playlist ♫
           </h1>
 
@@ -768,35 +933,52 @@ function render() {
 
       </div>
 
+
       ${
         songs.length
+
           ? `
             <div class="song-grid">
-              ${songs.map(songCard).join("")}
+              ${songs
+                .map(createSongCard)
+                .join("")}
             </div>
           `
+
           : emptyState(
               "♫",
               "Ta playlist est vide",
-              "Clique sur ＋ pour ajouter tes musiques préférées."
+              "Clique sur + pour ajouter une musique."
             )
       }
 
     `;
+
   }
+
 }
 
 
 /* =====================================================
-   CHANGER DE PAGE
+   NAVIGATION
 ===================================================== */
 
 function setPage(page) {
 
   currentPage = page;
 
+  searchTerm = "";
+
+  const search =
+    $("#searchInput");
+
+  if (search) {
+    search.value = "";
+  }
+
+
   document
-    .querySelectorAll(".nav-item")
+    .querySelectorAll(".nav-item[data-page]")
     .forEach(button => {
 
       button.classList.toggle(
@@ -806,14 +988,20 @@ function setPage(page) {
 
     });
 
+
   render();
 
-  $("#sidebar")?.classList.remove("open");
+
+  $("#sidebar")
+    ?.classList
+    .remove("open");
+
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 
@@ -825,11 +1013,12 @@ function toggleLike(id) {
 
   id = Number(id);
 
+
   if (isLiked(id)) {
 
     state.liked =
       state.liked.filter(
-        x => x !== id
+        value => value !== id
       );
 
     toast(
@@ -842,19 +1031,22 @@ function toggleLike(id) {
 
     state.disliked =
       state.disliked.filter(
-        x => x !== id
+        value => value !== id
       );
 
     toast(
       "Ajouté à J'aime ❤️"
     );
+
   }
+
 
   saveState();
 
   render();
 
-  updatePlayerActions();
+  updatePlayer();
+
 }
 
 
@@ -866,11 +1058,12 @@ function toggleDislike(id) {
 
   id = Number(id);
 
+
   if (isDisliked(id)) {
 
     state.disliked =
       state.disliked.filter(
-        x => x !== id
+        value => value !== id
       );
 
     toast(
@@ -883,19 +1076,22 @@ function toggleDislike(id) {
 
     state.liked =
       state.liked.filter(
-        x => x !== id
+        value => value !== id
       );
 
     toast(
       "Ajouté à Pas aimé 👎"
     );
+
   }
+
 
   saveState();
 
   render();
 
-  updatePlayerActions();
+  updatePlayer();
+
 }
 
 
@@ -907,11 +1103,12 @@ function togglePlaylist(id) {
 
   id = Number(id);
 
+
   if (isInPlaylist(id)) {
 
     state.playlist =
       state.playlist.filter(
-        x => x !== id
+        value => value !== id
       );
 
     toast(
@@ -925,13 +1122,16 @@ function togglePlaylist(id) {
     toast(
       "Ajouté à Ma playlist ♫"
     );
+
   }
+
 
   saveState();
 
   render();
 
-  updatePlayerActions();
+  updatePlayer();
+
 }
 
 
@@ -966,9 +1166,15 @@ function playSong(
   } else {
 
     queue =
-      SONGS.map(
-        song => song.id
-      );
+      SONGS
+        .filter(
+          song =>
+            !isDisliked(song.id)
+        )
+        .map(
+          song => song.id
+        );
+
   }
 
 
@@ -999,13 +1205,8 @@ function playSong(
 
   saveState();
 
-  updatePlayerUI();
+  updatePlayer();
 
-
-  /*
-    YouTube est chargé :
-    on lance réellement la vidéo.
-  */
 
   if (
     playerReady &&
@@ -1019,103 +1220,14 @@ function playSong(
   } else {
 
     toast(
-      "Le lecteur YouTube se prépare..."
+      "Le lecteur se prépare..."
     );
 
   }
+
 }
 
 
 /* =====================================================
    TOUT LIRE
-===================================================== */
-
-function playAll(list = SONGS) {
-
-  let songs =
-    list.filter(
-      song =>
-        !isDisliked(song.id)
-    );
-
-
-  if (!songs.length) {
-
-    toast(
-      "Aucune musique disponible."
-    );
-
-    return;
-  }
-
-
-  queue =
-    songs.map(
-      song => song.id
-    );
-
-
-  if (state.shuffle) {
-
-    queue =
-      shuffleArray(queue);
-
-  }
-
-
-  queuePosition = 0;
-
-
-  playSong(
-    queue[0],
-    queue
-  );
-}
-
-
-/* =====================================================
-   SHUFFLE
-===================================================== */
-
-function shuffleArray(array) {
-
-  const result =
-    [...array];
-
-  for (
-    let i = result.length - 1;
-    i > 0;
-    i--
-  ) {
-
-    const j =
-      Math.floor(
-        Math.random() *
-        (i + 1)
-      );
-
-    [
-      result[i],
-      result[j]
-    ] =
-    [
-      result[j],
-      result[i]
-    ];
-  }
-
-  return result;
-}
-
-
-/* =====================================================
-   SUIVANT
-===================================================== */
-
-function nextSong() {
-
-  if (!queue.length) {
-
-    queue =
-      SONGS.map(
-        song
+====================
