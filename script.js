@@ -1,268 +1,44 @@
 /* =====================================================
-   WAVEIFY
-   Lecteur + recommandations + likes + dislikes +
-   playlist + mode infini + sauvegarde
-===================================================== */
-
-
-/* =====================================================
-   MUSIQUES
+   WAVEIFY — VERSION CORRIGÉE
 ===================================================== */
 
 const SONGS = [
-
-  {
-    id: 1,
-    videoId: "Pl1d5YSEg2w",
-    title: "Musique 01",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 2,
-    videoId: "y1T2LQ2bym4",
-    title: "Musique 02",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 3,
-    videoId: "SX0u0s5h4as",
-    title: "Musique 03",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 4,
-    videoId: "mdcBqqWj3kY",
-    title: "Musique 04",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 5,
-    videoId: "n2THLWjJ3Wo",
-    title: "Musique 05",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 6,
-    videoId: "Snhn9wB-z1w",
-    title: "Musique 06",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 7,
-    videoId: "xlmyDTa_S6M",
-    title: "Musique 07",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 8,
-    videoId: "rDrIRNUaE6s",
-    title: "Musique 08",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 9,
-    videoId: "EXYj9wecau4",
-    title: "Musique 09",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 10,
-    videoId: "ShR_fQrqsdA",
-    title: "Musique 10",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 11,
-    videoId: "pN-TLYBDkWc",
-    title: "Musique 11",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 12,
-    videoId: "00ff2UcGLu0",
-    title: "Musique 12",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 13,
-    videoId: "c8qXCL-ElfA",
-    title: "Musique 13",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 14,
-    videoId: "pEBFJI-g9AA",
-    title: "Musique 14",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 15,
-    videoId: "63fJnwefxBk",
-    title: "Musique 15",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 16,
-    videoId: "gZXijVptbic",
-    title: "Musique 16",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 17,
-    videoId: "QzZflH4liuU",
-    title: "Musique 17",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 18,
-    videoId: "MFHiEocxkdM",
-    title: "Musique 18",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 19,
-    videoId: "2uM9ZIS-v0w",
-    title: "Musique 19",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 20,
-    videoId: "Qq7Q6CLCfvs",
-    title: "Musique 20",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 21,
-    videoId: "cYi1jI7uLa0",
-    title: "Musique 21",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 22,
-    videoId: "MqiljVyq_1o",
-    title: "Musique 22",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 23,
-    videoId: "KTYp4guSwLg",
-    title: "Musique 23",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 24,
-    videoId: "vaeio3idHzU",
-    title: "Musique 24",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 25,
-    videoId: "FaXqep3IsZw",
-    title: "Musique 25",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 26,
-    videoId: "VIs9zdNq_IU",
-    title: "Musique 26",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 27,
-    videoId: "JwVm-DHKH_U",
-    title: "Musique 27",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 28,
-    videoId: "zNEU9VExoWE",
-    title: "Musique 28",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 29,
-    videoId: "WudXzTex5JQ",
-    title: "Musique 29",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 30,
-    videoId: "pxjsZK_fkO4",
-    title: "Musique 30",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 31,
-    videoId: "dIJuNqS9c3w",
-    title: "Musique 31",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 32,
-    videoId: "BJwovrr6XzI",
-    title: "Musique 32",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 33,
-    videoId: "yx9WQ0hrsdk",
-    title: "Musique 33",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 34,
-    videoId: "0uLp-tejcSo",
-    title: "Musique 34",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 35,
-    videoId: "w4CI96-D2Zg",
-    title: "Musique 35",
-    artist: "À personnaliser"
-  },
-
-  {
-    id: 36,
-    videoId: "HqJ1qP05Si0",
-    title: "Musique 36",
-    artist: "À personnaliser"
-  }
-
+  { id: 1, videoId: "Pl1d5YSEg2w", title: "Musique 01", artist: "À personnaliser" },
+  { id: 2, videoId: "y1T2LQ2bym4", title: "Musique 02", artist: "À personnaliser" },
+  { id: 3, videoId: "SX0u0s5h4as", title: "Musique 03", artist: "À personnaliser" },
+  { id: 4, videoId: "mdcBqqWj3kY", title: "Musique 04", artist: "À personnaliser" },
+  { id: 5, videoId: "n2THLWjJ3Wo", title: "Musique 05", artist: "À personnaliser" },
+  { id: 6, videoId: "Snhn9wB-z1w", title: "Musique 06", artist: "À personnaliser" },
+  { id: 7, videoId: "xlmyDTa_S6M", title: "Musique 07", artist: "À personnaliser" },
+  { id: 8, videoId: "rDrIRNUaE6s", title: "Musique 08", artist: "À personnaliser" },
+  { id: 9, videoId: "EXYj9wecau4", title: "Musique 09", artist: "À personnaliser" },
+  { id: 10, videoId: "ShR_fQrqsdA", title: "Musique 10", artist: "À personnaliser" },
+  { id: 11, videoId: "pN-TLYBDkWc", title: "Musique 11", artist: "À personnaliser" },
+  { id: 12, videoId: "00ff2UcGLu0", title: "Musique 12", artist: "À personnaliser" },
+  { id: 13, videoId: "c8qXCL-ElfA", title: "Musique 13", artist: "À personnaliser" },
+  { id: 14, videoId: "pEBFJI-g9AA", title: "Musique 14", artist: "À personnaliser" },
+  { id: 15, videoId: "63fJnwefxBk", title: "Musique 15", artist: "À personnaliser" },
+  { id: 16, videoId: "gZXijVptbic", title: "Musique 16", artist: "À personnaliser" },
+  { id: 17, videoId: "QzZflH4liuU", title: "Musique 17", artist: "À personnaliser" },
+  { id: 18, videoId: "MFHiEocxkdM", title: "Musique 18", artist: "À personnaliser" },
+  { id: 19, videoId: "2uM9ZIS-v0w", title: "Musique 19", artist: "À personnaliser" },
+  { id: 20, videoId: "Qq7Q6CLCfvs", title: "Musique 20", artist: "À personnaliser" },
+  { id: 21, videoId: "cYi1jI7uLa0", title: "Musique 21", artist: "À personnaliser" },
+  { id: 22, videoId: "MqiljVyq_1o", title: "Musique 22", artist: "À personnaliser" },
+  { id: 23, videoId: "KTYp4guSwLg", title: "Musique 23", artist: "À personnaliser" },
+  { id: 24, videoId: "vaeio3idHzU", title: "Musique 24", artist: "À personnaliser" },
+  { id: 25, videoId: "FaXqep3IsZw", title: "Musique 25", artist: "À personnaliser" },
+  { id: 26, videoId: "VIs9zdNq_IU", title: "Musique 26", artist: "À personnaliser" },
+  { id: 27, videoId: "JwVm-DHKH_U", title: "Musique 27", artist: "À personnaliser" },
+  { id: 28, videoId: "zNEU9VExoWE", title: "Musique 28", artist: "À personnaliser" },
+  { id: 29, videoId: "WudXzTex5JQ", title: "Musique 29", artist: "À personnaliser" },
+  { id: 30, videoId: "pxjsZK_fkO4", title: "Musique 30", artist: "À personnaliser" },
+  { id: 31, videoId: "dIJuNqS9c3w", title: "Musique 31", artist: "À personnaliser" },
+  { id: 32, videoId: "BJwovrr6XzI", title: "Musique 32", artist: "À personnaliser" },
+  { id: 33, videoId: "yx9WQ0hrsdk", title: "Musique 33", artist: "À personnaliser" },
+  { id: 34, videoId: "0uLp-tejcSo", title: "Musique 34", artist: "À personnaliser" },
+  { id: 35, videoId: "w4CI96-D2Zg", title: "Musique 35", artist: "À personnaliser" },
+  { id: 36, videoId: "HqJ1qP05Si0", title: "Musique 36", artist: "À personnaliser" }
 ];
 
 
@@ -272,154 +48,98 @@ const SONGS = [
 
 const STORAGE_KEY = "waveify-v3";
 
-
 const DEFAULT_STATE = {
-
   liked: [],
-
   disliked: [],
-
   playlist: [],
-
   history: [],
-
   infinite: false,
-
   shuffle: false,
-
   repeat: false,
-
   volume: 70,
-
   currentId: null
-
 };
 
-
-let state = loadState();
-
-
 function loadState() {
-
   try {
-
-    const saved =
-      JSON.parse(
-        localStorage.getItem(STORAGE_KEY)
-      );
+    const saved = JSON.parse(
+      localStorage.getItem(STORAGE_KEY)
+    );
 
     return {
       ...DEFAULT_STATE,
       ...(saved || {})
     };
-
   } catch {
-
-    return {
-      ...DEFAULT_STATE
-    };
-
+    return { ...DEFAULT_STATE };
   }
-
 }
 
+let state = loadState();
 
 function saveState() {
-
   state.currentId = currentId;
 
   localStorage.setItem(
     STORAGE_KEY,
     JSON.stringify(state)
   );
-
 }
 
 
 /* =====================================================
-   VARIABLES DU LECTEUR
+   VARIABLES
 ===================================================== */
 
-let currentId =
-  state.currentId;
-
-let queue =
-  SONGS.map(song => song.id);
-
+let currentId = state.currentId;
+let queue = SONGS.map(song => song.id);
 let queuePosition = 0;
 
 let player = null;
-
 let playerReady = false;
+
+let currentPage = "home";
+let searchTerm = "";
 
 let progressTimer = null;
 
-let currentPage = "home";
-
-let searchTerm = "";
-
 
 /* =====================================================
-   UTILITAIRES
+   OUTILS
 ===================================================== */
 
 function $(selector) {
-
   return document.querySelector(selector);
-
 }
 
-
 function getSong(id) {
-
   return SONGS.find(
     song => song.id === Number(id)
   );
-
 }
-
 
 function isLiked(id) {
-
-  return state.liked.includes(
-    Number(id)
-  );
-
+  return state.liked.includes(Number(id));
 }
-
 
 function isDisliked(id) {
-
-  return state.disliked.includes(
-    Number(id)
-  );
-
+  return state.disliked.includes(Number(id));
 }
-
 
 function isInPlaylist(id) {
-
-  return state.playlist.includes(
-    Number(id)
-  );
-
+  return state.playlist.includes(Number(id));
 }
 
-
 function escapeHtml(value) {
-
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
-
 }
 
-
 function formatTime(seconds) {
-
   if (!Number.isFinite(seconds)) {
     return "0:00";
   }
@@ -433,68 +153,27 @@ function formatTime(seconds) {
       .padStart(2, "0");
 
   return `${minutes}:${secs}`;
-
 }
 
 
 /* =====================================================
-   NOTIFICATION
+   TOAST
 ===================================================== */
 
 function toast(message) {
+  const element = $("#toast");
 
-  const element =
-    $("#toast");
+  if (!element) return;
 
-  element.textContent =
-    message;
+  element.textContent = message;
 
   element.classList.add("show");
 
-  clearTimeout(
-    toast.timer
-  );
+  clearTimeout(toast.timer);
 
-  toast.timer =
-    setTimeout(() => {
-
-      element.classList.remove("show");
-
-    }, 1800);
-
-}
-
-
-/* =====================================================
-   PAGES
-===================================================== */
-
-function setPage(page) {
-
-  currentPage = page;
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.page === page
-      );
-
-    });
-
-  render();
-
-  $("#sidebar")
-    .classList
-    .remove("open");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
+  toast.timer = setTimeout(() => {
+    element.classList.remove("show");
+  }, 1800);
 }
 
 
@@ -504,62 +183,52 @@ function setPage(page) {
 
 function getRecommendations() {
 
+  const disliked =
+    new Set(state.disliked);
+
   const liked =
     new Set(state.liked);
 
-  const disliked =
-    new Set(state.disliked);
+  const playlist =
+    new Set(state.playlist);
 
   const history =
     new Set(state.history);
 
-
   return SONGS
-
-    .filter(song =>
-      !disliked.has(song.id)
-    )
-
+    .filter(song => !disliked.has(song.id))
     .map(song => {
 
       let score =
-        Math.random() * 3;
+        Math.random() * 5;
 
       if (liked.has(song.id)) {
-        score -= 8;
+        score += 2;
+      }
+
+      if (playlist.has(song.id)) {
+        score += 3;
       }
 
       if (history.has(song.id)) {
-        score -= 2;
-      }
-
-      if (
-        state.playlist.includes(song.id)
-      ) {
-        score += 1;
+        score -= 1;
       }
 
       return {
         song,
         score
       };
-
     })
-
     .sort(
       (a, b) =>
         b.score - a.score
     )
-
-    .map(item =>
-      item.song
-    );
-
+    .map(item => item.song);
 }
 
 
 /* =====================================================
-   SEARCH
+   RECHERCHE
 ===================================================== */
 
 function getSearchResults() {
@@ -573,81 +242,59 @@ function getSearchResults() {
       .toLowerCase()
       .trim();
 
-
   return SONGS.filter(song =>
-
     song.title
       .toLowerCase()
       .includes(query)
-
     ||
-
     song.artist
       .toLowerCase()
       .includes(query)
-
   );
-
 }
 
 
 /* =====================================================
-   SONGS DE LA PAGE
+   MUSIQUES DE LA PAGE
 ===================================================== */
 
 function getPageSongs() {
 
   if (searchTerm.trim()) {
-
     return getSearchResults();
-
   }
-
 
   if (currentPage === "liked") {
-
-    return SONGS.filter(song =>
-      isLiked(song.id)
+    return SONGS.filter(
+      song => isLiked(song.id)
     );
-
   }
-
 
   if (currentPage === "disliked") {
-
-    return SONGS.filter(song =>
-      isDisliked(song.id)
+    return SONGS.filter(
+      song => isDisliked(song.id)
     );
-
   }
-
 
   if (currentPage === "playlist") {
-
-    return SONGS.filter(song =>
-      isInPlaylist(song.id)
+    return SONGS.filter(
+      song => isInPlaylist(song.id)
     );
-
   }
-
 
   if (
     currentPage ===
     "recommendations"
   ) {
-
     return getRecommendations();
-
   }
 
-
   return SONGS;
-
 }
 
 
 /* =====================================================
-   CARTE MUSIQUE
+   CARTE
 ===================================================== */
 
 function songCard(song) {
@@ -661,9 +308,7 @@ function songCard(song) {
   const playlist =
     isInPlaylist(song.id);
 
-
   return `
-
     <article
       class="song-card"
       data-song-id="${song.id}"
@@ -688,7 +333,6 @@ function songCard(song) {
 
       </div>
 
-
       <p
         class="song-title"
         title="${escapeHtml(song.title)}"
@@ -696,11 +340,9 @@ function songCard(song) {
         ${escapeHtml(song.title)}
       </p>
 
-
       <div class="song-artist">
         ${escapeHtml(song.artist)}
       </div>
-
 
       <div class="card-actions">
 
@@ -708,27 +350,22 @@ function songCard(song) {
           class="card-action like ${liked ? "active" : ""}"
           data-action="like"
           data-id="${song.id}"
-          title="J'aime"
         >
           ${liked ? "♥" : "♡"}
         </button>
-
 
         <button
           class="card-action dislike ${disliked ? "active" : ""}"
           data-action="dislike"
           data-id="${song.id}"
-          title="Pas aimé"
         >
           👎
         </button>
-
 
         <button
           class="card-action ${playlist ? "active in-playlist" : ""}"
           data-action="playlist"
           data-id="${song.id}"
-          title="Ma playlist"
         >
           ${playlist ? "✓" : "＋"}
         </button>
@@ -736,14 +373,12 @@ function songCard(song) {
       </div>
 
     </article>
-
   `;
-
 }
 
 
 /* =====================================================
-   EMPTY STATE
+   VIDE
 ===================================================== */
 
 function emptyState(
@@ -753,7 +388,6 @@ function emptyState(
 ) {
 
   return `
-
     <div class="empty">
 
       <div class="empty-icon">
@@ -769,9 +403,7 @@ function emptyState(
       </p>
 
     </div>
-
   `;
-
 }
 
 
@@ -781,14 +413,15 @@ function emptyState(
 
 function render() {
 
-  const page =
-    $("#page");
+  const page = $("#page");
+
+  if (!page) return;
 
   const songs =
     getPageSongs();
 
 
-  /* SEARCH */
+  /* RECHERCHE */
 
   if (searchTerm.trim()) {
 
@@ -797,48 +430,36 @@ function render() {
       <div class="page-top">
 
         <div>
-
           <h1 class="page-title">
             Résultats de recherche
           </h1>
 
           <p>
             ${songs.length}
-            musique(s) trouvée(s)
-            pour «
-            ${escapeHtml(searchTerm)}
-            »
+            résultat(s) pour
+            « ${escapeHtml(searchTerm)} »
           </p>
-
         </div>
 
       </div>
 
-
       ${
         songs.length
-
-          ?
-
-        `
-          <div class="song-grid">
-            ${songs.map(songCard).join("")}
-          </div>
-        `
-
-          :
-
-        emptyState(
-          "⌕",
-          "Aucun résultat",
-          "Essaie un autre titre."
-        )
+          ? `
+            <div class="song-grid">
+              ${songs.map(songCard).join("")}
+            </div>
+          `
+          : emptyState(
+              "⌕",
+              "Aucun résultat",
+              "Essaie un autre titre."
+            )
       }
 
     `;
 
     return;
-
   }
 
 
@@ -862,9 +483,8 @@ function render() {
           Écoute tes morceaux YouTube,
           crée ta playlist, aime ou n'aime
           pas des titres et active le mode
-          infini pour continuer automatiquement.
+          infini.
         </p>
-
 
         <div class="hero-actions">
 
@@ -874,7 +494,6 @@ function render() {
           >
             ▶ Tout lire
           </button>
-
 
           <button
             class="secondary-action"
@@ -892,7 +511,6 @@ function render() {
       <div class="section-head">
 
         <div>
-
           <h2>
             Pour toi
           </h2>
@@ -900,7 +518,6 @@ function render() {
           <p>
             Une sélection personnalisée
           </p>
-
         </div>
 
         <span class="count">
@@ -925,18 +542,14 @@ function render() {
       <div class="section-head">
 
         <div>
-
           <h2>
             Toutes les musiques
           </h2>
 
           <p>
-            ${SONGS.length}
-            morceaux disponibles
+            ${SONGS.length} morceaux
           </p>
-
         </div>
-
 
         <button
           class="primary-btn"
@@ -955,11 +568,9 @@ function render() {
           .join("")}
 
       </div>
-
     `;
 
     return;
-
   }
 
 
@@ -981,56 +592,50 @@ function render() {
           </h1>
 
           <p>
-            Une sélection qui évolue
-            selon tes interactions.
+            Des morceaux sélectionnés
+            pour toi.
           </p>
 
         </div>
 
-
-        <button
-          class="primary-btn"
-          data-action="play-all"
-        >
-          ▶ Tout lire
-        </button>
+        ${
+          songs.length
+            ? `
+              <button
+                class="primary-btn"
+                data-action="play-all"
+              >
+                ▶ Tout lire
+              </button>
+            `
+            : ""
+        }
 
       </div>
 
-
       ${
         songs.length
-
-          ?
-
-        `
-          <div class="song-grid">
-            ${songs.map(songCard).join("")}
-          </div>
-        `
-
-          :
-
-        emptyState(
-          "✦",
-          "Pas encore de recommandations",
-          "Écoute et aime quelques morceaux pour personnaliser ta sélection."
-        )
+          ? `
+            <div class="song-grid">
+              ${songs.map(songCard).join("")}
+            </div>
+          `
+          : emptyState(
+              "✦",
+              "Pas encore de recommandations",
+              "Commence à écouter et à aimer des morceaux."
+            )
       }
 
     `;
 
     return;
-
   }
 
 
   /* J'AIME */
 
-  if (
-    currentPage ===
-    "liked"
-  ) {
+  if (currentPage === "liked") {
 
     page.innerHTML = `
 
@@ -1044,67 +649,49 @@ function render() {
 
           <p>
             ${songs.length}
-            musique(s) que tu as aimée(s).
+            musique(s) aimée(s).
           </p>
 
         </div>
 
-
         ${
           songs.length
-
-            ?
-
-          `
-            <button
-              class="primary-btn"
-              data-action="play-all"
-            >
-              ▶ Tout lire
-            </button>
-          `
-
-            :
-
-          ""
+            ? `
+              <button
+                class="primary-btn"
+                data-action="play-all"
+              >
+                ▶ Tout lire
+              </button>
+            `
+            : ""
         }
 
       </div>
 
-
       ${
         songs.length
-
-          ?
-
-        `
-          <div class="song-grid">
-            ${songs.map(songCard).join("")}
-          </div>
-        `
-
-          :
-
-        emptyState(
-          "♡",
-          "Aucune musique aimée",
-          "Appuie sur ♡ sur un morceau pour le retrouver ici."
-        )
+          ? `
+            <div class="song-grid">
+              ${songs.map(songCard).join("")}
+            </div>
+          `
+          : emptyState(
+              "♡",
+              "Aucune musique aimée",
+              "Clique sur ♡ pour ajouter une musique ici."
+            )
       }
 
     `;
 
     return;
-
   }
 
 
   /* PAS AIMÉ */
 
-  if (
-    currentPage ===
-    "disliked"
-  ) {
+  if (currentPage === "disliked") {
 
     page.innerHTML = `
 
@@ -1118,47 +705,36 @@ function render() {
 
           <p>
             ${songs.length}
-            musique(s) que tu n'as pas aimée(s).
+            musique(s) dans cette liste.
           </p>
 
         </div>
 
       </div>
 
-
       ${
         songs.length
-
-          ?
-
-        `
-          <div class="song-grid">
-            ${songs.map(songCard).join("")}
-          </div>
-        `
-
-          :
-
-        emptyState(
-          "👎",
-          "Rien ici",
-          "Les morceaux que tu n'aimes pas apparaîtront ici."
-        )
+          ? `
+            <div class="song-grid">
+              ${songs.map(songCard).join("")}
+            </div>
+          `
+          : emptyState(
+              "👎",
+              "Aucune musique",
+              "Les musiques que tu n'aimes pas apparaîtront ici."
+            )
       }
 
     `;
 
     return;
-
   }
 
 
   /* PLAYLIST */
 
-  if (
-    currentPage ===
-    "playlist"
-  ) {
+  if (currentPage === "playlist") {
 
     page.innerHTML = `
 
@@ -1177,53 +753,67 @@ function render() {
 
         </div>
 
-
         ${
           songs.length
-
-            ?
-
-          `
-            <button
-              class="primary-btn"
-              data-action="play-all"
-            >
-              ▶ Tout lire
-            </button>
-          `
-
-            :
-
-          ""
+            ? `
+              <button
+                class="primary-btn"
+                data-action="play-all"
+              >
+                ▶ Tout lire
+              </button>
+            `
+            : ""
         }
 
       </div>
 
-
       ${
         songs.length
-
-          ?
-
-        `
-          <div class="song-grid">
-            ${songs.map(songCard).join("")}
-          </div>
-        `
-
-          :
-
-        emptyState(
-          "♫",
-          "Ta playlist est vide",
-          "Ajoute tes musiques préférées avec le bouton ＋."
-        )
+          ? `
+            <div class="song-grid">
+              ${songs.map(songCard).join("")}
+            </div>
+          `
+          : emptyState(
+              "♫",
+              "Ta playlist est vide",
+              "Clique sur ＋ pour ajouter tes musiques préférées."
+            )
       }
 
     `;
-
   }
+}
 
+
+/* =====================================================
+   CHANGER DE PAGE
+===================================================== */
+
+function setPage(page) {
+
+  currentPage = page;
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.page === page
+      );
+
+    });
+
+  render();
+
+  $("#sidebar")?.classList.remove("open");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 
@@ -1235,44 +825,36 @@ function toggleLike(id) {
 
   id = Number(id);
 
-  const alreadyLiked =
-    isLiked(id);
+  if (isLiked(id)) {
 
-
-  state.liked =
-    state.liked.filter(
-      item => item !== id
-    );
-
-
-  if (!alreadyLiked) {
-
-    state.liked.push(id);
-
-    state.disliked =
-      state.disliked.filter(
-        item => item !== id
+    state.liked =
+      state.liked.filter(
+        x => x !== id
       );
-
-    toast(
-      "Ajouté à J'aime ❤️"
-    );
-
-  } else {
 
     toast(
       "Retiré de J'aime"
     );
 
-  }
+  } else {
 
+    state.liked.push(id);
+
+    state.disliked =
+      state.disliked.filter(
+        x => x !== id
+      );
+
+    toast(
+      "Ajouté à J'aime ❤️"
+    );
+  }
 
   saveState();
 
   render();
 
   updatePlayerActions();
-
 }
 
 
@@ -1284,44 +866,36 @@ function toggleDislike(id) {
 
   id = Number(id);
 
-  const alreadyDisliked =
-    isDisliked(id);
+  if (isDisliked(id)) {
 
-
-  state.disliked =
-    state.disliked.filter(
-      item => item !== id
-    );
-
-
-  if (!alreadyDisliked) {
-
-    state.disliked.push(id);
-
-    state.liked =
-      state.liked.filter(
-        item => item !== id
+    state.disliked =
+      state.disliked.filter(
+        x => x !== id
       );
-
-    toast(
-      "Ajouté à Pas aimé 👎"
-    );
-
-  } else {
 
     toast(
       "Retiré de Pas aimé"
     );
 
-  }
+  } else {
 
+    state.disliked.push(id);
+
+    state.liked =
+      state.liked.filter(
+        x => x !== id
+      );
+
+    toast(
+      "Ajouté à Pas aimé 👎"
+    );
+  }
 
   saveState();
 
   render();
 
   updatePlayerActions();
-
 }
 
 
@@ -1333,14 +907,11 @@ function togglePlaylist(id) {
 
   id = Number(id);
 
-
-  if (
-    isInPlaylist(id)
-  ) {
+  if (isInPlaylist(id)) {
 
     state.playlist =
       state.playlist.filter(
-        item => item !== id
+        x => x !== id
       );
 
     toast(
@@ -1354,16 +925,13 @@ function togglePlaylist(id) {
     toast(
       "Ajouté à Ma playlist ♫"
     );
-
   }
-
 
   saveState();
 
   render();
 
   updatePlayerActions();
-
 }
 
 
@@ -1378,12 +946,10 @@ function playSong(
 
   id = Number(id);
 
-  const selected =
+  const song =
     getSong(id);
 
-  if (!selected) {
-    return;
-  }
+  if (!song) return;
 
 
   currentId = id;
@@ -1403,7 +969,6 @@ function playSong(
       SONGS.map(
         song => song.id
       );
-
   }
 
 
@@ -1437,18 +1002,120 @@ function playSong(
   updatePlayerUI();
 
 
+  /*
+    YouTube est chargé :
+    on lance réellement la vidéo.
+  */
+
   if (
     playerReady &&
     player
   ) {
 
     player.loadVideoById(
-      selected.videoId
+      song.videoId
+    );
+
+  } else {
+
+    toast(
+      "Le lecteur YouTube se prépare..."
     );
 
   }
-
 }
 
 
-/* =======
+/* =====================================================
+   TOUT LIRE
+===================================================== */
+
+function playAll(list = SONGS) {
+
+  let songs =
+    list.filter(
+      song =>
+        !isDisliked(song.id)
+    );
+
+
+  if (!songs.length) {
+
+    toast(
+      "Aucune musique disponible."
+    );
+
+    return;
+  }
+
+
+  queue =
+    songs.map(
+      song => song.id
+    );
+
+
+  if (state.shuffle) {
+
+    queue =
+      shuffleArray(queue);
+
+  }
+
+
+  queuePosition = 0;
+
+
+  playSong(
+    queue[0],
+    queue
+  );
+}
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffleArray(array) {
+
+  const result =
+    [...array];
+
+  for (
+    let i = result.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const j =
+      Math.floor(
+        Math.random() *
+        (i + 1)
+      );
+
+    [
+      result[i],
+      result[j]
+    ] =
+    [
+      result[j],
+      result[i]
+    ];
+  }
+
+  return result;
+}
+
+
+/* =====================================================
+   SUIVANT
+===================================================== */
+
+function nextSong() {
+
+  if (!queue.length) {
+
+    queue =
+      SONGS.map(
+        song
