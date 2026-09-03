@@ -1,62 +1,67 @@
 /* =========================================================
-   WAVEIFY — SCRIPT.JS
+   WAVEIFY — SCRIPT COMPLET
 ========================================================= */
 
 
 /* =========================================================
-   YOUTUBE LINKS
+   YOUTUBE
 ========================================================= */
 
 const YOUTUBE_LINKS = [
-    "https://www.youtube.com/watch?v=Pl1d5YSEg2w",
-    "https://www.youtube.com/watch?v=y1T2LQ2bym4",
-    "https://www.youtube.com/watch?v=SX0u0s5h4as",
-    "https://www.youtube.com/watch?v=mdcBqqWj3kY",
-    "https://www.youtube.com/watch?v=n2THLWjJ3Wo",
-    "https://www.youtube.com/watch?v=Snhn9wB-z1w",
-    "https://www.youtube.com/watch?v=xlmyDTa_S6M",
-    "https://www.youtube.com/watch?v=rDrIRNUaE6s",
-    "https://www.youtube.com/watch?v=EXYj9wecau4",
-    "https://www.youtube.com/watch?v=ShR_fQrqsdA",
-    "https://www.youtube.com/watch?v=pN-TLYBDkWc",
-    "https://www.youtube.com/watch?v=00ff2UcGLu0",
-    "https://www.youtube.com/watch?v=c8qXCL-ElfA",
-    "https://www.youtube.com/watch?v=pEBFJI-g9AA",
-    "https://www.youtube.com/watch?v=63fJnwefxBk",
-    "https://www.youtube.com/watch?v=gZXijVptbic",
-    "https://www.youtube.com/watch?v=QzZflH4liuU",
-    "https://www.youtube.com/watch?v=MFHiEocxkdM",
-    "https://www.youtube.com/watch?v=2uM9ZIS-v0w",
-    "https://www.youtube.com/watch?v=Qq7Q6CLCfvs",
-    "https://www.youtube.com/watch?v=cYi1jI7uLa0",
-    "https://www.youtube.com/watch?v=MqiljVyq_1o",
-    "https://www.youtube.com/watch?v=KTYp4guSwLg",
-    "https://www.youtube.com/watch?v=vaeio3idHzU",
-    "https://www.youtube.com/watch?v=FaXqep3IsZw",
-    "https://www.youtube.com/watch?v=VIs9zdNq_IU",
-    "https://www.youtube.com/watch?v=JwVm-DHKH_U",
-    "https://www.youtube.com/watch?v=zNEU9VExoWE",
-    "https://www.youtube.com/watch?v=WudXzTex5JQ",
-    "https://www.youtube.com/watch?v=pxjsZK_fkO4",
-    "https://www.youtube.com/watch?v=dIJuNqS9c3w",
-    "https://www.youtube.com/watch?v=BJwovrr6XzI",
-    "https://www.youtube.com/watch?v=yx9WQ0hrsdk",
-    "https://www.youtube.com/watch?v=0uLp-tejcSo",
-    "https://www.youtube.com/watch?v=w4CI96-D2Zg",
-    "https://www.youtube.com/watch?v=HqJ1qP05Si0"
+    "https://www.youtube.com/watch?v=4NRXx6U8ABQ",
+    "https://www.youtube.com/watch?v=1G4isv_Fylg",
+    "https://www.youtube.com/watch?v=RB-RcX5DS5A",
+    "https://www.youtube.com/watch?v=fJ9rUzIMcZQ",
+    "https://www.youtube.com/watch?v=YVkUvmDQ3HY",
+    "https://www.youtube.com/watch?v=OPf0YbXqDm0",
+    "https://www.youtube.com/watch?v=JGwWNGJdvx8",
+    "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+    "https://www.youtube.com/watch?v=09R8_2nJtjg",
+    "https://www.youtube.com/watch?v=lp-EO5I60KA",
+    "https://www.youtube.com/watch?v=RgKAFK5djSk",
+    "https://www.youtube.com/watch?v=hT_nvWreIhg",
+    "https://www.youtube.com/watch?v=SlPhMPnQ58k",
+    "https://www.youtube.com/watch?v=PT2_F-1esPk",
+    "https://www.youtube.com/watch?v=ru0K8uYEZWw",
+    "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
+    "https://www.youtube.com/watch?v=60ItHLz5WEA",
+    "https://www.youtube.com/watch?v=09R8_2nJtjg",
+    "https://www.youtube.com/watch?v=7wtfhZwyrcc",
+    "https://www.youtube.com/watch?v=RgKAFK5djSk",
+    "https://www.youtube.com/watch?v=YQHsXMglC9A",
+    "https://www.youtube.com/watch?v=uelHwf8o7_U",
+    "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
+    "https://www.youtube.com/watch?v=bo_efYhYU2A",
+    "https://www.youtube.com/watch?v=60ItHLz5WEA",
+    "https://www.youtube.com/watch?v=3AtDnEC4zak",
+    "https://www.youtube.com/watch?v=09R8_2nJtjg",
+    "https://www.youtube.com/watch?v=OPf0YbXqDm0",
+    "https://www.youtube.com/watch?v=fRh_vgS2dFE",
+    "https://www.youtube.com/watch?v=YVkUvmDQ3HY",
+    "https://www.youtube.com/watch?v=JGwWNGJdvx8",
+    "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+    "https://www.youtube.com/watch?v=RgKAFK5djSk",
+    "https://www.youtube.com/watch?v=hT_nvWreIhg",
+    "https://www.youtube.com/watch?v=1G4isv_Fylg",
+    "https://www.youtube.com/watch?v=4NRXx6U8ABQ"
 ];
 
 
 /* =========================================================
-   YOUTUBE ID
+   OUTILS
 ========================================================= */
 
 function getYouTubeId(url) {
     try {
         const parsedUrl = new URL(url);
-        return parsedUrl.searchParams.get("v") || "";
-    } catch (error) {
-        return "";
+
+        if (parsedUrl.hostname.includes("youtu.be")) {
+            return parsedUrl.pathname.substring(1);
+        }
+
+        return parsedUrl.searchParams.get("v");
+    } catch {
+        return null;
     }
 }
 
@@ -66,36 +71,27 @@ function getYouTubeId(url) {
 ========================================================= */
 
 const tracks = YOUTUBE_LINKS.map((url, index) => {
-
     const id = getYouTubeId(url);
 
     return {
-        id: id,
-        url: url,
+        id,
         title: `Track ${String(index + 1).padStart(2, "0")}`,
         artist: "Waveify",
         thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`
     };
-
 });
 
 
 /* =========================================================
-   STATE
+   ÉTAT
 ========================================================= */
 
 let currentTrackIndex = 0;
-
 let player = null;
 
 let isPlaying = false;
 let isShuffle = false;
 let isRepeat = false;
-
-
-/* =========================================================
-   FAVORITES
-========================================================= */
 
 let favorites = JSON.parse(
     localStorage.getItem("waveifyFavorites") || "[]"
@@ -103,198 +99,115 @@ let favorites = JSON.parse(
 
 
 /* =========================================================
-   DOM ELEMENTS
+   DOM
 ========================================================= */
 
-const musicGrid =
-    document.getElementById("musicGrid");
+const musicGrid = document.getElementById("musicGrid");
+const libraryGrid = document.getElementById("libraryGrid");
+const favoritesGrid = document.getElementById("favoritesGrid");
 
-const libraryGrid =
-    document.getElementById("libraryGrid");
+const emptyFavorites = document.getElementById("emptyFavorites");
 
-const favoritesGrid =
-    document.getElementById("favoritesGrid");
+const playerCover = document.getElementById("playerCover");
+const playerTitle = document.getElementById("playerTitle");
+const playerArtist = document.getElementById("playerArtist");
 
-const emptyFavorites =
-    document.getElementById("emptyFavorites");
+const playerFavorite = document.getElementById("playerFavorite");
 
-const favoriteCount =
-    document.getElementById("favoriteCount");
+const playButton = document.getElementById("playButton");
+const previousButton = document.getElementById("previousButton");
+const nextButton = document.getElementById("nextButton");
 
+const shuffleButton = document.getElementById("shuffleButton");
+const repeatButton = document.getElementById("repeatButton");
 
-/* Player */
+const progressBar = document.getElementById("progressBar");
+const progress = document.getElementById("progress");
 
-const playerElement =
-    document.querySelector(".player");
+const currentTimeElement = document.getElementById("currentTime");
+const durationElement = document.getElementById("duration");
 
-const playerCover =
-    document.getElementById("playerCover");
+const volumeControl = document.getElementById("volumeControl");
 
-const playerTitle =
-    document.getElementById("playerTitle");
+const playAllButton = document.getElementById("playAllButton");
 
-const playerArtist =
-    document.getElementById("playerArtist");
+const sidebar = document.getElementById("sidebar");
+const mobileMenu = document.getElementById("mobileMenu");
 
-const playerFavorite =
-    document.getElementById("playerFavorite");
+const notificationButton =
+    document.getElementById("notificationButton");
 
+const backButton =
+    document.getElementById("backButton");
 
-/* Controls */
-
-const playButton =
-    document.getElementById("playButton");
-
-const previousButton =
-    document.getElementById("previousButton");
-
-const nextButton =
-    document.getElementById("nextButton");
-
-const shuffleButton =
-    document.getElementById("shuffleButton");
-
-const repeatButton =
-    document.getElementById("repeatButton");
-
-
-/* Progress */
-
-const progressBar =
-    document.getElementById("progressBar");
-
-const progressFill =
-    document.getElementById("progressFill");
-
-const progressThumb =
-    document.getElementById("progressThumb");
-
-const currentTimeElement =
-    document.getElementById("currentTime");
-
-const durationElement =
-    document.getElementById("duration");
-
-
-/* Volume */
-
-const volumeSlider =
-    document.getElementById("volumeSlider");
-
-
-/* Mobile menu */
-
-const mobileMenu =
-    document.getElementById("mobileMenu");
-
-const sidebar =
-    document.querySelector(".sidebar");
-
-const closeSidebar =
-    document.getElementById("closeSidebar");
+const forwardButton =
+    document.getElementById("forwardButton");
 
 
 /* =========================================================
-   FORMAT TIME
+   FORMAT TEMPS
 ========================================================= */
 
 function formatTime(seconds) {
-
-    if (!seconds || Number.isNaN(seconds)) {
+    if (!Number.isFinite(seconds)) {
         return "0:00";
     }
 
-    const minutes =
-        Math.floor(seconds / 60);
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
 
-    const remainingSeconds =
-        Math.floor(seconds % 60)
-            .toString()
-            .padStart(2, "0");
-
-    return `${minutes}:${remainingSeconds}`;
+    return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
 }
 
 
 /* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
-
-
-/* =========================================================
-   CREATE TRACK CARD
+   CARTES MUSIQUE
 ========================================================= */
 
 function createTrackCard(track, index) {
 
-    const isFavorite =
-        favorites.includes(track.id);
-
-
-    const card =
-        document.createElement("article");
-
+    const card = document.createElement("article");
 
     card.className = "music-card";
 
     card.dataset.index = index;
 
+    const isFavorite = favorites.includes(index);
 
     card.innerHTML = `
-
-        <div class="card-cover">
+        <div class="music-card-image">
 
             <img
                 src="${track.thumbnail}"
-                alt="${escapeHtml(track.title)}"
+                alt="${track.title}"
                 loading="lazy"
             >
 
             <button
-                class="card-play"
-                aria-label="Lire ${escapeHtml(track.title)}"
+                class="music-card-play"
+                aria-label="Lire ${track.title}"
             >
                 ▶
             </button>
 
+            <button
+                class="music-card-favorite ${isFavorite ? "active" : ""}"
+                aria-label="Ajouter aux favoris"
+            >
+                ${isFavorite ? "♥" : "♡"}
+            </button>
+
         </div>
 
+        <div class="music-card-info">
 
-        <div class="card-content">
+            <strong class="music-card-title">
+                ${track.title}
+            </strong>
 
-            <div class="card-title-row">
-
-                <strong class="card-title">
-                    ${escapeHtml(track.title)}
-                </strong>
-
-
-                <button
-                    class="card-heart ${
-                        isFavorite ? "favorite" : ""
-                    }"
-                    data-favorite="${track.id}"
-                    aria-label="Ajouter aux favoris"
-                >
-                    ${isFavorite ? "♥" : "♡"}
-                </button>
-
-            </div>
-
-
-            <div class="card-artist">
-                ${escapeHtml(track.artist)}
-            </div>
+            <span class="music-card-artist">
+                ${track.artist}
+            </span>
 
         </div>
     `;
@@ -302,50 +215,33 @@ function createTrackCard(track, index) {
 
     /* Lecture */
 
-    const play =
-        card.querySelector(".card-play");
+    const playCardButton =
+        card.querySelector(".music-card-play");
 
+    playCardButton.addEventListener("click", (event) => {
+        event.stopPropagation();
 
-    play.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-
-            playTrack(index);
-
-        }
-    );
+        playTrack(index);
+    });
 
 
     /* Favori */
 
-    const heart =
-        card.querySelector(".card-heart");
+    const favoriteButton =
+        card.querySelector(".music-card-favorite");
 
+    favoriteButton.addEventListener("click", (event) => {
+        event.stopPropagation();
 
-    heart.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-
-            toggleFavorite(track.id);
-
-        }
-    );
+        toggleFavorite(index);
+    });
 
 
     /* Double clic */
 
-    card.addEventListener(
-        "dblclick",
-        () => {
-
-            playTrack(index);
-
-        }
-    );
+    card.addEventListener("dblclick", () => {
+        playTrack(index);
+    });
 
 
     return card;
@@ -353,21 +249,23 @@ function createTrackCard(track, index) {
 
 
 /* =========================================================
-   RENDER TRACKS
+   RENDU DES MORCEAUX
 ========================================================= */
 
 function renderTracks() {
 
+    if (!musicGrid || !libraryGrid) {
+        return;
+    }
+
     musicGrid.innerHTML = "";
     libraryGrid.innerHTML = "";
-
 
     tracks.forEach((track, index) => {
 
         musicGrid.appendChild(
             createTrackCard(track, index)
         );
-
 
         libraryGrid.appendChild(
             createTrackCard(track, index)
@@ -378,150 +276,94 @@ function renderTracks() {
 
 
 /* =========================================================
-   RENDER FAVORITES
+   FAVORIS
 ========================================================= */
 
 function renderFavorites() {
 
-    favoritesGrid.innerHTML = "";
-
-
-    const favoriteTracks =
-        tracks.filter(track =>
-            favorites.includes(track.id)
-        );
-
-
-    favoriteCount.textContent =
-        `${favoriteTracks.length} morceau${
-            favoriteTracks.length > 1 ? "x" : ""
-        }`;
-
-
-    if (favoriteTracks.length === 0) {
-
-        emptyFavorites.classList.add("show");
-
+    if (!favoritesGrid) {
         return;
     }
 
+    favoritesGrid.innerHTML = "";
 
-    emptyFavorites.classList.remove("show");
-
+    const favoriteTracks = favorites
+        .map(index => tracks[index])
+        .filter(Boolean);
 
     favoriteTracks.forEach(track => {
 
-        const index =
-            tracks.findIndex(
-                item => item.id === track.id
-            );
-
+        const index = tracks.indexOf(track);
 
         favoritesGrid.appendChild(
             createTrackCard(track, index)
         );
 
     });
+
+
+    if (emptyFavorites) {
+        emptyFavorites.classList.toggle(
+            "visible",
+            favoriteTracks.length === 0
+        );
+    }
 }
 
 
-/* =========================================================
-   TOGGLE FAVORITE
-========================================================= */
-
-function toggleFavorite(trackId) {
-
-    if (favorites.includes(trackId)) {
-
-        favorites =
-            favorites.filter(
-                id => id !== trackId
-            );
-
-    } else {
-
-        favorites.push(trackId);
-
-    }
-
+function saveFavorites() {
 
     localStorage.setItem(
         "waveifyFavorites",
         JSON.stringify(favorites)
     );
+}
 
+
+function toggleFavorite(index) {
+
+    if (favorites.includes(index)) {
+
+        favorites = favorites.filter(
+            favoriteIndex => favoriteIndex !== index
+        );
+
+    } else {
+
+        favorites.push(index);
+
+    }
+
+    saveFavorites();
 
     renderTracks();
-
     renderFavorites();
 
     updatePlayerFavorite();
 }
 
 
-/* =========================================================
-   PLAYER FAVORITE
-========================================================= */
-
 function updatePlayerFavorite() {
 
-    const track =
-        tracks[currentTrackIndex];
-
-
-    if (!track) {
+    if (!playerFavorite) {
         return;
     }
 
-
-    const isFavorite =
-        favorites.includes(track.id);
-
-
-    playerFavorite.textContent =
-        isFavorite ? "♥" : "♡";
-
+    const active =
+        favorites.includes(currentTrackIndex);
 
     playerFavorite.classList.toggle(
-        "favorite",
-        isFavorite
+        "active",
+        active
     );
+
+    playerFavorite.textContent =
+        active ? "♥" : "♡";
 }
 
 
 /* =========================================================
-   UPDATE PLAYER INFO
-========================================================= */
-
-function updatePlayerInfo() {
-
-    const track =
-        tracks[currentTrackIndex];
-
-
-    if (!track) {
-        return;
-    }
-
-
-    playerTitle.textContent =
-        track.title;
-
-
-    playerArtist.textContent =
-        track.artist;
-
-
-    playerCover.src =
-        track.thumbnail;
-
-
-    updatePlayerFavorite();
-}
-
-
-/* =========================================================
-   LOAD TRACK
+   CHARGER UN MORCEAU
 ========================================================= */
 
 function loadTrack(index, autoplay = true) {
@@ -530,35 +372,41 @@ function loadTrack(index, autoplay = true) {
         return;
     }
 
-
     currentTrackIndex = index;
 
-    updatePlayerInfo();
+    const track = tracks[index];
 
-
-    if (!player) {
-        return;
+    if (playerCover) {
+        playerCover.src = track.thumbnail;
+        playerCover.alt = track.title;
     }
 
-
-    player.loadVideoById(
-        tracks[index].id
-    );
-
-
-    if (!autoplay) {
-
-        player.pauseVideo();
-
-        isPlaying = false;
-
-        updatePlayButton();
+    if (playerTitle) {
+        playerTitle.textContent = track.title;
     }
+
+    if (playerArtist) {
+        playerArtist.textContent = track.artist;
+    }
+
+    updatePlayerFavorite();
+
+    if (player) {
+
+        if (autoplay) {
+            player.loadVideoById(track.id);
+        } else {
+            player.cueVideoById(track.id);
+        }
+
+    }
+
+    updatePlayButton(false);
 }
 
 
 /* =========================================================
-   PLAY TRACK
+   LECTURE
 ========================================================= */
 
 function playTrack(index) {
@@ -567,36 +415,29 @@ function playTrack(index) {
         return;
     }
 
-
     currentTrackIndex = index;
 
-    updatePlayerInfo();
-
-
     if (!player) {
+        loadTrack(index, false);
         return;
     }
-
 
     player.loadVideoById(
         tracks[index].id
     );
 
+    isPlaying = true;
 
-    player.playVideo();
+    updatePlayButton(true);
+    updatePlayerFavorite();
 }
 
-
-/* =========================================================
-   PLAY / PAUSE
-========================================================= */
 
 function togglePlay() {
 
     if (!player) {
         return;
     }
-
 
     if (isPlaying) {
 
@@ -610,57 +451,61 @@ function togglePlay() {
 }
 
 
+function updatePlayButton(playing = isPlaying) {
+
+    if (!playButton) {
+        return;
+    }
+
+    playButton.textContent =
+        playing ? "❚❚" : "▶";
+
+    playButton.setAttribute(
+        "aria-label",
+        playing ? "Pause" : "Lecture"
+    );
+}
+
+
 /* =========================================================
-   NEXT TRACK
+   MORCEAU SUIVANT
 ========================================================= */
 
 function nextTrack() {
 
-    if (!tracks.length) {
-        return;
-    }
-
+    let nextIndex;
 
     if (isShuffle) {
 
-        let nextIndex;
+        if (tracks.length <= 1) {
+            nextIndex = currentTrackIndex;
+        } else {
 
+            do {
+                nextIndex =
+                    Math.floor(
+                        Math.random() * tracks.length
+                    );
+            } while (
+                nextIndex === currentTrackIndex
+            );
 
-        do {
+        }
 
-            nextIndex =
-                Math.floor(
-                    Math.random() *
-                    tracks.length
-                );
+    } else {
 
-        } while (
-            nextIndex === currentTrackIndex &&
-            tracks.length > 1
-        );
+        nextIndex =
+            (currentTrackIndex + 1) %
+            tracks.length;
 
-
-        playTrack(nextIndex);
-
-        return;
     }
-
-
-    let nextIndex =
-        currentTrackIndex + 1;
-
-
-    if (nextIndex >= tracks.length) {
-        nextIndex = 0;
-    }
-
 
     playTrack(nextIndex);
 }
 
 
 /* =========================================================
-   PREVIOUS TRACK
+   MORCEAU PRÉCÉDENT
 ========================================================= */
 
 function previousTrack() {
@@ -670,7 +515,6 @@ function previousTrack() {
         const currentTime =
             player.getCurrentTime();
 
-
         if (currentTime > 3) {
 
             player.seekTo(0, true);
@@ -679,24 +523,16 @@ function previousTrack() {
         }
     }
 
-
-    let previousIndex =
-        currentTrackIndex - 1;
-
-
-    if (previousIndex < 0) {
-
-        previousIndex =
-            tracks.length - 1;
-    }
-
+    const previousIndex =
+        (currentTrackIndex - 1 + tracks.length) %
+        tracks.length;
 
     playTrack(previousIndex);
 }
 
 
 /* =========================================================
-   PLAY ALL
+   LECTURE DE TOUS LES MORCEAUX
 ========================================================= */
 
 function playAll() {
@@ -705,30 +541,12 @@ function playAll() {
         return;
     }
 
-
     playTrack(0);
 }
 
 
 /* =========================================================
-   UPDATE PLAY BUTTON
-========================================================= */
-
-function updatePlayButton() {
-
-    playButton.textContent =
-        isPlaying ? "Ⅱ" : "▶";
-
-
-    playerElement.classList.toggle(
-        "playing",
-        isPlaying
-    );
-}
-
-
-/* =========================================================
-   UPDATE PROGRESS
+   PROGRESSION
 ========================================================= */
 
 function updateProgress() {
@@ -737,98 +555,86 @@ function updateProgress() {
         return;
     }
 
-
     try {
 
         const current =
             player.getCurrentTime();
 
-
         const duration =
             player.getDuration();
 
-
-        if (!duration) {
+        if (
+            !Number.isFinite(current) ||
+            !Number.isFinite(duration) ||
+            duration <= 0
+        ) {
             return;
         }
 
-
         const percentage =
-            Math.min(
-                100,
-                Math.max(
-                    0,
-                    (current / duration) * 100
-                )
-            );
+            (current / duration) * 100;
 
+        if (progress) {
+            progress.style.width =
+                `${percentage}%`;
+        }
 
-        progressFill.style.width =
-            `${percentage}%`;
+        if (currentTimeElement) {
+            currentTimeElement.textContent =
+                formatTime(current);
+        }
 
+        if (durationElement) {
+            durationElement.textContent =
+                formatTime(duration);
+        }
 
-        progressThumb.style.left =
-            `${percentage}%`;
-
-
-        currentTimeElement.textContent =
-            formatTime(current);
-
-
-        durationElement.textContent =
-            formatTime(duration);
-
-    } catch (error) {
-
-        // YouTube player pas encore prêt.
-
+    } catch {
+        /* Le lecteur peut ne pas être prêt */
     }
 }
 
 
 /* =========================================================
-   SEEK
+   RECHERCHE DANS LA BARRE DE PROGRESSION
 ========================================================= */
 
-function seek(event) {
+if (progressBar) {
 
-    if (!player) {
-        return;
-    }
+    progressBar.addEventListener(
+        "click",
+        event => {
 
+            if (!player) {
+                return;
+            }
 
-    const rect =
-        progressBar.getBoundingClientRect();
+            const duration =
+                player.getDuration();
 
+            if (!duration) {
+                return;
+            }
 
-    if (!rect.width) {
-        return;
-    }
+            const rect =
+                progressBar.getBoundingClientRect();
 
-
-    const percentage =
-        Math.min(
-            1,
-            Math.max(
-                0,
+            const position =
                 (event.clientX - rect.left) /
-                rect.width
-            )
-        );
+                rect.width;
 
+            const time =
+                Math.max(
+                    0,
+                    Math.min(
+                        duration,
+                        position * duration
+                    )
+                );
 
-    const duration =
-        player.getDuration();
-
-
-    if (duration) {
-
-        player.seekTo(
-            duration * percentage,
-            true
-        );
-
-    }
+            player.seekTo(time, true);
+        }
+    );
 }
 
 
@@ -836,15 +642,20 @@ function seek(event) {
    VOLUME
 ========================================================= */
 
-function updateVolume() {
+if (volumeControl) {
 
-    if (!player) {
-        return;
-    }
+    volumeControl.addEventListener(
+        "input",
+        () => {
 
+            if (!player) {
+                return;
+            }
 
-    player.setVolume(
-        Number(volumeSlider.value)
+            player.setVolume(
+                Number(volumeControl.value)
+            );
+        }
     );
 }
 
@@ -853,47 +664,25 @@ function updateVolume() {
    NAVIGATION
 ========================================================= */
 
-function showSection(section) {
+function showSection(sectionName) {
 
-    const homeSection =
-        document.getElementById("homeSection");
+    const sections = {
+        home: document.getElementById("homeSection"),
+        library: document.getElementById("librarySection"),
+        favorites: document.getElementById("favoritesSection")
+    };
 
+    Object.values(sections).forEach(section => {
 
-    const librarySection =
-        document.getElementById("librarySection");
+        if (section) {
+            section.classList.remove("active");
+        }
 
-
-    const favoritesSection =
-        document.getElementById("favoritesSection");
-
-
-    homeSection.style.display = "none";
-
-    librarySection.style.display = "none";
-
-    favoritesSection.style.display = "none";
+    });
 
 
-    if (section === "home") {
-
-        homeSection.style.display = "block";
-
-    }
-
-
-    if (section === "library") {
-
-        librarySection.style.display = "block";
-
-    }
-
-
-    if (section === "favorites") {
-
-        favoritesSection.style.display = "block";
-
-        renderFavorites();
-
+    if (sections[sectionName]) {
+        sections[sectionName].classList.add("active");
     }
 
 
@@ -903,199 +692,101 @@ function showSection(section) {
 
             item.classList.toggle(
                 "active",
-                item.dataset.section === section
+                item.dataset.section === sectionName
             );
 
         });
 
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    /* Retour en haut de la partie droite */
+
+    if (document.querySelector(".main-content")) {
+
+        document
+            .querySelector(".main-content")
+            .scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+    }
+
+
+    closeMobileMenu();
 }
 
 
 /* =========================================================
-   NAV BUTTONS
+   NAV ITEMS
 ========================================================= */
 
 document
     .querySelectorAll(".nav-item")
-    .forEach(button => {
+    .forEach(item => {
 
-        button.addEventListener(
-            "click",
-            () => {
+        item.addEventListener("click", () => {
 
-                showSection(
-                    button.dataset.section
-                );
+            const section =
+                item.dataset.section;
 
+            showSection(section);
 
-                /* Fermer le menu téléphone */
-
-                if (sidebar) {
-
-                    sidebar.classList.remove(
-                        "open"
-                    );
-
-                }
-
-            }
-        );
+        });
 
     });
 
 
 /* =========================================================
-   PLAY ALL BUTTON
+   MENU MOBILE
 ========================================================= */
 
-const playAllButton =
-    document.getElementById("playAllButton");
+function openMobileMenu() {
 
+    if (!sidebar || !mobileMenu) {
+        return;
+    }
 
-if (playAllButton) {
+    sidebar.classList.add("open");
+    mobileMenu.classList.add("active");
 
-    playAllButton.addEventListener(
-        "click",
-        playAll
+    mobileMenu.setAttribute(
+        "aria-label",
+        "Fermer le menu"
     );
-
 }
 
 
-/* =========================================================
-   SEE ALL BUTTON
-========================================================= */
+function closeMobileMenu() {
 
-const seeAllButton =
-    document.getElementById("seeAllButton");
+    if (!sidebar || !mobileMenu) {
+        return;
+    }
 
+    sidebar.classList.remove("open");
+    mobileMenu.classList.remove("active");
 
-if (seeAllButton) {
-
-    seeAllButton.addEventListener(
-        "click",
-        () => {
-
-            showSection("library");
-
-        }
+    mobileMenu.setAttribute(
+        "aria-label",
+        "Ouvrir le menu"
     );
-
 }
 
 
-/* =========================================================
-   PLAYER CONTROLS
-========================================================= */
+function toggleMobileMenu() {
 
-playButton.addEventListener(
-    "click",
-    togglePlay
-);
-
-
-previousButton.addEventListener(
-    "click",
-    previousTrack
-);
-
-
-nextButton.addEventListener(
-    "click",
-    nextTrack
-);
-
-
-/* Shuffle */
-
-shuffleButton.addEventListener(
-    "click",
-    () => {
-
-        isShuffle =
-            !isShuffle;
-
-
-        shuffleButton.classList.toggle(
-            "active",
-            isShuffle
-        );
-
+    if (!sidebar) {
+        return;
     }
-);
 
-
-/* Repeat */
-
-repeatButton.addEventListener(
-    "click",
-    () => {
-
-        isRepeat =
-            !isRepeat;
-
-
-        repeatButton.classList.toggle(
-            "active",
-            isRepeat
-        );
-
+    if (sidebar.classList.contains("open")) {
+        closeMobileMenu();
+    } else {
+        openMobileMenu();
     }
-);
+}
 
 
-/* Progress */
-
-progressBar.addEventListener(
-    "click",
-    seek
-);
-
-
-/* Volume */
-
-volumeSlider.addEventListener(
-    "input",
-    updateVolume
-);
-
-
-/* =========================================================
-   PLAYER FAVORITE
-========================================================= */
-
-playerFavorite.addEventListener(
-    "click",
-    () => {
-
-        const track =
-            tracks[currentTrackIndex];
-
-
-        if (track) {
-
-            toggleFavorite(
-                track.id
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   MOBILE SIDEBAR
-========================================================= */
-
-/* Ouvrir / fermer avec ☰ */
-
-if (mobileMenu && sidebar) {
+if (mobileMenu) {
 
     mobileMenu.addEventListener(
         "click",
@@ -1103,5 +794,183 @@ if (mobileMenu && sidebar) {
 
             event.stopPropagation();
 
-            sidebar.classList.toggle(
-       
+            toggleMobileMenu();
+
+        }
+    );
+}
+
+
+/* Fermer le menu si on clique sur la page */
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            window.innerWidth <= 767 &&
+            sidebar &&
+            mobileMenu &&
+            sidebar.classList.contains("open") &&
+            !sidebar.contains(event.target) &&
+            !mobileMenu.contains(event.target)
+        ) {
+            closeMobileMenu();
+        }
+
+    }
+);
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+if (notificationButton) {
+
+    notificationButton.addEventListener(
+        "click",
+        () => {
+
+            alert(
+                "Bienvenue sur Waveify 🎵"
+            );
+
+        }
+    );
+}
+
+
+/* =========================================================
+   BOUTON ÉCOUTER
+========================================================= */
+
+if (playAllButton) {
+
+    playAllButton.addEventListener(
+        "click",
+        playAll
+    );
+}
+
+
+/* =========================================================
+   CONTRÔLES DU LECTEUR
+========================================================= */
+
+if (playButton) {
+
+    playButton.addEventListener(
+        "click",
+        togglePlay
+    );
+}
+
+if (nextButton) {
+
+    nextButton.addEventListener(
+        "click",
+        nextTrack
+    );
+}
+
+if (previousButton) {
+
+    previousButton.addEventListener(
+        "click",
+        previousTrack
+    );
+}
+
+
+if (shuffleButton) {
+
+    shuffleButton.addEventListener(
+        "click",
+        () => {
+
+            isShuffle = !isShuffle;
+
+            shuffleButton.classList.toggle(
+                "active",
+                isShuffle
+            );
+
+        }
+    );
+}
+
+
+if (repeatButton) {
+
+    repeatButton.addEventListener(
+        "click",
+        () => {
+
+            isRepeat = !isRepeat;
+
+            repeatButton.classList.toggle(
+                "active",
+                isRepeat
+            );
+
+        }
+    );
+}
+
+
+if (playerFavorite) {
+
+    playerFavorite.addEventListener(
+        "click",
+        () => {
+
+            toggleFavorite(
+                currentTrackIndex
+            );
+
+        }
+    );
+}
+
+
+/* =========================================================
+   BOUTONS RETOUR / SUIVANT
+========================================================= */
+
+if (backButton) {
+
+    backButton.addEventListener(
+        "click",
+        () => {
+            window.history.back();
+        }
+    );
+}
+
+if (forwardButton) {
+
+    forwardButton.addEventListener(
+        "click",
+        () => {
+            window.history.forward();
+        }
+    );
+}
+
+
+/* =========================================================
+   ÉTAT DU LECTEUR YOUTUBE
+========================================================= */
+
+function handlePlayerState(event) {
+
+    /*
+       1 = PLAYING
+       2 = PAUSED
+       0 = ENDED
+    */
+
+    if (event.data === 1) {
+
+ 
