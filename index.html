@@ -1,239 +1,133 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Waveify — Music for your mood</title>
 
-    <meta
-        name="description"
-        content="Waveify — Écoute ta musique préférée et crée ton univers musical."
-    >
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-    <!-- =====================================================
+    <!-- =========================
+         MENU MOBILE
+    ========================== -->
+    <button class="mobile-menu" id="mobileMenu" aria-label="Ouvrir le menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+
+    <!-- =========================
          SIDEBAR
-    ====================================================== -->
+    ========================== -->
+    <aside class="sidebar" id="sidebar">
 
-    <aside class="sidebar">
-
-        <!-- Bouton fermeture téléphone -->
-        <button
-            id="closeSidebar"
-            class="close-sidebar"
-            aria-label="Fermer le menu"
-        >
-            ✕
-        </button>
-
-
-        <!-- Logo -->
         <div class="logo">
-            <span class="logo-icon">W</span>
+            <span class="logo-icon">♫</span>
             <span>Waveify</span>
         </div>
 
-
-        <!-- Navigation -->
         <nav class="main-nav">
 
-            <button
-                class="nav-item active"
-                data-section="home"
-            >
+            <button class="nav-item active" data-section="home">
                 <span class="nav-icon">⌂</span>
                 <span>Accueil</span>
             </button>
 
-
-            <button
-                class="nav-item"
-                data-section="library"
-            >
-                <span class="nav-icon">♫</span>
+            <button class="nav-item" data-section="library">
+                <span class="nav-icon">▣</span>
                 <span>Bibliothèque</span>
             </button>
 
-
-            <button
-                class="nav-item"
-                data-section="favorites"
-            >
+            <button class="nav-item" data-section="favorites">
                 <span class="nav-icon">♥</span>
                 <span>Favoris</span>
             </button>
 
         </nav>
 
+        <div class="sidebar-bottom">
+            <div class="user-card">
+                <div class="user-avatar">W</div>
 
-        <!-- Playlists -->
-        <div class="sidebar-playlists">
-
-            <p class="sidebar-title">
-                TES PLAYLISTS
-            </p>
-
-
-            <button class="playlist-item">
-                <span class="playlist-icon">＋</span>
-                <span>Mes morceaux</span>
-            </button>
-
-
-            <button class="playlist-item">
-                <span class="playlist-icon">♫</span>
-                <span>Waveify Hits</span>
-            </button>
-
-
-            <button class="playlist-item">
-                <span class="playlist-icon">♥</span>
-                <span>Mes favoris</span>
-            </button>
-
-        </div>
-
-
-        <!-- Utilisateur -->
-        <div class="user-card">
-
-            <div class="user-avatar">
-                W
+                <div class="user-info">
+                    <strong>Waveify User</strong>
+                    <span>Écoute ta musique</span>
+                </div>
             </div>
-
-            <div class="user-info">
-
-                <strong>
-                    Waveify User
-                </strong>
-
-                <span>
-                    Compte gratuit
-                </span>
-
-            </div>
-
         </div>
 
     </aside>
 
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+    <!-- =========================
+         CONTENU PRINCIPAL
+    ========================== -->
+    <main class="main-content">
 
-    <main>
-
-        <!-- Topbar -->
+        <!-- TOPBAR -->
         <header class="topbar">
 
-            <!-- Menu téléphone -->
-            <button
-                id="mobileMenu"
-                class="mobile-menu"
-                aria-label="Ouvrir le menu"
-                aria-controls="sidebar"
-            >
-                ☰
-            </button>
-
-
-            <div class="topbar-title">
-                TON UNIVERS MUSICAL
-            </div>
-
-
-            <div class="topbar-actions">
-
-                <button
-                    id="notificationButton"
-                    class="icon-button"
-                    aria-label="Notifications"
-                >
-                    ♫
+            <div class="topbar-left">
+                <button class="back-button" id="backButton" aria-label="Retour">
+                    ←
                 </button>
 
+                <button class="forward-button" id="forwardButton" aria-label="Suivant">
+                    →
+                </button>
+            </div>
 
-                <div class="top-avatar">
-                    W
-                </div>
+            <div class="topbar-right">
+
+                <button
+                    class="notification-button"
+                    id="notificationButton"
+                    aria-label="Notifications"
+                >
+                    ♡
+                </button>
 
             </div>
 
         </header>
 
 
-        <!-- =================================================
+        <!-- =========================
              ACCUEIL
-        ================================================== -->
+        ========================== -->
+        <section class="page-section active" id="homeSection">
 
-        <section
-            id="homeSection"
-            class="page-section"
-        >
-
-            <!-- Hero -->
+            <!-- HERO -->
             <section class="hero">
 
                 <div class="hero-content">
 
-                    <span class="hero-label">
-                        WAVEIFY
-                    </span>
-
-
-                    <h1>
-                        Ta musique.<br>
-                        Ton mood.
-                    </h1>
-
-
-                    <p>
-                        Découvre les morceaux qui
-                        correspondent à ton univers.
+                    <p class="hero-small-title">
+                        BIENVENUE SUR WAVEIFY
                     </p>
 
+                    <h1>
+                        Music for<br>
+                        your mood.
+                    </h1>
 
-                    <button
-                        id="playAllButton"
-                        class="primary-button"
-                    >
-                        ▶ Tout écouter
+                    <p class="hero-description">
+                        Écoute tes morceaux préférés et profite de ta musique,
+                        où que tu sois.
+                    </p>
+
+                    <button class="hero-button" id="playAllButton">
+                        ▶ Écouter maintenant
                     </button>
 
                 </div>
 
-
-                <!-- Animation -->
-                <div class="hero-waves">
-
+                <div class="hero-waves" aria-hidden="true">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -242,44 +136,31 @@
                     <span></span>
                     <span></span>
                     <span></span>
-
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
 
             </section>
 
 
-            <!-- Musiques -->
+            <!-- POUR TOI -->
             <section class="music-section">
 
                 <div class="section-header">
-
                     <div>
-
-                        <p class="section-label">
-                            POUR TOI
+                        <p class="section-subtitle">
+                            Découvre ta musique
                         </p>
 
-                        <h2>
-                            Tes morceaux
+                        <h2 class="section-title">
+                            Pour toi
                         </h2>
-
                     </div>
-
-
-                    <button
-                        id="seeAllButton"
-                        class="see-all-button"
-                    >
-                        Tout voir
-                    </button>
-
                 </div>
 
-
-                <div
-                    id="musicGrid"
-                    class="music-grid"
-                >
+                <div class="music-grid" id="musicGrid">
                     <!-- Les morceaux sont ajoutés par JavaScript -->
                 </div>
 
@@ -288,143 +169,102 @@
         </section>
 
 
-        <!-- =================================================
+        <!-- =========================
              BIBLIOTHÈQUE
-        ================================================== -->
-
-        <section
-            id="librarySection"
-            class="page-section"
-            style="display: none;"
-        >
+        ========================== -->
+        <section class="page-section" id="librarySection">
 
             <div class="page-title">
-
-                <p class="section-label">
-                    TA COLLECTION
+                <p class="section-subtitle">
+                    Ta musique
                 </p>
 
                 <h1>
                     Bibliothèque
                 </h1>
-
-                <p>
-                    Tous tes morceaux Waveify au même endroit.
-                </p>
-
             </div>
 
+            <section class="music-section">
 
-            <div
-                id="libraryGrid"
-                class="music-grid"
-            >
-                <!-- Les morceaux sont ajoutés par JavaScript -->
-            </div>
+                <div class="music-grid" id="libraryGrid">
+                    <!-- Les morceaux sont ajoutés par JavaScript -->
+                </div>
+
+            </section>
 
         </section>
 
 
-        <!-- =================================================
+        <!-- =========================
              FAVORIS
-        ================================================== -->
-
-        <section
-            id="favoritesSection"
-            class="page-section"
-            style="display: none;"
-        >
+        ========================== -->
+        <section class="page-section" id="favoritesSection">
 
             <div class="page-title">
-
-                <p class="section-label">
-                    TA SÉLECTION
+                <p class="section-subtitle">
+                    Tes morceaux préférés
                 </p>
 
                 <h1>
                     Favoris
                 </h1>
-
-                <p id="favoriteCount">
-                    0 morceau
-                </p>
-
             </div>
 
+            <section class="music-section">
 
-            <div
-                id="favoritesGrid"
-                class="music-grid"
-            >
-                <!-- Les favoris sont ajoutés par JavaScript -->
-            </div>
-
-
-            <div
-                id="emptyFavorites"
-                class="empty-favorites"
-            >
-
-                <div class="empty-icon">
-                    ♡
+                <div class="music-grid" id="favoritesGrid">
+                    <!-- Les favoris sont ajoutés par JavaScript -->
                 </div>
 
-                <h3>
-                    Aucun favori pour le moment
-                </h3>
+                <div class="empty-favorites" id="emptyFavorites">
+                    <div class="empty-icon">♡</div>
 
-                <p>
-                    Ajoute tes morceaux préférés
-                    pour les retrouver ici.
-                </p>
+                    <h3>
+                        Aucun favori pour le moment
+                    </h3>
 
-            </div>
+                    <p>
+                        Ajoute tes morceaux préférés à tes favoris
+                        pour les retrouver ici.
+                    </p>
+                </div>
+
+            </section>
 
         </section>
 
     </main>
 
 
-    <!-- =====================================================
-         PLAYER
-    ====================================================== -->
+    <!-- =========================
+         LECTEUR AUDIO
+    ========================== -->
+    <footer class="player" id="player">
 
-    <footer class="player">
-
-        <!-- Morceau actuel -->
+        <!-- MORCEAU ACTUEL -->
         <div class="player-left">
 
-            <img
-                id="playerCover"
-                class="player-cover"
-                src=""
-                alt="Pochette du morceau"
-            >
-
-
-            <div class="player-info">
-
-                <strong
-                    id="playerTitle"
-                    class="player-title"
+            <div class="player-cover">
+                <img
+                    id="playerCover"
+                    src=""
+                    alt="Pochette du morceau"
                 >
+            </div>
+
+            <div class="player-track-info">
+                <strong id="playerTitle">
                     Track 01
                 </strong>
 
-
-                <span
-                    id="playerArtist"
-                    class="player-artist"
-                >
+                <span id="playerArtist">
                     Waveify
                 </span>
-
             </div>
 
-
             <button
-                id="playerFavorite"
                 class="player-favorite"
+                id="playerFavorite"
                 aria-label="Ajouter aux favoris"
             >
                 ♡
@@ -433,102 +273,88 @@
         </div>
 
 
-        <!-- Contrôles -->
+        <!-- CONTRÔLES -->
         <div class="player-center">
 
-            <button
-                id="shuffleButton"
-                class="player-control"
-                aria-label="Lecture aléatoire"
-            >
-                🔀
-            </button>
+            <div class="player-controls">
 
+                <button
+                    class="control-button"
+                    id="shuffleButton"
+                    aria-label="Lecture aléatoire"
+                >
+                    🔀
+                </button>
 
-            <button
-                id="previousButton"
-                class="player-control"
-                aria-label="Morceau précédent"
-            >
-                ◀◀
-            </button>
+                <button
+                    class="control-button"
+                    id="previousButton"
+                    aria-label="Morceau précédent"
+                >
+                    ⏮
+                </button>
 
+                <button
+                    class="play-button"
+                    id="playButton"
+                    aria-label="Lecture"
+                >
+                    ▶
+                </button>
 
-            <button
-                id="playButton"
-                class="play-button"
-                aria-label="Lecture"
-            >
-                ▶
-            </button>
+                <button
+                    class="control-button"
+                    id="nextButton"
+                    aria-label="Morceau suivant"
+                >
+                    ⏭
+                </button>
 
-
-            <button
-                id="nextButton"
-                class="player-control"
-                aria-label="Morceau suivant"
-            >
-                ▶▶
-            </button>
-
-
-            <button
-                id="repeatButton"
-                class="player-control"
-                aria-label="Répéter"
-            >
-                🔁
-            </button>
-
-        </div>
-
-
-        <!-- Progression -->
-        <div class="progress-container">
-
-            <span id="currentTime">
-                0:00
-            </span>
-
-
-            <div
-                id="progressBar"
-                class="progress-bar"
-            >
-
-                <div
-                    id="progressFill"
-                    class="progress-fill"
-                ></div>
-
-
-                <div
-                    id="progressThumb"
-                    class="progress-thumb"
-                ></div>
+                <button
+                    class="control-button"
+                    id="repeatButton"
+                    aria-label="Répéter"
+                >
+                    🔁
+                </button>
 
             </div>
 
+            <div class="progress-container">
 
-            <span id="duration">
-                0:00
-            </span>
+                <span id="currentTime">
+                    0:00
+                </span>
+
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                >
+                    <div
+                        class="progress"
+                        id="progress"
+                    ></div>
+                </div>
+
+                <span id="duration">
+                    0:00
+                </span>
+
+            </div>
 
         </div>
 
 
-        <!-- Volume -->
+        <!-- VOLUME -->
         <div class="player-right">
 
             <span class="volume-icon">
                 🔊
             </span>
 
-
             <input
-                id="volumeSlider"
-                class="volume-slider"
                 type="range"
+                id="volumeControl"
                 min="0"
                 max="100"
                 value="80"
@@ -540,21 +366,19 @@
     </footer>
 
 
-    <!-- =====================================================
-         YOUTUBE PLAYER CACHÉ
-    ====================================================== -->
-
+    <!-- =========================
+         YOUTUBE PLAYER INVISIBLE
+    ========================== -->
     <div
         id="youtubePlayer"
-        class="youtube-player"
+        aria-hidden="true"
     ></div>
 
 
-    <!-- JavaScript -->
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
     <script src="script.js"></script>
 
 </body>
-
-</html>
-
-Ce HTML est compatible avec le "style.css" et le "script.js" qu’on vient de préparer.
+                    </html>
