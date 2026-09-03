@@ -1,10 +1,11 @@
 /* =========================================================
-   WAVEIFY
-   Music player
+   WAVEIFY — SCRIPT.JS
 ========================================================= */
 
 
-/* ================= YOUTUBE LINKS ================= */
+/* =========================================================
+   YOUTUBE LINKS
+========================================================= */
 
 const YOUTUBE_LINKS = [
     "https://www.youtube.com/watch?v=Pl1d5YSEg2w",
@@ -46,40 +47,42 @@ const YOUTUBE_LINKS = [
 ];
 
 
-/* ================= YOUTUBE ID ================= */
+/* =========================================================
+   YOUTUBE ID
+========================================================= */
 
 function getYouTubeId(url) {
     try {
-        const parsed = new URL(url);
-        return parsed.searchParams.get("v") || "";
+        const parsedUrl = new URL(url);
+        return parsedUrl.searchParams.get("v") || "";
     } catch (error) {
         return "";
     }
 }
 
 
-/* ================= TRACK DATA ================= */
+/* =========================================================
+   TRACKS
+========================================================= */
 
 const tracks = YOUTUBE_LINKS.map((url, index) => {
 
     const id = getYouTubeId(url);
 
     return {
-        id,
-        url,
-
-        title:
-            `Track ${String(index + 1).padStart(2, "0")}`,
-
+        id: id,
+        url: url,
+        title: `Track ${String(index + 1).padStart(2, "0")}`,
         artist: "Waveify",
-
-        thumbnail:
-            `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+        thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`
     };
+
 });
 
 
-/* ================= STATE ================= */
+/* =========================================================
+   STATE
+========================================================= */
 
 let currentTrackIndex = 0;
 
@@ -89,12 +92,19 @@ let isPlaying = false;
 let isShuffle = false;
 let isRepeat = false;
 
+
+/* =========================================================
+   FAVORITES
+========================================================= */
+
 let favorites = JSON.parse(
     localStorage.getItem("waveifyFavorites") || "[]"
 );
 
 
-/* ================= DOM ================= */
+/* =========================================================
+   DOM ELEMENTS
+========================================================= */
 
 const musicGrid =
     document.getElementById("musicGrid");
@@ -104,6 +114,15 @@ const libraryGrid =
 
 const favoritesGrid =
     document.getElementById("favoritesGrid");
+
+const emptyFavorites =
+    document.getElementById("emptyFavorites");
+
+const favoriteCount =
+    document.getElementById("favoriteCount");
+
+
+/* Player */
 
 const playerElement =
     document.querySelector(".player");
@@ -120,6 +139,9 @@ const playerArtist =
 const playerFavorite =
     document.getElementById("playerFavorite");
 
+
+/* Controls */
+
 const playButton =
     document.getElementById("playButton");
 
@@ -134,6 +156,9 @@ const shuffleButton =
 
 const repeatButton =
     document.getElementById("repeatButton");
+
+
+/* Progress */
 
 const progressBar =
     document.getElementById("progressBar");
@@ -150,21 +175,32 @@ const currentTimeElement =
 const durationElement =
     document.getElementById("duration");
 
+
+/* Volume */
+
 const volumeSlider =
     document.getElementById("volumeSlider");
 
-const favoriteCount =
-    document.getElementById("favoriteCount");
 
-const emptyFavorites =
-    document.getElementById("emptyFavorites");
+/* Mobile menu */
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+const sidebar =
+    document.querySelector(".sidebar");
+
+const closeSidebar =
+    document.getElementById("closeSidebar");
 
 
-/* ================= FORMAT TIME ================= */
+/* =========================================================
+   FORMAT TIME
+========================================================= */
 
 function formatTime(seconds) {
 
-    if (!seconds || isNaN(seconds)) {
+    if (!seconds || Number.isNaN(seconds)) {
         return "0:00";
     }
 
@@ -180,7 +216,9 @@ function formatTime(seconds) {
 }
 
 
-/* ================= ESCAPE HTML ================= */
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
 function escapeHtml(value) {
 
@@ -193,19 +231,24 @@ function escapeHtml(value) {
 }
 
 
-/* ================= CREATE CARD ================= */
+/* =========================================================
+   CREATE TRACK CARD
+========================================================= */
 
 function createTrackCard(track, index) {
 
     const isFavorite =
         favorites.includes(track.id);
 
+
     const card =
         document.createElement("article");
+
 
     card.className = "music-card";
 
     card.dataset.index = index;
+
 
     card.innerHTML = `
 
@@ -226,6 +269,7 @@ function createTrackCard(track, index) {
 
         </div>
 
+
         <div class="card-content">
 
             <div class="card-title-row">
@@ -234,8 +278,11 @@ function createTrackCard(track, index) {
                     ${escapeHtml(track.title)}
                 </strong>
 
+
                 <button
-                    class="card-heart ${isFavorite ? "favorite" : ""}"
+                    class="card-heart ${
+                        isFavorite ? "favorite" : ""
+                    }"
                     data-favorite="${track.id}"
                     aria-label="Ajouter aux favoris"
                 >
@@ -243,6 +290,7 @@ function createTrackCard(track, index) {
                 </button>
 
             </div>
+
 
             <div class="card-artist">
                 ${escapeHtml(track.artist)}
@@ -252,39 +300,50 @@ function createTrackCard(track, index) {
     `;
 
 
+    /* Lecture */
+
     const play =
         card.querySelector(".card-play");
 
+
     play.addEventListener(
         "click",
-        (event) => {
+        event => {
 
             event.stopPropagation();
 
             playTrack(index);
+
         }
     );
 
+
+    /* Favori */
 
     const heart =
         card.querySelector(".card-heart");
 
+
     heart.addEventListener(
         "click",
-        (event) => {
+        event => {
 
             event.stopPropagation();
 
             toggleFavorite(track.id);
+
         }
     );
 
+
+    /* Double clic */
 
     card.addEventListener(
         "dblclick",
         () => {
 
             playTrack(index);
+
         }
     );
 
@@ -293,18 +352,22 @@ function createTrackCard(track, index) {
 }
 
 
-/* ================= RENDER TRACKS ================= */
+/* =========================================================
+   RENDER TRACKS
+========================================================= */
 
 function renderTracks() {
 
     musicGrid.innerHTML = "";
     libraryGrid.innerHTML = "";
 
+
     tracks.forEach((track, index) => {
 
         musicGrid.appendChild(
             createTrackCard(track, index)
         );
+
 
         libraryGrid.appendChild(
             createTrackCard(track, index)
@@ -314,11 +377,14 @@ function renderTracks() {
 }
 
 
-/* ================= RENDER FAVORITES ================= */
+/* =========================================================
+   RENDER FAVORITES
+========================================================= */
 
 function renderFavorites() {
 
     favoritesGrid.innerHTML = "";
+
 
     const favoriteTracks =
         tracks.filter(track =>
@@ -328,9 +394,7 @@ function renderFavorites() {
 
     favoriteCount.textContent =
         `${favoriteTracks.length} morceau${
-            favoriteTracks.length > 1
-                ? "x"
-                : ""
+            favoriteTracks.length > 1 ? "x" : ""
         }`;
 
 
@@ -349,9 +413,9 @@ function renderFavorites() {
 
         const index =
             tracks.findIndex(
-                item =>
-                    item.id === track.id
+                item => item.id === track.id
             );
+
 
         favoritesGrid.appendChild(
             createTrackCard(track, index)
@@ -361,7 +425,9 @@ function renderFavorites() {
 }
 
 
-/* ================= FAVORITES ================= */
+/* =========================================================
+   TOGGLE FAVORITE
+========================================================= */
 
 function toggleFavorite(trackId) {
 
@@ -375,6 +441,7 @@ function toggleFavorite(trackId) {
     } else {
 
         favorites.push(trackId);
+
     }
 
 
@@ -385,18 +452,22 @@ function toggleFavorite(trackId) {
 
 
     renderTracks();
+
     renderFavorites();
 
     updatePlayerFavorite();
 }
 
 
-/* ================= PLAYER FAVORITE ================= */
+/* =========================================================
+   PLAYER FAVORITE
+========================================================= */
 
 function updatePlayerFavorite() {
 
     const track =
         tracks[currentTrackIndex];
+
 
     if (!track) {
         return;
@@ -418,7 +489,40 @@ function updatePlayerFavorite() {
 }
 
 
-/* ================= LOAD TRACK ================= */
+/* =========================================================
+   UPDATE PLAYER INFO
+========================================================= */
+
+function updatePlayerInfo() {
+
+    const track =
+        tracks[currentTrackIndex];
+
+
+    if (!track) {
+        return;
+    }
+
+
+    playerTitle.textContent =
+        track.title;
+
+
+    playerArtist.textContent =
+        track.artist;
+
+
+    playerCover.src =
+        track.thumbnail;
+
+
+    updatePlayerFavorite();
+}
+
+
+/* =========================================================
+   LOAD TRACK
+========================================================= */
 
 function loadTrack(index, autoplay = true) {
 
@@ -429,21 +533,7 @@ function loadTrack(index, autoplay = true) {
 
     currentTrackIndex = index;
 
-    const track =
-        tracks[currentTrackIndex];
-
-
-    playerTitle.textContent =
-        track.title;
-
-    playerArtist.textContent =
-        track.artist;
-
-    playerCover.src =
-        track.thumbnail;
-
-
-    updatePlayerFavorite();
+    updatePlayerInfo();
 
 
     if (!player) {
@@ -451,7 +541,9 @@ function loadTrack(index, autoplay = true) {
     }
 
 
-    player.loadVideoById(track.id);
+    player.loadVideoById(
+        tracks[index].id
+    );
 
 
     if (!autoplay) {
@@ -465,7 +557,9 @@ function loadTrack(index, autoplay = true) {
 }
 
 
-/* ================= PLAY TRACK ================= */
+/* =========================================================
+   PLAY TRACK
+========================================================= */
 
 function playTrack(index) {
 
@@ -476,42 +570,30 @@ function playTrack(index) {
 
     currentTrackIndex = index;
 
-    const track =
-        tracks[currentTrackIndex];
+    updatePlayerInfo();
 
-
-    playerTitle.textContent =
-        track.title;
-
-    playerArtist.textContent =
-        track.artist;
-
-    playerCover.src =
-        track.thumbnail;
-
-
-    updatePlayerFavorite();
-
-
-    if (player) {
-
-        player.loadVideoById(track.id);
-
-        player.playVideo();
-    }
-}
-
-
-/* ================= PLAY / PAUSE ================= */
-
-function togglePlay() {
 
     if (!player) {
         return;
     }
 
 
-    if (!tracks[currentTrackIndex]) {
+    player.loadVideoById(
+        tracks[index].id
+    );
+
+
+    player.playVideo();
+}
+
+
+/* =========================================================
+   PLAY / PAUSE
+========================================================= */
+
+function togglePlay() {
+
+    if (!player) {
         return;
     }
 
@@ -523,17 +605,26 @@ function togglePlay() {
     } else {
 
         player.playVideo();
+
     }
 }
 
 
-/* ================= NEXT ================= */
+/* =========================================================
+   NEXT TRACK
+========================================================= */
 
 function nextTrack() {
+
+    if (!tracks.length) {
+        return;
+    }
+
 
     if (isShuffle) {
 
         let nextIndex;
+
 
         do {
 
@@ -568,7 +659,9 @@ function nextTrack() {
 }
 
 
-/* ================= PREVIOUS ================= */
+/* =========================================================
+   PREVIOUS TRACK
+========================================================= */
 
 function previousTrack() {
 
@@ -576,6 +669,7 @@ function previousTrack() {
 
         const currentTime =
             player.getCurrentTime();
+
 
         if (currentTime > 3) {
 
@@ -601,7 +695,9 @@ function previousTrack() {
 }
 
 
-/* ================= PLAY ALL ================= */
+/* =========================================================
+   PLAY ALL
+========================================================= */
 
 function playAll() {
 
@@ -609,11 +705,14 @@ function playAll() {
         return;
     }
 
+
     playTrack(0);
 }
 
 
-/* ================= PLAY BUTTON ================= */
+/* =========================================================
+   UPDATE PLAY BUTTON
+========================================================= */
 
 function updatePlayButton() {
 
@@ -628,7 +727,9 @@ function updatePlayButton() {
 }
 
 
-/* ================= PROGRESS ================= */
+/* =========================================================
+   UPDATE PROGRESS
+========================================================= */
 
 function updateProgress() {
 
@@ -641,6 +742,7 @@ function updateProgress() {
 
         const current =
             player.getCurrentTime();
+
 
         const duration =
             player.getDuration();
@@ -664,6 +766,7 @@ function updateProgress() {
         progressFill.style.width =
             `${percentage}%`;
 
+
         progressThumb.style.left =
             `${percentage}%`;
 
@@ -671,17 +774,21 @@ function updateProgress() {
         currentTimeElement.textContent =
             formatTime(current);
 
+
         durationElement.textContent =
             formatTime(duration);
 
     } catch (error) {
 
-        // Le player YouTube n'est pas encore prêt.
+        // YouTube player pas encore prêt.
+
     }
 }
 
 
-/* ================= SEEK ================= */
+/* =========================================================
+   SEEK
+========================================================= */
 
 function seek(event) {
 
@@ -692,6 +799,11 @@ function seek(event) {
 
     const rect =
         progressBar.getBoundingClientRect();
+
+
+    if (!rect.width) {
+        return;
+    }
 
 
     const percentage =
@@ -715,11 +827,14 @@ function seek(event) {
             duration * percentage,
             true
         );
+
     }
 }
 
 
-/* ================= VOLUME ================= */
+/* =========================================================
+   VOLUME
+========================================================= */
 
 function updateVolume() {
 
@@ -734,47 +849,51 @@ function updateVolume() {
 }
 
 
-/* ================= NAVIGATION ================= */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 function showSection(section) {
 
-    const home =
-        document.getElementById(
-            "homeSection"
-        );
+    const homeSection =
+        document.getElementById("homeSection");
 
-    const library =
-        document.getElementById(
-            "librarySection"
-        );
+
+    const librarySection =
+        document.getElementById("librarySection");
+
 
     const favoritesSection =
-        document.getElementById(
-            "favoritesSection"
-        );
+        document.getElementById("favoritesSection");
 
 
-    home.style.display = "none";
-    library.style.display = "none";
+    homeSection.style.display = "none";
+
+    librarySection.style.display = "none";
+
     favoritesSection.style.display = "none";
 
 
     if (section === "home") {
-        home.style.display = "block";
+
+        homeSection.style.display = "block";
+
     }
 
 
     if (section === "library") {
-        library.style.display = "block";
+
+        librarySection.style.display = "block";
+
     }
 
 
     if (section === "favorites") {
 
-        favoritesSection.style.display =
-            "block";
+        favoritesSection.style.display = "block";
 
         renderFavorites();
+
     }
 
 
@@ -797,7 +916,9 @@ function showSection(section) {
 }
 
 
-/* ================= NAV BUTTONS ================= */
+/* =========================================================
+   NAV BUTTONS
+========================================================= */
 
 document
     .querySelectorAll(".nav-item")
@@ -811,27 +932,52 @@ document
                     button.dataset.section
                 );
 
+
+                /* Fermer le menu téléphone */
+
+                if (sidebar) {
+
+                    sidebar.classList.remove(
+                        "open"
+                    );
+
+                }
+
             }
         );
 
     });
 
 
-/* ================= PLAY ALL ================= */
+/* =========================================================
+   PLAY ALL BUTTON
+========================================================= */
 
-document
-    .getElementById("playAllButton")
-    .addEventListener(
+const playAllButton =
+    document.getElementById("playAllButton");
+
+
+if (playAllButton) {
+
+    playAllButton.addEventListener(
         "click",
         playAll
     );
 
+}
 
-/* ================= SEE ALL ================= */
 
-document
-    .getElementById("seeAllButton")
-    .addEventListener(
+/* =========================================================
+   SEE ALL BUTTON
+========================================================= */
+
+const seeAllButton =
+    document.getElementById("seeAllButton");
+
+
+if (seeAllButton) {
+
+    seeAllButton.addEventListener(
         "click",
         () => {
 
@@ -840,12 +986,22 @@ document
         }
     );
 
+}
 
-/* ================= PLAYER BUTTONS ================= */
+
+/* =========================================================
+   PLAYER CONTROLS
+========================================================= */
 
 playButton.addEventListener(
     "click",
     togglePlay
+);
+
+
+previousButton.addEventListener(
+    "click",
+    previousTrack
 );
 
 
@@ -855,11 +1011,7 @@ nextButton.addEventListener(
 );
 
 
-previousButton.addEventListener(
-    "click",
-    previousTrack
-);
-
+/* Shuffle */
 
 shuffleButton.addEventListener(
     "click",
@@ -878,6 +1030,8 @@ shuffleButton.addEventListener(
 );
 
 
+/* Repeat */
+
 repeatButton.addEventListener(
     "click",
     () => {
@@ -895,11 +1049,15 @@ repeatButton.addEventListener(
 );
 
 
+/* Progress */
+
 progressBar.addEventListener(
     "click",
     seek
 );
 
+
+/* Volume */
 
 volumeSlider.addEventListener(
     "input",
@@ -907,7 +1065,9 @@ volumeSlider.addEventListener(
 );
 
 
-/* ================= PLAYER FAVORITE ================= */
+/* =========================================================
+   PLAYER FAVORITE
+========================================================= */
 
 playerFavorite.addEventListener(
     "click",
@@ -916,227 +1076,32 @@ playerFavorite.addEventListener(
         const track =
             tracks[currentTrackIndex];
 
+
         if (track) {
 
             toggleFavorite(
                 track.id
             );
+
         }
 
     }
 );
 
 
-/* ================= MOBILE SIDEBAR ================= */
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
 
-const mobileMenu =
-    document.getElementById(
-        "mobileMenu"
-    );
+/* Ouvrir / fermer avec ☰ */
 
-const sidebar =
-    document.querySelector(
-        ".sidebar"
-    );
+if (mobileMenu && sidebar) {
 
-
-mobileMenu.addEventListener(
-    "click",
-    () => {
-
-        sidebar.classList.toggle(
-            "open"
-        );
-
-    }
-);
-
-
-/* Fermer le menu mobile après navigation */
-
-document
-    .querySelectorAll(".nav-item")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                sidebar.classList.remove(
-                    "open"
-                );
-
-            }
-        );
-
-    });
-
-
-/* ================= NOTIFICATION ================= */
-
-document
-    .getElementById("notificationButton")
-    .addEventListener(
+    mobileMenu.addEventListener(
         "click",
-        () => {
+        event => {
 
-            alert(
-                "Bienvenue sur Waveify 🎵"
-            );
+            event.stopPropagation();
 
-        }
-    );
-
-
-/* ================= YOUTUBE API ================= */
-
-/*
-    L'API YouTube appelle automatiquement
-    cette fonction lorsqu'elle est chargée.
-*/
-
-window.onYouTubeIframeAPIReady =
-    function () {
-
-        player =
-            new YT.Player(
-                "youtubePlayer",
-                {
-
-                    height: "1",
-                    width: "1",
-
-                    videoId:
-                        tracks[0].id,
-
-                    playerVars: {
-
-                        autoplay: 0,
-
-                        controls: 0,
-
-                        disablekb: 1,
-
-                        fs: 0,
-
-                        modestbranding: 1,
-
-                        playsinline: 1,
-
-                        rel: 0
-
-                    },
-
-
-                    events: {
-
-                        onReady:
-                            function (event) {
-
-                                event.target.setVolume(
-                                    Number(
-                                        volumeSlider.value
-                                    )
-                                );
-
-
-                                loadTrack(
-                                    0,
-                                    false
-                                );
-
-                            },
-
-
-                        onStateChange:
-                            function (event) {
-
-                                handlePlayerState(
-                                    event.data
-                                );
-
-                            }
-
-                    }
-
-                }
-            );
-
-    };
-
-
-/* ================= YOUTUBE STATES ================= */
-
-function handlePlayerState(state) {
-
-    if (
-        state === YT.PlayerState.PLAYING
-    ) {
-
-        isPlaying = true;
-    }
-
-
-    if (
-        state === YT.PlayerState.PAUSED
-    ) {
-
-        isPlaying = false;
-    }
-
-
-    if (
-        state === YT.PlayerState.ENDED
-    ) {
-
-        isPlaying = false;
-
-
-        if (isRepeat) {
-
-            player.seekTo(
-                0,
-                true
-            );
-
-            player.playVideo();
-
-        } else {
-
-            nextTrack();
-        }
-    }
-
-
-    updatePlayButton();
-}
-
-
-/* ================= INITIALIZE ================= */
-
-renderTracks();
-
-renderFavorites();
-
-updatePlayButton();
-
-
-/* ================= PROGRESS LOOP ================= */
-
-setInterval(
-    updateProgress,
-    500
-);
-
-
-/* ================= LOAD YOUTUBE API ================= */
-
-const youtubeScript =
-    document.createElement("script");
-
-youtubeScript.src =
-    "https://www.youtube.com/iframe_api";
-
-document
-    .head
-    .appendChild(youtubeScript);
+            sidebar.classList.toggle(
+       
