@@ -1,1449 +1,1071 @@
 /* =========================================================
-   WAVEIFY
-   Music player
-   ========================================================= */
+WAVEIFY
+Music player
+========================================================= */
+
+/* ================= YOUTUBE LINKS ================= */
+
+const YOUTUBE_LINKS = [
+"https://www.youtube.com/watch?v=Pl1d5YSEg2w",
+"https://www.youtube.com/watch?v=y1T2LQ2bym4",
+"https://www.youtube.com/watch?v=SX0u0s5h4as",
+"https://www.youtube.com/watch?v=mdcBqqWj3kY",
+"https://www.youtube.com/watch?v=n2THLWjJ3Wo",
+"https://www.youtube.com/watch?v=Snhn9wB-z1w",
+"https://www.youtube.com/watch?v=xlmyDTa_S6M",
+"https://www.youtube.com/watch?v=rDrIRNUaE6s",
+"https://www.youtube.com/watch?v=EXYj9wecau4",
+"https://www.youtube.com/watch?v=ShR_fQrqsdA",
+"https://www.youtube.com/watch?v=pN-TLYBDkWc",
+"https://www.youtube.com/watch?v=00ff2UcGLu0",
+"https://www.youtube.com/watch?v=c8qXCL-ElfA",
+"https://www.youtube.com/watch?v=pEBFJI-g9AA",
+"https://www.youtube.com/watch?v=63fJnwefxBk",
+"https://www.youtube.com/watch?v=gZXijVptbic",
+"https://www.youtube.com/watch?v=QzZflH4liuU",
+"https://www.youtube.com/watch?v=MFHiEocxkdM",
+"https://www.youtube.com/watch?v=2uM9ZIS-v0w",
+"https://www.youtube.com/watch?v=Qq7Q6CLCfvs",
+"https://www.youtube.com/watch?v=cYi1jI7uLa0",
+"https://www.youtube.com/watch?v=MqiljVyq_1o",
+"https://www.youtube.com/watch?v=KTYp4guSwLg",
+"https://www.youtube.com/watch?v=vaeio3idHzU",
+"https://www.youtube.com/watch?v=FaXqep3IsZw",
+"https://www.youtube.com/watch?v=VIs9zdNq_IU",
+"https://www.youtube.com/watch?v=JwVm-DHKH_U",
+"https://www.youtube.com/watch?v=zNEU9VExoWE",
+"https://www.youtube.com/watch?v=WudXzTex5JQ",
+"https://www.youtube.com/watch?v=pxjsZK_fkO4",
+"https://www.youtube.com/watch?v=dIJuNqS9c3w",
+"https://www.youtube.com/watch?v=BJwovrr6XzI",
+"https://www.youtube.com/watch?v=yx9WQ0hrsdk",
+"https://www.youtube.com/watch?v=0uLp-tejcSo",
+"https://www.youtube.com/watch?v=w4CI96-D2Zg",
+"https://www.youtube.com/watch?v=HqJ1qP05Si0"
+];
 
+/* ================= YOUTUBE ID ================= */
 
-/* ================= VARIABLES ================= */
-
-:root {
-    --bg: #080808;
-    --bg-light: #111111;
-    --bg-card: #151515;
-    --bg-card-hover: #1d1d1d;
-
-    --text: #ffffff;
-    --text-secondary: #a7a7a7;
-    --text-dark: #777777;
-
-    --accent: #1ed760;
-    --accent-light: #56ff91;
-
-    --border: rgba(255, 255, 255, 0.08);
-
-    --sidebar-width: 250px;
-    --player-height: 92px;
-
-    --radius: 14px;
-}
-
-
-/* ================= RESET ================= */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    min-height: 100vh;
-
-    background: var(--bg);
-    color: var(--text);
-
-    font-family: "Inter", sans-serif;
-
-    overflow-x: hidden;
-}
-
-button,
-input {
-    font: inherit;
-}
-
-button {
-    border: 0;
-    cursor: pointer;
-}
-
-img {
-    display: block;
-    max-width: 100%;
-}
-
-
-/* ================= SIDEBAR ================= */
-
-.sidebar {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-    bottom: var(--player-height);
-
-    width: var(--sidebar-width);
-
-    z-index: 1000;
-
-    display: flex;
-    flex-direction: column;
-
-    padding: 28px 18px 18px;
-
-    background: #0b0b0b;
-
-    border-right: 1px solid var(--border);
-
-    overflow: hidden;
-}
-
-
-/* ================= LOGO ================= */
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-
-    padding: 0 10px 30px;
-
-    font-size: 23px;
-    font-weight: 800;
-    letter-spacing: -0.7px;
-}
-
-.logo-icon {
-    width: 30px;
-    height: 30px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 3px;
-
-    padding: 5px;
-
-    border-radius: 9px;
-
-    background: var(--accent);
-}
-
-.logo-icon span {
-    width: 3px;
-
-    border-radius: 5px;
-
-    background: #000;
-}
-
-.logo-icon span:nth-child(1) {
-    height: 10px;
-}
-
-.logo-icon span:nth-child(2) {
-    height: 17px;
-}
-
-.logo-icon span:nth-child(3) {
-    height: 13px;
-}
-
-
-/* ================= NAVIGATION ================= */
-
-.main-nav {
-    display: flex;
-    flex-direction: column;
-
-    gap: 5px;
-}
-
-.nav-item {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 13px 14px;
-
-    border-radius: 10px;
-
-    background: transparent;
-
-    color: var(--text-secondary);
-
-    font-size: 14px;
-    font-weight: 600;
-
-    text-align: left;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.nav-item svg {
-    width: 21px;
-    height: 21px;
-
-    fill: none;
-    stroke: currentColor;
-
-    stroke-width: 1.8;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
-
-    flex-shrink: 0;
-}
-
-.nav-item:hover {
-    color: var(--text);
-
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.nav-item.active {
-    color: #000;
-
-    background: var(--accent);
-}
-
-.nav-item.active:hover {
-    background: var(--accent-light);
-}
-
-
-/* ================= SIDEBAR BOTTOM ================= */
-
-.sidebar-bottom {
-    margin-top: auto;
-}
-
-
-/* ================= USER CARD ================= */
-
-.user-card {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 12px;
-
-    border-radius: 12px;
-
-    background: rgba(255, 255, 255, 0.045);
-}
-
-.user-card .avatar {
-    width: 35px;
-    height: 35px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
-
-    border-radius: 50%;
-
-    background: var(--accent);
-
-    color: #000;
-
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.user-card > div:nth-child(2) {
-    min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 2px;
-}
-
-.user-card strong {
-    max-width: 125px;
-
-    overflow: hidden;
-
-    white-space: nowrap;
-
-    text-overflow: ellipsis;
-
-    font-size: 12px;
-}
-
-.user-card small {
-    color: var(--text-dark);
-
-    font-size: 10px;
-}
-
-.more-button {
-    margin-left: auto;
-
-    padding: 4px;
-
-    background: transparent;
-
-    color: var(--text-secondary);
-
-    font-size: 15px;
-
-    letter-spacing: 2px;
-}
-
-.more-button:hover {
-    color: var(--text);
-}
-
-
-/* ================= MAIN CONTENT ================= */
-
-.main-content {
-    min-height: calc(100vh - var(--player-height));
-
-    margin-left: var(--sidebar-width);
-
-    padding: 0 42px 120px;
-}
-
-
-/* ================= TOPBAR ================= */
-
-.topbar {
-    height: 80px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.welcome span {
-    color: var(--text-dark);
-
-    font-size: 11px;
-    font-weight: 700;
-
-    letter-spacing: 1.8px;
-}
-
-.top-actions {
-    display: flex;
-    align-items: center;
-
-    gap: 14px;
-}
-
-.icon-button {
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.05);
-
-    color: var(--text-secondary);
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
-}
-
-.icon-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-
-    color: var(--text);
-}
-
-.icon-button svg {
-    width: 19px;
-    height: 19px;
-
-    fill: none;
-    stroke: currentColor;
-
-    stroke-width: 1.7;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.top-avatar {
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #222;
-
-    color: var(--accent);
-
-    font-size: 14px;
-    font-weight: 800;
-}
-
-
-/* ================= MOBILE MENU ================= */
-
-.mobile-menu {
-    display: none;
-
-    width: 40px;
-    height: 40px;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    background: rgba(255, 255, 255, 0.06);
-
-    color: var(--text);
-
-    font-size: 20px;
-}
-
-
-/* ================= HERO ================= */
-
-.hero {
-    position: relative;
-
-    min-height: 350px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 48px 52px;
-
-    overflow: hidden;
-
-    border-radius: 22px;
-
-    background:
-        radial-gradient(
-            circle at 80% 30%,
-            rgba(30, 215, 96, 0.2),
-            transparent 35%
-        ),
-        linear-gradient(
-            135deg,
-            #151515,
-            #0d0d0d
-        );
-}
-
-.hero-background {
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle at 75% 70%,
-            rgba(30, 215, 96, 0.12),
-            transparent 35%
-        );
-
-    pointer-events: none;
-}
-
-.hero-content {
-    position: relative;
-
-    z-index: 2;
-
-    max-width: 550px;
-}
-
-.hero-label {
-    display: flex;
-    align-items: center;
-
-    gap: 9px;
-
-    margin-bottom: 18px;
-
-    color: var(--accent);
-
-    font-size: 11px;
-    font-weight: 800;
-
-    letter-spacing: 2px;
-}
-
-.pulse-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: var(--accent);
-
-    box-shadow:
-        0 0 0 5px rgba(30, 215, 96, 0.12);
-
-    animation: pulse 1.8s infinite;
-}
-
-@keyframes pulse {
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(0.75);
-        opacity: 0.6;
-    }
-}
-
-.hero h1 {
-    margin-bottom: 18px;
-
-    font-size: clamp(42px, 5vw, 68px);
-
-    line-height: 0.98;
-
-    letter-spacing: -3px;
-}
-
-.hero h1 span {
-    color: var(--accent);
+function getYouTubeId(url) {
+try {
+const parsed = new URL(url);
+return parsed.searchParams.get("v") || "";
+} catch (error) {
+return "";
 }
-
-.hero p {
-    max-width: 470px;
-
-    margin-bottom: 27px;
-
-    color: var(--text-secondary);
-
-    font-size: 14px;
-
-    line-height: 1.7;
 }
 
-.hero-button {
-    display: inline-flex;
-    align-items: center;
+/* ================= TRACK DATA ================= */
 
-    gap: 10px;
+const tracks = YOUTUBE_LINKS.map((url, index) => {
+const id = getYouTubeId(url);
 
-    padding: 13px 21px;
+return {
+id,
+url,
 
-    border-radius: 999px;
+title:    
+    `Track ${String(index + 1).padStart(2, "0")}`,    
 
-    background: var(--accent);
+artist: "Waveify",    
 
-    color: #000;
+thumbnail:    
+    `https://img.youtube.com/vi/${id}/hqdefault.jpg`
 
-    font-size: 13px;
-    font-weight: 800;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
-}
+};
 
-.hero-button:hover {
-    transform: translateY(-2px);
+});
 
-    background: var(--accent-light);
+/* ================= STATE ================= */
 
-    box-shadow:
-        0 8px 30px rgba(30, 215, 96, 0.2);
-}
+let currentTrackIndex = 0;
 
-.play-symbol {
-    font-size: 12px;
-}
+let player = null;
 
+let isPlaying = false;
+let isShuffle = false;
+let isRepeat = false;
 
-/* ================= HERO WAVES ================= */
+let favorites = JSON.parse(
+localStorage.getItem("waveifyFavorites") || "[]"
+);
 
-.hero-waves {
-    position: absolute;
+/* ================= DOM ================= */
 
-    right: 50px;
-    bottom: 35px;
+const musicGrid =
+document.getElementById("musicGrid");
 
-    width: 300px;
-    height: 180px;
+const libraryGrid =
+document.getElementById("libraryGrid");
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+const favoritesGrid =
+document.getElementById("favoritesGrid");
 
-    gap: 7px;
+const playerElement =
+document.querySelector(".player");
 
-    opacity: 0.25;
-}
+const playerCover =
+document.getElementById("playerCover");
 
-.hero-waves div {
-    width: 7px;
+const playerTitle =
+document.getElementById("playerTitle");
 
-    height: 30px;
+const playerArtist =
+document.getElementById("playerArtist");
 
-    border-radius: 999px;
+const playerFavorite =
+document.getElementById("playerFavorite");
 
-    background: var(--accent);
+const playButton =
+document.getElementById("playButton");
 
-    animation: wave 1.2s ease-in-out infinite alternate;
-}
+const previousButton =
+document.getElementById("previousButton");
 
-.hero-waves div:nth-child(2) {
-    animation-delay: -0.2s;
-}
+const nextButton =
+document.getElementById("nextButton");
 
-.hero-waves div:nth-child(3) {
-    animation-delay: -0.4s;
-}
+const shuffleButton =
+document.getElementById("shuffleButton");
 
-.hero-waves div:nth-child(4) {
-    animation-delay: -0.6s;
-}
+const repeatButton =
+document.getElementById("repeatButton");
 
-.hero-waves div:nth-child(5) {
-    animation-delay: -0.8s;
-}
+const progressBar =
+document.getElementById("progressBar");
 
-.hero-waves div:nth-child(6) {
-    animation-delay: -1s;
-}
+const progressFill =
+document.getElementById("progressFill");
 
-.hero-waves div:nth-child(7) {
-    animation-delay: -0.3s;
-}
+const progressThumb =
+document.getElementById("progressThumb");
 
-.hero-waves div:nth-child(8) {
-    animation-delay: -0.5s;
-}
+const currentTimeElement =
+document.getElementById("currentTime");
 
-.hero-waves div:nth-child(9) {
-    animation-delay: -0.7s;
-}
+const durationElement =
+document.getElementById("duration");
 
-.hero-waves div:nth-child(10) {
-    animation-delay: -0.9s;
-}
+const volumeSlider =
+document.getElementById("volumeSlider");
 
-.hero-waves div:nth-child(11) {
-    animation-delay: -0.1s;
-}
+const favoriteCount =
+document.getElementById("favoriteCount");
 
-.hero-waves div:nth-child(12) {
-    animation-delay: -0.4s;
-}
+const emptyFavorites =
+document.getElementById("emptyFavorites");
 
-@keyframes wave {
-    from {
-        height: 25px;
-    }
+/* ================= FORMAT TIME ================= */
 
-    to {
-        height: 135px;
-    }
+function formatTime(seconds) {
+if (!seconds || isNaN(seconds)) {
+return "0:00";
 }
-
 
-/* ================= SECTIONS ================= */
+const minutes =
+Math.floor(seconds / 60);
 
-.music-section {
-    padding-top: 42px;
-}
+const remainingSeconds =
+Math.floor(seconds % 60)
+.toString()
+.padStart(2, "0");
 
-.section-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+return ${minutes}:${remainingSeconds};
 
-    margin-bottom: 22px;
 }
 
-.section-header h2 {
-    margin-bottom: 5px;
+/* ================= ESCAPE HTML ================= */
 
-    font-size: 22px;
-
-    letter-spacing: -0.5px;
+function escapeHtml(value) {
+return String(value)
+.replaceAll("&", "&")
+.replaceAll("<", "<")
+.replaceAll(">", ">")
+.replaceAll('"', """)
+.replaceAll("'", "'");
 }
 
-.section-header p {
-    color: var(--text-dark);
+/* ================= CREATE CARD ================= */
 
-    font-size: 12px;
-}
+function createTrackCard(track, index) {
+const isFavorite =
+favorites.includes(track.id);
 
-.see-all {
-    background: transparent;
+const card =
+document.createElement("article");
 
-    color: var(--text-secondary);
+card.className = "music-card";
 
-    font-size: 12px;
-    font-weight: 600;
-}
+card.dataset.index = index;
 
-.see-all:hover {
-    color: var(--accent);
-}
+card.innerHTML = `
 
+<div class="card-cover">    
 
-/* ================= MUSIC GRID ================= */
+    <img    
+        src="${track.thumbnail}"    
+        alt="${escapeHtml(track.title)}"    
+        loading="lazy"    
+    >    
 
-.music-grid {
-    display: grid;
+    <button    
+        class="card-play"    
+        aria-label="Lire ${escapeHtml(track.title)}"    
+    >    
+        ▶    
+    </button>    
 
-    grid-template-columns:
-        repeat(
-            auto-fill,
-            minmax(165px, 1fr)
-        );
+</div>    
 
-    gap: 20px;
-}
+<div class="card-content">    
 
+    <div class="card-title-row">    
 
-/* ================= MUSIC CARD ================= */
+        <strong class="card-title">    
+            ${escapeHtml(track.title)}    
+        </strong>    
 
-.music-card {
-    min-width: 0;
+        <button    
+            class="card-heart ${isFavorite ? "favorite" : ""}"    
+            data-favorite="${track.id}"    
+            aria-label="Ajouter aux favoris"    
+        >    
+            ${isFavorite ? "♥" : "♡"}    
+        </button>    
 
-    padding: 10px;
+    </div>    
 
-    border-radius: var(--radius);
+    <div class="card-artist">    
+        ${escapeHtml(track.artist)}    
+    </div>    
 
-    background: var(--bg-card);
+</div>
 
-    transition:
-        background 0.25s ease,
-        transform 0.25s ease;
-}
+`;
 
-.music-card:hover {
-    background: var(--bg-card-hover);
+const play =
+card.querySelector(".card-play");
 
-    transform: translateY(-4px);
+play.addEventListener(
+"click",
+(event) => {
+event.stopPropagation();
+playTrack(index);
 }
-
-
-/* ================= CARD COVER ================= */
+);
 
-.card-cover {
-    position: relative;
+const heart =
+card.querySelector(".card-heart");
 
-    aspect-ratio: 1 / 1;
-
-    overflow: hidden;
-
-    border-radius: 10px;
-
-    background: #222;
+heart.addEventListener(
+"click",
+(event) => {
+event.stopPropagation();
+toggleFavorite(track.id);
 }
-
-.card-cover img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
+);
 
-    transition:
-        transform 0.35s ease,
-        filter 0.35s ease;
+card.addEventListener(
+"dblclick",
+() => {
+playTrack(index);
 }
+);
 
-.music-card:hover .card-cover img {
-    transform: scale(1.05);
+return card;
 
-    filter: brightness(0.65);
 }
-
-
-/* ================= CARD PLAY ================= */
-
-.card-play {
-    position: absolute;
-
-    right: 10px;
-    bottom: 10px;
-
-    width: 42px;
-    height: 42px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* ================= RENDER TRACKS ================= */
 
-    border-radius: 50%;
+function renderTracks() {
+musicGrid.innerHTML = "";
+libraryGrid.innerHTML = "";
 
-    background: var(--accent);
+tracks.forEach((track, index) => {
 
-    color: #000;
+musicGrid.appendChild(    
+    createTrackCard(track, index)    
+);    
 
-    font-size: 13px;
+libraryGrid.appendChild(    
+    createTrackCard(track, index)    
+);
 
-    opacity: 0;
+});
 
-    transform: translateY(8px);
-
-    transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
 }
-
-.music-card:hover .card-play {
-    opacity: 1;
 
-    transform: translateY(0);
-}
+/* ================= RENDER FAVORITES ================= */
 
-.card-play:hover {
-    background: var(--accent-light);
+function renderFavorites() {
+favoritesGrid.innerHTML = "";
 
-    transform: scale(1.06);
-}
+const favoriteTracks =
+tracks.filter(track =>
+favorites.includes(track.id)
+);
 
+favoriteCount.textContent =
+${favoriteTracks.length} morceau${     favoriteTracks.length > 1     ? "x"     : ""     };
 
-/* ================= CARD CONTENT ================= */
+if (favoriteTracks.length === 0) {
 
-.card-content {
-    padding: 12px 3px 4px;
-}
+emptyFavorites.classList.add("show");    
 
-.card-title-row {
-    display: flex;
-    align-items: center;
+return;
 
-    gap: 8px;
 }
 
-.card-title {
-    min-width: 0;
+emptyFavorites.classList.remove("show");
 
-    overflow: hidden;
+favoriteTracks.forEach(track => {
 
-    white-space: nowrap;
+const index =    
+    tracks.findIndex(    
+        item =>    
+            item.id === track.id    
+    );    
 
-    text-overflow: ellipsis;
+favoritesGrid.appendChild(    
+    createTrackCard(track, index)    
+);
 
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.card-artist {
-    margin-top: 5px;
-
-    color: var(--text-dark);
+});
 
-    font-size: 11px;
 }
-
-
-/* ================= CARD HEART ================= */
-
-.card-heart {
-    width: 25px;
-    height: 25px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* ================= FAVORITES ================= */
 
-    flex-shrink: 0;
+function toggleFavorite(trackId) {
 
-    border-radius: 50%;
+if (favorites.includes(trackId)) {
 
-    background: transparent;
+favorites =    
+    favorites.filter(    
+        id => id !== trackId    
+    );
 
-    color: var(--text-dark);
+} else {
 
-    font-size: 18px;
+favorites.push(trackId);
 
-    line-height: 1;
-
-    transition:
-        color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.card-heart:hover {
-    color: var(--text);
-
-    transform: scale(1.12);
 }
 
-.card-heart.favorite {
-    color: var(--accent);
-}
+localStorage.setItem(
+"waveifyFavorites",
+JSON.stringify(favorites)
+);
 
+renderTracks();
+renderFavorites();
 
-/* ================= PAGE TITLE ================= */
+updatePlayerFavorite();
 
-.page-title {
-    padding: 45px 0 32px;
 }
 
-.page-title > span {
-    color: var(--accent);
+/* ================= PLAYER FAVORITE ================= */
 
-    font-size: 10px;
-    font-weight: 800;
+function updatePlayerFavorite() {
 
-    letter-spacing: 2px;
-}
-
-.page-title h1 {
-    margin-top: 7px;
+const track =
+tracks[currentTrackIndex];
 
-    font-size: 38px;
-
-    letter-spacing: -1.5px;
+if (!track) {
+return;
 }
-
-.page-title p {
-    margin-top: 7px;
-
-    color: var(--text-secondary);
 
-    font-size: 13px;
-}
+const isFavorite =
+favorites.includes(track.id);
 
+playerFavorite.textContent =
+isFavorite ? "♥" : "♡";
 
-/* ================= HIDDEN SECTION ================= */
+playerFavorite.classList.toggle(
+"favorite",
+isFavorite
+);
 
-.hidden-section {
-    display: none;
 }
-
 
-/* ================= FAVORITES TITLE ================= */
+/* ================= LOAD TRACK ================= */
 
-.favorites-title {
-    display: flex;
-    align-items: center;
+function loadTrack(index, autoplay = true) {
 
-    gap: 22px;
+if (!tracks[index]) {
+return;
 }
 
-.favorite-big-icon {
-    width: 72px;
-    height: 72px;
+currentTrackIndex = index;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+const track =
+tracks[currentTrackIndex];
 
-    flex-shrink: 0;
+playerTitle.textContent =
+track.title;
 
-    border-radius: 16px;
+playerArtist.textContent =
+track.artist;
 
-    background:
-        linear-gradient(
-            135deg,
-            #1ed760,
-            #0d9e43
-        );
+playerCover.src =
+track.thumbnail;
 
-    color: #000;
+updatePlayerFavorite();
 
-    font-size: 32px;
+if (!player) {
+return;
 }
-
-
-/* ================= EMPTY FAVORITES ================= */
-
-.empty-state {
-    min-height: 280px;
 
-    display: none;
+player.loadVideoById(track.id);
 
-    align-items: center;
-    justify-content: center;
+if (!autoplay) {
 
-    flex-direction: column;
+player.pauseVideo();    
 
-    text-align: center;
+isPlaying = false;    
 
-    color: var(--text-secondary);
-}
+updatePlayButton();
 
-.empty-state.show {
-    display: flex;
 }
-
-.empty-state > div {
-    margin-bottom: 14px;
-
-    color: var(--text-dark);
 
-    font-size: 52px;
 }
 
-.empty-state h2 {
-    margin-bottom: 8px;
-
-    color: var(--text);
-
-    font-size: 18px;
-}
+/* ================= PLAY TRACK ================= */
 
-.empty-state p {
-    color: var(--text-dark);
+function playTrack(index) {
 
-    font-size: 12px;
+if (!tracks[index]) {
+return;
 }
 
+currentTrackIndex = index;
 
-/* ================= PLAYER ================= */
+const track =
+tracks[currentTrackIndex];
 
-.player {
-    position: fixed;
+playerTitle.textContent =
+track.title;
 
-    left: 0;
-    right: 0;
-    bottom: 0;
+playerArtist.textContent =
+track.artist;
 
-    height: var(--player-height);
+playerCover.src =
+track.thumbnail;
 
-    z-index: 2000;
+updatePlayerFavorite();
 
-    display: grid;
+if (player) {
 
-    grid-template-columns:
-        minmax(220px, 1fr)
-        minmax(300px, 1.5fr)
-        minmax(180px, 1fr);
+player.loadVideoById(track.id);    
 
-    align-items: center;
+player.playVideo();
 
-    gap: 25px;
-
-    padding: 12px 25px;
-
-    background:
-        rgba(13, 13, 13, 0.97);
-
-    border-top: 1px solid var(--border);
-
-    backdrop-filter: blur(18px);
 }
-
 
-/* ================= PLAYER LEFT ================= */
-
-.player-left {
-    min-width: 0;
-
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
 }
-
-.player-cover {
-    position: relative;
-
-    width: 55px;
-    height: 55px;
 
-    flex-shrink: 0;
+/* ================= PLAY / PAUSE ================= */
 
-    overflow: hidden;
+function togglePlay() {
 
-    border-radius: 7px;
-
-    background: #222;
+if (!player) {
+return;
 }
-
-.player-cover img {
-    width: 100%;
-    height: 100%;
 
-    object-fit: cover;
+if (!tracks[currentTrackIndex]) {
+return;
 }
 
-.cover-playing {
-    position: absolute;
+if (isPlaying) {
 
-    inset: 0;
+player.pauseVideo();
 
-    display: none;
+} else {
 
-    align-items: center;
-    justify-content: center;
+player.playVideo();
 
-    gap: 2px;
-
-    background: rgba(0, 0, 0, 0.35);
 }
 
-.player.playing .cover-playing {
-    display: flex;
 }
-
-.cover-playing span {
-    width: 2px;
-
-    height: 12px;
 
-    border-radius: 5px;
+/* ================= NEXT ================= */
 
-    background: var(--accent);
+function nextTrack() {
 
-    animation: playerBars 0.8s infinite alternate;
-}
-
-.cover-playing span:nth-child(2) {
-    height: 18px;
-
-    animation-delay: -0.3s;
-}
+if (isShuffle) {
 
-.cover-playing span:nth-child(3) {
-    height: 9px;
+let nextIndex;    
 
-    animation-delay: -0.5s;
-}
+do {    
 
-@keyframes playerBars {
-    from {
-        transform: scaleY(0.5);
-    }
+    nextIndex =    
+        Math.floor(    
+            Math.random() *    
+            tracks.length    
+        );    
 
-    to {
-        transform: scaleY(1);
-    }
-}
+} while (    
+    nextIndex === currentTrackIndex &&    
+    tracks.length > 1    
+);    
 
-.track-info {
-    min-width: 0;
+playTrack(nextIndex);    
 
-    display: flex;
-    flex-direction: column;
+return;
 
-    gap: 4px;
 }
 
-.track-info strong {
-    overflow: hidden;
+let nextIndex =
+currentTrackIndex + 1;
 
-    white-space: nowrap;
-
-    text-overflow: ellipsis;
-
-    font-size: 12px;
+if (nextIndex >= tracks.length) {
+nextIndex = 0;
 }
-
-.track-info span {
-    overflow: hidden;
-
-    white-space: nowrap;
-
-    text-overflow: ellipsis;
 
-    color: var(--text-dark);
+playTrack(nextIndex);
 
-    font-size: 10px;
 }
 
-.player-heart {
-    margin-left: 3px;
+/* ================= PREVIOUS ================= */
 
-    flex-shrink: 0;
+function previousTrack() {
 
-    background: transparent;
+if (player) {
 
-    color: var(--text-secondary);
+const currentTime =    
+    player.getCurrentTime();    
 
-    font-size: 20px;
+if (currentTime > 3) {    
 
-    transition:
-        color 0.2s ease,
-        transform 0.2s ease;
-}
+    player.seekTo(0, true);    
 
-.player-heart:hover {
-    color: var(--text);
-
-    transform: scale(1.1);
+    return;    
 }
 
-.player-heart.favorite {
-    color: var(--accent);
 }
-
 
-/* ================= PLAYER CENTER ================= */
+let previousIndex =
+currentTrackIndex - 1;
 
-.player-center {
-    min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 9px;
-}
+if (previousIndex < 0) {
 
-.player-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+previousIndex =    
+    tracks.length - 1;
 
-    gap: 18px;
 }
 
-.player-controls button {
-    width: 30px;
-    height: 30px;
+playTrack(previousIndex);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: transparent;
-
-    color: var(--text-secondary);
-
-    transition:
-        color 0.2s ease,
-        transform 0.2s ease;
 }
 
-.player-controls button:hover {
-    color: var(--text);
+/* ================= PLAY ALL ================= */
 
-    transform: scale(1.08);
-}
+function playAll() {
 
-.player-controls button.active {
-    color: var(--accent);
+if (!tracks.length) {
+return;
 }
-
-.player-controls svg {
-    width: 17px;
-    height: 17px;
 
-    fill: none;
-    stroke: currentColor;
+playTrack(0);
 
-    stroke-width: 1.7;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
 }
-
-.play-button {
-    width: 38px !important;
-    height: 38px !important;
-
-    border-radius: 50% !important;
 
-    background: var(--text) !important;
+/* ================= PLAY BUTTON ================= */
 
-    color: #000 !important;
+function updatePlayButton() {
 
-    font-size: 12px;
+playButton.textContent =
+isPlaying ? "Ⅱ" : "▶";
 
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease !important;
-}
+playerElement.classList.toggle(
+"playing",
+isPlaying
+);
 
-.play-button:hover {
-    background: var(--accent) !important;
-
-    transform: scale(1.08) !important;
 }
-
 
 /* ================= PROGRESS ================= */
 
-.progress-container {
-    display: grid;
+function updateProgress() {
 
-    grid-template-columns: 32px 1fr 32px;
-
-    align-items: center;
-
-    gap: 9px;
+if (!player) {
+return;
 }
 
-.progress-container > span {
-    color: var(--text-dark);
+try {
 
-    font-size: 9px;
+const current =    
+    player.getCurrentTime();    
 
-    text-align: center;
+const duration =    
+    player.getDuration();    
+
+if (!duration) {    
+    return;    
+}    
+
+const percentage =    
+    Math.min(    
+        100,    
+        Math.max(    
+            0,    
+            (current / duration) * 100    
+        )    
+    );    
+
+progressFill.style.width =    
+    `${percentage}%`;    
+
+progressThumb.style.left =    
+    `${percentage}%`;    
+
+currentTimeElement.textContent =    
+    formatTime(current);    
+
+durationElement.textContent =    
+    formatTime(duration);
+
+} catch (error) {
+
+// Le player YouTube n'est pas encore prêt.
+
 }
 
-.progress-bar {
-    position: relative;
-
-    height: 5px;
-
-    cursor: pointer;
-
-    border-radius: 999px;
-
-    background: #303030;
 }
 
-.progress-fill {
-    position: absolute;
+/* ================= SEEK ================= */
 
-    left: 0;
-    top: 0;
+function seek(event) {
 
-    width: 0;
-    height: 100%;
-
-    border-radius: inherit;
-
-    background: var(--accent);
+if (!player) {
+return;
 }
 
-.progress-thumb {
-    position: absolute;
+const rect =
+progressBar.getBoundingClientRect();
 
-    top: 50%;
+const percentage =
+Math.min(
+1,
+Math.max(
+0,
+(event.clientX - rect.left) /
+rect.width
+)
+);
 
-    left: 0;
+const duration =
+player.getDuration();
 
-    width: 10px;
-    height: 10px;
+if (duration) {
 
-    border-radius: 50%;
+player.seekTo(    
+    duration * percentage,    
+    true    
+);
 
-    background: var(--accent);
-
-    transform: translate(-50%, -50%);
-
-    opacity: 0;
-
-    transition: opacity 0.2s ease;
 }
 
-.progress-bar:hover .progress-thumb {
-    opacity: 1;
 }
 
+/* ================= VOLUME ================= */
 
-/* ================= PLAYER RIGHT ================= */
+function updateVolume() {
 
-.player-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    gap: 10px;
+if (!player) {
+return;
 }
 
-.player-right button {
-    width: 30px;
-    height: 30px;
+player.setVolume(
+Number(volumeSlider.value)
+);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: transparent;
-
-    color: var(--text-secondary);
 }
 
-.player-right button:hover {
-    color: var(--text);
+/* ================= NAVIGATION ================= */
+
+function showSection(section) {
+
+const home =
+document.getElementById(
+"homeSection"
+);
+
+const library =
+document.getElementById(
+"librarySection"
+);
+
+const favoritesSection =
+document.getElementById(
+"favoritesSection"
+);
+
+home.style.display = "none";
+library.style.display = "none";
+favoritesSection.style.display = "none";
+
+if (section === "home") {
+home.style.display = "block";
 }
 
-.player-right svg {
-    width: 18px;
-    height: 18px;
-
-    fill: none;
-    stroke: currentColor;
-
-    stroke-width: 1.6;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
+if (section === "library") {
+library.style.display = "block";
 }
 
-#volumeSlider {
-    width: 100px;
+if (section === "favorites") {
 
-    height: 4px;
+favoritesSection.style.display =    
+    "block";    
 
-    appearance: none;
+renderFavorites();
 
-    cursor: pointer;
-
-    border-radius: 999px;
-
-    background: #3a3a3a;
 }
 
-#volumeSlider::-webkit-slider-thumb {
-    appearance: none;
+document
+.querySelectorAll(".nav-item")
+.forEach(item => {
 
-    width: 11px;
-    height: 11px;
+item.classList.toggle(    
+        "active",    
+        item.dataset.section === section    
+    );    
 
-    border-radius: 50%;
+});
 
-    background: var(--text);
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
+
 }
 
-#volumeSlider::-moz-range-thumb {
-    width: 11px;
-    height: 11px;
+/* ================= NAV BUTTONS ================= */
 
-    border: 0;
+document
+.querySelectorAll(".nav-item")
+.forEach(button => {
 
-    border-radius: 50%;
+button.addEventListener(
+"click",
+() => {
 
-    background: var(--text);
+showSection(    
+            button.dataset.section    
+        );    
+
+    }    
+);
+
+});
+
+/* ================= PLAY ALL ================= */
+
+document
+.getElementById("playAllButton")
+.addEventListener(
+"click",
+playAll
+);
+
+/* ================= SEE ALL ================= */
+
+document
+.getElementById("seeAllButton")
+.addEventListener(
+"click",
+() => {
+
+showSection("library");
+
 }
 
+);
 
-/* ================= YOUTUBE PLAYER ================= */
+/* ================= PLAYER BUTTONS ================= */
 
-#youtubePlayer {
-    position: fixed;
+playButton.addEventListener(
+"click",
+togglePlay
+);
 
-    width: 1px;
-    height: 1px;
+nextButton.addEventListener(
+"click",
+nextTrack
+);
 
-    left: -100px;
-    bottom: 0;
+previousButton.addEventListener(
+"click",
+previousTrack
+);
 
-    opacity: 0;
+shuffleButton.addEventListener(
+"click",
+() => {
 
-    pointer-events: none;
+isShuffle =
+!isShuffle;
+
+shuffleButton.classList.toggle(    
+    "active",    
+    isShuffle    
+);
+
 }
 
+);
 
-/* =========================================================
-   TABLET
-   ========================================================= */
+repeatButton.addEventListener(
+"click",
+() => {
 
-@media (max-width: 1100px) {
+isRepeat =
+!isRepeat;
 
-    :root {
-        --sidebar-width: 210px;
-    }
+repeatButton.classList.toggle(    
+    "active",    
+    isRepeat    
+);
 
-    .main-content
+}
+
+);
+
+progressBar.addEventListener(
+"click",
+seek
+);
+
+volumeSlider.addEventListener(
+"input",
+updateVolume
+);
+
+/* ================= PLAYER FAVORITE ================= */
+
+playerFavorite.addEventListener(
+"click",
+() => {
+
+const track =
+tracks[currentTrackIndex];
+
+if (track) {    
+
+    toggleFavorite(    
+        track.id    
+    );    
+}
+
+}
+
+);
+
+/* ================= MOBILE SIDEBAR ================= */
+
+const mobileMenu =
+document.getElementById(
+"mobileMenu"
+);
+
+const sidebar =
+document.querySelector(
+".sidebar"
+);
+
+if (mobileMenu && sidebar) {
+
+mobileMenu.addEventListener(
+"click",
+(event) => {
+
+event.stopPropagation();    
+
+    sidebar.classList.toggle(    
+        "open"    
+    );    
+
+}
+
+);
+
+document
+.querySelectorAll(".nav-item")
+.forEach(button => {
+
+button.addEventListener(    
+        "click",    
+        () => {    
+
+            sidebar.classList.remove(    
+                "open"    
+            );    
+
+        }    
+    );    
+
+});
+
+}
+
+/* ================= NOTIFICATION ================= */
+
+document
+.getElementById("notificationButton")
+.addEventListener(
+"click",
+() => {
+
+alert(
+"Bienvenue sur Waveify 🎵"
+);
+
+}
+
+);
+
+/* ================= YOUTUBE API ================= */
+
+/*
+L'API YouTube appelle automatiquement
+cette fonction lorsqu'elle est chargée.
+*/
+
+window.onYouTubeIframeAPIReady =
+function () {
+
+player =
+new YT.Player(
+"youtubePlayer",
+{
+
+height: "1",    
+        width: "1",    
+
+        videoId:    
+            tracks[0].id,    
+
+        playerVars: {    
+
+            autoplay: 0,    
+
+            controls: 0,    
+
+            disablekb: 1,    
+
+            fs: 0,    
+
+            modestbranding: 1,    
+
+            playsinline: 1,    
+
+            rel: 0    
+
+        },    
+
+        events: {    
+
+            onReady:    
+                function (event) {    
+
+                    event.target.setVolume(    
+                        Number(    
+                            volumeSlider.value    
+                        )    
+                    );    
+
+                    loadTrack(    
+                        0,    
+                        false    
+                    );    
+
+                },    
+
+            onStateChange:    
+                function (event) {    
+
+                    handlePlayerState(    
+                        event.data    
+                    );    
+
+                }    
+
+        }    
+
+    }    
+);
+
+};
+
+/* ================= YOUTUBE STATES ================= */
+
+function handlePlayerState(state) {
+
+if (
+state === YT.PlayerState.PLAYING
+) {
+
+isPlaying = true;
+
+}
+
+if (
+state === YT.PlayerState.PAUSED
+) {
+
+isPlaying = false;
+
+}
+
+if (
+state === YT.PlayerState.ENDED
+) {
+
+isPlaying = false;    
+
+if (isRepeat) {    
+
+    player.seekTo(    
+        0,    
+        true    
+    );    
+
+    player.playVideo();    
+
+} else {    
+
+    nextTrack();    
+}
+
+}
+
+updatePlayButton();
+
+}
+
+/* ================= INITIALIZE ================= */
+
+renderTracks();
+
+renderFavorites();
+
+updatePlayButton();
+
+/* ================= PROGRESS LOOP ================= */
+
+setInterval(
+updateProgress,
+500
+);
+
+/* ================= LOAD YOUTUBE API ================= */
+
+const youtubeScript =
+document.createElement("script");
+
+youtubeScript.src =
+"https://www.youtube.com/iframe_api";
+
+document
+.head
+.appendChild(youtubeScript);
