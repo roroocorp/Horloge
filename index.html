@@ -2,8 +2,13 @@
 <html lang="fr">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Waveify — Music for your mood</title>
 
@@ -13,7 +18,12 @@
     >
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
@@ -21,6 +31,7 @@
     >
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -32,42 +43,69 @@
         <div class="logo">
 
             <div class="logo-icon">
+
                 <span></span>
                 <span></span>
                 <span></span>
+
             </div>
 
             <span>Waveify</span>
 
         </div>
 
+
         <nav class="main-nav">
 
-            <button class="nav-item active" data-section="home">
+            <button
+                class="nav-item active"
+                data-section="home"
+            >
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5v-9Z"/>
+
+                    <path
+                        d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5v-9Z"
+                    />
+
                 </svg>
 
                 <span>Accueil</span>
 
             </button>
 
-            <button class="nav-item" data-section="library">
+
+            <button
+                class="nav-item"
+                data-section="library"
+            >
 
                 <svg viewBox="0 0 24 24">
+
                     <path d="M4 4h16v16H4z"/>
-                    <path d="M8 8h8M8 12h8M8 16h5"/>
+
+                    <path
+                        d="M8 8h8M8 12h8M8 16h5"
+                    />
+
                 </svg>
 
                 <span>Bibliothèque</span>
 
             </button>
 
-            <button class="nav-item" data-section="favorites">
+
+            <button
+                class="nav-item"
+                data-section="favorites"
+            >
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M20.8 8.8c0 5.4-8.8 10.2-8.8 10.2S3.2 14.2 3.2 8.8A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z"/>
+
+                    <path
+                        d="M20.8 8.8c0 5.4-8.8 10.2-8.8 10.2S3.2 14.2 3.2 8.8A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z"
+                    />
+
                 </svg>
 
                 <span>Favoris</span>
@@ -76,6 +114,9 @@
 
         </nav>
 
+
+        <!-- ================= SIDEBAR USER ================= -->
+
         <div class="sidebar-bottom">
 
             <div class="user-card">
@@ -83,11 +124,19 @@
                 <div class="avatar">W</div>
 
                 <div>
+
                     <strong>Waveify User</strong>
+
                     <small>Compte gratuit</small>
+
                 </div>
 
-                <button class="more-button">•••</button>
+                <button
+                    class="more-button"
+                    aria-label="Plus d'options"
+                >
+                    •••
+                </button>
 
             </div>
 
@@ -95,9 +144,13 @@
 
     </aside>
 
+
     <!-- ================= MAIN ================= -->
 
     <main class="main-content">
+
+
+        <!-- ================= TOPBAR ================= -->
 
         <header class="topbar">
 
@@ -109,11 +162,34 @@
                 ☰
             </button>
 
+
             <div class="welcome">
+
                 <span>TON UNIVERS MUSICAL</span>
+
             </div>
 
+
             <div class="top-actions">
+
+                <button
+                    class="icon-button"
+                    id="notificationButton"
+                    aria-label="Notifications"
+                >
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                        />
+
+                        <path d="M10 21h4"/>
+
+                    </svg>
+
+                </button>
+
 
                 <div class="top-avatar">W</div>
 
@@ -121,13 +197,21 @@
 
         </header>
 
+
         <!-- ================= HOME ================= -->
 
-        <section id="homeSection" class="page-section">
+        <section
+            id="homeSection"
+            class="page-section"
+        >
+
+
+            <!-- ================= HERO ================= -->
 
             <section class="hero">
 
                 <div class="hero-background"></div>
+
 
                 <div class="hero-content">
 
@@ -139,28 +223,39 @@
 
                     </div>
 
+
                     <h1>
+
                         Ta musique.<br>
+
                         <span>Ton univers.</span>
+
                     </h1>
 
+
                     <p>
+
                         Découvre tes morceaux préférés et profite
                         d'une expérience musicale immersive.
+
                     </p>
+
 
                     <button
                         class="hero-button"
                         id="playAllButton"
                     >
 
-                        <span class="play-symbol">▶</span>
+                        <span class="play-symbol">
+                            ▶
+                        </span>
 
                         Tout écouter
 
                     </button>
 
                 </div>
+
 
                 <div class="hero-waves">
 
@@ -181,6 +276,7 @@
 
             </section>
 
+
             <!-- ================= RECENT ================= -->
 
             <section class="music-section">
@@ -191,9 +287,12 @@
 
                         <h2>Pour toi</h2>
 
-                        <p>Ta sélection Waveify</p>
+                        <p>
+                            Ta sélection Waveify
+                        </p>
 
                     </div>
+
 
                     <button
                         class="see-all"
@@ -204,6 +303,7 @@
 
                 </div>
 
+
                 <div
                     class="music-grid"
                     id="musicGrid"
@@ -212,6 +312,7 @@
             </section>
 
         </section>
+
 
         <!-- ================= LIBRARY ================= -->
 
@@ -232,12 +333,14 @@
 
             </div>
 
+
             <div
                 class="music-grid"
                 id="libraryGrid"
             ></div>
 
         </section>
+
 
         <!-- ================= FAVORITES ================= -->
 
@@ -251,6 +354,7 @@
                 <div class="favorite-big-icon">
                     ♥
                 </div>
+
 
                 <div>
 
@@ -266,10 +370,12 @@
 
             </div>
 
+
             <div
                 class="music-grid"
                 id="favoritesGrid"
             ></div>
+
 
             <div
                 class="empty-state"
@@ -293,9 +399,13 @@
 
     </main>
 
+
     <!-- ================= PLAYER ================= -->
 
     <footer class="player">
+
+
+        <!-- ================= PLAYER LEFT ================= -->
 
         <div class="player-left">
 
@@ -307,6 +417,7 @@
                     alt="Pochette"
                 >
 
+
                 <div class="cover-playing">
 
                     <span></span>
@@ -316,6 +427,7 @@
                 </div>
 
             </div>
+
 
             <div class="track-info">
 
@@ -329,6 +441,7 @@
 
             </div>
 
+
             <button
                 class="player-heart"
                 id="playerFavorite"
@@ -340,66 +453,107 @@
 
         </div>
 
+
+        <!-- ================= PLAYER CENTER ================= -->
+
         <div class="player-center">
+
 
             <div class="player-controls">
 
                 <button
                     id="shuffleButton"
                     title="Lecture aléatoire"
+                    aria-label="Lecture aléatoire"
                 >
 
                     <svg viewBox="0 0 24 24">
-                        <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M4 4l5 5m6 6 6 6"/>
+
+                        <path
+                            d="M16 3h5v5M4 20 21 3M21 16v5h-5M4 4l5 5m6 6 6 6"
+                        />
+
                     </svg>
 
                 </button>
+
 
                 <button
                     id="previousButton"
                     title="Précédent"
+                    aria-label="Précédent"
                 >
 
                     <svg viewBox="0 0 24 24">
-                        <path d="m19 5-9 7 9 7V5ZM6 5v14"/>
+
+                        <path
+                            d="m19 5-9 7 9 7V5ZM6 5v14"
+                        />
+
                     </svg>
 
                 </button>
+
 
                 <button
                     class="play-button"
                     id="playButton"
                     title="Lecture"
+                    aria-label="Lecture"
                 >
                     ▶
                 </button>
 
+
                 <button
                     id="nextButton"
                     title="Suivant"
+                    aria-label="Suivant"
                 >
 
                     <svg viewBox="0 0 24 24">
-                        <path d="m5 5 9 7-9 7V5Zm13 0v14"/>
+
+                        <path
+                            d="m5 5 9 7-9 7V5Zm13 0v14"
+                        />
+
                     </svg>
 
                 </button>
 
+
                 <button
                     id="repeatButton"
                     title="Répéter"
+                    aria-label="Répéter"
                 >
 
                     <svg viewBox="0 0 24 24">
-                        <path d="M17 2l4 4-4 4"/>
-                        <path d="M3 11V9a3 3 0 0 1 3-3h15"/>
-                        <path d="M7 22l-4-4 4-4"/>
-                        <path d="M21 13v2a3 3 0 0 1-3 3H3"/>
+
+                        <path
+                            d="M17 2l4 4-4 4"
+                        />
+
+                        <path
+                            d="M3 11V9a3 3 0 0 1 3-3h15"
+                        />
+
+                        <path
+                            d="M7 22l-4-4 4-4"
+                        />
+
+                        <path
+                            d="M21 13v2a3 3 0 0 1-3 3H3"
+                        />
+
                     </svg>
 
                 </button>
 
             </div>
+
+
+            <!-- ================= PROGRESS ================= -->
 
             <div class="progress-container">
 
@@ -407,22 +561,25 @@
                     0:00
                 </span>
 
+
                 <div
                     class="progress-bar"
                     id="progressBar"
                 >
 
                     <div
-                        id="progressFill"
                         class="progress-fill"
+                        id="progressFill"
                     ></div>
 
+
                     <div
-                        id="progressThumb"
                         class="progress-thumb"
+                        id="progressThumb"
                     ></div>
 
                 </div>
+
 
                 <span id="duration">
                     0:00
@@ -432,6 +589,9 @@
 
         </div>
 
+
+        <!-- ================= PLAYER RIGHT ================= -->
+
         <div class="player-right">
 
             <button
@@ -440,11 +600,19 @@
             >
 
                 <svg viewBox="0 0 24 24">
-                    <path d="M4 9v6h4l5 4V5L8 9H4Z"/>
-                    <path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>
+
+                    <path
+                        d="M4 9v6h4l5 4V5L8 9H4Z"
+                    />
+
+                    <path
+                        d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"
+                    />
+
                 </svg>
 
             </button>
+
 
             <input
                 id="volumeSlider"
@@ -459,9 +627,11 @@
 
     </footer>
 
+
     <!-- ================= YOUTUBE PLAYER ================= -->
 
     <div id="youtubePlayer"></div>
+
 
     <!-- ================= JAVASCRIPT ================= -->
 
