@@ -1,1320 +1,1025 @@
 /* =========================================================
-   WAVEIFY — STYLE COMPLET
-   ========================================================= */
+WAVEIFY
+Music player
+========================================================= */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ================= YOUTUBE LINKS ================= */
+
+const YOUTUBE_LINKS = [
+"https://www.youtube.com/watch?v=Pl1d5YSEg2w",
+"https://www.youtube.com/watch?v=y1T2LQ2bym4",
+"https://www.youtube.com/watch?v=SX0u0s5h4as",
+"https://www.youtube.com/watch?v=mdcBqqWj3kY",
+"https://www.youtube.com/watch?v=n2THLWjJ3Wo",
+"https://www.youtube.com/watch?v=Snhn9wB-z1w",
+"https://www.youtube.com/watch?v=xlmyDTa_S6M",
+"https://www.youtube.com/watch?v=rDrIRNUaE6s",
+"https://www.youtube.com/watch?v=EXYj9wecau4",
+"https://www.youtube.com/watch?v=ShR_fQrqsdA",
+"https://www.youtube.com/watch?v=pN-TLYBDkWc",
+"https://www.youtube.com/watch?v=00ff2UcGLu0",
+"https://www.youtube.com/watch?v=c8qXCL-ElfA",
+"https://www.youtube.com/watch?v=pEBFJI-g9AA",
+"https://www.youtube.com/watch?v=63fJnwefxBk",
+"https://www.youtube.com/watch?v=gZXijVptbic",
+"https://www.youtube.com/watch?v=QzZflH4liuU",
+"https://www.youtube.com/watch?v=MFHiEocxkdM",
+"https://www.youtube.com/watch?v=2uM9ZIS-v0w",
+"https://www.youtube.com/watch?v=Qq7Q6CLCfvs",
+"https://www.youtube.com/watch?v=cYi1jI7uLa0",
+"https://www.youtube.com/watch?v=MqiljVyq_1o",
+"https://www.youtube.com/watch?v=KTYp4guSwLg",
+"https://www.youtube.com/watch?v=vaeio3idHzU",
+"https://www.youtube.com/watch?v=FaXqep3IsZw",
+"https://www.youtube.com/watch?v=VIs9zdNq_IU",
+"https://www.youtube.com/watch?v=JwVm-DHKH_U",
+"https://www.youtube.com/watch?v=zNEU9VExoWE",
+"https://www.youtube.com/watch?v=WudXzTex5JQ",
+"https://www.youtube.com/watch?v=pxjsZK_fkO4",
+"https://www.youtube.com/watch?v=dIJuNqS9c3w",
+"https://www.youtube.com/watch?v=BJwovrr6XzI",
+"https://www.youtube.com/watch?v=yx9WQ0hrsdk",
+"https://www.youtube.com/watch?v=0uLp-tejcSo",
+"https://www.youtube.com/watch?v=w4CI96-D2Zg",
+"https://www.youtube.com/watch?v=HqJ1qP05Si0"
+];
+
+/* ================= YOUTUBE ID ================= */
+
+function getYouTubeId(url) {
+    try {
+        const parsed = new URL(url);
+        return parsed.searchParams.get("v") || "";
+    } catch (error) {
+        return "";
+    }
 }
 
-:root {
-    --bg: #09090b;
-    --bg-secondary: #111114;
-    --card: #151519;
-    --card-hover: #1c1c21;
-    --text: #ffffff;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-    --accent: #8b5cf6;
-    --accent-light: #a78bfa;
-    --accent-dark: #6d28d9;
-    --border: rgba(255, 255, 255, 0.08);
-    --sidebar-width: 250px;
-    --player-height: 88px;
+/* ================= TRACK DATA ================= */
+
+const tracks = YOUTUBE_LINKS.map((url, index) => {
+    const id = getYouTubeId(url);
+
+    return {
+        id,
+        url,
+
+        title:
+            `Track ${String(index + 1).padStart(2, "0")}`,
+
+        artist: "Waveify",
+
+        thumbnail:
+            `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+    };
+});
+
+/* ================= STATE ================= */
+
+let currentTrackIndex = 0;
+
+let player = null;
+
+let isPlaying = false;
+let isShuffle = false;
+let isRepeat = false;
+
+let favorites = JSON.parse(
+    localStorage.getItem("waveifyFavorites") || "[]"
+);
+
+/* ================= DOM ================= */
+
+const musicGrid =
+    document.getElementById("musicGrid");
+
+const libraryGrid =
+    document.getElementById("libraryGrid");
+
+const favoritesGrid =
+    document.getElementById("favoritesGrid");
+
+const playerElement =
+    document.querySelector(".player");
+
+const playerCover =
+    document.getElementById("playerCover");
+
+const playerTitle =
+    document.getElementById("playerTitle");
+
+const playerArtist =
+    document.getElementById("playerArtist");
+
+const playerFavorite =
+    document.getElementById("playerFavorite");
+
+const playButton =
+    document.getElementById("playButton");
+
+const previousButton =
+    document.getElementById("previousButton");
+
+const nextButton =
+    document.getElementById("nextButton");
+
+const shuffleButton =
+    document.getElementById("shuffleButton");
+
+const repeatButton =
+    document.getElementById("repeatButton");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const progressFill =
+    document.getElementById("progressFill");
+
+const progressThumb =
+    document.getElementById("progressThumb");
+
+const currentTimeElement =
+    document.getElementById("currentTime");
+
+const durationElement =
+    document.getElementById("duration");
+
+const volumeSlider =
+    document.getElementById("volumeSlider");
+
+const favoriteCount =
+    document.getElementById("favoriteCount");
+
+const emptyFavorites =
+    document.getElementById("emptyFavorites");
+
+/* ================= FORMAT TIME ================= */
+
+function formatTime(seconds) {
+
+    if (!seconds || isNaN(seconds)) {
+        return "0:00";
+    }
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const remainingSeconds =
+        Math.floor(seconds % 60)
+            .toString()
+            .padStart(2, "0");
+
+    return `${minutes}:${remainingSeconds}`;
 }
 
-html {
-    scroll-behavior: smooth;
+/* ================= ESCAPE HTML ================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
 
-body {
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Inter", sans-serif;
-    overflow-x: hidden;
-}
+/* ================= CREATE CARD ================= */
 
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+function createTrackCard(track, index) {
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    const isFavorite =
+        favorites.includes(track.id);
 
-    width: var(--sidebar-width);
-    height: 100vh;
+    const card =
+        document.createElement("article");
 
-    display: flex;
-    flex-direction: column;
+    card.className = "music-card";
 
-    padding: 28px 18px;
-
-    background: rgba(12, 12, 15, 0.96);
-    border-right: 1px solid var(--border);
+    card.dataset.index = index;
 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-}
-
-/* LOGO */
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-
-    padding: 0 10px;
-    margin-bottom: 42px;
-
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.7px;
-}
-
-.logo-icon {
-    width: 30px;
-    height: 30px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-
-    padding: 6px;
-
-    border-radius: 9px;
+    card.innerHTML = `
 
-    background: linear-gradient(
-        135deg,
-        var(--accent-light),
-        var(--accent)
-    );
-}
+        <div class="card-cover">
 
-.logo-icon span {
-    width: 3px;
-    border-radius: 4px;
-    background: white;
-}
+            <img
+                src="${track.thumbnail}"
+                alt="${escapeHtml(track.title)}"
+                loading="lazy"
+            >
 
-.logo-icon span:nth-child(1) {
-    height: 8px;
-}
+            <button
+                class="card-play"
+                aria-label="Lire ${escapeHtml(track.title)}"
+            >
+                ▶
+            </button>
 
-.logo-icon span:nth-child(2) {
-    height: 15px;
-}
+        </div>
 
-.logo-icon span:nth-child(3) {
-    height: 11px;
-}
+        <div class="card-content">
 
-/* NAVIGATION */
+            <div class="card-title-row">
 
-.main-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
+                <strong class="card-title">
+                    ${escapeHtml(track.title)}
+                </strong>
 
-.nav-item {
-    width: 100%;
-    height: 48px;
+                <button
+                    class="card-heart ${isFavorite ? "favorite" : ""}"
+                    data-favorite="${track.id}"
+                    aria-label="Ajouter aux favoris"
+                >
+                    ${isFavorite ? "♥" : "♡"}
+                </button>
 
-    display: flex;
-    align-items: center;
-    gap: 14px;
+            </div>
 
-    padding: 0 14px;
+            <div class="card-artist">
+                ${escapeHtml(track.artist)}
+            </div>
 
-    border: 0;
-    border-radius: 12px;
+        </div>
 
-    background: transparent;
-    color: var(--text-secondary);
+    `;
 
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
+    const play =
+        card.querySelector(".card-play");
 
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
-}
-
-.nav-item svg {
-    width: 20px;
-    height: 20px;
-
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.nav-item:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.nav-item.active {
-    color: white;
-    background: rgba(139, 92, 246, 0.16);
-}
-
-.nav-item.active svg {
-    color: var(--accent-light);
-}
-
-/* SIDEBAR BOTTOM */
-
-.sidebar-bottom {
-    margin-top: auto;
-}
-
-.user-card {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 12px;
-
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
-    background: rgba(255, 255, 255, 0.025);
-}
-
-.avatar {
-    width: 36px;
-    height: 36px;
-
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: linear-gradient(
-        135deg,
-        #a78bfa,
-        #7c3aed
-    );
-
-    color: white;
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.user-card > div:nth-child(2) {
-    min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.user-card strong {
-    font-size: 12px;
-    font-weight: 700;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.user-card small {
-    color: var(--text-muted);
-    font-size: 10px;
-}
-
-.more-button {
-    margin-left: auto;
-
-    border: 0;
-    background: transparent;
-    color: var(--text-muted);
-
-    cursor: pointer;
-}
-
-/* =========================================================
-   MAIN CONTENT
-   ========================================================= */
-
-.main-content {
-    min-height: 100vh;
-
-    margin-left: var(--sidebar-width);
-
-    padding-bottom: calc(var(--player-height) + 35px);
-}
-
-/* =========================================================
-   TOPBAR
-   ========================================================= */
-
-.topbar {
-    height: 76px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 0 36px;
-}
-
-.welcome {
-    display: flex;
-    align-items: center;
-}
-
-.welcome span {
-    color: var(--text-muted);
-
-    font-size: 11px;
-    font-weight: 700;
-
-    letter-spacing: 1.6px;
-}
-
-.top-actions {
-    margin-left: auto;
-
-    display: flex;
-    align-items: center;
-}
-
-.top-avatar {
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: linear-gradient(
-        135deg,
-        #a78bfa,
-        #7c3aed
+    play.addEventListener(
+        "click",
+        (event) => {
+            event.stopPropagation();
+            playTrack(index);
+        }
     );
 
-    font-size: 13px;
-    font-weight: 800;
-}
+    const heart =
+        card.querySelector(".card-heart");
 
-.mobile-menu {
-    display: none;
-
-    border: 0;
-    background: transparent;
-    color: white;
-
-    font-size: 23px;
-
-    cursor: pointer;
-}
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-.hero {
-    position: relative;
-
-    min-height: 365px;
-
-    margin: 0 36px;
-
-    display: flex;
-    align-items: center;
-
-    overflow: hidden;
-
-    border-radius: 26px;
-
-    background:
-        radial-gradient(
-            circle at 80% 40%,
-            rgba(139, 92, 246, 0.3),
-            transparent 42%
-        ),
-        linear-gradient(
-            135deg,
-            #17131f,
-            #0f0f13 65%
-        );
-}
-
-.hero-background {
-    position: absolute;
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle at 75% 20%,
-            rgba(167, 139, 250, 0.18),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 90% 80%,
-            rgba(109, 40, 217, 0.2),
-            transparent 35%
-        );
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-
-    max-width: 600px;
-
-    padding: 48px;
-}
-
-.hero-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    margin-bottom: 20px;
-
-    color: var(--accent-light);
-
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
-.pulse-dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: var(--accent-light);
-
-    box-shadow:
-        0 0 0 5px rgba(167, 139, 250, 0.1),
-        0 0 16px rgba(167, 139, 250, 0.7);
-}
-
-.hero h1 {
-    margin-bottom: 18px;
-
-    font-size: clamp(40px, 5vw, 66px);
-    line-height: 0.98;
-
-    letter-spacing: -3px;
-    font-weight: 800;
-}
-
-.hero h1 span {
-    color: var(--accent-light);
-}
-
-.hero p {
-    max-width: 500px;
-
-    margin-bottom: 28px;
-
-    color: var(--text-secondary);
-
-    font-size: 14px;
-    line-height: 1.7;
-}
-
-.hero-button {
-    height: 46px;
-
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-
-    padding: 0 21px;
-
-    border: 0;
-    border-radius: 12px;
-
-    background: white;
-    color: #111;
-
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
-}
-
-.hero-button:hover {
-    transform: translateY(-2px);
-    opacity: 0.92;
-}
-
-.play-symbol {
-    font-size: 12px;
-}
-
-/* HERO WAVES */
-
-.hero-waves {
-    position: absolute;
-    right: 30px;
-    bottom: 0;
-
-    width: 42%;
-    height: 75%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    opacity: 0.4;
-}
-
-.hero-waves div {
-    width: 6px;
-
-    border-radius: 20px;
-
-    background: linear-gradient(
-        to top,
-        transparent,
-        var(--accent-light)
+    heart.addEventListener(
+        "click",
+        (event) => {
+            event.stopPropagation();
+            toggleFavorite(track.id);
+        }
     );
 
-    animation: wave 1.6s ease-in-out infinite;
-}
-
-.hero-waves div:nth-child(1) {
-    height: 22%;
-}
-
-.hero-waves div:nth-child(2) {
-    height: 42%;
-    animation-delay: 0.1s;
-}
-
-.hero-waves div:nth-child(3) {
-    height: 65%;
-    animation-delay: 0.2s;
-}
-
-.hero-waves div:nth-child(4) {
-    height: 48%;
-    animation-delay: 0.3s;
-}
-
-.hero-waves div:nth-child(5) {
-    height: 82%;
-    animation-delay: 0.4s;
-}
-
-.hero-waves div:nth-child(6) {
-    height: 58%;
-    animation-delay: 0.5s;
-}
-
-.hero-waves div:nth-child(7) {
-    height: 90%;
-    animation-delay: 0.6s;
-}
-
-.hero-waves div:nth-child(8) {
-    height: 55%;
-    animation-delay: 0.7s;
-}
-
-.hero-waves div:nth-child(9) {
-    height: 78%;
-    animation-delay: 0.8s;
-}
-
-.hero-waves div:nth-child(10) {
-    height: 48%;
-    animation-delay: 0.9s;
-}
-
-.hero-waves div:nth-child(11) {
-    height: 70%;
-    animation-delay: 1s;
-}
-
-.hero-waves div:nth-child(12) {
-    height: 35%;
-    animation-delay: 1.1s;
-}
-
-@keyframes wave {
-    0%,
-    100% {
-        transform: scaleY(0.75);
-    }
-
-    50% {
-        transform: scaleY(1);
-    }
-}
-
-/* =========================================================
-   MUSIC SECTIONS
-   ========================================================= */
-
-.music-section {
-    padding: 42px 36px 0;
-}
-
-.section-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-
-    margin-bottom: 24px;
-}
-
-.section-header h2 {
-    margin-bottom: 5px;
-
-    font-size: 23px;
-    font-weight: 800;
-    letter-spacing: -0.7px;
-}
-
-.section-header p {
-    color: var(--text-muted);
-    font-size: 12px;
-}
-
-.see-all {
-    border: 0;
-    background: transparent;
-
-    color: var(--accent-light);
-
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 700;
-
-    cursor: pointer;
-}
-
-.music-grid {
-    display: grid;
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(155px, 1fr)
+    card.addEventListener(
+        "dblclick",
+        () => {
+            playTrack(index);
+        }
     );
 
-    gap: 20px;
+    return card;
 }
 
-/* =========================================================
-   MUSIC CARD
-   ========================================================= */
+/* ================= RENDER TRACKS ================= */
 
-.music-card {
-    position: relative;
+function renderTracks() {
 
-    min-width: 0;
+    musicGrid.innerHTML = "";
+    libraryGrid.innerHTML = "";
 
-    padding: 12px;
+    tracks.forEach((track, index) => {
 
-    border-radius: 17px;
-
-    background: var(--card);
-    border: 1px solid transparent;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.music-card:hover {
-    transform: translateY(-4px);
-
-    background: var(--card-hover);
-    border-color: var(--border);
-}
-
-.card-cover {
-    position: relative;
-
-    width: 100%;
-    aspect-ratio: 1;
-
-    margin-bottom: 13px;
-
-    overflow: hidden;
-
-    border-radius: 13px;
-
-    background: var(--bg-secondary);
-}
-
-.card-cover img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-
-    transition: transform 0.35s ease;
-}
-
-.music-card:hover .card-cover img {
-    transform: scale(1.05);
-}
-
-.card-play {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 0;
-    border-radius: 50%;
-
-    background: white;
-    color: #111;
-
-    font-size: 13px;
-
-    opacity: 0;
-    transform: translateY(6px);
-
-    cursor: pointer;
-
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
-}
-
-.music-card:hover .card-play {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.card-info {
-    min-width: 0;
-}
-
-.card-title {
-    display: block;
-
-    margin-bottom: 5px;
-
-    overflow: hidden;
-
-    color: white;
-
-    font-size: 13px;
-    font-weight: 700;
-
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.card-artist {
-    display: block;
-
-    overflow: hidden;
-
-    color: var(--text-muted);
-
-    font-size: 11px;
-
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.favorite-button {
-    position: absolute;
-    top: 19px;
-    right: 19px;
-
-    width: 30px;
-    height: 30px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 0;
-    border-radius: 50%;
-
-    background: rgba(0, 0, 0, 0.55);
-    color: white;
-
-    font-size: 15px;
-
-    opacity: 0;
-
-    cursor: pointer;
-
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
-}
-
-.music-card:hover .favorite-button {
-    opacity: 1;
-}
-
-.favorite-button.active {
-    opacity: 1;
-    color: #f472b6;
-}
-
-/* =========================================================
-   PAGE TITLES
-   ========================================================= */
-
-.hidden-section {
-    display: none;
-}
-
-.page-title {
-    padding: 40px 36px 10px;
-}
-
-.page-title > span,
-.page-title div > span {
-    color: var(--accent-light);
-
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 1.8px;
-}
-
-.page-title h1 {
-    margin-top: 8px;
-
-    font-size: 40px;
-    line-height: 1;
-
-    letter-spacing: -1.8px;
-}
-
-.page-title p {
-    margin-top: 10px;
-
-    color: var(--text-muted);
-
-    font-size: 13px;
-}
-
-.favorites-title {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.favorite-big-icon {
-    width: 64px;
-    height: 64px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
-
-    border-radius: 18px;
-
-    background: linear-gradient(
-        135deg,
-        var(--accent),
-        var(--accent-dark)
-    );
-
-    color: white;
-
-    font-size: 28px;
-}
-
-/* =========================================================
-   EMPTY FAVORITES
-   ========================================================= */
-
-.empty-state {
-    min-height: 300px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    padding: 30px;
-
-    text-align: center;
-}
-
-.empty-state > div {
-    margin-bottom: 14px;
-
-    color: var(--text-muted);
-
-    font-size: 42px;
-}
-
-.empty-state h2 {
-    margin-bottom: 8px;
-
-    font-size: 18px;
-}
-
-.empty-state p {
-    max-width: 320px;
-
-    color: var(--text-muted);
-
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-/* =========================================================
-   PLAYER
-   ========================================================= */
-
-.player {
-    position: fixed;
-    left: var(--sidebar-width);
-    right: 0;
-    bottom: 0;
-
-    z-index: 1100;
-
-    height: var(--player-height);
-
-    display: grid;
-    grid-template-columns: minmax(220px, 1fr) minmax(300px, 1.5fr) minmax(160px, 1fr);
-    align-items: center;
-    gap: 25px;
-
-    padding: 12px 25px;
-
-    background: rgba(14, 14, 18, 0.96);
-    border-top: 1px solid var(--border);
-
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-}
-
-/* PLAYER LEFT */
-
-.player-left {
-    min-width: 0;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.player-cover {
-    position: relative;
-
-    width: 54px;
-    height: 54px;
-
-    flex-shrink: 0;
-
-    overflow: hidden;
-
-    border-radius: 9px;
-
-    background: var(--card);
-}
-
-.player-cover img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-}
-
-.cover-playing {
-    position: absolute;
-    inset: 0;
-
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-
-    gap: 2px;
-
-    padding-bottom: 7px;
-
-    background: rgba(0, 0, 0, 0.3);
-
-    opacity: 0;
-}
-
-.cover-playing span {
-    width: 2px;
-    height: 8px;
-
-    border-radius: 3px;
-
-    background: white;
-}
-
-.cover-playing span:nth-child(2) {
-    height: 13px;
-}
-
-.cover-playing span:nth-child(3) {
-    height: 10px;
-}
-
-.player.playing .cover-playing {
-    opacity: 1;
-}
-
-.track-info {
-    min-width: 0;
-
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.track-info strong {
-    overflow: hidden;
-
-    font-size: 12px;
-
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.track-info span {
-    overflow: hidden;
-
-    color: var(--text-muted);
-
-    font-size: 10px;
-
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.player-heart {
-    margin-left: 4px;
-
-    border: 0;
-    background: transparent;
-
-    color: var(--text-muted);
-
-    font-size: 20px;
-
-    cursor: pointer;
-}
-
-.player-heart.active {
-    color: #f472b6;
-}
-
-/* PLAYER CENTER */
-
-.player-center {
-    min-width: 0;
-}
-
-.player-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 17px;
-
-    margin-bottom: 8px;
-}
-
-.player-controls button {
-    width: 27px;
-    height: 27px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 0;
-    background: transparent;
-
-    color: var(--text-secondary);
-
-    cursor: pointer;
-}
-
-.player-controls button:hover {
-    color: white;
-}
-
-.player-controls svg {
-    width: 17px;
-    height: 17px;
-
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.player-controls .play-button {
-    width: 37px;
-    height: 37px;
-
-    border-radius: 50%;
-
-    background: white;
-    color: #111;
-
-    font-size: 12px;
-}
-
-.progress-container {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-}
-
-.progress-container > span {
-    min-width: 30px;
-
-    color: var(--text-muted);
-
-    font-size: 9px;
-
-    text-align: center;
-}
-
-.progress-bar {
-    position: relative;
-
-    height: 4px;
-
-    flex: 1;
-
-    overflow: visible;
-
-    border-radius: 10px;
-
-    background: rgba(255, 255, 255, 0.1);
-
-    cursor: pointer;
-}
-
-.progress-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-
-    width: 0;
-    height: 100%;
-
-    border-radius: inherit;
-
-    background: var(--accent-light);
-}
-
-.progress-thumb {
-    position: absolute;
-    top: 50%;
-    left: 0;
-
-    width: 10px;
-    height: 10px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    transform: translate(-50%, -50%);
-
-    opacity: 0;
-}
-
-.progress-bar:hover .progress-thumb {
-    opacity: 1;
-}
-
-/* PLAYER RIGHT */
-
-.player-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.player-right button {
-    width: 25px;
-    height: 25px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 0;
-    background: transparent;
-
-    color: var(--text-secondary);
-
-    cursor: pointer;
-}
-
-.player-right svg {
-    width: 17px;
-    height: 17px;
-
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-#volumeSlider {
-    width: 90px;
-    accent-color: var(--accent-light);
-    cursor: pointer;
-}
-
-/* =========================================================
-   YOUTUBE PLAYER
-   ========================================================= */
-
-#youtubePlayer {
-    position: fixed;
-
-    width: 1px;
-    height: 1px;
-
-    left: -100px;
-    bottom: -100px;
-
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 1000px) {
-
-    :root {
-        --sidebar-width: 220px;
-    }
-
-    .sidebar {
-        padding: 25px 14px;
-    }
-
-    .topbar {
-        padding: 0 25px;
-    }
-
-    .hero {
-        margin: 0 25px;
-    }
-
-    .hero-content {
-        padding: 40px;
-    }
-
-    .music-section {
-        padding-left: 25px;
-        padding-right: 25px;
-    }
-
-    .music-grid {
-        grid-template-columns: repeat(
-            4,
-            minmax(130px, 1fr)
+        musicGrid.appendChild(
+            createTrackCard(track, index)
         );
 
-        gap: 15px;
+        libraryGrid.appendChild(
+            createTrackCard(track, index)
+        );
+
+    });
+}
+
+/* ================= RENDER FAVORITES ================= */
+
+function renderFavorites() {
+
+    favoritesGrid.innerHTML = "";
+
+    const favoriteTracks =
+        tracks.filter(track =>
+            favorites.includes(track.id)
+        );
+
+    favoriteCount.textContent =
+        `${favoriteTracks.length} morceau${
+            favoriteTracks.length > 1
+                ? "x"
+                : ""
+        }`;
+
+    if (favoriteTracks.length === 0) {
+
+        emptyFavorites.classList.add("show");
+
+        return;
     }
 
-    .player {
-        grid-template-columns: 1fr 1.3fr 0.7fr;
-        gap: 15px;
+    emptyFavorites.classList.remove("show");
 
-        padding-left: 18px;
-        padding-right: 18px;
+    favoriteTracks.forEach(track => {
+
+        const index =
+            tracks.findIndex(
+                item =>
+                    item.id === track.id
+            );
+
+        favoritesGrid.appendChild(
+            createTrackCard(track, index)
+        );
+
+    });
+}
+
+/* ================= FAVORITES ================= */
+
+function toggleFavorite(trackId) {
+
+    if (favorites.includes(trackId)) {
+
+        favorites =
+            favorites.filter(
+                id => id !== trackId
+            );
+
+    } else {
+
+        favorites.push(trackId);
     }
 
-    #volumeSlider {
-        width: 65px;
+    localStorage.setItem(
+        "waveifyFavorites",
+        JSON.stringify(favorites)
+    );
+
+    renderTracks();
+    renderFavorites();
+
+    updatePlayerFavorite();
+}
+
+/* ================= PLAYER FAVORITE ================= */
+
+function updatePlayerFavorite() {
+
+    const track =
+        tracks[currentTrackIndex];
+
+    if (!track) {
+        return;
+    }
+
+    const isFavorite =
+        favorites.includes(track.id);
+
+    playerFavorite.textContent =
+        isFavorite ? "♥" : "♡";
+
+    playerFavorite.classList.toggle(
+        "favorite",
+        isFavorite
+    );
+}
+
+/* ================= LOAD TRACK ================= */
+
+function loadTrack(index, autoplay = true) {
+
+    if (!tracks[index]) {
+        return;
+    }
+
+    currentTrackIndex = index;
+
+    const track =
+        tracks[currentTrackIndex];
+
+    playerTitle.textContent =
+        track.title;
+
+    playerArtist.textContent =
+        track.artist;
+
+    playerCover.src =
+        track.thumbnail;
+
+    updatePlayerFavorite();
+
+    if (!player) {
+        return;
+    }
+
+    player.loadVideoById(track.id);
+
+    if (!autoplay) {
+
+        player.pauseVideo();
+
+        isPlaying = false;
+
+        updatePlayButton();
     }
 }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+/* ================= PLAY TRACK ================= */
 
-@media (max-width: 700px) {
+function playTrack(index) {
 
-    :root {
-        --player-height: 132px;
+    if (!tracks[index]) {
+        return;
     }
 
-    body {
-        width: 100%;
-        max-width: 100vw;
+    currentTrackIndex = index;
 
-        overflow-x: hidden;
+    const track =
+        tracks[currentTrackIndex];
+
+    playerTitle.textContent =
+        track.title;
+
+    playerArtist.textContent =
+        track.artist;
+
+    playerCover.src =
+        track.thumbnail;
+
+    updatePlayerFavorite();
+
+    if (player) {
+
+        player.loadVideoById(track.id);
+
+        player.playVideo();
+    }
+}
+
+/* ================= PLAY / PAUSE ================= */
+
+function togglePlay() {
+
+    if (!player) {
+        return;
     }
 
-    /* SIDEBAR MOBILE */
-
-    .sidebar {
-        position: fixed;
-
-        width: min(250px, 78vw);
-        max-width: 78vw;
-
-        height: 100vh;
-
-        padding: 24px 14px;
-
-        transform: translateX(-105%);
-
-        transition: transform 0.25s ease;
-
-        box-shadow: 12px 0 35px rgba(0, 0, 0, 0.35);
-
-        z-index: 2000;
+    if (!tracks[currentTrackIndex]) {
+        return;
     }
 
-    .sidebar.open {
-        transform: translat
+    if (isPlaying) {
+
+        player.pauseVideo();
+
+    } else {
+
+        player.playVideo();
+    }
+}
+
+/* ================= NEXT ================= */
+
+function nextTrack() {
+
+    if (isShuffle) {
+
+        let nextIndex;
+
+        do {
+
+            nextIndex =
+                Math.floor(
+                    Math.random() *
+                    tracks.length
+                );
+
+        } while (
+            nextIndex === currentTrackIndex &&
+            tracks.length > 1
+        );
+
+        playTrack(nextIndex);
+
+        return;
+    }
+
+    let nextIndex =
+        currentTrackIndex + 1;
+
+    if (nextIndex >= tracks.length) {
+        nextIndex = 0;
+    }
+
+    playTrack(nextIndex);
+}
+
+/* ================= PREVIOUS ================= */
+
+function previousTrack() {
+
+    if (player) {
+
+        const currentTime =
+            player.getCurrentTime();
+
+        if (currentTime > 3) {
+
+            player.seekTo(0, true);
+
+            return;
+        }
+    }
+
+    let previousIndex =
+        currentTrackIndex - 1;
+
+    if (previousIndex < 0) {
+
+        previousIndex =
+            tracks.length - 1;
+    }
+
+    playTrack(previousIndex);
+}
+
+/* ================= PLAY ALL ================= */
+
+function playAll() {
+
+    if (!tracks.length) {
+        return;
+    }
+
+    playTrack(0);
+}
+
+/* ================= PLAY BUTTON ================= */
+
+function updatePlayButton() {
+
+    playButton.textContent =
+        isPlaying ? "Ⅱ" : "▶";
+
+    playerElement.classList.toggle(
+        "playing",
+        isPlaying
+    );
+}
+
+/* ================= PROGRESS ================= */
+
+function updateProgress() {
+
+    if (!player) {
+        return;
+    }
+
+    try {
+
+        const current =
+            player.getCurrentTime();
+
+        const duration =
+            player.getDuration();
+
+        if (!duration) {
+            return;
+        }
+
+        const percentage =
+            Math.min(
+                100,
+                Math.max(
+                    0,
+                    (current / duration) * 100
+                )
+            );
+
+        progressFill.style.width =
+            `${percentage}%`;
+
+        progressThumb.style.left =
+            `${percentage}%`;
+
+        currentTimeElement.textContent =
+            formatTime(current);
+
+        durationElement.textContent =
+            formatTime(duration);
+
+    } catch (error) {
+
+        // Le player YouTube n'est pas encore prêt.
+
+    }
+}
+
+/* ================= SEEK ================= */
+
+function seek(event) {
+
+    if (!player) {
+        return;
+    }
+
+    const rect =
+        progressBar.getBoundingClientRect();
+
+    const percentage =
+        Math.min(
+            1,
+            Math.max(
+                0,
+                (event.clientX - rect.left) /
+                rect.width
+            )
+        );
+
+    const duration =
+        player.getDuration();
+
+    if (duration) {
+
+        player.seekTo(
+            duration * percentage,
+            true
+        );
+    }
+}
+
+/* ================= VOLUME ================= */
+
+function updateVolume() {
+
+    if (!player) {
+        return;
+    }
+
+    player.setVolume(
+        Number(volumeSlider.value)
+    );
+}
+
+/* ================= NAVIGATION ================= */
+
+function showSection(section) {
+
+    const home =
+        document.getElementById(
+            "homeSection"
+        );
+
+    const library =
+        document.getElementById(
+            "librarySection"
+        );
+
+    const favoritesSection =
+        document.getElementById(
+            "favoritesSection"
+        );
+
+    home.style.display = "none";
+    library.style.display = "none";
+    favoritesSection.style.display = "none";
+
+    if (section === "home") {
+        home.style.display = "block";
+    }
+
+    if (section === "library") {
+        library.style.display = "block";
+    }
+
+    if (section === "favorites") {
+
+        favoritesSection.style.display =
+            "block";
+
+        renderFavorites();
+    }
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+
+            item.classList.toggle(
+                "active",
+                item.dataset.section === section
+            );
+
+        });
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+/* ================= NAV BUTTONS ================= */
+
+document
+    .querySelectorAll(".nav-item")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                showSection(
+                    button.dataset.section
+                );
+
+            }
+        );
+
+    });
+
+/* ================= PLAY ALL ================= */
+
+document
+    .getElementById("playAllButton")
+    .addEventListener(
+        "click",
+        playAll
+    );
+
+/* ================= SEE ALL ================= */
+
+document
+    .getElementById("seeAllButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            showSection("library");
+
+        }
+    );
+
+/* ================= PLAYER BUTTONS ================= */
+
+playButton.addEventListener(
+    "click",
+    togglePlay
+);
+
+nextButton.addEventListener(
+    "click",
+    nextTrack
+);
+
+previousButton.addEventListener(
+    "click",
+    previousTrack
+);
+
+shuffleButton.addEventListener(
+    "click",
+    () => {
+
+        isShuffle =
+            !isShuffle;
+
+        shuffleButton.classList.toggle(
+            "active",
+            isShuffle
+        );
+
+    }
+);
+
+repeatButton.addEventListener(
+    "click",
+    () => {
+
+        isRepeat =
+            !isRepeat;
+
+        repeatButton.classList.toggle(
+            "active",
+            isRepeat
+        );
+
+    }
+);
+
+progressBar.addEventListener(
+    "click",
+    seek
+);
+
+volumeSlider.addEventListener(
+    "input",
+    updateVolume
+);
+
+/* ================= PLAYER FAVORITE ================= */
+
+playerFavorite.addEventListener(
+    "click",
+    () => {
+
+        const track =
+            tracks[currentTrackIndex];
+
+        if (track) {
+
+            toggleFavorite(
+                track.id
+            );
+        }
+
+    }
+);
+
+/* ================= MOBILE SIDEBAR ================= */
+
+const mobileMenu =
+    document.getElementById(
+        "mobileMenu"
+    );
+
+const sidebar =
+    document.querySelector(
+        ".sidebar"
+    );
+
+if (mobileMenu && sidebar) {
+
+    mobileMenu.addEventListener(
+        "click",
+        (event) => {
+
+            event.stopPropagation();
+
+            sidebar.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    sidebar.classList.remove(
+                        "open"
+                    );
+
+                }
+            );
+
+        });
+}
+
+/* ================= YOUTUBE API ================= */
+
+/*
+L'API YouTube appelle automatiquement
+cette fonction lorsqu'elle est chargée.
+*/
+
+window.onYouTubeIframeAPIReady =
+    function () {
+
+        player =
+            new YT.Player(
+                "youtubePlayer",
+                {
+
+                    height: "1",
+                    width: "1",
+
+                    videoId:
+                        tracks[0].id,
+
+                    playerVars: {
+
+                        autoplay: 0,
+
+                        controls: 0,
+
+                        disablekb: 1,
+
+                        fs: 0,
+
+                        modestbranding: 1,
+
+                        playsinline: 1,
+
+                        rel: 0
+
+                    },
+
+                    events: {
+
+                        onReady:
+                            function (event) {
+
+                                event.target.setVolume(
+                                    Number(
+                                        volumeSlider.value
+                                    )
+                                );
+
+                                loadTrack(
+                                    0,
+                                    false
+                                );
+
+                            },
+
+                        onStateChange:
+                            function (event) {
+
+                                handlePlayerState(
+                                    event.data
+                                );
+
+                            }
+
+                    }
+
+                }
+            );
+
+    };
+
+/* ================= YOUTUBE STATES ================= */
+
+function handlePlayerState(state) {
+
+    if (
+        state === YT.PlayerState.PLAYING
+    ) {
+
+        isPlaying = true;
+    }
+
+    if (
+        state === YT.PlayerState.PAUSED
+    ) {
+
+        isPlaying = false;
+    }
+
+    if (
+        state === YT.PlayerState.ENDED
+    ) {
+
+        isPlaying = false;
+
+        if (isRepeat) {
+
+            player.seekTo(
+                0,
+                true
+            );
+
+            player.playVideo();
+
+        } else {
+
+            nextTrack();
+        }
+    }
+
+    updatePlayButton();
+}
+
+/* ================= INITIALIZE ================= */
+
+renderTracks();
+
+renderFavorites();
+
+updatePlayButton();
+
+/* ================= PROGRESS LOOP ================= */
+
+setInterval(
+    updateProgress,
+    500
+);
+
+/* ================= LOAD YOUTUBE API ================= */
+
+const youtubeScript =
+    document.createElement("script");
+
+youtubeScript.src =
+    "https://www.youtube.com/iframe_api";
+
+document
+    .head
+    .appendChild(youtubeScript);
