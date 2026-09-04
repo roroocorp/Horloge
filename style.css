@@ -1654,6 +1654,14 @@ height: 25px;
 font-size: 15px;
 }
 
+/* ---------- PETIT DÉCALAGE TEXTE ---------- */
+/* La photo et le cœur ne bougent pas */
+
+.card-title,
+.card-artist {
+transform: translateX(2px);
+}
+
 /* ---------- PAGE TITLE ---------- */
 
 .page-title {
@@ -1695,20 +1703,4 @@ gap: 8px;
 
 .player-left {
 flex: 1;
-min-width: 0;
-
-gap: 8px;
-}
-
-.player-cover {
-width: 46px;
-height: 46px;
-}
-
-.track-info strong {
-font-size: 11px;
-}
-
-.track-info span {
-font-size: 9px;
-  }
+m
