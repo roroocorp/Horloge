@@ -1654,14 +1654,6 @@ height: 25px;
 font-size: 15px;
 }
 
-/* ---------- TEXTE : PETIT DÉCALAGE À DROITE ---------- */
-/* La photo et le cœur restent exactement à leur place */
-
-.card-title,
-.card-artist {
-transform: translateX(2px);
-}
-
 /* ---------- PAGE TITLE ---------- */
 
 .page-title {
@@ -1699,4 +1691,21 @@ display: flex;
 align-items: center;
 
 gap: 8px;
-  
+}
+
+.player-left {
+flex: 1;
+min-width: 0;
+
+gap: 8px;
+}
+
+.player-cover {
+width: 46px;
+height: 46px;
+}
+
+/* ---------- MOBILE : CACHER NOM ET ARTISTE ---------- */
+
+.track-info {
+dis
