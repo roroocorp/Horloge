@@ -1,7 +1,6 @@
-/* =========================================================
-   WAVEIFY — PREMIUM MUSIC PLAYER
-   PC + TABLETTE + MOBILE
-   ========================================================= */
+/* =========================
+   VARIABLES
+========================= */
 
 :root {
     --bg-main: #090b0d;
@@ -11,27 +10,27 @@
     --bg-sidebar: #0c0f11;
     --bg-player: #111416;
 
-    --text-primary: #ffffff;
-    --text-secondary: #a7adb3;
-    --text-muted: #6f767c;
+    --text-main: #f4f6f7;
+    --text-secondary: #9ba3a8;
+    --text-muted: #687178;
 
-    --accent: #1ed760;
-    --accent-hover: #20e56a;
+    --accent: #27e07f;
+    --accent-hover: #35ee8b;
 
     --border: rgba(255, 255, 255, 0.07);
 
     --sidebar-width: 230px;
     --player-height: 82px;
 
-    --radius-small: 8px;
-    --radius-medium: 14px;
+    --radius-small: 10px;
+    --radius-medium: 16px;
     --radius-large: 22px;
 }
 
 
-/* =========================================================
+/* =========================
    RESET
-   ========================================================= */
+========================= */
 
 * {
     margin: 0;
@@ -46,7 +45,7 @@ html {
 body {
     min-height: 100vh;
     background: var(--bg-main);
-    color: var(--text-primary);
+    color: var(--text-main);
     font-family: "Inter", sans-serif;
     overflow-x: hidden;
 }
@@ -66,110 +65,103 @@ img {
     max-width: 100%;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
+body.menu-open {
+    overflow: hidden;
 }
 
 
-/* =========================================================
+/* =========================
    SIDEBAR
-   ========================================================= */
+========================= */
 
 .sidebar {
     position: fixed;
+    z-index: 1000;
     top: 0;
     left: 0;
-    z-index: 1000;
 
     width: var(--sidebar-width);
-    height: 100vh;
-
-    padding: 24px 14px;
+    height: calc(100vh - var(--player-height));
 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+
+    padding: 28px 16px 18px;
 
     background: var(--bg-sidebar);
     border-right: 1px solid var(--border);
-
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
-.sidebar::-webkit-scrollbar {
-    width: 5px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
+.sidebar-top {
+    width: 100%;
 }
 
 
-/* =========================================================
+/* =========================
    LOGO
-   ========================================================= */
+========================= */
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 11px;
 
-    padding: 4px 10px 28px;
-
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
+    padding: 0 12px;
+    margin-bottom: 38px;
 }
 
 .logo-icon {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 10px;
+    border-radius: 11px;
 
     background: var(--accent);
-    color: #000;
+    color: #07100b;
 
-    font-size: 17px;
-    font-weight: 900;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
 
-/* =========================================================
+/* =========================
    NAVIGATION
-   ========================================================= */
+========================= */
 
-.sidebar-nav {
+.main-nav {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
 }
 
 .nav-item {
     width: 100%;
-    min-height: 42px;
 
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 13px;
 
-    padding: 0 12px;
+    padding: 12px 13px;
 
-    border-radius: 10px;
+    border-radius: 11px;
 
     background: transparent;
     color: var(--text-secondary);
 
-    font-size: 13px;
-    font-weight: 600;
-
     text-align: left;
+    font-size: 14px;
+    font-weight: 600;
 
     transition:
         background 0.2s ease,
@@ -178,370 +170,325 @@ a {
 }
 
 .nav-item:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-main);
 }
 
 .nav-item.active {
-    background: rgba(30, 215, 96, 0.12);
+    background: rgba(39, 224, 127, 0.11);
     color: var(--accent);
 }
 
-.nav-item i,
-.nav-item svg {
-    width: 18px;
-    min-width: 18px;
-    font-size: 17px;
-}
-
-
-/* =========================================================
-   PLAYLISTS
-   ========================================================= */
-
-.playlists {
-    margin-top: 28px;
-}
-
-.playlists-title {
-    padding: 0 12px;
-    margin-bottom: 10px;
-
-    color: var(--text-muted);
-
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-}
-
-.playlist-item {
-    width: 100%;
-    padding: 8px 12px;
+.nav-icon {
+    width: 20px;
 
     display: flex;
     align-items: center;
+    justify-content: center;
 
-    border-radius: 8px;
-
-    background: transparent;
-    color: var(--text-secondary);
-
-    font-size: 12px;
-
-    text-align: left;
-
-    transition: 0.2s ease;
-}
-
-.playlist-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
+    font-size: 18px;
 }
 
 
-/* =========================================================
+/* =========================
    USER CARD
-   ========================================================= */
+========================= */
 
 .user-card {
-    margin-top: auto;
-    padding: 12px;
-
     display: flex;
     align-items: center;
     gap: 10px;
 
+    padding: 11px;
+
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
 
     background: rgba(255, 255, 255, 0.025);
 }
 
-.user-avatar {
-    width: 34px;
-    height: 34px;
-    min-width: 34px;
-
+.user-avatar,
+.top-avatar {
     display: flex;
     align-items: center;
     justify-content: center;
 
+    flex-shrink: 0;
+
     border-radius: 50%;
 
-    background: #252a2e;
+    background: var(--accent);
+    color: #07100b;
 
-    font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+
+    font-size: 13px;
 }
 
 .user-info {
     min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    flex: 1;
 }
 
-.user-name {
-    font-size: 11px;
-    font-weight: 700;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.user-info strong {
+    font-size: 12px;
+    color: var(--text-main);
 }
 
-.user-status {
-    margin-top: 2px;
+.user-info span {
+    font-size: 10px;
+    color: var(--accent);
+}
 
-    color: var(--text-muted);
+.user-more {
+    color: var(--text-secondary);
+    background: transparent;
 
-    font-size: 9px;
+    font-size: 18px;
 }
 
 
-/* =========================================================
-   MAIN CONTENT
-   ========================================================= */
+/* =========================
+   MAIN
+========================= */
 
 .main-content {
-    min-height: 100vh;
+    min-height: calc(100vh - var(--player-height));
 
     margin-left: var(--sidebar-width);
-
     padding-bottom: calc(var(--player-height) + 30px);
-
-    transition: margin-left 0.25s ease;
 }
 
 
-/* =========================================================
+/* =========================
    TOPBAR
-   ========================================================= */
+========================= */
 
 .topbar {
-    height: 68px;
-
-    padding: 0 28px;
+    height: 72px;
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
-    position: sticky;
-    top: 0;
-    z-index: 500;
-
-    background: rgba(9, 11, 13, 0.88);
-    backdrop-filter: blur(16px);
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+    padding: 0 34px;
 }
 
-.topbar-left,
-.topbar-right {
-    display: flex;
-    align-items: center;
-}
-
-.topbar-right {
-    gap: 10px;
-}
-
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
-.search-box {
-    width: min(360px, 40vw);
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    gap: 9px;
-
-    padding: 0 13px;
-
-    border-radius: 20px;
-
-    background: #15191c;
-    border: 1px solid var(--border);
-
-    color: var(--text-muted);
-}
-
-.search-box input {
-    width: 100%;
-
-    border: 0;
-    outline: 0;
-
-    background: transparent;
-    color: #fff;
-
-    font-size: 12px;
-}
-
-.search-box input::placeholder {
-    color: var(--text-muted);
-}
-
-
-/* =========================================================
-   TOPBAR BUTTONS
-   ========================================================= */
-
-.icon-button {
-    width: 36px;
-    height: 36px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: transparent;
-    color: var(--text-secondary);
-
-    transition: 0.2s ease;
-}
-
-.icon-button:hover {
-    background: rgba(255, 255, 255, 0.07);
-    color: #fff;
+.topbar-spacer {
+    flex: 1;
 }
 
 .top-avatar {
     width: 34px;
     height: 34px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #24292d;
-
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 12px;
 }
-
-
-/* =========================================================
-   MOBILE MENU BUTTON
-   ========================================================= */
 
 .mobile-menu {
     display: none;
+
+    width: 40px;
+    height: 40px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--bg-card);
+    color: var(--text-main);
+
+    font-size: 20px;
 }
 
 
-/* =========================================================
+/* =========================
    PAGE
-   ========================================================= */
+========================= */
 
 .page-section {
     display: none;
 
-    padding: 28px;
+    padding: 0 34px 40px;
+
+    animation: pageAppear 0.25s ease;
 }
 
 .page-section.active {
     display: block;
 }
 
+@keyframes pageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
 
-/* =========================================================
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================
    HERO
-   ========================================================= */
+========================= */
 
 .hero {
     position: relative;
-
-    min-height: 285px;
-
-    padding: 42px;
+    min-height: 310px;
 
     display: flex;
     align-items: center;
 
     overflow: hidden;
 
+    margin-bottom: 42px;
+    padding: 46px 48px;
+
+    border: 1px solid var(--border);
     border-radius: var(--radius-large);
 
     background:
         radial-gradient(
-            circle at 80% 30%,
-            rgba(30, 215, 96, 0.15),
-            transparent 35%
+            circle at 80% 20%,
+            rgba(39, 224, 127, 0.15),
+            transparent 34%
         ),
         linear-gradient(
             135deg,
-            #171c1f,
-            #0e1113
+            #111719,
+            #0d1113
         );
-
-    border: 1px solid var(--border);
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
 
-    max-width: 570px;
+    max-width: 600px;
 }
 
-.hero-label {
-    margin-bottom: 13px;
+.hero-label,
+.section-label {
+    display: inline-block;
+
+    margin-bottom: 10px;
 
     color: var(--accent);
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 1.5px;
-    text-transform: uppercase;
 }
 
 .hero h1 {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 
-    font-size: clamp(32px, 4vw, 56px);
+    font-size: clamp(36px, 5vw, 64px);
     line-height: 0.98;
-    letter-spacing: -2px;
+    letter-spacing: -2.5px;
+}
+
+.hero h1 span {
+    color: var(--accent);
 }
 
 .hero p {
-    max-width: 480px;
+    max-width: 500px;
+
+    margin-bottom: 24px;
 
     color: var(--text-secondary);
 
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.7;
 }
 
 
-/* =========================================================
-   HERO BUTTON
-   ========================================================= */
+/* =========================
+   HERO WAVES
+========================= */
+
+.hero-decoration {
+    position: absolute;
+    right: -50px;
+    bottom: -70px;
+
+    width: 470px;
+    height: 300px;
+
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.wave {
+    position: absolute;
+
+    border: 1px solid rgba(39, 224, 127, 0.2);
+    border-radius: 50%;
+}
+
+.wave-one {
+    width: 360px;
+    height: 170px;
+
+    right: 20px;
+    bottom: 40px;
+
+    transform: rotate(-12deg);
+}
+
+.wave-two {
+    width: 420px;
+    height: 200px;
+
+    right: -15px;
+    bottom: 10px;
+
+    transform: rotate(-12deg);
+}
+
+.wave-three {
+    width: 490px;
+    height: 230px;
+
+    right: -55px;
+    bottom: -25px;
+
+    transform: rotate(-12deg);
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
 
 .primary-button {
-    margin-top: 24px;
-
-    min-height: 42px;
-
-    padding: 0 20px;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 9px;
 
-    border-radius: 22px;
+    padding: 12px 19px;
+
+    border-radius: 11px;
 
     background: var(--accent);
-    color: #000;
+    color: #06100a;
 
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
 
     transition:
@@ -554,174 +501,114 @@ a {
     transform: translateY(-2px);
 }
 
+.text-button {
+    background: transparent;
+    color: var(--text-secondary);
 
-/* =========================================================
-   HERO WAVES
-   ========================================================= */
+    font-size: 12px;
+    font-weight: 600;
 
-.hero-waves {
-    position: absolute;
-    right: 30px;
-    bottom: 25px;
-
-    width: 300px;
-    height: 150px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    opacity: 0.6;
+    transition: color 0.2s ease;
 }
 
-.hero-waves span {
-    width: 4px;
-
-    border-radius: 5px;
-
-    background: var(--accent);
-
-    animation: waveAnimation 1.2s ease-in-out infinite;
-}
-
-.hero-waves span:nth-child(1) {
-    height: 25%;
-    animation-delay: -0.9s;
-}
-
-.hero-waves span:nth-child(2) {
-    height: 50%;
-    animation-delay: -0.7s;
-}
-
-.hero-waves span:nth-child(3) {
-    height: 75%;
-    animation-delay: -0.5s;
-}
-
-.hero-waves span:nth-child(4) {
-    height: 45%;
-    animation-delay: -0.3s;
-}
-
-.hero-waves span:nth-child(5) {
-    height: 90%;
-    animation-delay: -0.1s;
-}
-
-.hero-waves span:nth-child(6) {
-    height: 55%;
-    animation-delay: -0.6s;
-}
-
-.hero-waves span:nth-child(7) {
-    height: 35%;
-    animation-delay: -0.4s;
-}
-
-@keyframes waveAnimation {
-    0%,
-    100% {
-        transform: scaleY(0.65);
-    }
-
-    50% {
-        transform: scaleY(1);
-    }
-}
-
-
-/* =========================================================
-   SECTION HEADER
-   ========================================================= */
-
-.section-header {
-    margin: 32px 0 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-}
-
-.section-header h2 {
-    font-size: 19px;
-    letter-spacing: -0.5px;
-}
-
-.section-link {
-    color: var(--text-muted);
-
-    font-size: 11px;
-    font-weight: 700;
-
-    transition: 0.2s ease;
-}
-
-.section-link:hover {
+.text-button:hover {
     color: var(--accent);
 }
 
 
-/* =========================================================
+/* =========================
+   SECTIONS
+========================= */
+
+.music-section {
+    width: 100%;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+.section-header h2 {
+    font-size: 24px;
+    letter-spacing: -0.8px;
+}
+
+.page-title {
+    margin-bottom: 30px;
+}
+
+.page-title h1 {
+    margin-bottom: 8px;
+
+    font-size: 34px;
+    letter-spacing: -1.5px;
+}
+
+.page-title p {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+
+/* =========================
    MUSIC GRID
-   ========================================================= */
+========================= */
 
 .music-grid {
     display: grid;
 
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 17px;
 }
 
 
-/* =========================================================
+/* =========================
    MUSIC CARD
-   ========================================================= */
+========================= */
 
 .music-card {
-    position: relative;
-
     min-width: 0;
 
     padding: 10px;
 
-    border-radius: 14px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-medium);
 
     background: var(--bg-card);
-
-    border: 1px solid transparent;
 
     cursor: pointer;
 
     transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        border-color 0.25s ease;
+        background 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .music-card:hover {
     background: var(--bg-card-hover);
     border-color: var(--border);
 
-    transform: translateY(-4px);
+    transform: translateY(-3px);
 }
 
 .music-cover {
     position: relative;
 
-    width: 100%;
-    aspect-ratio: 1 / 1;
-
-    margin-bottom: 10px;
+    aspect-ratio: 1;
 
     overflow: hidden;
 
-    border-radius: 10px;
+    margin-bottom: 11px;
 
-    background: #202529;
+    border-radius: 12px;
+
+    background: #1b2024;
 }
 
 .music-cover img {
@@ -729,217 +616,197 @@ a {
     height: 100%;
 
     object-fit: cover;
-
-    transition: transform 0.35s ease;
 }
 
-.music-card:hover .music-cover img {
-    transform: scale(1.05);
-}
-
-.music-play {
+.card-play,
+.card-favorite {
     position: absolute;
-    right: 8px;
-    bottom: 8px;
-
-    width: 38px;
-    height: 38px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
-
-    background: var(--accent);
-    color: #000;
-
     opacity: 0;
-    transform: translateY(7px);
 
     transition:
         opacity 0.2s ease,
-        transform 0.2s ease;
+        transform 0.2s ease,
+        background 0.2s ease;
 }
 
-.music-card:hover .music-play {
+.music-card:hover .card-play,
+.music-card:hover .card-favorite {
     opacity: 1;
-    transform: translateY(0);
 }
 
-.music-title {
-    padding: 0 2px;
+.card-play {
+    left: 50%;
+    top: 50%;
+
+    width: 48px;
+    height: 48px;
+
+    transform: translate(-50%, -45%);
+
+    border-radius: 50%;
+
+    background: var(--accent);
+    color: #06100a;
+
+    font-size: 17px;
+}
+
+.card-play:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+}
+
+.card-favorite {
+    top: 9px;
+    right: 9px;
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+
+    font-size: 16px;
+}
+
+.card-favorite.active {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.music-card-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    padding: 0 2px 4px;
+}
+
+.music-card-info strong {
+    overflow: hidden;
+
+    color: var(--text-main);
 
     font-size: 12px;
     font-weight: 700;
 
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.music-artist {
-    margin-top: 4px;
-    padding: 0 2px;
+.music-card-info span {
+    overflow: hidden;
 
-    color: var(--text-muted);
+    color: var(--text-secondary);
 
     font-size: 10px;
 
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 
 
-/* =========================================================
-   FAVORITE BUTTON ON CARD
-   ========================================================= */
-
-.card-favorite {
-    position: absolute;
-    top: 17px;
-    right: 17px;
-    z-index: 3;
-
-    width: 30px;
-    height: 30px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: rgba(0, 0, 0, 0.55);
-    color: #fff;
-
-    opacity: 0;
-
-    transition: 0.2s ease;
-}
-
-.music-card:hover .card-favorite,
-.card-favorite.active {
-    opacity: 1;
-}
-
-.card-favorite.active {
-    color: var(--accent);
-}
-
-
-/* =========================================================
-   PAGE TITLES
-   ========================================================= */
-
-.page-title {
-    margin-bottom: 25px;
-}
-
-.page-title h1 {
-    font-size: 30px;
-    letter-spacing: -1px;
-}
-
-.page-title p {
-    margin-top: 7px;
-
-    color: var(--text-muted);
-
-    font-size: 12px;
-}
-
-
-/* =========================================================
-   FAVORITES
-   ========================================================= */
-
-.favorites-count {
-    color: var(--text-muted);
-
-    font-size: 11px;
-}
+/* =========================
+   EMPTY FAVORITES
+========================= */
 
 .empty-state {
-    min-height: 280px;
+    min-height: 300px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    padding: 30px;
+    padding: 40px;
 
-    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border: 1px dashed var(--border);
     border-radius: var(--radius-medium);
 
     text-align: center;
 }
 
-.empty-state-icon {
-    width: 54px;
-    height: 54px;
-
-    margin-bottom: 15px;
+.empty-icon {
+    width: 60px;
+    height: 60px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    margin-bottom: 18px;
+
     border-radius: 50%;
 
-    background: rgba(30, 215, 96, 0.08);
+    background: rgba(39, 224, 127, 0.08);
     color: var(--accent);
 
-    font-size: 22px;
+    font-size: 28px;
 }
 
-.empty-state h3 {
-    margin-bottom: 6px;
+.empty-state h2 {
+    margin-bottom: 8px;
 
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .empty-state p {
-    color: var(--text-muted);
+    max-width: 380px;
 
-    font-size: 11px;
+    margin-bottom: 20px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    line-height: 1.6;
 }
 
 
-/* =========================================================
+/* =========================
    PLAYER
-   ========================================================= */
+========================= */
 
 .player {
     position: fixed;
+    z-index: 2000;
+
     left: 0;
     right: 0;
     bottom: 0;
-
-    z-index: 2000;
 
     height: var(--player-height);
 
     display: grid;
 
-    grid-template-columns: minmax(200px, 1fr) minmax(350px, 1.5fr) minmax(200px, 1fr);
+    grid-template-columns:
+        minmax(220px, 1fr)
+        minmax(320px, 1.5fr)
+        minmax(180px, 1fr);
 
     align-items: center;
 
-    padding: 10px 20px;
+    gap: 25px;
 
-    background: rgba(17, 20, 22, 0.96);
-    backdrop-filter: blur(20px);
+    padding: 10px 25px;
 
+    background: rgba(17, 20, 22, 0.97);
     border-top: 1px solid var(--border);
+
+    backdrop-filter: blur(15px);
 }
 
 
-/* =========================================================
+/* =========================
    PLAYER LEFT
-   ========================================================= */
+========================= */
 
 .player-left {
     min-width: 0;
@@ -952,64 +819,64 @@ a {
 .player-cover {
     width: 54px;
     height: 54px;
-    min-width: 54px;
 
-    overflow: hidden;
+    flex-shrink: 0;
 
-    border-radius: 7px;
-
-    background: #22272a;
-}
-
-.player-cover img {
-    width: 100%;
-    height: 100%;
+    border-radius: 9px;
 
     object-fit: cover;
+
+    background: #1b2024;
 }
 
-.player-track-info {
+.player-info {
     min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-.player-title {
-    font-size: 11px;
-    font-weight: 700;
+.player-info strong {
+    overflow: hidden;
+
+    font-size: 12px;
 
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.player-artist {
-    margin-top: 3px;
+.player-info span {
+    overflow: hidden;
 
-    color: var(--text-muted);
+    color: var(--text-secondary);
 
-    font-size: 9px;
+    font-size: 10px;
 
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .player-favorite {
-    margin-left: 5px;
+    margin-left: auto;
 
     background: transparent;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 
-    font-size: 15px;
+    font-size: 20px;
+
+    transition: color 0.2s ease;
 }
 
+.player-favorite:hover,
 .player-favorite.active {
     color: var(--accent);
 }
 
 
-/* =========================================================
+/* =========================
    PLAYER CENTER
-   ========================================================= */
+========================= */
 
 .player-center {
     min-width: 0;
@@ -1017,6 +884,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     gap: 7px;
 }
 
@@ -1024,65 +892,65 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: 17px;
 }
 
-.player-button {
-    width: 28px;
-    height: 28px;
-
+.control-button,
+.play-button {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
-
     background: transparent;
     color: var(--text-secondary);
 
-    transition: 0.2s ease;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.player-button:hover {
-    color: #fff;
+.control-button {
+    width: 27px;
+    height: 27px;
+
+    font-size: 14px;
 }
 
-.player-button.active {
+.control-button:hover,
+.control-button.active {
     color: var(--accent);
 }
 
 .play-button {
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
 
-    background: #fff;
-    color: #000;
+    border-radius: 50%;
+
+    background: var(--text-main);
+    color: #090b0d;
+
+    font-size: 13px;
 }
 
 .play-button:hover {
-    background: var(--accent);
-    color: #000;
+    transform: scale(1.06);
 }
 
-
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-
-.progress-wrapper {
-    width: min(100%, 500px);
+.progress-area {
+    width: 100%;
 
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.time {
-    min-width: 30px;
+.progress-area span {
+    width: 30px;
 
     color: var(--text-muted);
 
-    font-size: 8px;
+    font-size: 9px;
 
     text-align: center;
 }
@@ -1094,15 +962,17 @@ a {
 
     height: 4px;
 
-    border-radius: 10px;
+    overflow: hidden;
 
-    background: #34393d;
+    border-radius: 20px;
+
+    background: #2b3034;
 
     cursor: pointer;
 }
 
 .progress-bar {
-    width: 0%;
+    width: 0;
     height: 100%;
 
     border-radius: inherit;
@@ -1113,24 +983,22 @@ a {
 }
 
 
-/* =========================================================
+/* =========================
    PLAYER RIGHT
-   ========================================================= */
+========================= */
 
 .player-right {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 9px;
+    gap: 10px;
 }
 
 .volume-icon {
-    color: var(--text-muted);
-
-    font-size: 13px;
+    font-size: 14px;
 }
 
-.volume-slider {
+#volumeSlider {
     width: 90px;
 
     accent-color: var(--accent);
@@ -1139,9 +1007,9 @@ a {
 }
 
 
-/* =========================================================
-   YOUTUBE PLAYER
-   ========================================================= */
+/* =========================
+   YOUTUBE
+========================= */
 
 #youtubePlayer {
     position: fixed;
@@ -1149,81 +1017,344 @@ a {
     width: 1px;
     height: 1px;
 
-    left: -9999px;
-    top: -9999px;
+    left: -100px;
+    bottom: -100px;
 
     opacity: 0;
     pointer-events: none;
 }
 
 
-/* =========================================================
+/* =========================
    MOBILE OVERLAY
-   ========================================================= */
+========================= */
 
 .sidebar-overlay {
-    display: none;
-
     position: fixed;
-    inset: 0;
-
     z-index: 900;
 
+    inset: 0;
+
+    display: none;
+
     background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(2px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.25s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+
+    opacity: 1;
+    pointer-events: auto;
 }
 
 
-/* =========================================================
+/* =========================
    TABLET
-   ========================================================= */
+========================= */
 
-/*
-   La tablette garde un fonctionnement proche de ton CSS
-   d'origine.
-*/
+@media (min-width: 701px) and (max-width: 1100px) {
 
-@media (max-width: 1100px) and (min-width: 701px) {
+    :root {
+        --sidebar-width: 190px;
+    }
+
+    .sidebar {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .logo {
+        padding: 0 8px;
+    }
+
+    .logo-text {
+        font-size: 18px;
+    }
+
+    .page-section {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .topbar {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
 
     .music-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
     }
 
     .hero {
-        min-height: 270px;
+        min-height: 280px;
+        padding: 38px;
     }
 
-    .hero-waves {
-        width: 240px;
+    .hero-decoration {
+        right: -130px;
+        opacity: 0.45;
     }
 
     .player {
         grid-template-columns:
             minmax(180px, 1fr)
-            minmax(300px, 1.5fr)
-            minmax(160px, 1fr);
+            minmax(260px, 1.5fr)
+            minmax(140px, 0.8fr);
+
+        gap: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
-    .search-box {
-        width: 300px;
+    .player-controls {
+        gap: 10px;
     }
 }
 
 
-/* =========================================================
-   PC — PETITS ÉCRANS
-   ========================================================= */
+/* =========================
+   PETIT PC
+========================= */
 
 @media (min-width: 1101px) and (max-width: 1300px) {
 
+    .music-grid {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
     :root {
-        --sidebar-width: 210px;
+        --player-height: 108px;
     }
 
     .sidebar {
-        padding-left: 11px;
-        padding-right: 11px;
+        z-index: 1500;
+
+        width: 250px;
+        height: 100vh;
+
+        transform: translateX(-100%);
+
+        transition: transform 0.25s ease;
+
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+
+        min-height: calc(100vh - var(--player-height));
+    }
+
+    .topbar {
+        height: 62px;
+
+        padding: 0 16px;
+    }
+
+    .mobile-menu {
+        display: flex;
     }
 
     .page-section {
-        pad
+        padding: 0 16px 25px;
+    }
+
+    .hero {
+        min-height: 360px;
+
+        margin-bottom: 32px;
+        padding: 32px 25px;
+
+        border-radius: 18px;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+        letter-spacing: -1.8px;
+    }
+
+    .hero p {
+        font-size: 12px;
+    }
+
+    .hero-decoration {
+        right: -190px;
+        bottom: -50px;
+
+        opacity: 0.4;
+    }
+
+    .section-header {
+        margin-bottom: 15px;
+    }
+
+    .section-header h2 {
+        font-size: 21px;
+    }
+
+    .music-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 11px;
+    }
+
+    .music-card {
+        padding: 8px;
+    }
+
+    .music-cover {
+        margin-bottom: 9px;
+    }
+
+    .card-play {
+        width: 42px;
+        height: 42px;
+    }
+
+    .card-favorite {
+        opacity: 1;
+    }
+
+    .page-title h1 {
+        font-size: 30px;
+    }
+
+    .player {
+        height: var(--player-height);
+
+        grid-template-columns: 1fr auto;
+
+        grid-template-rows:
+            auto
+            auto;
+
+        gap: 4px 12px;
+
+        padding: 8px 14px;
+    }
+
+    .player-left {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .player-center {
+        grid-column: 1 / -1;
+        grid-row: 2;
+
+        width: 100%;
+
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .player-controls {
+        gap: 9px;
+    }
+
+    .control-button {
+        width: 24px;
+        height: 24px;
+
+        font-size: 12px;
+    }
+
+    .play-button {
+        width: 31px;
+        height: 31px;
+
+        font-size: 11px;
+    }
+
+    .progress-area {
+        flex: 1;
+    }
+
+    .player-right {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .volume-icon,
+    #volumeSlider {
+        display: none;
+    }
+
+    .player-cover {
+        width: 42px;
+        height: 42px;
+    }
+
+    .player-favorite {
+        font-size: 18px;
+    }
+}
+
+
+/* =========================
+   PETITS TÉLÉPHONES
+========================= */
+
+@media (max-width: 380px) {
+
+    .hero {
+        min-height: 330px;
+        padding: 28px 20px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .music-grid {
+        gap: 8px;
+    }
+
+    .music-card {
+        padding: 6px;
+    }
+
+    .player-controls {
+        gap: 5px;
+    }
+}
+
+
+/* =========================
+   ACCESSIBILITÉ
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+   }
