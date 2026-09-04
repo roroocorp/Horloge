@@ -1,1402 +1,1056 @@
 /* =========================================================
-   Waveify — script.js
-   ========================================================= */
+WAVEIFY
+Music player
+========================================================= */
 
-"use strict";
+/* ================= YOUTUBE LINKS ================= */
 
-/* =========================================================
-   MUSIQUES
-   ========================================================= */
-
-const videoLinks = [
-  "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-  "https://www.youtube.com/watch?v=fJ9rUzIMcZQ",
-  "https://www.youtube.com/watch?v=RgKAFK5djSk",
-  "https://www.youtube.com/watch?v=09R8_2nJtjg",
-  "https://www.youtube.com/watch?v=YQHsXMglC9A",
-  "https://www.youtube.com/watch?v=OPf0YbXqDm0",
-  "https://www.youtube.com/watch?v=JGwWNGJdvx8",
-  "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
-  "https://www.youtube.com/watch?v=60ItHLz5WEA",
-  "https://www.youtube.com/watch?v=lp-EO5I60KA",
-  "https://www.youtube.com/watch?v=hT_nvWreIhg",
-  "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
-  "https://www.youtube.com/watch?v=7wtfhZwyrcc",
-  "https://www.youtube.com/watch?v=KQ6zr6kCPj8",
-  "https://www.youtube.com/watch?v=RgKAFK5djSk",
-  "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
-  "https://www.youtube.com/watch?v=JGwWNGJdvx8",
-  "https://www.youtube.com/watch?v=YQHsXMglC9A",
-  "https://www.youtube.com/watch?v=OPf0YbXqDm0",
-  "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
-  "https://www.youtube.com/watch?v=60ItHLz5WEA",
-  "https://www.youtube.com/watch?v=fJ9rUzIMcZQ",
-  "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-  "https://www.youtube.com/watch?v=09R8_2nJtjg",
-  "https://www.youtube.com/watch?v=hT_nvWreIhg",
-  "https://www.youtube.com/watch?v=lp-EO5I60KA",
-  "https://www.youtube.com/watch?v=7wtfhZwyrcc",
-  "https://www.youtube.com/watch?v=KQ6zr6kCPj8",
-  "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-  "https://www.youtube.com/watch?v=fJ9rUzIMcZQ",
-  "https://www.youtube.com/watch?v=RgKAFK5djSk",
-  "https://www.youtube.com/watch?v=09R8_2nJtjg",
-  "https://www.youtube.com/watch?v=YQHsXMglC9A",
-  "https://www.youtube.com/watch?v=OPf0YbXqDm0",
-  "https://www.youtube.com/watch?v=JGwWNGJdvx8",
-  "https://www.youtube.com/watch?v=kJQP7kiw5Fk"
+const YOUTUBE_LINKS = [
+"https://www.youtube.com/watch?v=Pl1d5YSEg2w",
+"https://www.youtube.com/watch?v=y1T2LQ2bym4",
+"https://www.youtube.com/watch?v=SX0u0s5h4as",
+"https://www.youtube.com/watch?v=mdcBqqWj3kY",
+"https://www.youtube.com/watch?v=n2THLWjJ3Wo",
+"https://www.youtube.com/watch?v=Snhn9wB-z1w",
+"https://www.youtube.com/watch?v=xlmyDTa_S6M",
+"https://www.youtube.com/watch?v=rDrIRNUaE6s",
+"https://www.youtube.com/watch?v=EXYj9wecau4",
+"https://www.youtube.com/watch?v=ShR_fQrqsdA",
+"https://www.youtube.com/watch?v=pN-TLYBDkWc",
+"https://www.youtube.com/watch?v=00ff2UcGLu0",
+"https://www.youtube.com/watch?v=c8qXCL-ElfA",
+"https://www.youtube.com/watch?v=pEBFJI-g9AA",
+"https://www.youtube.com/watch?v=63fJnwefxBk",
+"https://www.youtube.com/watch?v=gZXijVptbic",
+"https://www.youtube.com/watch?v=QzZflH4liuU",
+"https://www.youtube.com/watch?v=MFHiEocxkdM",
+"https://www.youtube.com/watch?v=2uM9ZIS-v0w",
+"https://www.youtube.com/watch?v=Qq7Q6CLCfvs",
+"https://www.youtube.com/watch?v=cYi1jI7uLa0",
+"https://www.youtube.com/watch?v=MqiljVyq_1o",
+"https://www.youtube.com/watch?v=KTYp4guSwLg",
+"https://www.youtube.com/watch?v=vaeio3idHzU",
+"https://www.youtube.com/watch?v=FaXqep3IsZw",
+"https://www.youtube.com/watch?v=VIs9zdNq_IU",
+"https://www.youtube.com/watch?v=JwVm-DHKH_U",
+"https://www.youtube.com/watch?v=zNEU9VExoWE",
+"https://www.youtube.com/watch?v=WudXzTex5JQ",
+"https://www.youtube.com/watch?v=pxjsZK_fkO4",
+"https://www.youtube.com/watch?v=dIJuNqS9c3w",
+"https://www.youtube.com/watch?v=BJwovrr6XzI",
+"https://www.youtube.com/watch?v=yx9WQ0hrsdk",
+"https://www.youtube.com/watch?v=0uLp-tejcSo",
+"https://www.youtube.com/watch?v=w4CI96-D2Zg",
+"https://www.youtube.com/watch?v=HqJ1qP05Si0"
 ];
 
+/* ================= YOUTUBE ID ================= */
 
-/* =========================================================
-   CRÉATION DES MORCEAUX
-   ========================================================= */
-
-function getYoutubeId(url) {
-  try {
-    const parsed = new URL(url);
-
-    if (parsed.hostname === "youtu.be") {
-      return parsed.pathname.substring(1);
-    }
-
-    return parsed.searchParams.get("v");
-  } catch (error) {
-    return null;
-  }
+function getYouTubeId(url) {
+try {
+const parsed = new URL(url);
+return parsed.searchParams.get("v") || "";
+} catch (error) {
+return "";
+}
 }
 
+/* ================= TRACK DATA ================= */
 
-const tracks = videoLinks
-  .map((url, index) => {
+const tracks = YOUTUBE_LINKS.map((url, index) => {
+const id = getYouTubeId(url);
 
-    const youtubeId = getYoutubeId(url);
+return {  
+    id,  
+    url,  
 
-    return {
-      id: index,
-      youtubeId: youtubeId,
-      title: `Track ${String(index + 1).padStart(2, "0")}`,
-      artist: "Waveify",
-      cover: youtubeId
-        ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
-        : "",
-      url: url
-    };
+    title:  
+        `Track ${String(index + 1).padStart(2, "0")}`,  
 
-  })
-  .filter(track => track.youtubeId);
+    artist: "Waveify",  
 
+    thumbnail:  
+        `https://img.youtube.com/vi/${id}/hqdefault.jpg`  
+};
 
-/* =========================================================
-   VARIABLES
-   ========================================================= */
+});
 
-let currentTrack = 15;
+/* ================= STATE ================= */
+
+let currentTrackIndex = 0;
+
+let player = null;
 
 let isPlaying = false;
+let isShuffle = false;
+let isRepeat = false;
 
-let shuffleEnabled = false;
+let favorites = JSON.parse(
+localStorage.getItem("waveifyFavorites") || "[]"
+);
 
-let repeatEnabled = false;
+/* ================= DOM ================= */
 
-let youtubePlayer = null;
+const musicGrid =
+document.getElementById("musicGrid");
 
-let youtubeReady = false;
+const libraryGrid =
+document.getElementById("libraryGrid");
 
-let progressInterval = null;
+const favoritesGrid =
+document.getElementById("favoritesGrid");
 
-let favorites = [];
+const playerElement =
+document.querySelector(".player");
 
-let savedSection = "homeSection";
+const playerCover =
+document.getElementById("playerCover");
 
+const playerTitle =
+document.getElementById("playerTitle");
 
-/* =========================================================
-   CHARGEMENT LOCALSTORAGE
-   ========================================================= */
+const playerArtist =
+document.getElementById("playerArtist");
 
-function loadSavedData() {
+const playerFavorite =
+document.getElementById("playerFavorite");
 
-  try {
+const playButton =
+document.getElementById("playButton");
 
-    const savedFavorites =
-      localStorage.getItem("waveifyFavorites");
+const previousButton =
+document.getElementById("previousButton");
 
-    if (savedFavorites) {
+const nextButton =
+document.getElementById("nextButton");
 
-      const parsed =
-        JSON.parse(savedFavorites);
+const shuffleButton =
+document.getElementById("shuffleButton");
 
-      if (Array.isArray(parsed)) {
-        favorites = parsed
-          .map(Number)
-          .filter(Number.isInteger);
-      }
+const repeatButton =
+document.getElementById("repeatButton");
 
-    }
+const progressBar =
+document.getElementById("progressBar");
 
-  } catch (error) {
+const progressFill =
+document.getElementById("progressFill");
 
-    favorites = [];
+const progressThumb =
+document.getElementById("progressThumb");
 
-  }
+const currentTimeElement =
+document.getElementById("currentTime");
 
+const durationElement =
+document.getElementById("duration");
 
-  const section =
-    localStorage.getItem("waveifySection");
+const volumeSlider =
+document.getElementById("volumeSlider");
 
-  if (
-    section &&
-    document.getElementById(section)
-  ) {
-    savedSection = section;
-  }
+const favoriteCount =
+document.getElementById("favoriteCount");
+
+const emptyFavorites =
+document.getElementById("emptyFavorites");
+
+/* ================= FORMAT TIME ================= */
+
+function formatTime(seconds) {
+if (!seconds || isNaN(seconds)) {
+return "0:00";
+}
+
+const minutes =  
+    Math.floor(seconds / 60);  
+
+const remainingSeconds =  
+    Math.floor(seconds % 60)  
+        .toString()  
+        .padStart(2, "0");  
+
+return `${minutes}:${remainingSeconds}`;
 
 }
 
+/* ================= ESCAPE HTML ================= */
 
-/* =========================================================
-   SAUVEGARDE DES FAVORIS
-   ========================================================= */
+function escapeHtml(value) {
+return String(value)
+.replaceAll("&", "&")
+.replaceAll("<", "<")
+.replaceAll(">", ">")
+.replaceAll('"', """)
+.replaceAll("'", "'");
+}
 
-function saveFavorites() {
+/* ================= CREATE CARD ================= */
 
-  localStorage.setItem(
-    "waveifyFavorites",
-    JSON.stringify(favorites)
-  );
+function createTrackCard(track, index) {
+const isFavorite =
+favorites.includes(track.id);
+
+const card =  
+    document.createElement("article");  
+
+card.className = "music-card";  
+
+card.dataset.index = index;  
+
+card.innerHTML = `  
+
+    <div class="card-cover">  
+
+        <img  
+            src="${track.thumbnail}"  
+            alt="${escapeHtml(track.title)}"  
+            loading="lazy"  
+        >  
+
+        <button  
+            class="card-play"  
+            aria-label="Lire ${escapeHtml(track.title)}"  
+        >  
+            ▶  
+        </button>  
+
+    </div>  
+
+    <div class="card-content">  
+
+        <div class="card-title-row">  
+
+            <strong class="card-title">  
+                ${escapeHtml(track.title)}  
+            </strong>  
+
+            <button  
+                class="card-heart ${isFavorite ? "favorite" : ""}"  
+                data-favorite="${track.id}"  
+                aria-label="Ajouter aux favoris"  
+            >  
+                ${isFavorite ? "♥" : "♡"}  
+            </button>  
+
+        </div>  
+
+        <div class="card-artist">  
+            ${escapeHtml(track.artist)}  
+        </div>  
+
+    </div>  
+`;  
+
+const play =  
+    card.querySelector(".card-play");  
+
+play.addEventListener(  
+    "click",  
+    (event) => {  
+        event.stopPropagation();  
+        playTrack(index);  
+    }  
+);  
+
+const heart =  
+    card.querySelector(".card-heart");  
+
+heart.addEventListener(  
+    "click",  
+    (event) => {  
+        event.stopPropagation();  
+        toggleFavorite(track.id);  
+    }  
+);  
+
+card.addEventListener(  
+    "dblclick",  
+    () => {  
+        playTrack(index);  
+    }  
+);  
+
+return card;
 
 }
 
+/* ================= RENDER TRACKS ================= */
 
-/* =========================================================
-   SAUVEGARDE DE LA PAGE
-   ========================================================= */
+function renderTracks() {
+musicGrid.innerHTML = "";
+libraryGrid.innerHTML = "";
 
-function saveSection(sectionId) {
+tracks.forEach((track, index) => {  
 
-  localStorage.setItem(
-    "waveifySection",
-    sectionId
-  );
+    musicGrid.appendChild(  
+        createTrackCard(track, index)  
+    );  
 
-}
+    libraryGrid.appendChild(  
+        createTrackCard(track, index)  
+    );  
 
-
-/* =========================================================
-   CHARGER YOUTUBE
-   ========================================================= */
-
-function loadYouTubeAPI() {
-
-  if (
-    window.YT &&
-    window.YT.Player
-  ) {
-
-    createYouTubePlayer();
-
-    return;
-
-  }
-
-
-  if (
-    document.getElementById("youtube-api")
-  ) {
-
-    return;
-
-  }
-
-
-  window.onYouTubeIframeAPIReady =
-    createYouTubePlayer;
-
-
-  const script =
-    document.createElement("script");
-
-  script.id = "youtube-api";
-
-  script.src =
-    "https://www.youtube.com/iframe_api";
-
-  document.head.appendChild(script);
+});
 
 }
 
+/* ================= RENDER FAVORITES ================= */
 
-/* =========================================================
-   CRÉER LE PLAYER YOUTUBE
-   ========================================================= */
+function renderFavorites() {
+favoritesGrid.innerHTML = "";
 
-function createYouTubePlayer() {
+const favoriteTracks =  
+    tracks.filter(track =>  
+        favorites.includes(track.id)  
+    );  
 
-  if (youtubePlayer) {
-    return;
-  }
+favoriteCount.textContent =  
+    `${favoriteTracks.length} morceau${  
+        favoriteTracks.length > 1  
+            ? "x"  
+            : ""  
+    }`;  
 
+if (favoriteTracks.length === 0) {  
 
-  if (!window.YT || !window.YT.Player) {
-    return;
-  }
+    emptyFavorites.classList.add("show");  
 
+    return;  
+}  
 
-  youtubePlayer =
-    new YT.Player(
-      "youtubePlayer",
-      {
+emptyFavorites.classList.remove("show");  
 
-        width: "1",
-        height: "1",
+favoriteTracks.forEach(track => {  
 
-        videoId:
-          tracks[currentTrack]
-            ? tracks[currentTrack].youtubeId
-            : "",
+    const index =  
+        tracks.findIndex(  
+            item =>  
+                item.id === track.id  
+        );  
 
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          playsinline: 1,
-          rel: 0
-        },
+    favoritesGrid.appendChild(  
+        createTrackCard(track, index)  
+    );  
 
-        events: {
-
-          onReady: function () {
-
-            youtubeReady = true;
-
-            updatePlayer();
-
-            updateProgress();
-
-          },
-
-
-          onStateChange:
-            handlePlayerStateChange,
-
-
-          onError:
-            handlePlayerError
-
-        }
-
-      }
-    );
+});
 
 }
 
+/* ================= FAVORITES ================= */
 
-/* =========================================================
-   ÉTAT YOUTUBE
-   ========================================================= */
+function toggleFavorite(trackId) {
 
-function handlePlayerStateChange(event) {
+if (favorites.includes(trackId)) {  
 
-  if (!window.YT) {
-    return;
-  }
+    favorites =  
+        favorites.filter(  
+            id => id !== trackId  
+        );  
 
+} else {  
 
-  if (
-    event.data ===
-    YT.PlayerState.PLAYING
-  ) {
+    favorites.push(trackId);  
+}  
 
-    isPlaying = true;
+localStorage.setItem(  
+    "waveifyFavorites",  
+    JSON.stringify(favorites)  
+);  
 
-    updatePlayButton();
+renderTracks();  
+renderFavorites();  
 
-    startProgress();
-
-    return;
-
-  }
-
-
-  if (
-    event.data ===
-    YT.PlayerState.PAUSED
-  ) {
-
-    isPlaying = false;
-
-    updatePlayButton();
-
-    stopProgress();
-
-    return;
-
-  }
-
-
-  if (
-    event.data ===
-    YT.PlayerState.BUFFERING
-  ) {
-
-    return;
-
-  }
-
-
-  if (
-    event.data ===
-    YT.PlayerState.ENDED
-  ) {
-
-    isPlaying = false;
-
-    updatePlayButton();
-
-    stopProgress();
-
-    handleTrackEnded();
-
-  }
+updatePlayerFavorite();
 
 }
 
+/* ================= PLAYER FAVORITE ================= */
 
-/* =========================================================
-   ERREUR YOUTUBE
-   ========================================================= */
+function updatePlayerFavorite() {
 
-function handlePlayerError() {
+const track =  
+    tracks[currentTrackIndex];  
 
-  isPlaying = false;
+if (!track) {  
+    return;  
+}  
 
-  updatePlayButton();
+const isFavorite =  
+    favorites.includes(track.id);  
 
-  stopProgress();
+playerFavorite.textContent =  
+    isFavorite ? "♥" : "♡";  
 
-}
-
-
-/* =========================================================
-   MORCEAU TERMINÉ
-   ========================================================= */
-
-function handleTrackEnded() {
-
-  if (repeatEnabled) {
-
-    playTrack(
-      currentTrack,
-      true
-    );
-
-    return;
-
-  }
-
-
-  nextTrack();
+playerFavorite.classList.toggle(  
+    "favorite",  
+    isFavorite  
+);
 
 }
 
+/* ================= LOAD TRACK ================= */
 
-/* =========================================================
-   LIRE UN MORCEAU
-   ========================================================= */
+function loadTrack(index, autoplay = true) {
 
-function playTrack(index, restart = false) {
+if (!tracks[index]) {  
+    return;  
+}  
 
-  const number =
-    Number(index);
+currentTrackIndex = index;  
 
+const track =  
+    tracks[currentTrackIndex];  
 
-  if (
-    !Number.isInteger(number) ||
-    !tracks[number]
-  ) {
+playerTitle.textContent =  
+    track.title;  
 
-    return;
+playerArtist.textContent =  
+    track.artist;  
 
-  }
+playerCover.src =  
+    track.thumbnail;  
 
+updatePlayerFavorite();  
 
-  currentTrack = number;
+if (!player) {  
+    return;  
+}  
 
+player.loadVideoById(track.id);  
 
-  updatePlayer();
+if (!autoplay) {  
 
+    player.pauseVideo();  
 
-  loadYouTubeAPI();
+    isPlaying = false;  
 
-
-  if (
-    !youtubePlayer ||
-    !youtubeReady
-  ) {
-
-    return;
-
-  }
-
-
-  const id =
-    tracks[currentTrack].youtubeId;
-
-
-  try {
-
-    if (restart) {
-
-      youtubePlayer.loadVideoById(id);
-
-    } else {
-
-      youtubePlayer.loadVideoById(id);
-
-    }
-
-    youtubePlayer.playVideo();
-
-    isPlaying = true;
-
-    updatePlayButton();
-
-    startProgress();
-
-  } catch (error) {
-
-    isPlaying = false;
-
-    updatePlayButton();
-
-  }
+    updatePlayButton();  
+}
 
 }
 
+/* ================= PLAY TRACK ================= */
 
-/* =========================================================
-   LECTURE / PAUSE
-   ========================================================= */
+function playTrack(index) {
+
+if (!tracks[index]) {  
+    return;  
+}  
+
+currentTrackIndex = index;  
+
+const track =  
+    tracks[currentTrackIndex];  
+
+playerTitle.textContent =  
+    track.title;  
+
+playerArtist.textContent =  
+    track.artist;  
+
+playerCover.src =  
+    track.thumbnail;  
+
+updatePlayerFavorite();  
+
+if (player) {  
+
+    player.loadVideoById(track.id);  
+
+    player.playVideo();  
+}
+
+}
+
+/* ================= PLAY / PAUSE ================= */
 
 function togglePlay() {
 
-  loadYouTubeAPI();
+if (!player) {  
+    return;  
+}  
 
+if (!tracks[currentTrackIndex]) {  
+    return;  
+}  
 
-  if (
-    !youtubePlayer ||
-    !youtubeReady
-  ) {
+if (isPlaying) {  
 
-    return;
+    player.pauseVideo();  
 
-  }
+} else {  
 
-
-  try {
-
-    if (isPlaying) {
-
-      youtubePlayer.pauseVideo();
-
-    } else {
-
-      youtubePlayer.playVideo();
-
-    }
-
-  } catch (error) {
-
-    console.warn(
-      "Impossible de contrôler la lecture.",
-      error
-    );
-
-  }
+    player.playVideo();  
+}
 
 }
 
-
-/* =========================================================
-   MORCEAU SUIVANT
-   ========================================================= */
+/* ================= NEXT ================= */
 
 function nextTrack() {
 
-  if (!tracks.length) {
-    return;
-  }
+if (isShuffle) {  
 
+    let nextIndex;  
 
-  if (shuffleEnabled) {
+    do {  
 
-    if (tracks.length === 1) {
+        nextIndex =  
+            Math.floor(  
+                Math.random() *  
+                tracks.length  
+            );  
 
-      playTrack(0);
+    } while (  
+        nextIndex === currentTrackIndex &&  
+        tracks.length > 1  
+    );  
 
-      return;
+    playTrack(nextIndex);  
 
-    }
+    return;  
+}  
 
+let nextIndex =  
+    currentTrackIndex + 1;  
 
-    let next;
+if (nextIndex >= tracks.length) {  
+    nextIndex = 0;  
+}  
 
-    do {
-
-      next =
-        Math.floor(
-          Math.random() *
-          tracks.length
-        );
-
-    } while (
-      next === currentTrack
-    );
-
-
-    playTrack(next);
-
-    return;
-
-  }
-
-
-  let next =
-    currentTrack + 1;
-
-
-  if (next >= tracks.length) {
-
-    next = 0;
-
-  }
-
-
-  playTrack(next);
+playTrack(nextIndex);
 
 }
 
-
-/* =========================================================
-   MORCEAU PRÉCÉDENT
-   ========================================================= */
+/* ================= PREVIOUS ================= */
 
 function previousTrack() {
 
-  if (
-    youtubePlayer &&
-    youtubeReady
-  ) {
+if (player) {  
 
-    try {
+    const currentTime =  
+        player.getCurrentTime();  
 
-      const time =
-        youtubePlayer.getCurrentTime();
+    if (currentTime > 3) {  
 
+        player.seekTo(0, true);  
 
-      if (
-        Number.isFinite(time) &&
-        time > 3
-      ) {
+        return;  
+    }  
+}  
 
-        youtubePlayer.seekTo(
-          0,
-          true
-        );
+let previousIndex =  
+    currentTrackIndex - 1;  
 
-        return;
+if (previousIndex < 0) {  
 
-      }
+    previousIndex =  
+        tracks.length - 1;  
+}  
 
-    } catch (error) {}
-
-  }
-
-
-  let previous =
-    currentTrack - 1;
-
-
-  if (previous < 0) {
-
-    previous =
-      tracks.length - 1;
-
-  }
-
-
-  playTrack(previous);
+playTrack(previousIndex);
 
 }
 
+/* ================= PLAY ALL ================= */
 
-/* =========================================================
-   METTRE À JOUR LE PLAYER
-   ========================================================= */
+function playAll() {
 
-function updatePlayer() {
+if (!tracks.length) {  
+    return;  
+}  
 
-  const track =
-    tracks[currentTrack];
-
-
-  if (!track) {
-    return;
-  }
-
-
-  const cover =
-    document.getElementById(
-      "playerCover"
-    );
-
-
-  const title =
-    document.getElementById(
-      "playerTitle"
-    );
-
-
-  const artist =
-    document.getElementById(
-      "playerArtist"
-    );
-
-
-  const favorite =
-    document.getElementById(
-      "playerFavorite"
-    );
-
-
-  if (cover) {
-
-    cover.src =
-      track.cover;
-
-    cover.alt =
-      track.title;
-
-  }
-
-
-  if (title) {
-
-    title.textContent =
-      track.title;
-
-  }
-
-
-  if (artist) {
-
-    artist.textContent =
-      track.artist;
-
-  }
-
-
-  if (favorite) {
-
-    const active =
-      favorites.includes(
-        track.id
-      );
-
-
-    favorite.textContent =
-      active ? "♥" : "♡";
-
-
-    favorite.classList.toggle(
-      "active",
-      active
-    );
-
-  }
-
-
-  updatePlayButton();
+playTrack(0);
 
 }
 
-
-/* =========================================================
-   BOUTON PLAY / PAUSE
-   ========================================================= */
+/* ================= PLAY BUTTON ================= */
 
 function updatePlayButton() {
 
-  const button =
-    document.getElementById(
-      "playButton"
-    );
+playButton.textContent =  
+    isPlaying ? "Ⅱ" : "▶";  
 
-
-  if (!button) {
-    return;
-  }
-
-
-  button.textContent =
-    isPlaying
-      ? "❚❚"
-      : "▶";
-
-
-  button.setAttribute(
-    "aria-label",
-    isPlaying
-      ? "Pause"
-      : "Lecture"
-  );
-
-
-  button.setAttribute(
-    "title",
-    isPlaying
-      ? "Pause"
-      : "Lecture"
-  );
+playerElement.classList.toggle(  
+    "playing",  
+    isPlaying  
+);
 
 }
 
-
-/* =========================================================
-   PROGRESSION
-   ========================================================= */
-
-function startProgress() {
-
-  stopProgress();
-
-
-  progressInterval =
-    setInterval(
-      updateProgress,
-      250
-    );
-
-}
-
-
-function stopProgress() {
-
-  if (progressInterval) {
-
-    clearInterval(
-      progressInterval
-    );
-
-    progressInterval = null;
-
-  }
-
-}
-
+/* ================= PROGRESS ================= */
 
 function updateProgress() {
 
-  if (
-    !youtubePlayer ||
-    !youtubeReady
-  ) {
+if (!player) {  
+    return;  
+}  
 
-    return;
+try {  
 
-  }
+    const current =  
+        player.getCurrentTime();  
 
+    const duration =  
+        player.getDuration();  
 
-  let current = 0;
+    if (!duration) {  
+        return;  
+    }  
 
-  let duration = 0;
+    const percentage =  
+        Math.min(  
+            100,  
+            Math.max(  
+                0,  
+                (current / duration) * 100  
+            )  
+        );  
 
+    progressFill.style.width =  
+        `${percentage}%`;  
 
-  try {
+    progressThumb.style.left =  
+        `${percentage}%`;  
 
-    current =
-      youtubePlayer.getCurrentTime();
+    currentTimeElement.textContent =  
+        formatTime(current);  
 
-    duration =
-      youtubePlayer.getDuration();
+    durationElement.textContent =  
+        formatTime(duration);  
 
-  } catch (error) {
+} catch (error) {  
 
-    return;
-
-  }
-
-
-  if (
-    !Number.isFinite(current) ||
-    !Number.isFinite(duration) ||
-    duration <= 0
-  ) {
-
-    return;
-
-  }
-
-
-  const percentage =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        (current / duration) * 100
-      )
-    );
-
-
-  const fill =
-    document.getElementById(
-      "progressFill"
-    );
-
-
-  const thumb =
-    document.getElementById(
-      "progressThumb"
-    );
-
-
-  if (fill) {
-
-    fill.style.width =
-      `${percentage}%`;
-
-  }
-
-
-  if (thumb) {
-
-    thumb.style.left =
-      `${percentage}%`;
-
-  }
-
-
-  const currentTime =
-    document.getElementById(
-      "currentTime"
-    );
-
-
-  const durationElement =
-    document.getElementById(
-      "duration"
-    );
-
-
-  if (currentTime) {
-
-    currentTime.textContent =
-      formatTime(current);
-
-  }
-
-
-  if (durationElement) {
-
-    durationElement.textContent =
-      formatTime(duration);
-
-  }
+    // Le player YouTube n'est pas encore prêt.  
+}
 
 }
 
+/* ================= SEEK ================= */
 
-/* =========================================================
-   FORMAT TEMPS
-   ========================================================= */
+function seek(event) {
 
-function formatTime(seconds) {
+if (!player) {  
+    return;  
+}  
 
-  if (
-    !Number.isFinite(seconds) ||
-    seconds < 0
-  ) {
+const rect =  
+    progressBar.getBoundingClientRect();  
 
-    return "0:00";
+const percentage =  
+    Math.min(  
+        1,  
+        Math.max(  
+            0,  
+            (event.clientX - rect.left) /  
+            rect.width  
+        )  
+    );  
 
-  }
+const duration =  
+    player.getDuration();  
 
+if (duration) {  
 
-  const total =
-    Math.floor(seconds);
-
-
-  const minutes =
-    Math.floor(total / 60);
-
-
-  const secs =
-    total % 60;
-
-
-  return (
-    `${minutes}:` +
-    `${String(secs).padStart(2, "0")}`
-  );
+    player.seekTo(  
+        duration * percentage,  
+        true  
+    );  
+}
 
 }
 
+/* ================= VOLUME ================= */
 
-/* =========================================================
-   BARRE DE PROGRESSION
-   ========================================================= */
+function updateVolume() {
 
-function seekFromClick(event) {
+if (!player) {  
+    return;  
+}  
 
-  if (
-    !youtubePlayer ||
-    !youtubeReady
-  ) {
-
-    return;
-
-  }
-
-
-  const bar =
-    event.currentTarget;
-
-
-  const rect =
-    bar.getBoundingClientRect();
-
-
-  if (!rect.width) {
-    return;
-  }
-
-
-  const position =
-    (event.clientX - rect.left) /
-    rect.width;
-
-
-  const percentage =
-    Math.max(
-      0,
-      Math.min(
-        1,
-        position
-      )
-    );
-
-
-  try {
-
-    const duration =
-      youtubePlayer.getDuration();
-
-
-    youtubePlayer.seekTo(
-      duration * percentage,
-      true
-    );
-
-  } catch (error) {}
+player.setVolume(  
+    Number(volumeSlider.value)  
+);
 
 }
 
+/* ================= NAVIGATION ================= */
 
-/* =========================================================
-   FAVORIS
-   ========================================================= */
+function showSection(section) {
 
-function isFavorite(id) {
+const home =  
+    document.getElementById(  
+        "homeSection"  
+    );  
 
-  return favorites.includes(
-    Number(id)
-  );
+const library =  
+    document.getElementById(  
+        "librarySection"  
+    );  
 
-}
+const favoritesSection =  
+    document.getElementById(  
+        "favoritesSection"  
+    );  
 
+home.style.display = "none";  
+library.style.display = "none";  
+favoritesSection.style.display = "none";  
 
-function toggleFavorite(id) {
+if (section === "home") {  
+    home.style.display = "block";  
+}  
 
-  id = Number(id);
+if (section === "library") {  
+    library.style.display = "block";  
+}  
 
+if (section === "favorites") {  
 
-  if (
-    !Number.isInteger(id)
-  ) {
+    favoritesSection.style.display =  
+        "block";  
 
-    return;
+    renderFavorites();  
+}  
 
-  }
+document  
+    .querySelectorAll(".nav-item")  
+    .forEach(item => {  
 
+        item.classList.toggle(  
+            "active",  
+            item.dataset.section === section  
+        );  
 
-  if (
-    favorites.includes(id)
-  ) {
+    });  
 
-    favorites =
-      favorites.filter(
-        favoriteId =>
-          favoriteId !== id
-      );
-
-  } else {
-
-    favorites.push(id);
-
-  }
-
-
-  saveFavorites();
-
-  renderAll();
-
-  updatePlayer();
-
-}
-
-
-/* =========================================================
-   RENDU DES CARTES
-   ========================================================= */
-
-function renderCards(
-  container,
-  list
-) {
-
-  if (!container) {
-    return;
-  }
-
-
-  container.innerHTML = "";
-
-
-  list.forEach(track => {
-
-    const favorite =
-      isFavorite(track.id);
-
-
-    const card =
-      document.createElement(
-        "article"
-      );
-
-
-    card.className =
-      "music-card";
-
-
-    card.innerHTML = `
-
-      <div class="card-cover">
-
-        <img
-          src="${escapeHtml(track.cover)}"
-          alt="${escapeHtml(track.title)}"
-          loading="lazy"
-        >
-
-        <button
-          type="button"
-          class="card-play"
-          data-play="${track.id}"
-          aria-label="Lire ${escapeHtml(track.title)}"
-        >
-          ▶
-        </button>
-
-      </div>
-
-      <div class="card-info">
-
-        <button
-          type="button"
-          class="card-favorite ${
-            favorite ? "active" : ""
-          }"
-          data-favorite="${track.id}"
-          aria-label="${
-            favorite
-              ? "Retirer des favoris"
-              : "Ajouter aux favoris"
-          }"
-        >
-          ${favorite ? "♥" : "♡"}
-        </button>
-
-        <span class="card-title">
-          ${escapeHtml(track.title)}
-        </span>
-
-        <span class="card-artist">
-          ${escapeHtml(track.artist)}
-        </span>
-
-      </div>
-
-    `;
-
-
-    container.appendChild(card);
-
-  });
+window.scrollTo({  
+    top: 0,  
+    behavior: "smooth"  
+});
 
 }
 
+/* ================= NAV BUTTONS ================= */
 
-/* =========================================================
-   PROTECTION HTML
-   ========================================================= */
+document
+.querySelectorAll(".nav-item")
+.forEach(button => {
 
-function escapeHtml(value) {
+button.addEventListener(  
+        "click",  
+        () => {  
 
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+            showSection(  
+                button.dataset.section  
+            );  
 
-}
+        }  
+    );  
 
+});
 
-/* =========================================================
-   RENDRE TOUT LE SITE
-   ========================================================= */
+/* ================= PLAY ALL ================= */
 
-function renderAll() {
+document
+.getElementById("playAllButton")
+.addEventListener(
+"click",
+playAll
+);
 
-  const homeGrid =
-    document.getElementById(
-      "musicGrid"
-    );
+/* ================= SEE ALL ================= */
 
+document
+.getElementById("seeAllButton")
+.addEventListener(
+"click",
+() => {
 
-  const libraryGrid =
-    document.getElementById(
-      "libraryGrid"
-    );
+showSection("library");  
 
+    }  
+);
 
-  const favoritesGrid =
-    document.getElementById(
-      "favoritesGrid"
-    );
+/* ================= PLAYER BUTTONS ================= */
 
+playButton.addEventListener(
+"click",
+togglePlay
+);
 
-  const favoriteTracks =
-    tracks.filter(
-      track =>
-        favorites.includes(
-          track.id
-        )
-    );
+nextButton.addEventListener(
+"click",
+nextTrack
+);
 
+previousButton.addEventListener(
+"click",
+previousTrack
+);
 
-  if (homeGrid) {
+shuffleButton.addEventListener(
+"click",
+() => {
 
-    renderCards(
-      homeGrid,
-      tracks.slice(0, 10)
-    );
+isShuffle =  
+        !isShuffle;  
 
-  }
-
-
-  if (libraryGrid) {
-
-    renderCards(
-      libraryGrid,
-      tracks
-    );
-
-  }
-
-
-  if (favoritesGrid) {
-
-    renderCards(
-      favoritesGrid,
-      favoriteTracks
-    );
-
-  }
-
-
-  const emptyFavorites =
-    document.getElementById(
-      "emptyFavorites"
-    );
-
-
-  if (emptyFavorites) {
-
-    emptyFavorites.classList.toggle(
-      "show",
-      favoriteTracks.length === 0
-    );
-
-  }
-
-
-  const favoriteCount =
-    document.getElementById(
-      "favoriteCount"
-    );
-
-
-  if (favoriteCount) {
-
-    const number =
-      favoriteTracks.length;
-
-
-    favoriteCount.textContent =
-      `${number} morceau${
-        number > 1 ? "x" : ""
-      }`;
-
-  }
+    shuffleButton.classList.toggle(  
+        "active",  
+        isShuffle  
+    );  
 
 }
 
+);
 
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
+repeatButton.addEventListener(
+"click",
+() => {
 
-function showSection(sectionId) {
+isRepeat =  
+        !isRepeat;  
 
-  const section =
-    document.getElementById(
-      sectionId
-    );
+    repeatButton.classList.toggle(  
+        "active",  
+        isRepeat  
+    );  
 
+}
 
-  if (!section) {
-    return;
-  }
+);
 
+progressBar.addEventListener(
+"click",
+seek
+);
 
-  document
-    .querySelectorAll(
-      ".page-section"
-    )
-    .forEach(page => {
+volumeSlider.addEventListener(
+"input",
+updateVolume
+);
 
-      page.classList.toggle(
-        "active",
-        page.id === sectionId
-      );
+/* ================= PLAYER FAVORITE ================= */
+
+playerFavorite.addEventListener(
+"click",
+() => {
+
+const track =  
+        tracks[currentTrackIndex];  
+
+    if (track) {  
+
+        toggleFavorite(  
+            track.id  
+        );  
+    }  
+
+}
+
+);
+
+/* ================= MOBILE SIDEBAR ================= */
+
+const mobileMenu =
+document.getElementById(
+"mobileMenu"
+);
+
+const sidebar =
+document.querySelector(
+".sidebar"
+);
+
+if (mobileMenu && sidebar) {
+
+mobileMenu.addEventListener(  
+    "click",  
+    (event) => {  
+
+        event.stopPropagation();  
+
+        sidebar.classList.toggle(  
+            "open"  
+        );  
+
+    }  
+);  
+
+document  
+    .querySelectorAll(".nav-item")  
+    .forEach(button => {  
+
+        button.addEventListener(  
+            "click",  
+            () => {  
+
+                sidebar.classList.remove(  
+                    "open"  
+                );  
+
+            }  
+        );  
 
     });
 
+}
 
-  document
-    .querySelectorAll(
-      ".nav-item"
-    )
-    .forEach(button => {
+/* ================= NOTIFICATION ================= */
 
-      button.classList.toggle(
-        "active",
-        button.dataset.section ===
-          sectionId
-      );
+document
+.getElementById("notificationButton")
+.addEventListener(
+"click",
+() => {
 
-    });
+alert(  
+            "Bienvenue sur Waveify 🎵"  
+        );  
 
+    }  
+);
 
-  saveSection(sectionId);
+/* ================= YOUTUBE API ================= */
 
+/*
+L'API YouTube appelle automatiquement
+cette fonction lorsqu'elle est chargée.
+*/
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+window.onYouTubeIframeAPIReady =
+function () {
+
+player =  
+    new YT.Player(  
+        "youtubePlayer",  
+        {  
+
+            height: "1",  
+            width: "1",  
+
+            videoId:  
+                tracks[0].id,  
+
+            playerVars: {  
+
+                autoplay: 0,  
+
+                controls: 0,  
+
+                disablekb: 1,  
+
+                fs: 0,  
+
+                modestbranding: 1,  
+
+                playsinline: 1,  
+
+                rel: 0  
+
+            },  
+
+            events: {  
+
+                onReady:  
+                    function (event) {  
+
+                        event.target.setVolume(  
+                            Number(  
+                                volumeSlider.value  
+                            )  
+                        );  
+
+                        loadTrack(  
+                            0,  
+                            false  
+                        );  
+
+                    },  
+
+                onStateChange:  
+                    function (event) {  
+
+                        handlePlayerState(  
+                            event.data  
+                        );  
+
+                    }  
+
+            }  
+
+        }  
+    );
+
+};
+
+/* ================= YOUTUBE STATES ================= */
+
+function handlePlayerState(state) {
+
+if (  
+    state === YT.PlayerState.PLAYING  
+) {  
+
+    isPlaying = true;  
+}  
+
+if (  
+    state === YT.PlayerState.PAUSED  
+) {  
+
+    isPlaying = false;  
+}  
+
+if (  
+    state === YT.PlayerState.ENDED  
+) {  
+
+    isPlaying = false;  
+
+    if (isRepeat) {  
+
+        player.seekTo(  
+            0,  
+            true  
+        );  
+
+        player.playVideo();  
+
+    } else {  
+
+        nextTrack();  
+    }  
+}  
+
+updatePlayButton();
 
 }
 
+/* ================= INITIALIZE ================= */
 
-/* =========================================================
-   ALÉATOIRE
-   ========================================================= */
+renderTracks();
 
-function toggleShuffle() {
+renderFavorites();
 
-  shuffleEnabled =
-    !shuffleEnabled;
+updatePlayButton();
 
+/* ================= PROGRESS LOOP ================= */
 
-  const button =
-    document.getElementById(
-      "shuffleButton"
-    );
+setInterval(
+updateProgress,
+500
+);
 
+/* ================= LOAD YOUTUBE API ================= */
 
-  if (button) {
+const youtubeScript =
+document.createElement("script");
 
-    button.classList.toggle(
-      "active",
-      shuffleEnabled
-    );
+youtubeScript.src =
+"https://www.youtube.com/iframe_api";
 
-  }
-
-}
-
-
-/* =========================================================
-   RÉPÉTER
-   ========================================================= */
-
-function toggleRepeat() {
-
-  repeatEnabled =
-    !repeatEnabled;
-
-
-  const button =
-    document.getElementById(
-      "repeatButton"
-    );
-
-
-  if (button) {
-
-    button.classList.toggle(
-      "active",
-      repeatEnabled
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   ÉVÉNEMENTS DES CARTES
-   ========================================================= */
-
-document.addEventListener(
-  "click",
-  function(event) {
-
-    const playButton =
-      event.target.closest(
-        "[data-play]"
-      );
-
-
-    if (playButton) {
-
-      event.preventDefault();
-
-      playTrack(
-        playButton.dataset.play
-      );
-
-  
+document
+.head
+.appendChild(youtubeScript);
