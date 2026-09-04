@@ -1705,7 +1705,9 @@ width: 46px;
 height: 46px;
 }
 
-/* ---------- MOBILE : CACHER NOM ET ARTISTE ---------- */
-
+/* Titre + Waveify masqués sur téléphone */
 .track-info {
-dis
+display: none;
+}
+
+.
