@@ -1654,8 +1654,8 @@ height: 25px;
 font-size: 15px;
 }
 
-/* ---------- PETIT DÉCALAGE TEXTE ---------- */
-/* La photo et le cœur ne bougent pas */
+/* ---------- TEXTE : PETIT DÉCALAGE À DROITE ---------- */
+/* La photo et le cœur restent exactement à leur place */
 
 .card-title,
 .card-artist {
@@ -1699,8 +1699,4 @@ display: flex;
 align-items: center;
 
 gap: 8px;
-}
-
-.player-left {
-flex: 1;
-m
+  
