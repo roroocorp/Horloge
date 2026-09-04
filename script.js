@@ -6,42 +6,42 @@ Music player
 /* ================= YOUTUBE LINKS ================= */
 
 const YOUTUBE_LINKS = [
-"https://www.youtube.com/watch?v=Pl1d5YSEg2w",
-"https://www.youtube.com/watch?v=y1T2LQ2bym4",
-"https://www.youtube.com/watch?v=SX0u0s5h4as",
-"https://www.youtube.com/watch?v=mdcBqqWj3kY",
-"https://www.youtube.com/watch?v=n2THLWjJ3Wo",
-"https://www.youtube.com/watch?v=Snhn9wB-z1w",
-"https://www.youtube.com/watch?v=xlmyDTa_S6M",
-"https://www.youtube.com/watch?v=rDrIRNUaE6s",
-"https://www.youtube.com/watch?v=EXYj9wecau4",
-"https://www.youtube.com/watch?v=ShR_fQrqsdA",
-"https://www.youtube.com/watch?v=pN-TLYBDkWc",
-"https://www.youtube.com/watch?v=00ff2UcGLu0",
-"https://www.youtube.com/watch?v=c8qXCL-ElfA",
-"https://www.youtube.com/watch?v=pEBFJI-g9AA",
-"https://www.youtube.com/watch?v=63fJnwefxBk",
-"https://www.youtube.com/watch?v=gZXijVptbic",
-"https://www.youtube.com/watch?v=QzZflH4liuU",
-"https://www.youtube.com/watch?v=MFHiEocxkdM",
-"https://www.youtube.com/watch?v=2uM9ZIS-v0w",
-"https://www.youtube.com/watch?v=Qq7Q6CLCfvs",
-"https://www.youtube.com/watch?v=cYi1jI7uLa0",
-"https://www.youtube.com/watch?v=MqiljVyq_1o",
-"https://www.youtube.com/watch?v=KTYp4guSwLg",
-"https://www.youtube.com/watch?v=vaeio3idHzU",
-"https://www.youtube.com/watch?v=FaXqep3IsZw",
-"https://www.youtube.com/watch?v=VIs9zdNq_IU",
-"https://www.youtube.com/watch?v=JwVm-DHKH_U",
-"https://www.youtube.com/watch?v=zNEU9VExoWE",
-"https://www.youtube.com/watch?v=WudXzTex5JQ",
-"https://www.youtube.com/watch?v=pxjsZK_fkO4",
-"https://www.youtube.com/watch?v=dIJuNqS9c3w",
-"https://www.youtube.com/watch?v=BJwovrr6XzI",
-"https://www.youtube.com/watch?v=yx9WQ0hrsdk",
-"https://www.youtube.com/watch?v=0uLp-tejcSo",
-"https://www.youtube.com/watch?v=w4CI96-D2Zg",
-"https://www.youtube.com/watch?v=HqJ1qP05Si0"
+    "https://www.youtube.com/watch?v=Pl1d5YSEg2w",
+    "https://www.youtube.com/watch?v=y1T2LQ2bym4",
+    "https://www.youtube.com/watch?v=SX0u0s5h4as",
+    "https://www.youtube.com/watch?v=mdcBqqWj3kY",
+    "https://www.youtube.com/watch?v=n2THLWjJ3Wo",
+    "https://www.youtube.com/watch?v=Snhn9wB-z1w",
+    "https://www.youtube.com/watch?v=xlmyDTa_S6M",
+    "https://www.youtube.com/watch?v=rDrIRNUaE6s",
+    "https://www.youtube.com/watch?v=EXYj9wecau4",
+    "https://www.youtube.com/watch?v=ShR_fQrqsdA",
+    "https://www.youtube.com/watch?v=pN-TLYBDkWc",
+    "https://www.youtube.com/watch?v=00ff2UcGLu0",
+    "https://www.youtube.com/watch?v=c8qXCL-ElfA",
+    "https://www.youtube.com/watch?v=pEBFJI-g9AA",
+    "https://www.youtube.com/watch?v=63fJnwefxBk",
+    "https://www.youtube.com/watch?v=gZXijVptbic",
+    "https://www.youtube.com/watch?v=QzZflH4liuU",
+    "https://www.youtube.com/watch?v=MFHiEocxkdM",
+    "https://www.youtube.com/watch?v=2uM9ZIS-v0w",
+    "https://www.youtube.com/watch?v=Qq7Q6CLCfvs",
+    "https://www.youtube.com/watch?v=cYi1jI7uLa0",
+    "https://www.youtube.com/watch?v=MqiljVyq_1o",
+    "https://www.youtube.com/watch?v=KTYp4guSwLg",
+    "https://www.youtube.com/watch?v=vaeio3idHzU",
+    "https://www.youtube.com/watch?v=FaXqep3IsZw",
+    "https://www.youtube.com/watch?v=VIs9zdNq_IU",
+    "https://www.youtube.com/watch?v=JwVm-DHKH_U",
+    "https://www.youtube.com/watch?v=zNEU9VExoWE",
+    "https://www.youtube.com/watch?v=WudXzTex5JQ",
+    "https://www.youtube.com/watch?v=pxjsZK_fkO4",
+    "https://www.youtube.com/watch?v=dIJuNqS9c3w",
+    "https://www.youtube.com/watch?v=BJwovrr6XzI",
+    "https://www.youtube.com/watch?v=yx9WQ0hrsdk",
+    "https://www.youtube.com/watch?v=0uLp-tejcSo",
+    "https://www.youtube.com/watch?v=w4CI96-D2Zg",
+    "https://www.youtube.com/watch?v=HqJ1qP05Si0"
 ];
 
 /* ================= YOUTUBE ID ================= */
@@ -83,39 +83,6 @@ let player = null;
 let isPlaying = false;
 let isShuffle = false;
 let isRepeat = false;
-
-/* ================= SHUFFLE ================= */
-
-let shuffleQueue = [];
-
-function shuffleArray(array) {
-    const result = [...array];
-
-    for (let i = result.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [result[i], result[j]] =
-            [result[j], result[i]];
-    }
-
-    return result;
-}
-
-function resetShuffleQueue() {
-    shuffleQueue = tracks
-        .map((track, index) => index)
-        .filter(index => index !== currentTrackIndex);
-
-    shuffleQueue = shuffleArray(shuffleQueue);
-}
-
-function getNextShuffleTrack() {
-    if (shuffleQueue.length === 0) {
-        resetShuffleQueue();
-    }
-
-    return shuffleQueue.shift();
-}
 
 let favorites = JSON.parse(
     localStorage.getItem("waveifyFavorites") || "[]"
@@ -270,7 +237,6 @@ function createTrackCard(track, index) {
             </div>
 
         </div>
-
     `;
 
     const play =
@@ -379,7 +345,6 @@ function toggleFavorite(trackId) {
     } else {
 
         favorites.push(trackId);
-
     }
 
     localStorage.setItem(
@@ -458,21 +423,13 @@ function loadTrack(index, autoplay = true) {
 
 /* ================= PLAY TRACK ================= */
 
-function playTrack(index, fromShuffle = false) {
+function playTrack(index) {
 
     if (!tracks[index]) {
         return;
     }
 
     currentTrackIndex = index;
-
-    /*
-    Si le morceau est choisi manuellement,
-    on recommence un nouveau cycle aléatoire.
-    */
-    if (isShuffle && !fromShuffle) {
-        shuffleQueue = [];
-    }
 
     const track =
         tracks[currentTrackIndex];
@@ -522,18 +479,24 @@ function togglePlay() {
 
 function nextTrack() {
 
-    if (!tracks.length) {
-        return;
-    }
-
     if (isShuffle) {
 
-        const nextIndex =
-            getNextShuffleTrack();
+        let nextIndex;
 
-        if (nextIndex !== undefined) {
-            playTrack(nextIndex, true);
-        }
+        do {
+
+            nextIndex =
+                Math.floor(
+                    Math.random() *
+                    tracks.length
+                );
+
+        } while (
+            nextIndex === currentTrackIndex &&
+            tracks.length > 1
+        );
+
+        playTrack(nextIndex);
 
         return;
     }
@@ -645,7 +608,6 @@ function updateProgress() {
     } catch (error) {
 
         // Le player YouTube n'est pas encore prêt.
-
     }
 }
 
@@ -821,12 +783,6 @@ shuffleButton.addEventListener(
             isShuffle
         );
 
-        shuffleQueue = [];
-
-        if (isShuffle) {
-            resetShuffleQueue();
-        }
-
     }
 );
 
@@ -919,6 +875,21 @@ if (mobileMenu && sidebar) {
         });
 }
 
+/* ================= NOTIFICATION ================= */
+
+document
+    .getElementById("notificationButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            alert(
+                "Bienvenue sur Waveify 🎵"
+            );
+
+        }
+    );
+
 /* ================= YOUTUBE API ================= */
 
 /*
@@ -927,70 +898,70 @@ cette fonction lorsqu'elle est chargée.
 */
 
 window.onYouTubeIframeAPIReady =
-    function () {
+function () {
 
-        player =
-            new YT.Player(
-                "youtubePlayer",
-                {
+    player =
+        new YT.Player(
+            "youtubePlayer",
+            {
 
-                    height: "1",
-                    width: "1",
+                height: "1",
+                width: "1",
 
-                    videoId:
-                        tracks[0].id,
+                videoId:
+                    tracks[0].id,
 
-                    playerVars: {
+                playerVars: {
 
-                        autoplay: 0,
+                    autoplay: 0,
 
-                        controls: 0,
+                    controls: 0,
 
-                        disablekb: 1,
+                    disablekb: 1,
 
-                        fs: 0,
+                    fs: 0,
 
-                        modestbranding: 1,
+                    modestbranding: 1,
 
-                        playsinline: 1,
+                    playsinline: 1,
 
-                        rel: 0
+                    rel: 0
 
-                    },
+                },
 
-                    events: {
+                events: {
 
-                        onReady:
-                            function (event) {
+                    onReady:
+                        function (event) {
 
-                                event.target.setVolume(
-                                    Number(
-                                        volumeSlider.value
-                                    )
-                                );
+                            event.target.setVolume(
+                                Number(
+                                    volumeSlider.value
+                                )
+                            );
 
-                                loadTrack(
-                                    0,
-                                    false
-                                );
+                            loadTrack(
+                                0,
+                                false
+                            );
 
-                            },
+                        },
 
-                        onStateChange:
-                            function (event) {
+                    onStateChange:
+                        function (event) {
 
-                                handlePlayerState(
-                                    event.data
-                                );
+                            handlePlayerState(
+                                event.data
+                            );
 
-                            }
-
-                    }
+                        }
 
                 }
-            );
 
-    };
+            }
+        );
+
+};
 
 /* ================= YOUTUBE STATES ================= */
 
@@ -1001,7 +972,6 @@ function handlePlayerState(state) {
     ) {
 
         isPlaying = true;
-
     }
 
     if (
@@ -1009,7 +979,6 @@ function handlePlayerState(state) {
     ) {
 
         isPlaying = false;
-
     }
 
     if (
@@ -1031,7 +1000,6 @@ function handlePlayerState(state) {
 
             nextTrack();
         }
-
     }
 
     updatePlayButton();
@@ -1043,4 +1011,23 @@ renderTracks();
 
 renderFavorites();
 
-updatePlayButton
+updatePlayButton();
+
+/* ================= PROGRESS LOOP ================= */
+
+setInterval(
+    updateProgress,
+    500
+);
+
+/* ================= LOAD YOUTUBE API ================= */
+
+const youtubeScript =
+    document.createElement("script");
+
+youtubeScript.src =
+    "https://www.youtube.com/iframe_api";
+
+document
+    .head
+    .appendChild(youtubeScript);
